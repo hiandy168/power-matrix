@@ -1,0 +1,7 @@
+/target/
+/.settings/
+/*.project
+/web-core/target/
+/web-core/.settings/
+/web-core/.project
+/web-core/.classpath
