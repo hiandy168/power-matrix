@@ -1,7 +1,7 @@
 /target/
 /.settings/
 /*.project
-/web-core/target/
-/web-core/.settings/
-/web-core/.project
-/web-core/.classpath
+/matrix-core/target/
+/matrix-core/.settings/
+/matrix-core/.project
+/matrix-core/.classpath
