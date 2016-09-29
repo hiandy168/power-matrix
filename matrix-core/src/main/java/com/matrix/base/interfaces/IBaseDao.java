@@ -1,4 +1,4 @@
-package com.matrix.base;
+package com.matrix.base.interfaces;
 
 import java.io.Serializable;
 import java.util.List;
