@@ -1,6 +1,8 @@
 package com.matrix.system.cache;
 
 import com.matrix.cache.RootCache;
+import com.matrix.map.MStringMap;
+import com.matrix.util.IoUtil;
 
 /**
  * alias TopConfig
@@ -12,30 +14,27 @@ public class PropConfig extends RootCache<String, String> {
 	public final static PropConfig Instance = new PropConfig();
 
 	public synchronized void refresh() {
-		SysWorkDir topDir = new SysWorkDir();
-		String sTempConfigString = topDir
-				.getTempDir(TopConst.CONST_TOP_CUSTOM_CONFIG_PATH);
-		// topDir.upZapDir();
-		getLogger().logInfo(0, "refresh " + sTempConfigString);
+		SysWorkDir sysWorkDir = new SysWorkDir();
+		String tempPath = sysWorkDir.getTempDir(TopConst.CONST_TOP_CUSTOM_CONFIG_PATH);
+		getLogger().logInfo(0, "开始同步并刷新项目配置文件： " + tempPath);
 		IoUtil ioHelper = new IoUtil();
-		ioHelper.copyResources(
-				"classpath*:META-INF/hjy/config/*.properties",
-				sTempConfigString, "/hjy/config/");
+		ioHelper.copyResources("classpath*:META-INF/matrix/config/*.properties" , tempPath , "/matrix/config/");
+		
+		
 		LoadProperties loadProperties = new LoadProperties();
 
 		// 开始读取配置
 		{
-			MStringMap mStringMap = loadProperties.loadMap(sTempConfigString);
+			MStringMap mStringMap = loadProperties.loadMap(tempPath);
 
 			for (String s : mStringMap.getKeys()) {
-				this.inElement(s, mStringMap.get(s));
+				this.addElement(s, mStringMap.get(s));
 			}
 		}
 
 		// 开始扫描扩展自定义的设置
 		{
-			String sCustom = topDir
-					.getCustomPath(TopConst.CONST_TOP_CUSTOM_CONFIG_PATH);
+			String sCustom = sysWorkDir.getCustomPath(TopConst.CONST_TOP_CUSTOM_CONFIG_PATH);
 			getLogger().logInfo(0, "scan custom config " + sCustom + "");
 
 			MStringMap mCustomMap = loadProperties.loadMap(sCustom);
@@ -44,27 +43,53 @@ public class PropConfig extends RootCache<String, String> {
 				getLogger().logWarn(0, "scan custom config  not exist");
 			} else {
 				for (String s : mCustomMap.getKeys()) {
-					this.inElement(s, mCustomMap.get(s));
+					this.addElement(s, mCustomMap.get(s));
 				}
 			}
 		}
 
 		// 开始加载最后本地配置项
 		{
-			String sLocal = topDir.getLocalConfigPath();
+			String sLocal = sysWorkDir.getLocalConfigPath();
 			getLogger().logInfo(0, "scan local config " + sLocal + "");
 			MStringMap mCustomMap = loadProperties.loadMap(sLocal);
 			for (String s : mCustomMap.getKeys()) {
-				this.inElement(s, mCustomMap.get(s));
+				this.addElement(s, mCustomMap.get(s));
 			}
 		}
-
-		// ConfigObservable.INSTANCE.doUpdate(this);
-
 	}
 
+
 	@Override
-	public String getOne(String k) {
+	public String getOneSetCatch(String k) {
 		return null;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

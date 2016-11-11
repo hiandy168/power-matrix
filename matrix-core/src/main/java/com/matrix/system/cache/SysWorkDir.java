@@ -51,7 +51,7 @@ public class SysWorkDir extends BaseClass {
 	public String getServerletPath(String subDirPath) {
 		String path = "";
 		if (StringUtils.isBlank(TopConst.CONST_TOP_DIR_SERVLET)) {   // 在tomcat运行模式下返回的是当前应用的路径
-			TopConst.CONST_TOP_DIR_SERVLET = System.getProperty("user.home");
+			TopConst.CONST_TOP_DIR_SERVLET = System.getProperty("user.home"); // C:\Users\Yangcl
 		}
 		if (StringUtils.isNotBlank(subDirPath)) {  // 如果该参数为空 则表明不为servlet启动 可能是由juit启动
 			subDirPath = "/" + subDirPath;
@@ -75,12 +75,13 @@ public class SysWorkDir extends BaseClass {
 		String path_ = "";
 		if (StringUtils.isBlank(TopConst.CONST_TOP_DIR_CUSTOM)) {
 			String sServerPath = this.getServerletPath("");
-			String sStart = "/sysconfig/matrix/";   // TODO    /etc/hjy/
+			String sStart = "/power/matrix/";   // TODO    /etc/hjy/
 			// 判断如果是windows系统 则默认取系统所在路径的根目录
 			if (StringUtils.substring(sServerPath, 1, 2).equals(":")) {
 				sStart = sServerPath.substring(0, 2) + sStart;
 			}
-			sServerPath = sServerPath.toLowerCase().replace(":", "_").replace("/", "_").replace("\\", "_");
+			// TODO 此处代码与原来不同，可能会出现异常
+			sServerPath = sServerPath.toLowerCase().replace(":", "_").replace("/", "_").replace("\\", "_").replace("__", "_");   
 			sStart = sStart + sServerPath;
 			TopConst.CONST_TOP_DIR_CUSTOM = sStart + "/";
 		}
@@ -95,27 +96,29 @@ public class SysWorkDir extends BaseClass {
 	
 
 	/**
-	 * alias upLocalConfigPath
-	 * 获取本地配置目录 该目录为最后加载的配置 会覆盖所有已加载配置
+	 * @descriptions 获取本地配置目录 该目录为最后加载的配置 会覆盖所有已加载配置   
+	 * @alias upLocalConfigPath
 	 * 
 	 * @return
+	 * @date 2016年11月12日 上午12:01:42
+	 * @author Yangcl 
+	 * @version 1.0.0.1
 	 */
 	public String getLocalConfigPath() {
-		String sReturn = "";
-
-		String sServerPath = getServerletPath("");
-
-		String sStart = "/etc/hjy/local/";
-
+		String path = "";
+		String serverPath = getServerletPath("");
+		String start = "/power/matrix/local/";  // TODO  etc/hjy/local 
 		// 判断如果是windows系统 则默认取系统所在路径的根目录
-		if (StringUtils.substring(sServerPath, 1, 2).equals(":")) {
-			sStart = sServerPath.substring(0, 2) + sStart;
+		if (StringUtils.substring(serverPath, 1, 2).equals(":")) {
+			start = serverPath.substring(0, 2) + start;
 		}
-		
-		sReturn=sStart;
-		IoUtil.createDir(sReturn);
-		return sReturn;
-
+		path = start; 
+		IoUtil.createDir(path);
+		return path;
 	}
-
 }
+
+
+
+
+
