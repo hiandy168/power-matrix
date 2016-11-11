@@ -11,7 +11,7 @@ package com.matrix.base.interfaces;
 public interface IBaseCache {
 
 	/**
-	 * @description: 刷新缓存 该方法一向定义为synchronized
+	 * @description: 刷新缓存 该方法一般定义为synchronized 
 	 * 
 	 * @author Yangcl 
 	 * @date 2016年9月29日 下午4:37:00 

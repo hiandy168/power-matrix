@@ -8,6 +8,7 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import com.matrix.annotation.Inject;
 import com.matrix.system.SpringCtxUtil;
+import com.matrix.system.cache.PropVisitor;
 
 /**
  * @description: 顶层基类，提供多样化的注解功能、配置文件访问等等|TODO PropVisitor功能尚未完成，等待处理中 
@@ -64,6 +65,14 @@ public class BaseClass {
 		return (T) SpringCtxUtil.getBean(beanName);
 	}
 	
+	/**
+	 * @description: 为子类提供日志访问 
+	 * 
+	 * @return
+	 * @author Yangcl 
+	 * @date 2016年11月11日 下午6:37:29 
+	 * @version 1.0.0.1
+	 */
 	public BaseLog getLogger() {
 		return logger;
 	}
@@ -79,9 +88,7 @@ public class BaseClass {
 	 * @version 1.0.0.1
 	 */
 	public String getConfig(String key) {
-//		return PropVisitor.getConfig(key);                 
-		
-		return "";
+		return PropVisitor.getConfig(key);                 
 	}
 
 	

@@ -2,6 +2,8 @@ package com.matrix.base;
 
 import org.apache.commons.logging.LogFactory;
 
+import com.matrix.system.cache.PropVisitor;
+
 
 /**
  * @description: 基础日志服务类 | TODO PropVisitor功能尚未完成，等待处理中
@@ -11,18 +13,20 @@ import org.apache.commons.logging.LogFactory;
  * @date 2016年9月29日 下午2:33:16 
  * @version 1.0.0
  */
-public class BaseLog extends BaseClass {
+public class BaseLog{  // TODO  extends BaseClass 这里是否还需要继承该类？？
 	
 	/**
-	 * 格式化日志输出
+	 * @description: 格式化日志输出
 	 * 
 	 * @param iInfoCode
 	 * @param sParms
 	 * @return
+	 * @author Yangcl 
+	 * @date 2016年11月11日 下午6:35:30 
+	 * @version 1.0.0.1
 	 */
 	public String formatLog(int iInfoCode, Object... sParms) {
-//		return "[" + String.valueOf(iInfoCode) + "]: " + PropVisitor.getLogInfo(iInfoCode, sParms);
-		return " " ;
+		return "BaseLog.java ---- [" + String.valueOf(iInfoCode) + "]: " + PropVisitor.getLogInfo(iInfoCode, sParms);
 	}
 
 	/**
