@@ -5,9 +5,13 @@ import com.matrix.map.MStringMap;
 import com.matrix.util.IoUtil;
 
 /**
- * alias TopConfig
- * 初始化加载配置
- * @author HJY 
+ * @descriptions 初始化加载项目配置文件中的信息到ecache中
+ * @alias TopConfig
+ *
+ * @author Yangcl
+ * @home https://github.com/PowerYangcl 
+ * @date 2016年11月12日 下午6:23:36
+ * @version 1.0.1
  */
 public class PropConfig extends RootCache<String, String> {
 

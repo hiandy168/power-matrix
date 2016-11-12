@@ -7,7 +7,7 @@ import com.matrix.helper.FormatHelper;
 
 
 /**
- * @description: 访问每一个依赖power-matrix项目的sub module
+ * @description: 访问每一个依赖power-matrix项目的sub module中的配置文件缓存信息
  * 
  * @author Yangcl
  * @home https://github.com/PowerYangcl

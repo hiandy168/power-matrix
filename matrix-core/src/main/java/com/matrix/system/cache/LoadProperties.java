@@ -12,12 +12,12 @@ import org.apache.commons.lang.StringUtils;
 import com.matrix.base.BaseClass;
 import com.matrix.map.MStringMap;
 
- 
 /**
  * @descriptions 读取classpath*:META-INF/matrix/config/*.properties 配置文件
  *
- * @date 2016年11月12日 下午12:15:37
  * @author Yangcl 
+ * @home https://github.com/PowerYangcl
+ * @date 2016年11月12日 下午6:28:16
  * @version 1.0.1
  */
 public class LoadProperties extends BaseClass {
