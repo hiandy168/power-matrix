@@ -5,7 +5,7 @@ import com.matrix.map.MStringMap;
 import com.matrix.util.IoUtil;
  
 /**
- * @descriptions 获取提示消息配置信息|这些信息用于项目国际化
+ * @descriptions 初始化项目配置文件中的【提示消息配置信息】到ecache中|这些信息用于项目国际化
  * @alias TopInfo
  * 
  * @author Yangcl 

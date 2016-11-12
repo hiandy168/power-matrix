@@ -3,11 +3,11 @@ package com.matrix.system.cache;
 import org.apache.commons.lang.StringUtils;
 
 import com.matrix.helper.FormatHelper;
-
-
+import com.matrix.map.MStringMap;
 
 /**
  * @description: 访问每一个依赖power-matrix项目的sub module中的配置文件缓存信息
+ * @alias TopUp
  * 
  * @author Yangcl
  * @home https://github.com/PowerYangcl
@@ -15,10 +15,8 @@ import com.matrix.helper.FormatHelper;
  * @version 1.0.0
  */
 public class PropVisitor {
-
 	private final static PropInfo topInfo = new PropInfo();
 	private final static ConfigMap configMap=new ConfigMap();
-	
 	
 	/**
 	 * @description: 获取META-INF//module//config//config.*.properties文件的某个系统常量定义配置项
@@ -50,24 +48,48 @@ public class PropVisitor {
 	}
 	
 	/**
-	 * @param sKey
-	 * @return
+	 * @descriptions 在系统初始化的时候去获取配置的缓存信心|When system init , this function will be used.
+	 *
+	 * @param key
+	 * @date 2016年11月12日 下午6:59:32
+	 * @author Yangcl 
+	 * @version 1.0.0.1
 	 */
-	public static MStringMap getConfigMap(String sKey) {
-		return configMap.getValue(sKey);
+	public static MStringMap getConfigMap(String key) {
+		return configMap.getValue(key);
 	}
 	
-	/** 
-	 * alias upLogInfo
-	 * 格式化日志内容
-	 * @param iInfoCode
-	 * @param sParms
+
+	/**
+	 * @descriptions 格式化日志内容
+	 * @alias upLogInfo
+	 * 
+	 * @param infoCode
+	 * @param params
 	 * @return
+	 * @date 2016年11月12日 下午7:02:41
+	 * @author Yangcl 
+	 * @version 1.0.0.1
 	 */
-	public static String getLogInfo(int iInfoCode, Object... sParms){
-		return (iInfoCode<1 ? StringUtils.join(sParms) : FormatHelper.formatString(getInfo(iInfoCode), sParms));
+	public static String getLogInfo(int infoCode, Object... params){
+		return (infoCode<1 ? StringUtils.join(params) : FormatHelper.formatString(getInfo(infoCode) , params));
 	}
-	
-	
-	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

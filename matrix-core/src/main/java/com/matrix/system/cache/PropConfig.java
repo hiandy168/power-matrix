@@ -5,7 +5,7 @@ import com.matrix.map.MStringMap;
 import com.matrix.util.IoUtil;
 
 /**
- * @descriptions 初始化加载项目配置文件中的信息到ecache中
+ * @descriptions 初始化项目配置文件中的【属性配置信息】到ecache中
  * @alias TopConfig
  *
  * @author Yangcl
