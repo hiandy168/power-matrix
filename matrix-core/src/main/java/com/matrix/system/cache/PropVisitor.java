@@ -21,7 +21,7 @@ public class PropVisitor {
 	
 	
 	/**
-	 * @description: 获取//config//config.*.properties文件的某个系统常量定义配置项
+	 * @description: 获取META-INF//module//config//config.*.properties文件的某个系统常量定义配置项
 	 * 	这是一个主要的应用方法|获取第三方接口地址、用户名、密码等等。
 	 * 
 	 * @param sKey
