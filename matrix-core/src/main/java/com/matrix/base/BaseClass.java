@@ -11,10 +11,9 @@ import com.matrix.system.SpringCtxUtil;
 import com.matrix.system.cache.PropVisitor;
 
 /**
- * @description: 顶层基类，提供多样化的注解功能、配置文件访问等等|TODO PropVisitor功能尚未完成，等待处理中 
+ * @description: 顶层基类，提供多样化的注解功能、配置文件访问等等 
  * 
- * @author Yangcl
- * @home https://github.com/PowerYangcl
+ * @author 张海涛
  * @date 2016年9月29日 下午2:40:02 
  * @version 1.0.0
  */
