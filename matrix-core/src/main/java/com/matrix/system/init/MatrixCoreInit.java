@@ -14,7 +14,7 @@ import com.matrix.system.cache.TopConst;
  * @date 2016年11月15日 下午9:41:57
  * @version 1.0.1
  */
-public class WebCoreInit extends RootInit {
+public class MatrixCoreInit extends RootInit {
 
 	public boolean onInit() {
 		return initVersion();
@@ -29,17 +29,17 @@ public class WebCoreInit extends RootInit {
 	 * @version 1.0.0.1
 	 */
 	public boolean initVersion() {
-		TopConst.CONST_CURRENT_MODEL = getConfig("webcore.model");
-		String version = getConfig("webcore.version");
-		String custVersion = getConfig("webcore.version_" + TopConst.CONST_CURRENT_MODEL);
+		// 定义系统加载的模型类型  不同生产环境下该变量应该为不一样 开发环境为dev 测试环境为beta 候选版本为rc 生产版本为idc
+		TopConst.CONST_CURRENT_MODEL = getConfig("matrix-core.model");
+		String version = getConfig("matrix-core.version");
+		String custVersion = getConfig("matrix-core.version_" + TopConst.CONST_CURRENT_MODEL);
 		if (StringUtils.isNotBlank(custVersion)) {
 			version = custVersion;
 		}
 		TopConst.CONST_CURRENT_VERSION = version;
-		TopConst.CONST_LOG_TYPE = getConfig("webcore.log_type");   // 统一日志的操作类型
-		TopConst.CONST_LOG_ADDRESS = getConfig("webcore.log_address");  // 统一日志的传送地址
+		TopConst.CONST_LOG_TYPE = getConfig("matrix-core.log_type");   // 统一日志的操作类型
+		TopConst.CONST_LOG_ADDRESS = getConfig("matrix-core.log_address");  // 统一日志的传送地址
 		return true;
-
 	}
 
 	@Override

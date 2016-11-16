@@ -53,9 +53,6 @@ public abstract class RootCache<K, V> extends BaseClass implements IBaseCache {
 	 * @version 1.0.0.1
 	 */
 	public abstract V getOneSetCatch(K k); 
-	
-	
-	
 
 	/**
 	 * @description: 添加缓存
@@ -139,9 +136,6 @@ public abstract class RootCache<K, V> extends BaseClass implements IBaseCache {
 			return v;
 		}
 	}
-	
-	
-	
 
 	public void removeAll() {
 		cache.removeAll();

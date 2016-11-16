@@ -74,7 +74,7 @@ public class SysInit extends RootInit {
 	 */
 	private boolean initClass() {
 		boolean bFlagInit = true;
-		String sConfigName = "webcore.initclass";         // TODO 这个是啥意思？？？？？
+		String sConfigName = "matrix-core.initclass";         // TODO 这个是啥意思？？？？？
 		MStringMap mStringMap = PropVisitor.getConfigMap(sConfigName);
 		for (String sClassName : mStringMap.values()) {
 			if (!StringUtils.isEmpty(sClassName)) {
@@ -99,7 +99,7 @@ public class SysInit extends RootInit {
 	@Override
 	public boolean onDestory() {
 		boolean bFlagInit = true;
-		String sConfigName = "webcore.initclass";
+		String sConfigName = "matrix-core.initclass";
 		MStringMap mStringMap = PropVisitor.getConfigMap(sConfigName);
 		for (String sClassName : mStringMap.values()) {
 			if (!StringUtils.isEmpty(sClassName)) {

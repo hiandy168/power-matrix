@@ -44,21 +44,16 @@ public class ServerletLoader {
 		if (!bFlagLoad) {
 			bFlagLoad = true;
 			try {
-				servletContext.log("Initializing HJY web core");
-				// String sTopConfigString=
-				// servletContext.getInitParameter("zapcomtopconfig");
-				// servletContext.log(sTopConfigString);
+				servletContext.log("Initializing Power Matrix ! ! ! ! !");
 				WebApplicationContext wac = WebApplicationContextUtils.getWebApplicationContext(servletContext);
 				SpringCtxUtil.setApplicationContext(wac);
 				TopConst.CONST_TOP_DIR_SERVLET = servletContext.getRealPath("");
 				servletContext.log(TopConst.CONST_TOP_DIR_SERVLET);
-				// servletContext.getContextPath();
 				bFlagSuccess= new SysInit().init();
-				// InitProcess(servletContext);
-				servletContext.log("Initializing HJY web core finished");
+				servletContext.log("Power Matrix Initializing Finished");
 			} catch (RuntimeException ex) {
 				bFlagSuccess=false;
-				servletContext.log("Error occurs in initializing HJY web core" + ex.getMessage());
+				servletContext.log("Error occurs in initializing Power Matrix " + ex.getMessage());
 			}
 		}
 
@@ -88,7 +83,7 @@ public class ServerletLoader {
 			if(!init(servletContext))
 			{
 				servletContext.log(this.getClass().getName()+  " Error onStartup");
-				throw new ServletException("init error");
+				throw new ServletException("ServerletLoader.java 错误的启动异常信息");
 			}
 		}
 	}

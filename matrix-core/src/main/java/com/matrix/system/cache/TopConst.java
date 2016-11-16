@@ -51,22 +51,22 @@ public class TopConst {
 	public final static String CONST_JOB_START = "job_";
 
 	/*
-	 * 定义当前整个后台系统的版本 由config.webcore初始化
+	 * 定义当前整个后台系统的版本 由config.matrix-core初始化
 	 */
 	public static String CONST_CURRENT_VERSION = "";
 
 	/**
-	 * 定义当前的运行模型 由config.webcore初始化
+	 * 定义当前的运行模型 由config.matrix-core初始化
 	 */
 	public static String CONST_CURRENT_MODEL = "";
 
 	/**
-	 * 定义日志类型 由config.webcore初始化
+	 * 定义日志类型 由config.matrix-core初始化
 	 */
 	public static String CONST_LOG_TYPE = "";
 
 	/**
-	 * 定义日志存储目标 由config.webcore初始化
+	 * 定义日志存储目标 由config.matrix-core初始化
 	 */
 	public static String CONST_LOG_ADDRESS = "";
 
