@@ -16,8 +16,8 @@
 		<!--<module>power-api</module>-->
 		<!--<module>power-redis</module>-->
 		<!--<module>power-picture</module>-->
-		<!--<module>power-open-api</module> 
-		<module>power-sample</module> -->
+		<!--<module>power-open-api</module> -->
+		<module>example-ui</module>
     </modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

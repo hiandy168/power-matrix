@@ -1,23 +1,16 @@
-/target/
-
-
-/.settings/
-
-
+/target/ 
+/.settings/ 
 /*.project
 
 
 
 /matrix-core/target/
-
-
 /matrix-core/.settings/
-
-
-/matrix-core/.project
-
-
+/matrix-core/.project 
 /matrix-core/.classpath
 
 
-
+/example-ui/target/
+/example-ui/.settings/
+/example-ui/.project 
+/example-ui/.classpath
