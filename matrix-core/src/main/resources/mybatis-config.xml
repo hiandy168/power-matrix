@@ -3,7 +3,7 @@
 <configuration>
 	<!-- 别名 -->
 <!-- 	<typeAliases>
-		<package name="com.hjy.matrix.entity"/>
+		<package name="com.matrix.entity"/>
 	</typeAliases> -->
 	
 	<plugins>
@@ -47,3 +47,21 @@
 	</plugins>
 	
 </configuration>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

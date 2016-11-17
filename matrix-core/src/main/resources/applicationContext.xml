@@ -7,15 +7,15 @@
     xmlns:jee="http://www.springframework.org/schema/jee"  
     xmlns:tx="http://www.springframework.org/schema/tx"  
     xsi:schemaLocation="    
-        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd  
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd  
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd  
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd  
-        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd  
-        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">    
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd  
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd  
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">    
         
 	<!-- 自动扫描 使用注解的包，包括子集 -->
-	<context:component-scan base-package="com.hjy.dao" />
-	<context:component-scan base-package="com.hjy.service" />
+	<context:component-scan base-package="com.matrix.dao" />
+	<context:component-scan base-package="com.matrix.service" />
 	
 	<!-- 配置数据源 -->
 	<context:property-placeholder location="classpath:properties/jdbc.properties" />   
@@ -46,24 +46,20 @@
 		<property name="filters" value="mergeStat" />
 	</bean>
 	
-	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations" value="classpath*:mapper/**/*.xml"></property>
 		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
 	</bean>
 	
-	
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.hjy.dao" />
+		<property name="basePackage" value="com.matrix.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 	</bean>
 	
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
-	
-	
 	
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
@@ -96,20 +92,19 @@
     </tx:advice>  
     
     <aop:config>  
-        <aop:pointcut id="serviceOperation"  expression="execution(* com.hjy.service.impl.*.*(..))" />  
+        <aop:pointcut id="serviceOperation"  expression="execution(* com.matrix.service.impl.*.*(..))" />  
         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />  
     </aop:config>  
     
 
 	<!--
-		com.alibaba.druid.support.spring.stat.DruidStatInterceptor是一个标准的Spring Method Interceptor。
-		以下为：方法名正则匹配拦截配置
+		com.alibaba.druid.support.spring.stat.DruidStatInterceptor是一个标准的Spring Method Interceptor。以下为：方法名正则匹配拦截配置
 	  -->
 	<bean id="druid-stat-interceptor" class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor"></bean>
 	<bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut" scope="prototype">
 		<property name="patterns">
 			<list>
-				<value>com.hjy.service.impl.*</value>
+				<value>com.matrix.service.impl.*</value>
 			</list>
 		</property>
 	</bean>
