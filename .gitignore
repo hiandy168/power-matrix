@@ -9,6 +9,11 @@
 /matrix-core/.project 
 /matrix-core/.classpath
 
+/matrix-quartz/target/
+/matrix-quartz/.settings/
+/matrix-quartz/.project 
+/matrix-quartz/.classpath
+
 
 /example-ui/target/
 /example-ui/.settings/

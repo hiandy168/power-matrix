@@ -9,7 +9,7 @@
 	<modules>
 		<module>matrix-core</module>
 		<!--<module>matrix-admin</module>-->
-		<!--<module>matrix-quartz</module>-->
+		<module>matrix-quartz</module> 
 		<!--<module>matrix-cache</module>-->
 		<!--<module>matrix-session</module>-->
 		<!--<module>matrix-jms</module> -->

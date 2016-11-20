@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" updateCheck="false" xsi:noNamespaceSchemaLocation="ehcache.xsd">  
-  
-    
-  
     <!--  
-    Mandatory Default Cache configuration. These settings will be applied to caches  
-    created programmtically using CacheManager.add(String cacheName)  
-    -->  
-    <!--  
+    	Mandatory Default Cache configuration. These settings will be applied to caches  
+    	created programmtically using CacheManager.add(String cacheName)  
+    	
        name:缓存名称。  
        maxElementsInMemory：缓存最大个数。  
        eternal:对象是否永久有效，一但设置了，timeout将不起作用。  
@@ -21,12 +17,5 @@
        memoryStoreEvictionPolicy：当达到maxElementsInMemory限制时，Ehcache将会根据指定的策略去清理内存。默认策略是LRU（最近最少使用）。你可以设置为FIFO（先进先出）或是LFU（较少使用）。  
        clearOnFlush：内存数量最大时是否清除。  
     -->  
-    <defaultCache  
-            maxElementsInMemory="10000"  
-            eternal="true"  
-            timeToIdleSeconds="0"  
-            timeToLiveSeconds="0"  
-            overflowToDisk="false"  
-           
-            />  
+    <defaultCache maxElementsInMemory="10000" eternal="true" timeToIdleSeconds="0" timeToLiveSeconds="0" overflowToDisk="false" />  
 </ehcache>  

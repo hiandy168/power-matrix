@@ -6,7 +6,7 @@ import com.matrix.system.cache.PropVisitor;
 
 
 /**
- * @description: 基础日志服务类 | TODO PropVisitor功能尚未完成，等待处理中
+ * @description: 基础日志服务类  
  * 
  * @author Yangcl
  * @home https://github.com/PowerYangcl
@@ -36,7 +36,7 @@ public class BaseLog{  // TODO  extends BaseClass 这里是否还需要继承该
 	 *            替换参数
 	 */
 	public void logWarn(int iInfoCode) {
-//		LogFactory.getLog(this.getClass()).warn(PropVisitor.getLogInfo(iInfoCode));
+		LogFactory.getLog(this.getClass()).warn(PropVisitor.getLogInfo(iInfoCode));
 	}
 	/**
 	 * @param lInfoId
@@ -45,7 +45,7 @@ public class BaseLog{  // TODO  extends BaseClass 这里是否还需要继承该
 	 *            替换参数
 	 */
 	public void logInfo(int iInfoCode) {
-//		LogFactory.getLog(this.getClass()).info(PropVisitor.getLogInfo(iInfoCode));
+		LogFactory.getLog(this.getClass()).info(PropVisitor.getLogInfo(iInfoCode));
 	}
 	/**
 	 * @param lInfoId
@@ -54,7 +54,7 @@ public class BaseLog{  // TODO  extends BaseClass 这里是否还需要继承该
 	 *            替换参数
 	 */
 	public void logError(int iInfoCode) {
-//		LogFactory.getLog(this.getClass()).error(PropVisitor.getLogInfo(iInfoCode));
+		LogFactory.getLog(this.getClass()).error(PropVisitor.getLogInfo(iInfoCode));
 	}
 	/**
 	 * @param lInfoId
@@ -63,7 +63,7 @@ public class BaseLog{  // TODO  extends BaseClass 这里是否还需要继承该
 	 *            替换参数
 	 */
 	public void logDebug(int iInfoCode) {
-//		LogFactory.getLog(this.getClass()).debug(PropVisitor.getLogInfo(iInfoCode));
+		LogFactory.getLog(this.getClass()).debug(PropVisitor.getLogInfo(iInfoCode));
 	}
 	
 	

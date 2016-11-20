@@ -25,11 +25,22 @@ import com.matrix.base.interfaces.IBaseService;
  * @author Yangcl
  * @version 1.0.1
  */
-// @Service("baseService") abstract
 public class BaseServiceImpl<T, PK extends Serializable> extends BaseClass implements IBaseService<T, PK> {
 
-	public static Logger logger = Logger.getLogger(BaseServiceImpl.class);
 
+	/**
+	 * 	   @ Autowired标签按byType(即：Class)自动注入; @ Resource标签默认按byName(即：类型名称)自动注入。
+	 * 针对这句代码【public BaseDao<T,PK> baseDao;】如果你用@Resource的方式进行注入
+	 * 那么会报这个异常：NoUniqueBeanDefinitionException:No qualifying bean of type
+	 * [com.yangcl.springmvc.base.BaseDao] is defined: expected single matching bean
+	 * but found 2: bookDao,userDao
+	 * 	   原因在于BookDao和UserDao都继承了BaseDao，他们的实现代码是这样的：
+	 * public interface BookDao extends BaseDao<Book , Integer>
+	 * public interface UserDao extends BaseDao<User, Integer>
+	 * 当在这个位置注入了【baseDao】后，Spring会去找对应的实现类，此时出现了2个接口，
+	 * 他们都继承了BaseDao，而@Resource标签默认按byName去找实现的Bean，Spring面对
+	 * 两个类型名称相同的Bean会无法判断需要注入哪一个。
+	 */
 	@Autowired
 	public IBaseDao<T, PK> baseDao;
 
@@ -55,7 +66,6 @@ public class BaseServiceImpl<T, PK extends Serializable> extends BaseClass imple
 
 	@Override
 	public Integer updateSelective(T entity) {
-		// TODO Auto-generated method stub
 		return baseDao.updateSelective(entity);
 	}
 
@@ -90,21 +100,6 @@ public class BaseServiceImpl<T, PK extends Serializable> extends BaseClass imple
 	}
 
 	@Override
-	public JSONObject jsonList(T entity) {
-		JSONObject result = new JSONObject();
-		List<T> list = baseDao.findList(entity);
-		if (list != null && list.size() > 0) {
-			result.put("status", "success");
-			result.put("list", list);
-			return result;
-		} else {
-			result.put("status", "error");
-			result.put("msg", "结果集为空");
-			return result;
-		}
-	}
-
-	@Override
 	public <DTO> List<T> findGroupList(DTO dto) {
 		return baseDao.findGroupList(dto);
 	}
@@ -127,6 +122,21 @@ public class BaseServiceImpl<T, PK extends Serializable> extends BaseClass imple
 	@Override
 	public Integer selectMaxId() {
 		return baseDao.selectMaxId();
+	}
+	
+	@Override
+	public JSONObject jsonList(T entity) {
+		JSONObject result = new JSONObject();
+		List<T> list = baseDao.findList(entity);
+		if (list != null && list.size() > 0) {
+			result.put("status", "success");
+			result.put("list", list);
+			return result;
+		} else {
+			result.put("status", "error");
+			result.put("msg", this.getInfo(100090001)); // 结果集为空
+			return result;
+		}
 	}
 
 	@Override
@@ -154,7 +164,7 @@ public class BaseServiceImpl<T, PK extends Serializable> extends BaseClass imple
 			result.put("status", "success");
 		} else {
 			result.put("status", "error");
-			result.put("msg", "没有查询到可以显示的数据");
+			result.put("msg", this.getInfo(100090002));  // 没有查询到可以显示的数据 
 		}
 		PageInfo<T> pageList = new PageInfo<T>(list);
 		result.put("data", pageList);
@@ -163,3 +173,27 @@ public class BaseServiceImpl<T, PK extends Serializable> extends BaseClass imple
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

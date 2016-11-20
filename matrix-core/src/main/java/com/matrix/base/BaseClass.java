@@ -7,6 +7,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import com.matrix.annotation.Inject;
+import com.matrix.helper.FormatHelper;
 import com.matrix.system.SpringCtxUtil;
 import com.matrix.system.cache.PropVisitor;
 
@@ -90,6 +91,19 @@ public class BaseClass {
 		return PropVisitor.getConfig(key);                 
 	}
 
+	/**
+	 * @description: 通过访问每一个项目的 info.****.****.properties文件，获取其消息提示内容
+	 * 
+	 * @param infoCode 文本编号
+	 * @param parms  拼接字符串 此字段可以为空
+	 * 
+	 * @author Yangcl 
+	 * @date 2016年9月29日 下午2:42:48 
+	 * @version 1.0.0.1
+	 */
+	public String getInfo(long infoCode, Object... parms) {
+		return FormatHelper.formatString(PropVisitor.getInfo(infoCode), parms);
+	}
 	
 }
 
