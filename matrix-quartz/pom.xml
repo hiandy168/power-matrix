@@ -11,4 +11,13 @@
   <name>matrix-quartz</name>
   <packaging>jar</packaging>
   <url>https://github.com/PowerYangcl</url>
+  
+  <dependencies>
+		<dependency>
+			<groupId>com.power-matrix</groupId>
+			<artifactId>matrix-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+	
 </project>
