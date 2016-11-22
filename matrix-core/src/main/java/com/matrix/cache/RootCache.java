@@ -10,9 +10,10 @@ import net.sf.ehcache.Element;
 
  
 /**
- * @description: 缓存基类|ecache涉及缓存的操作均需继承此基类
+ * @description: 缓存基类|配置文件类型的缓存(****.properties)|ecache涉及缓存的操作均需继承此基类
  * 
- * @author Yangcl
+ * @author zht
+ * @copy_by Yangcl 
  * @home https://github.com/PowerYangcl
  * @date 2016年11月11日 下午6:04:51 
  * @version 1.0.0

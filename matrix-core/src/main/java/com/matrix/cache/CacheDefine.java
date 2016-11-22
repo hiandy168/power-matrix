@@ -11,9 +11,10 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.config.CacheConfiguration;
 
 /**
- * @description: ehcache 缓存定义类|RootCatch.java 和 CustomCache.java会分别继承该类
+ * @description: ehcache 缓存定义类|RootCatch.java 和 RootCustomCache.java会分别继承该类
  * 
- * @author Yangcl
+ * @author zht
+ * @copy_by Yangcl 
  * @home https://github.com/PowerYangcl
  * @date 2016年11月11日 下午6:08:15 
  * @version 1.0.0
@@ -43,7 +44,7 @@ public class CacheDefine extends BaseClass {
 	}
 
 	/**
-	 * @description: 添加缓存|缓存类型：rootcache|RootCatch.java会继承该类，并使用这个方法添加缓存
+	 * @description: 添加缓存(配置文件类型的缓存)|缓存类型：rootcache|RootCatch.java会继承该类，并使用这个方法添加缓存
 	 * 		清除缓存时，以rootcache开头的所有缓存都会被清除。
 	 * @alias inCache 
 	 * 
@@ -71,7 +72,7 @@ public class CacheDefine extends BaseClass {
 
  
 	/**
-	 * @description: 添加自定义的缓存|缓存类型：customcache|CustomCatch.java会继承该类，并使用这个方法添加缓存
+	 * @description: 添加自定义的缓存(非配置文件类型的缓存)|缓存类型：customcache|RootCustomCache.java会继承该类，并使用这个方法添加缓存
 	 * 			该cache自由设置配置 清除缓存时不清除该类cache
 	 * @alias inCustomCache 
 	 * 
