@@ -1,4 +1,4 @@
-package com.matrix.pojo.entity.system;
+package com.matrix.pojo.dto;
 
 public class LogInfo {
 

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import com.matrix.annotation.Inject;
 import com.matrix.base.BaseClass;
 import com.matrix.base.interfaces.IBaseJob;
+import com.matrix.helper.LogHelper;
+import com.matrix.helper.WebHelper;
 import com.matrix.pojo.entity.SysJob;
 import com.matrix.quartz.model.MJobInfo;
 import com.matrix.quartz.model.MLogJob;
@@ -34,7 +36,6 @@ public abstract class RootJobForLock extends BaseClass implements Job, IBaseJob 
 		MJobInfo mJobInfo = new MJobInfo();
 		try {
 			if (context != null && context.getMergedJobDataMap() != null && context.getMergedJobDataMap().containsKey( TopConst.CONST_JOB_START + "status")) {
-
 				if (context.getNextFireTime() != null) {
 					sNextTime = context.getNextFireTime(); 
 				}

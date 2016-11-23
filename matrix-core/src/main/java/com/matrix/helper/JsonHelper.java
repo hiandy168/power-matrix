@@ -1,4 +1,4 @@
-package com.matrix.util;
+package com.matrix.helper;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;

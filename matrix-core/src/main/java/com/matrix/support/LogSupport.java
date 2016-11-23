@@ -9,11 +9,12 @@ import org.apache.commons.lang.StringUtils;
 import com.matrix.base.BaseClass;
 import com.matrix.cache.impl.LogCache;
 import com.matrix.helper.FormatHelper;
+import com.matrix.helper.JsonHelper;
 import com.matrix.map.MDataMap;
-import com.matrix.pojo.entity.system.LogInfo;
+import com.matrix.pojo.dto.LogInfo;
+import com.matrix.pojo.dto.SendLog;
 import com.matrix.system.cache.SysWorkDir;
 import com.matrix.system.cache.TopConst;
-import com.matrix.util.JsonHelper;
 import com.matrix.util.NetUtil;
 
 
