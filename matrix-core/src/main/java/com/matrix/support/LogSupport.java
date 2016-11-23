@@ -13,6 +13,7 @@ import com.matrix.map.MDataMap;
 import com.matrix.pojo.entity.system.LogInfo;
 import com.matrix.system.cache.SysWorkDir;
 import com.matrix.system.cache.TopConst;
+import com.matrix.util.JsonHelper;
 import com.matrix.util.NetUtil;
 
 
@@ -93,7 +94,7 @@ public class LogSupport extends BaseClass {
 
 		if (sendLog.getLogs() != null && sendLog.getLogs().size() > 0) {
 			try {
-				WebClientSupport.upPost(TopConst.CONST_LOG_ADDRESS, new MDataMap("api_input", GsonHelper.toJson(sendLog)));
+				WebClientSupport.upPost(TopConst.CONST_LOG_ADDRESS, new MDataMap("api_input", JsonHelper.toJson(sendLog)));
 			} catch (Exception e) {
 				getLogger().logError(967905007 , e.getMessage());
 				e.printStackTrace();
