@@ -21,6 +21,14 @@ import com.matrix.service.IJobService;
 import com.matrix.system.cache.TopConst;
 import com.matrix.util.DateUtil;
 
+/**
+ * @descriptions 定时任务顶层实现类
+ *
+ * @author Yangcl 
+ * @home https://github.com/PowerYangcl
+ * @date 2016年11月24日 下午11:27:08
+ * @version 1.0.1
+ */
 public abstract class RootJobForLock extends BaseClass implements Job, IBaseJob {
 
 	@Inject
