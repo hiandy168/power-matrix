@@ -31,7 +31,7 @@ import com.matrix.service.IExampleService;
 @Controller
 @RequestMapping("example")
 public class ExampleController{
-private static Logger logger=Logger.getLogger(ExampleController.class);
+	private static Logger logger=Logger.getLogger(ExampleController.class);
 	
 	@Autowired
 	private IExampleService exampleService;
