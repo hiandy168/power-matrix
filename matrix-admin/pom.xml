@@ -19,6 +19,12 @@
 			<artifactId>example-ui</artifactId>
 			<version>${project.version}</version>
 		</dependency> 
+		
+		<dependency>
+			<groupId>com.power-matrix</groupId>
+			<artifactId>matrix-quartz</artifactId>
+			<version>${project.version}</version>
+		</dependency> 
 	</dependencies>
 	
 	<build>
