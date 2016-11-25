@@ -6,7 +6,7 @@ import com.matrix.base.interfaces.IBaseDao;
 import com.matrix.pojo.entity.SysJobExectimer;
 
 
-public interface IJobExectimerDao extends IBaseDao<SysJobExectimer, Integer> {
+public interface ISysJobExectimerDao extends IBaseDao<SysJobExectimer, Integer> {
 
 	/**
 	 * @descriptions JobServiceImpl 使用一次
@@ -18,6 +18,8 @@ public interface IJobExectimerDao extends IBaseDao<SysJobExectimer, Integer> {
 	 * @version 1.0.0.1
 	 */
 	public Integer updateSelectiveByExecCode(SysJobExectimer entity);
+	
+	 
 	
 	/**
 	 * @descriptions KjtOperationsManagerServiceImpl 调用一次

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.matrix.dao.ISysJobExectimerDao">
+
+	<resultMap id="BaseResultMap" type="com.matrix.pojo.entity.SysJobExectimer">
+		<id column="zid" property="zid" jdbcType="INTEGER" />
+		<result column="uid" property="uid" jdbcType="CHAR" />
+		<result column="exec_code" property="execCode" jdbcType="VARCHAR" />
+		<result column="exec_type" property="execType" jdbcType="VARCHAR" />
+		<result column="exec_info" property="execInfo" jdbcType="VARCHAR" />
+		<result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
+		<result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="exec_time" property="execTime" jdbcType="TIMESTAMP" />
+		<result column="flag_success" property="flagSuccess" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+		<result column="exec_number" property="execNumber" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<select id="find" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select * from job_exectimer where zid = #{id,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from job_exectimer
+		where zid = #{id , jdbcType=INTEGER}
+	</delete>
+
+
+	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.SysJobExectimer">
+		insert into job_exectimer
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="zid != null">
+				zid,
+			</if>
+			<if test="uid != null">
+				uid,
+			</if>
+			<if test="execCode != null">
+				exec_code,
+			</if>
+			<if test="execType != null">
+				exec_type,
+			</if>
+			<if test="execInfo != null">
+				exec_info,
+			</if>
+			<if test="beginTime != null">
+				begin_time,
+			</if>
+			<if test="endTime != null">
+				end_time,
+			</if>
+			<if test="execTime != null">
+				exec_time,
+			</if>
+			<if test="flagSuccess != null">
+				flag_success,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="execNumber != null">
+				exec_number,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="zid != null">
+				#{zid,jdbcType=INTEGER},
+			</if>
+			<if test="uid != null">
+				#{uid,jdbcType=CHAR},
+			</if>
+			<if test="execCode != null">
+				#{execCode,jdbcType=VARCHAR},
+			</if>
+			<if test="execType != null">
+				#{execType,jdbcType=VARCHAR},
+			</if>
+			<if test="execInfo != null">
+				#{execInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="beginTime != null">
+				#{beginTime,jdbcType=CHAR},
+			</if>
+			<if test="endTime != null">
+				#{endTime,jdbcType=CHAR},
+			</if>
+			<if test="execTime != null">
+				#{execTime,jdbcType=CHAR},
+			</if>
+			<if test="flagSuccess != null">
+				#{flagSuccess,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="execNumber != null">
+				#{execNumber,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateSelective" parameterType="com.matrix.pojo.entity.SysJobExectimer">
+		update job_exectimer
+		<set> 
+			<if test="execCode != null">
+				exec_code = #{execCode,jdbcType=VARCHAR},
+			</if>
+			<if test="execType != null">
+				exec_type = #{execType,jdbcType=VARCHAR},
+			</if>
+			<if test="execInfo != null">
+				exec_info = #{execInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="beginTime != null">
+				begin_time = #{beginTime,jdbcType=CHAR},
+			</if>
+			<if test="endTime != null">
+				end_time = #{endTime,jdbcType=CHAR},
+			</if>
+			<if test="execTime != null">
+				exec_time = #{execTime,jdbcType=CHAR},
+			</if>
+			<if test="flagSuccess != null">
+				flag_success = #{flagSuccess,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="execNumber != null">
+				exec_number = #{execNumber,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where zid = #{zid,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateSelectiveByExecCode" parameterType="com.matrix.pojo.entity.SysJobExectimer">
+		update job_exectimer
+		<set>
+			<if test="uid != null">
+				uid = #{uid,jdbcType=CHAR},
+			</if>
+			<if test="execCode != null">
+				exec_code = #{execCode,jdbcType=VARCHAR},
+			</if>
+			<if test="execType != null">
+				exec_type = #{execType,jdbcType=VARCHAR},
+			</if>
+			<if test="execInfo != null">
+				exec_info = #{execInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="beginTime != null">
+				begin_time = #{beginTime,jdbcType=CHAR},
+			</if>
+			<if test="endTime != null">
+				end_time = #{endTime,jdbcType=CHAR},
+			</if>
+			<if test="execTime != null">
+				exec_time = #{execTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="flagSuccess != null">
+				flag_success = #{flagSuccess,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="execNumber != null">
+				exec_number = #{execNumber,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where exec_code = #{execCode , jdbcType=INTEGER}
+	</update>
+	
+	<!-- 根据查询条件查询定时执行表数据集合 2016-07-06 zhy -->
+	<select id="findList" resultMap="BaseResultMap" parameterType="com.matrix.pojo.entity.SysJobExectimer">
+		select * from job_exectimer
+		<where>
+			flag_success = 0
+			AND exec_time &lt; #{execTime,jdbcType=TIMESTAMP}
+			AND exec_type = #{execType,jdbcType=VARCHAR}
+			AND exec_number &lt; #{execNumber,jdbcType=INTEGER}
+		</where>
+	</select>
+	
+	<update id="updateSelectiveByFlag" parameterType="com.matrix.pojo.entity.SysJobExectimer">
+		update job_exectimer
+		<set>  
+			<if test="beginTime != null">
+				begin_time = '',
+			</if>
+			<if test="endTime != null">
+				end_time = '',
+			</if>
+			<if test="execTime != null">
+				exec_time = #{execTime,jdbcType=CHAR},
+			</if> 
+			<if test="remark != null">
+				remark = #{remark,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="execNumber != null">
+				exec_number = #{execNumber,jdbcType=INTEGER},
+			</if> 
+		</set>
+		where flag_success = 0
+	</update>
+	
+	<update id="updateSelectiveByOrderCode" parameterType="com.matrix.pojo.entity.SysJobExectimer">
+		update 
+			job_exectimer
+		set
+			begin_time = #{beginTime,jdbcType=CHAR},
+			end_time = #{endTime,jdbcType=CHAR},
+			flag_success = #{flagSuccess , jdbcType=INTEGER},
+			remark = #{remark , jdbcType=LONGVARCHAR},
+			exec_number = exec_number + 1 
+		where 
+			exec_info = #{execInfo , jdbcType=INTEGER}
+	</update>
+	
+	<!-- 根据  exec_type 和 exec_info 来查询一个订单 - 20160918 - Yangcl -->
+	<select id="findByOrderCode" parameterType="com.matrix.pojo.entity.SysJobExectimer" resultMap="BaseResultMap">
+		select 
+			* 
+		from 
+			webcore.job_exectimer 
+		where 
+			exec_type = #{execType , jdbcType=VARCHAR}
+		and 
+			exec_info = #{execInfo , jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 找到特定商户下等待同步推送的订单 - 20160920 - Yangcl -->
+	<select id="findRsyncOrderList" resultMap="BaseResultMap" parameterType="com.matrix.pojo.entity.SysJobExectimer">
+		select 
+			* 
+		from 
+			webcore.job_exectimer
+		where
+			flag_success = 0
+			and exec_type = #{execType,jdbcType=VARCHAR}
+			and exec_number &lt; #{execNumber,jdbcType=INTEGER}
+			and exec_time between  #{start , jdbcType=VARCHAR}  and  #{end , jdbcType=VARCHAR}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import com.matrix.annotation.Inject;
 import com.matrix.base.interfaces.IBaseJob;
 import com.matrix.map.MDataMap;
+import com.matrix.pojo.dto.SysJobDto;
 import com.matrix.pojo.entity.SysJob;
 import com.matrix.quartz.model.MJobInfo;
 import com.matrix.quartz.support.JobSupport;
@@ -32,7 +33,7 @@ public class JobInit extends RootInit {
 		}
 		List<String> rglist_ = new ArrayList<String>(Arrays.asList(rglist.split(",")));
 		
-		SysJob entity = new SysJob();
+		SysJobDto entity = new SysJobDto();
 		entity.setFlagEnable(1);        // 定时任务的执行状态
 		entity.setRglist(rglist_); 
 		List<SysJob> list = jobService.findSysJobList(entity);
