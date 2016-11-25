@@ -19,3 +19,9 @@
 /example-ui/.settings/
 /example-ui/.project 
 /example-ui/.classpath
+
+
+/matrix-admin/target/
+/matrix-admin/.settings/
+/matrix-admin/.project 
+/matrix-admin/.classpath
