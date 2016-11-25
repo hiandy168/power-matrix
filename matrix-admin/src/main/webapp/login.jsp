@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>登录页面</title>
+    <title>power-matrix</title>
 
     <link rel="stylesheet" href="css/style.default.css" type="text/css" />
     <!--[if IE 9]>
@@ -30,7 +30,7 @@
     	<div class="loginboxinner">
         	
             <div class="logo">
-            	<h1 class="logo">$<span>惠家有</span>$</h1>
+            	<h1 class="logo">$<span>能量矩阵</span>$</h1>
 				<span class="slogan">后台管理系统</span>
             </div>
             

@@ -7,7 +7,7 @@ var login = {
      * 登录相关类
      */
     login:function(formId){
-        var url_ = 'login/login.do';
+        var url_ = 'manager/login.do';
         var data_ = $('#' + formId).serializeArray();
         var object = JSON.parse(ajaxs.sendAjax('post' , url_ , data_));
         if(object.status == 'success'){
