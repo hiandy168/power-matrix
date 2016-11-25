@@ -15,7 +15,7 @@ import com.matrix.pojo.entity.SysError;
 import com.matrix.service.ISystemService;
 
 @Service("systemService")
-public class SystemServiceImpl extends BaseServiceImpl<SystemUtil, Integer> implements ISystemService {
+public class SystemServiceImpl implements ISystemService {
 	
 	@Resource
 	private ISysLockDao sysLockDao;

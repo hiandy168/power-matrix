@@ -4,7 +4,7 @@ import com.matrix.base.interfaces.IBaseService;
 import com.matrix.pojo.dto.SystemUtil;
 import com.matrix.pojo.entity.SysError;
 
-public interface ISystemService extends IBaseService<SystemUtil , Integer>{
+public interface ISystemService {
 
 	public String addLock(String keycode, Integer timeoutSecond, String uuid);
 	

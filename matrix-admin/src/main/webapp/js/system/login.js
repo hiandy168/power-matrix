@@ -11,7 +11,7 @@ var login = {
         var data_ = $('#' + formId).serializeArray();
         var object = JSON.parse(ajaxs.sendAjax('post' , url_ , data_));
         if(object.status == 'success'){
-            window.location.href='login/index.do';
+            window.location.href='manager/index.do';
         }else{
             alert(object.msg);
         }
