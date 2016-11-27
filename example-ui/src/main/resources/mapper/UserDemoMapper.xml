@@ -23,7 +23,28 @@
 			id = #{id,jdbcType=INTEGER}
 	</select>
 	
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	
+	<select id="queryPage" parameterType="com.matrix.pojo.entity.UserDemo" resultMap="BaseResultMap">
+		select 
+			* 
+		from 
+			test.user_demo 
+		<where>
+			1 = 1 
+			<if test="userName != null and userName != ''  ">
+				and user_name = #{userName , jdbcType=VARCHAR}
+			</if>
+			<if test="mobile != null and mobile != ''  ">
+				and mobile = #{mobile , jdbcType=VARCHAR}
+			</if>
+			<if test="sex != null and sex != ''  ">
+				and sex = #{sex , jdbcType=INTEGER}
+			</if>
+		</where>
+	</select>
+	
+	
+	<delete id="deleteById" parameterType="java.lang.Integer">
 		delete from test.user_demo where id = #{id,jdbcType=INTEGER}
 	</delete>
 	

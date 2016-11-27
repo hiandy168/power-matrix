@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
@@ -31,6 +32,24 @@ public class ExampleServiceImpl  extends BaseServiceImpl<UserDemo, Integer> impl
 		}else{
 			result.put("status", false);
 			result.put("msg", "数据插入异常！");
+		}
+		return result;
+	}
+
+	public JSONObject deleteOne(UserDemo entity) {
+		JSONObject result = new JSONObject();
+		if(StringUtils.isNotBlank(entity.getId().toString())){
+			Integer count = userDemoDao.deleteById(entity.getId());
+			if(count == 1){
+				result.put("status", "success");
+				result.put("msg", "删除成功");
+			}else{
+				result.put("status", "error");
+				result.put("msg", "删除失败");
+			}
+		}else{
+			result.put("status", "error");
+			result.put("msg", "删除记录Id不可为空");
 		}
 		return result;
 	}

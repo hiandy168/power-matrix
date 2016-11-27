@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.miemiedev.mybatis.paginator.domain.Order;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.matrix.pojo.entity.UserDemo;
 import com.matrix.service.IExampleService;
 
@@ -67,10 +64,7 @@ public class ExampleController{
 		return exampleService.addInfo(entity, session);  
 	}
 	
-	
-	
-	
-	
+	 
 	/**
 	 * @descriptions 简单分页示例 Ajax分页 不涉及弹窗分页问题 
 	 * 
@@ -118,16 +112,15 @@ public class ExampleController{
 		// TODO 按钮权限控制等等
 		return "jsp/example/alertExample"; 
 	}
-	
-	
 
 	
 	@RequestMapping(value = "deleteOne", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject deleteOne(UserDemo info){
-//		return exampleService.deleteOne(info); 
-		return null;
+		return exampleService.deleteOne(info); 
 	}
+	
+	
 	
 	@RequestMapping("editInfoPage")   
 	public String editInfoPage(UserDemo info , ModelMap model , HttpServletRequest request, HttpSession session){

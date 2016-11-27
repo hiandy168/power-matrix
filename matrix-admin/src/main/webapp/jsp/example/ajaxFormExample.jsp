@@ -65,20 +65,20 @@
          }
 
         function deleteOne(id_){
-            if(confirm('您确定要删除这条记录吗？')){
-                var type_ = 'post';
-                var url_ = '${basePath}example/deleteOne.do';
-                var data_ = {id:id_};
-                var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
-                if(obj.status == 'success'){
-                    alert(obj.msg);
-//                    $("#tr-" + id_).remove();
-                    var currentPageNumber = $(".paginate_active").html();   // 定位到当前分页的页码，然后重新加载数据
-                    aForm.formPaging(currentPageNumber);
-                }else{
-                    alert(obj.msg);
-                }
-            }
+        	jConfirm('您确定要删除这条记录吗？', 'confirm', function(flag) {
+	            if(flag){
+	            	var type_ = 'post';
+	                var url_ = '${basePath}example/deleteOne.do';
+	                var data_ = {id:id_};
+	                var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+	                if(obj.status == 'success'){
+	                    var currentPageNumber = $(".paginate_active").html();   // 定位到当前分页的页码，然后重新加载数据
+	                    aForm.formPaging(currentPageNumber);
+	                }else{
+	                }
+	                jAlert(obj.msg, 'title');
+	            }
+			});
         }
 
         //搜索

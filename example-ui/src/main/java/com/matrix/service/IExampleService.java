@@ -9,4 +9,6 @@ import com.matrix.pojo.entity.UserDemo;
 public interface IExampleService  extends IBaseService<UserDemo, Integer> {
 
 	public JSONObject addInfo(UserDemo entity , HttpSession session);
+	
+	public JSONObject deleteOne(UserDemo entity); 
 }
