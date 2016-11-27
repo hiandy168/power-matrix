@@ -8,9 +8,9 @@
 		<result column="password" property="password" jdbcType="VARCHAR" />
 		<result column="id_number" property="idNumber" jdbcType="VARCHAR" />
 		<result column="sex" property="sex" jdbcType="INTEGER" />
-		<result column="birthday" property="birthday" jdbcType="DATE" />
+		<result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
 		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
-		<result column="email" property="email" jdbcType="INTEGER" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 	</resultMap>
 	
@@ -81,7 +81,7 @@
 				#{mobile,jdbcType=VARCHAR},
 			</if>
 			<if test="email != null">
-				#{email,jdbcType=INTEGER},
+				#{email,jdbcType=VARCHAR},
 			</if>
 			<if test="createTime != null">
 				#{createTime,jdbcType=TIMESTAMP},
@@ -112,7 +112,7 @@
 				mobile = #{mobile,jdbcType=VARCHAR},
 			</if>
 			<if test="email != null">
-				email = #{email,jdbcType=INTEGER},
+				email = #{email,jdbcType=VARCHAR},
 			</if>
 			<if test="createTime != null">
 				create_time = #{createTime,jdbcType=TIMESTAMP},

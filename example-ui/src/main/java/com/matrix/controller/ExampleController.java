@@ -46,37 +46,29 @@ public class ExampleController{
 	 */
 	@RequestMapping("addInfoPage")
 	public String toAddPage(HttpSession session){ 
-		
 		return "jsp/example/addExample"; 
 	}
 	
 	/**
-	 * @descriptions 添加一条信息到数据库，成功后跳转回添加页面
+	 * @descriptions 添加一条信息到数据库，成功后跳转回添加页面|并对密码做MD5加密处理
+	 * 
+	 * 页面传递到SpringMvc的时候会出现400错误，意味着参数类型与实体的不对应
+	 * 数据库中是Data类型故实体类中的字段也是Date类型，但页面传的是String类型
+	 * 所以才导致400错误。此时需要将Date类型的字段改成String类型此问题即可解决。
+	 * 且不会影响数据的插入。
 	 * 
 	 * @author Yangcl
 	 * @date 2016年6月13日-下午11:04:45
 	 * @version 1.0.0.1
 	 */
-	@RequestMapping("addInfo")
-	public String addInfo(UserDemo entity , ModelMap model , HttpSession session){ 
-//		entity.setFlag(1);
-//		UserInfo userInfo = (UserInfo) session.getAttribute("userInfo");
-//		entity.setCreateTime(new Date());
-//		entity.setCreateUserId( userInfo.getId() ); 
-//		entity.setUpdateTime(new Date());
-//		entity.setUpdateUserId(userInfo.getId()); 
-//		
-//		Integer count = companyService.insertSelective(entity);
-//		if(count == 1){
-//			model.put("status", true);
-//			model.put("msg", "数据插入成功！");
-//		}else{
-//			model.put("status", false);
-//			model.put("msg", "数据插入异常！");
-//		}
-		
-		return "jsp/example/addExample"; 
+	@RequestMapping(value = "addInfo", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject addInfo(UserDemo entity , HttpSession session){ 
+		return exampleService.addInfo(entity, session);  
 	}
+	
+	
+	
 	
 	
 	/**

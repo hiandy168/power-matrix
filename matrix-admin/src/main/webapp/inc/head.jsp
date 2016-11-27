@@ -3,7 +3,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>惠家有矩阵后台管理系统</title>
+    <title>能量矩阵后台</title>
 
     <link rel="stylesheet" href="${css}/style.default.css" type="text/css" />
 
@@ -23,6 +23,8 @@
 	<script type="text/javascript" src="${js}/plugins/jquery-ui.js"></script>
 	<script type="text/javascript" src="${js}/plugins/colorpicker.js" ></script>
 	<script type="text/javascript" src="${js}/plugins/jquery.alerts.js" ></script>
+	
+	<script type="text/javascript" src="${js}/datePicker/WdatePicker.js" ></script>
 	
 	<!-- ajax相关方法 jsonp等 -->
     <script type="text/javascript" src="${js}/utils/ajaxs.js"></script> 
