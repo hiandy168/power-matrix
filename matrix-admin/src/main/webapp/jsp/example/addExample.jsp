@@ -27,7 +27,14 @@
 		<%@ include file="/inc/left.jsp" %>
 
         <div class="centercontent">
-
+			<div class="pageheader notab">
+	            <h1 class="pagetitle">添加记录示例</h1>
+	                    <span class="pagedesc">
+	                        添加一条记录到test库的user_demo表中，页面路径：【jsp/example/addExample.jsp】
+	                    </span>
+	            <span style="display:none">jsp/example/addExample.jsp</span>
+	        </div>
+	        
 			<div id="validation" class="subcontent" style="display: block">
 				<form id="form-example" class="stdform" method="post" action="${basePath}example/addInfo.do">
 					<p>

@@ -146,7 +146,7 @@ public class ExampleController{
 	/**
 	 * @descriptions 实际样本-A
 	 *  
-	 * @date 2016年8月31日下午4:27:17
+	 * @date 2016年11月28日 上午10:32:24 
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
@@ -155,6 +155,34 @@ public class ExampleController{
 		return "jsp/example/reality/questionQuery";
 	}
 
+	/**
+	 * @description: 实际样本-B
+	 * 
+	 * @return
+	 * @author Yangcl 
+	 * @date 2016年11月28日 上午10:32:24 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "example_b")
+	public String example_b() { 
+		return "jsp/example/reality/validate";
+	}
+	// 实际样本-B 
+	@RequestMapping(value = "example_b1")
+	public String example_c(String key, HttpSession session) { 
+		if(key.equals("whosyourdaddy")){ 
+			session.setAttribute("kjt-key", "kjt-key"); // 写入session
+			return "redirect:/jsp/example/reality/index.jsp";    
+		}else{ 
+			return "redirect:/jsp/example/reality/validate.jsp";
+		} 
+	}
+	// 离开此页面
+	@RequestMapping(value = "leave")
+	public String leave(HttpSession session ) { 
+		session.setAttribute("kjt-key", null); // 删除session
+		return "redirect:/jsp/example/reality/validate.jsp";    
+	}
 }
 
 

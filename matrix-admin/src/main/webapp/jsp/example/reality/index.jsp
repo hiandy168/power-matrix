@@ -16,7 +16,7 @@
 	pageContext.setAttribute("resources", resources);
 	
 	if(session.getAttribute("kjt-key") == null){
-		String url = basePath + "jsp/sbkjt/validate.jsp";
+		String url = basePath + "jsp/example/reality/validate.jsp";
 		response.sendRedirect(url);
 		return;
 	}
@@ -28,115 +28,9 @@
 <head>
     <%@ include file="/inc/head.jsp" %>
     <script type="text/javascript">
-
-        function funcOne(){
-            var type_ = 'post';
-            var url_ = '${basePath}kjt/funcOne.do';
-            var data_ = {json:$("#json-str").val()};
-            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
-            if(obj.status == 'success'){
-                jAlert(obj.desc, '网页提示');
-            }
-        }
-
-        function funcTwo(){
-            var s = $("#s-time").val();
-            var e = $("#e-time").val();
-
-            var type_ = 'post';
-            var url_ = '${basePath}kjt/funcTwo.do';
-            var data_ = {
-                s:s,
-                e:e
-            };
-            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
-            if(obj.status == 'success'){
-                jAlert(obj.desc, '网页提示');
-            }
-        }
-
-        function funcThree(){
-            var remark_ = $("#remark").val();
-            var execTime_ = $("#exec-time").val();
-            var type_ = 'post';
-            var url_ = '${basePath}kjt/funcThree.do';
-            var data_ = {
-                remark:remark_,
-                execTime:execTime_
-            };
-            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
-            if(obj.status == 'success'){
-                jAlert(obj.desc, '网页提示');
-            }
-        }
-
-        function funcFour(){
-            jConfirm('你确定要批量置空跨境通商品编号吗？', '高危险操作！', function(flag) {
-                if(flag){
-                    var type_ = 'post';
-                    var url_ = '${basePath}kjt/funcFour.do';
-                    var data_ = {json:$("#json-str-p").val()};
-                    var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
-                    if(obj.status == 'success'){
-                        jAlert(obj.desc, '网页提示');
-                    }
-                }
-            });
-
-        }
-
-        function funcFive(){
-            var type_ = 'post';
-            var url_ = '${basePath}kjt/funcFive.do';
-            var data_ = {json:$("#json-str-e").val()};
-            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
-            if(obj.status == 'success'){
-                jAlert(obj.desc, '网页提示');
-            }
-        }
-
-        function funcSix(){
-            var type_ = 'post';
-            var url_ = '${basePath}kjt/funcSix.do';
-            var data_ = {json:$("#json-str-s").val()};
-            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
-            if(obj.status == 'success'){
-                jAlert(obj.desc, '网页提示');
-            }
-        }
-
-        function funcSeven(){
-            var msg = "商品批量上架";
-            var status_ = trim($("#seven-status").val());
-            if(status_ == "4497153900060004"){
-                msg = "商品批量下架";
-            }
-            if(status_.length == 0){
-                jAlert('上下架状态不得为空', '网页提示');
-                return;
-            }
-
-            jConfirm('你确定要批量【' + msg + '】吗？', '高危险操作！', function(flag) {
-                if(flag){
-                    var type_ = 'post';
-                    var url_ = '${basePath}kjt/funcSeven.do';
-                    var data_ = {
-                        json:$("#json-str-seven").val(),
-                        productStatus:status_,
-                        reason:$("#json-str-seven-reason").val()
-                    };
-                    var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
-                    if(obj.status == 'success'){
-                        jAlert(obj.desc, '网页提示');
-                    }
-                }
-            });
-        }
-
         function trim(str) {
             return str.replace(/(^\s+$)/g, "");
         }
-
     </script>
 </head>
 
@@ -149,11 +43,11 @@
         <div class="centercontent tables">
             <!--这个跳转页面的功能及跳转路径等等-->
             <div class="pageheader notab">
-                <h1 class="pagetitle">跨境通线上临时问题解决页面</h1>
+                <h1 class="pagetitle">实际样本-B 页面</h1>
                     <span class="pagedesc">
-                        这个页面 执行运营人员的线上临时需求，如：一批商品下架、一批商品上架等等。 | <a href="${basePath}kjt/leave.do" style="color: #ff0000">【离开此页面】</a>
+                        实际样本-B 所在的页面样例。 | <a href="${basePath}example/leave.do" style="color: #ff0000">【离开此页面】</a>
                     </span>
-                <span style="display:none">jsp/sbkjt/index.jsp</span>
+                <span style="display:none">jsp/example/reality/index.jsp</span>
             </div>
 
             <div id="contentwrapper" class="contentwrapper">

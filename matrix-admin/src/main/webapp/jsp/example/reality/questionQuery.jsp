@@ -122,11 +122,11 @@
 
     <div class="centercontent tables">
         <div class="pageheader notab">
-            <h1 class="pagetitle">日志查询与数据对比</h1>
+            <h1 class="pagetitle">实际样本-A 日志查询与数据对比 </h1>
                     <span class="pagedesc">
-                        定位跨境通问题订单
+                        定位问题订单
                     </span>
-            <span style="display:none">jsp/sbkjt/validate.jsp</span>
+            <span style="display:none">jsp/example/reality/validate.jsp</span>
         </div>
 
         <div id="contentwrapper" class="contentwrapper">
@@ -163,15 +163,15 @@
                                     </tr>
                                     <tr>
                                         <td class="tdright">订单编号</td>
-                                        <td class="tdleft">
+                                        <td class="tdleft"> 
                                             <input type="text" name="orderCode" placeholder="如：DD4555980102">
                                         </td>
                                         <td class="tdright">跨境商户</td>
                                         <td class="tdleft">
                                             <!-- <input type="text" name="sellerCode" placeholder="如：DD4555980102"> -->
                                             <select id="seven-status" name="sellerCode" class="radius3" style="margin-left:0px; width:370px">
-											    <option value="SF03KJT">跨境通</option>
-											    <option value="SF03100646">民生品粹</option>
+											    <option value="2222">跨境通</option>
+											    <option value="4444">民生品粹</option>
 											</select>
                                         </td>
                                     </tr>

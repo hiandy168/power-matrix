@@ -46,13 +46,13 @@
                     <span class="arrow"></span>
                     <ul id="formsub222222">
                         <li id="li-1">
-                            <a href="${basePath}kjt/query.do"  target="_blank">跨境通问题查询</a>
-                        </li>
+                            <a href="">二级菜单栏 - 1 </a>
+                        </li>  
                         <li id="li-2">
-                            <a href="${basePath}kjt/validate.do">跨境通临时问题维护</a>
+                            <a href="">二级菜单栏 - 2</a>
                         </li>
                         <li id="li-3">
-                            <a href="${basePath}seller/index.do">商户管理</a>
+                            <a href="">二级菜单栏 - 3</a>
                         </li>
                     </ul>
                 </li>
@@ -80,6 +80,10 @@
                         
                         <li id="li-8">
                         	<a href="${basePath}example/example_a.do">实际样本-A</a>
+                        </li>
+                        
+                        <li id="li-9">
+                        	<a href="${basePath}example/example_b.do">实际样本-B</a>
                         </li>
                     </ul>
                 </li>
