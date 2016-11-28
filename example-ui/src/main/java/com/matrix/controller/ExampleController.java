@@ -140,6 +140,20 @@ public class ExampleController{
 //		return userInfoService.editInfo(info);
 		return null;
 	}
+	
+	
+	
+	/**
+	 * @descriptions 实际样本-A
+	 *  
+	 * @date 2016年8月31日下午4:27:17
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "example_a")
+	public String example_a() { 
+		return "jsp/example/reality/questionQuery";
+	}
 
 }
 

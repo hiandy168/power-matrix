@@ -67,18 +67,19 @@
                         </li>
                         
                         <li id="li-5">
-                        	<a href="${basePath}example/pageFormExample.do">简单分页表单示例</a>
-                        </li>
-                        <li id="li-6">
                         	<a href="${basePath}example/ajaxFormExample.do">Ajax 分页示例</a>
                         </li>
                         
-                        <li id="li-7">
+                        <li id="li-6">
                         	<a href="${basePath}example/ajaxFormDialogExample.do">Ajax 分页+弹出窗体分页 示例</a>
                         </li>
 
-                        <li id="li-8">
+                        <li id="li-7">
                         	<a href="${basePath}example/alertExample.do">自定义 alert confirm note 示例</a>
+                        </li>
+                        
+                        <li id="li-8">
+                        	<a href="${basePath}example/example_a.do">实际样本-A</a>
                         </li>
                     </ul>
                 </li>
