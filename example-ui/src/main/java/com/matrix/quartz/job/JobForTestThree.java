@@ -17,16 +17,17 @@ import com.matrix.helper.WebHelper;
 public class JobForTestThree extends RootJob {
 
 	public void doExecute(JobExecutionContext context) {
+		String lockCode = "";
 		try {
-			String lockCode = WebHelper.getInstance().addLock(100 , "JobForTestThree");	// 分布式锁定
+			lockCode = WebHelper.getInstance().addLock(100 , "JobForTestThree");	// 分布式锁定
 			if (StringUtils.isNotBlank(lockCode)){
 				String rglist = "***************** 所属任务组：" + this.getConfig("example-ui.rglist");
 				System.out.println(this.getInfo(999990001 , "@ JobForTestThree.java is running" , rglist)); 
 			}else{
 				this.getLogger().logInfo(999990002, "【JobForTestThree】");   
-				WebHelper.getInstance().unLock(lockCode);
 			}
 		} catch (Exception e) {
+			WebHelper.getInstance().unLock(lockCode);
 			e.printStackTrace();
 		}
 	}

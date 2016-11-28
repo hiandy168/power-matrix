@@ -21,16 +21,17 @@ public class JobForTestOne extends RootJob {
 	private static Logger logger = Logger.getLogger(JobForTestOne.class);
 	
 	public void doExecute(JobExecutionContext context) {
+		String lockCode = "";
 		try {
-			String lockCode = WebHelper.getInstance().addLock(10 , "JobForTestOne");	// 分布式锁定
+			lockCode = WebHelper.getInstance().addLock(10 , "JobForTestOne");	// 分布式锁定
 			if (StringUtils.isNotBlank(lockCode)){
 				String rglist = "***************** 所属任务组：" + this.getConfig("example-ui.rglist");
 				System.out.println(this.getInfo(999990001 , "@ JobForTestOne.java is running" , rglist)); 
 			}else{
 				this.getLogger().logInfo(999990002, "【JobForTestOne】");   
-				WebHelper.getInstance().unLock(lockCode);
 			}
 		}catch (Exception e) {
+			WebHelper.getInstance().unLock(lockCode);
 			e.printStackTrace();
 		}
 	}
