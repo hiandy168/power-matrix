@@ -52,11 +52,11 @@ public class WebHelper extends BaseClass {
 	 * 加锁 该方法只能锁定一个编号
 	 * 
 	 * @param keys 
-	 * @param timeOutSeconds 过期秒数。
+	 * @param lifeSeconds 锁的生效时间单位为秒。
 	 * @return
 	 */
-	public String addLock(String keys, int timeOutSeconds) {
-		return addLock(timeOutSeconds, keys);
+	public String addLock(String keys, int lifeSeconds) {
+		return addLock(lifeSeconds, keys);
 	}
 
 	/**
@@ -64,11 +64,11 @@ public class WebHelper extends BaseClass {
 	 * 返回锁定的唯一编号 如果返回的是非空表示锁定成功 在业务逻辑执行完成后调用unlock解锁<br/>
 	 * 返回如果是空需要自行处理失败的消息
 	 * 
-	 * @param timeOutSeconds
+	 * @param lifeSeconds 设置这个锁的生效时间，单位为秒
 	 * @param keys
 	 * @return 返回非空表示锁定成功 否则表示锁定失败
 	 */
-	public String addLock(int timeOutSeconds, String... keys) {
+	public String addLock(int lifeSeconds, String... keys) {
 		String sReturn = "";
 		String sUid = genUuid();
 		boolean bFlagLocked = true;
@@ -76,7 +76,7 @@ public class WebHelper extends BaseClass {
 		for (String sKey : keys) {
 			if (bFlagLocked) {
 				try {
-					String outFlag = systemService.addLock(sKey, timeOutSeconds, sUid);
+					String outFlag = systemService.addLock(sKey, lifeSeconds, sUid);
 					if (!outFlag.equals("1")) {
 						bFlagLocked = false;
 					}

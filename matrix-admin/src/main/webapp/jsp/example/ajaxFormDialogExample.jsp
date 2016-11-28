@@ -199,24 +199,6 @@
 
                             <label>First Name4</label>
                             <span class="field"><input id="name4" type="text" name="name"  class="form-search"></span>
-
-                            <label>First Name4</label>
-                            <span class="field"><input id="name5" type="text" name="name"  class="form-search"></span>
-
-                            <label>First Name6</label>
-                            <span class="field"><input id="name6" type="text" name="name"  class="form-search"></span>
-                        </p>
-                        <p style="margin:5px 0px 0px 0px;">
-                            <label>First Name7</label>
-                            <span class="field"><input id="name7" type="text" name="name"  class="form-search"></span>
-
-                            <label>First Name8</label>
-                            <span class="field"><input id="name8" type="text" name="name"  class="form-search"></span>
-                        </p>
-                        <p style="margin:5px 0px 0px 0px;">
-                            <a href="" class="btn btn_orange btn_search radius50" style="float:right">
-                                <span>Search</span>
-                            </a>
                         </p>
                     </div>
 

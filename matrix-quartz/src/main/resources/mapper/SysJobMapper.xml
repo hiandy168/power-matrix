@@ -24,7 +24,7 @@
 	</select>
 	
 	<!-- 根据run_group_did找到可运行的定时任务列表 - Yangcl -->
-	<select id="findList" resultMap="BaseResultMap" parameterType="com.matrix.pojo.dto.SysJobDto">
+	<select id="findListByDto" resultMap="BaseResultMap" parameterType="com.matrix.pojo.dto.SysJobDto">
 		select 
 			* 
 		from 

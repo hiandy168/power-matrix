@@ -1,5 +1,5 @@
 /*
-SQLyog Ultimate v12.09 (64 bit)
+SQLyog Ultimate v11.11 (64 bit)
 MySQL - 5.5.28 : Database - matrixcore
 *********************************************************************
 */
@@ -9,16 +9,9 @@ MySQL - 5.5.28 : Database - matrixcore
 /*!40101 SET SQL_MODE=''*/;
 
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`matrixcore` /*!40100 DEFAULT CHARACTER SET utf8 */;
-
-USE `matrixcore`;
-
 /*Table structure for table `sys_error` */
-
-DROP TABLE IF EXISTS `sys_error`;
 
 CREATE TABLE `sys_error` (
   `zid` int(11) NOT NULL AUTO_INCREMENT,
@@ -37,8 +30,6 @@ CREATE TABLE `sys_error` (
 insert  into `sys_error`(`zid`,`uid`,`error_code`,`error_type`,`error_level`,`error_source`,`error_info`,`create_time`) values (158,'783f615144654f028eb3ce8eb0ecb543','sCode','sErrorType','20','sErrorSource','setErrorInfo #########askdfjielznnvf asdlkffjie asdli adsfw asdfoaisdf asdflaiefd asdf  asdfeadsdf','2016-06-21 22:36:40'),(159,'d79a307b31e64d7984a5f63200c8b3d6','sCode','sErrorType','20','sErrorSource','setErrorInfo #########TestException','2016-06-22 21:35:28');
 
 /*Table structure for table `sys_exectimer` */
-
-DROP TABLE IF EXISTS `sys_exectimer`;
 
 CREATE TABLE `sys_exectimer` (
   `zid` int(11) NOT NULL AUTO_INCREMENT,
@@ -60,8 +51,6 @@ CREATE TABLE `sys_exectimer` (
 
 /*Table structure for table `sys_job` */
 
-DROP TABLE IF EXISTS `sys_job`;
-
 CREATE TABLE `sys_job` (
   `zid` int(11) NOT NULL AUTO_INCREMENT,
   `uid` char(32) DEFAULT '',
@@ -78,13 +67,13 @@ CREATE TABLE `sys_job` (
   `set_extend` varchar(450) DEFAULT '' COMMENT '扩展设置',
   `next_time` datetime DEFAULT NULL COMMENT '下一次执行时间',
   PRIMARY KEY (`zid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='定时任务列表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='定时任务列表';
 
 /*Data for the table `sys_job` */
 
-/*Table structure for table `sys_job_exectimer` */
+insert  into `sys_job`(`zid`,`uid`,`job_title`,`job_class`,`job_triger`,`run_group_did`,`flag_enable`,`job_remark`,`begin_time`,`flag_parallel`,`max_exec_time`,`end_time`,`set_extend`,`next_time`) values (1,'ba3cb5b2a5a645a8bb4644df42db8881','定时任务测试类','com.matrix.quartz.job.JobForTestOne','2 * * * * ?','matrix-quartz-test',1,'','2016-11-28 17:13:02',1,0,'2016-11-28 17:13:02','','2016-11-28 17:14:02'),(2,'ba3cb5b2a5a645a8bb4644df42db8882','定时任务测试类','com.matrix.quartz.job.JobForTestTwo','2 * * * * ?','matrix-quartz-test',1,'','2016-11-28 17:13:02',1,0,'2016-11-28 17:13:02','','2016-11-28 17:14:02'),(3,'ba3cb5b2a5a645a8bb4644df42db8883','定时任务测试类','com.matrix.quartz.job.JobForTestThree','2 * * * * ?','matrix-quartz-test',1,'','2016-11-28 17:13:02',1,0,'2016-11-28 17:13:02','','2016-11-28 17:14:02');
 
-DROP TABLE IF EXISTS `sys_job_exectimer`;
+/*Table structure for table `sys_job_exectimer` */
 
 CREATE TABLE `sys_job_exectimer` (
   `zid` int(11) NOT NULL AUTO_INCREMENT,
@@ -106,8 +95,6 @@ CREATE TABLE `sys_job_exectimer` (
 
 /*Table structure for table `sys_lock` */
 
-DROP TABLE IF EXISTS `sys_lock`;
-
 CREATE TABLE `sys_lock` (
   `zid` int(8) NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `uid` varchar(32) NOT NULL COMMENT 'UUID',
@@ -119,13 +106,13 @@ CREATE TABLE `sys_lock` (
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`zid`),
   UNIQUE KEY `key_code_unique` (`keycode`)
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_lock` */
 
-/*Table structure for table `sys_webcode` */
+insert  into `sys_lock`(`zid`,`uid`,`keyid`,`keycode`,`creator`,`create_time`,`updator`,`update_time`) values (43,'dc9685e8b54a11e6bec300ffcd92a041','3a506eb51db44aaba4be6593557999ea','JobForTestOne',NULL,'2016-11-28 17:13:02',NULL,NULL),(44,'dc9724d7b54a11e6bec300ffcd92a041','fcd3a7c9558b4bd9bae30c908423e84b','JobForTestTwo',NULL,'2016-11-28 17:13:02',NULL,NULL),(45,'dc97a359b54a11e6bec300ffcd92a041','9cf40dc4547a433f9a232f99b814cc27','JobForTestThree',NULL,'2016-11-28 17:13:02',NULL,NULL);
 
-DROP TABLE IF EXISTS `sys_webcode`;
+/*Table structure for table `sys_webcode` */
 
 CREATE TABLE `sys_webcode` (
   `zid` int(11) NOT NULL AUTO_INCREMENT,
@@ -145,8 +132,6 @@ CREATE TABLE `sys_webcode` (
 insert  into `sys_webcode`(`zid`,`uid`,`code_start`,`date_apply`,`min_number`,`now_number`,`code_note`,`flag_date`) values (14,'75e615befb4a11e2ac71000c298b20fc','test','160419',100000,100002,'',1),(15,'77eaacbcfb5411e2ac71000c298b20fc','FS','130802',100000,100007,'',1),(16,'cbd34e62fb5711e2ac71000c298b20fc','FF','140414',100000,100013,'',1),(299,'d0e691ee37bc11e68984b8ee655812b8','fairy-','160621',100000,100030,'',1),(300,'f516a4106acc11e69f56b8ee655812b8','KCRL','160826',100000,100002,'',1);
 
 /* Procedure structure for procedure `proc_get_unique_code` */
-
-/*!50003 DROP PROCEDURE IF EXISTS  `proc_get_unique_code` */;
 
 DELIMITER $$
 
@@ -196,8 +181,6 @@ DELIMITER ;
 
 /* Procedure structure for procedure `proc_lock_or_unlock_somekey` */
 
-/*!50003 DROP PROCEDURE IF EXISTS  `proc_lock_or_unlock_somekey` */;
-
 DELIMITER $$
 
 /*!50003 CREATE DEFINER=`qhsy`@`%` PROCEDURE `proc_lock_or_unlock_somekey`(in somekey VARCHAR(1000),in keysplit VARCHAR(2),in timeoutsecond INT,in lockflag INT,in UUID VARCHAR(50))
@@ -205,7 +188,7 @@ BEGIN
 	
 	DECLARE i int DEFAULT 0;
 	DECLARE lockid VARCHAR(32) DEFAULT '';
-	DECLARE createTime VARCHAR(50) DEFAULT '';
+	DECLARE currentTime VARCHAR(50) DEFAULT '';
 	DECLARE lockCurrentKey VARCHAR(50) DEFAULT '';
 	DECLARE lockzid INT DEFAULT 0; 
 	DECLARE outFlag INT DEFAULT 2;
@@ -219,18 +202,18 @@ BEGIN
 	IF lockflag =1 THEN
 				
 				 
-				SET createTime=CONCAT(current_timestamp,'');
+				SET currentTime=CONCAT(current_timestamp,'');
 				
 				
 				
 				
-				DELETE FROM sys_lock where keycode=somekey and (UNIX_TIMESTAMP(createTime) - UNIX_TIMESTAMP(create_time))>timeoutsecond;
+				DELETE FROM sys_lock where keycode=somekey and (UNIX_TIMESTAMP(currentTime) - UNIX_TIMESTAMP(create_time))>timeoutsecond;
 				SELECT zid INTO lockzid from sys_lock where keycode=somekey;
 					IF FOUND_ROWS()<=0 THEN
 						
 							
 								INSERT INTO sys_lock (uid,keycode,keyid,create_time)
-									SELECT REPLACE(UUID(),'-',''),somekey,UUID,createTime ;
+									SELECT REPLACE(UUID(),'-',''),somekey,UUID,currentTime ;
 								IF ROW_COUNT()<=0 THEN
 									
 									set outFlag=2;
@@ -271,6 +254,5 @@ END */$$
 DELIMITER ;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

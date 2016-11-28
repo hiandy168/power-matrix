@@ -10,7 +10,7 @@
          <parameter property="uuid" mode="IN" jdbcType="VARCHAR"/>
      </parameterMap>
 	<select id="addLock" parameterMap="lockParam" statementType="CALLABLE" resultType="String">
-		CALL webcore.proc_lock_or_unlock_somekey(?,?,?,?,?)
+		CALL matrixcore.proc_lock_or_unlock_somekey(?,?,?,?,?)
 	</select>
 	
 	

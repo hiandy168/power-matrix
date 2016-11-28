@@ -7,7 +7,7 @@
 		<parameter property="code" mode="IN" jdbcType="VARCHAR" />
 	</parameterMap>
 	<select id="callUniqueCode" parameterMap="uniqueParam" statementType="CALLABLE" resultType="String">
-		call zapdata.proc_zw_getcode(?)
+		call matrixcore.proc_zw_getcode(?)
 	</select>
 	
 	
