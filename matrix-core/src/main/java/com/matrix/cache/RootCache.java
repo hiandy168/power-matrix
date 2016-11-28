@@ -111,7 +111,8 @@ public abstract class RootCache<K, V> extends BaseClass implements IBaseCache {
 	public V getValue(K k) {
 		if (!containsKey(k)) {
 			synchronized (this) {
-				getLogger().logInfo(0, "RootCache.java正在重新加载缓存信息：" + k.toString());
+//				getLogger().logInfo(0, "RootCache.java正在重新加载缓存信息：" + k.toString());
+				System.out.println("RootCache.java正在重新加载缓存信息：" + k.toString());
 				refresh();
 			}
 		}
@@ -125,12 +126,14 @@ public abstract class RootCache<K, V> extends BaseClass implements IBaseCache {
 					v = (V) cache.get(k).getObjectValue();
 				} else {
 					v = getOneSetCatch(k);  // 获取一个子类设置的缓存内容
-					getLogger().logInfo(0, this.getClass().getName() + " 开始设置自定义缓存 " + k.toString() + "  RootCatch.java 执行中");
+//					getLogger().logInfo(0, this.getClass().getName() + " 开始设置自定义缓存 " + k.toString() + "  RootCatch.java 执行中");
+					System.out.println(this.getClass().getName() + " 开始设置自定义缓存 " + k.toString() + "  RootCatch.java 执行中");
 					if (v != null && !containsKey(k)) {
 						addElement(k, v);
 					}
 					else if(v==null){
-						getLogger().logWarn(0 , this.getClass().getName() + " 未成功加载自定义缓存内容，其缓存定义可能为空 "+k.toString()  + "  RootCatch.java 执行中");
+//						getLogger().logWarn(0 , this.getClass().getName() + " 未成功加载自定义缓存内容，其缓存定义可能为空 "+k.toString()  + "  RootCatch.java 执行中");
+						System.out.println(this.getClass().getName() + " 未成功加载自定义缓存内容，其缓存定义可能为空 "+k.toString()  + "  RootCatch.java 执行中");
 					}
 				}
 			}

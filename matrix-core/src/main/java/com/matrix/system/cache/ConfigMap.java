@@ -7,7 +7,7 @@ import com.matrix.map.MStringMap;
 
  
 /**
- * @descriptions
+ * @descriptions 获取initclass[]中要实例化的类
  *
  * @author Yangcl 
  * @home https://github.com/PowerYangcl
