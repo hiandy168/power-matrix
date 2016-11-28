@@ -1,6 +1,7 @@
 package com.matrix.system.cache;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 import com.matrix.base.BaseClass;
 import com.matrix.util.IoUtil;
@@ -17,8 +18,10 @@ import com.matrix.util.IoUtil;
  */
 public class SysWorkDir extends BaseClass {
 
+	private static Logger logger = Logger.getLogger(SysWorkDir.class);
+	
 	/**
-	 * @description: 获取临时文件夹路径
+	 * @description: 获取系统全局配置文件(所有配置文件)所在的临时文件夹的路径
 	 * @alias upTempDir
 	 * 
 	 * @param sTempDir  临时目录的子文件夹
@@ -29,8 +32,9 @@ public class SysWorkDir extends BaseClass {
 	 */
 	public String getTempDir(String sTempDir) {
 		if (StringUtils.isEmpty(TopConst.CONST_TOP_DIR_TEMP)) {
-			TopConst.CONST_TOP_DIR_TEMP = this.getServerletPath("hjyzoos/hjydir/temp/");  // TODO 这个文件夹在哪儿？？？？？？？？
-			getLogger().logDebug(0, this.getClass().getName() + "  初始化全局的配置文件夹和系统信息：" + TopConst.CONST_TOP_DIR_TEMP);
+			TopConst.CONST_TOP_DIR_TEMP = this.getServerletPath("matrixzoos/dir/temp/");   
+//			logger.info(this.getClass().getName() + "  初始化全局的配置文件夹和系统信息：" + TopConst.CONST_TOP_DIR_TEMP);
+			System.out.println(this.getClass().getName() + "  初始化全局的配置文件夹和系统信息：" + TopConst.CONST_TOP_DIR_TEMP); 
 		}
 		String dirPath = TopConst.CONST_TOP_DIR_TEMP + sTempDir;
 		IoUtil.createDir(dirPath);
@@ -75,12 +79,11 @@ public class SysWorkDir extends BaseClass {
 		String path_ = "";
 		if (StringUtils.isBlank(TopConst.CONST_TOP_DIR_CUSTOM)) {
 			String sServerPath = this.getServerletPath("");
-			String sStart = "/power/matrix/";   // TODO    /etc/hjy/
+			String sStart = "/power/matrix/";   
 			// 判断如果是windows系统 则默认取系统所在路径的根目录
 			if (StringUtils.substring(sServerPath, 1, 2).equals(":")) {
 				sStart = sServerPath.substring(0, 2) + sStart;
 			}
-			// TODO 此处代码与原来不同，可能会出现异常
 			sServerPath = sServerPath.toLowerCase().replace(":", "_").replace("/", "_").replace("\\", "_").replace("__", "_");   
 			sStart = sStart + sServerPath;
 			TopConst.CONST_TOP_DIR_CUSTOM = sStart + "/";
@@ -107,7 +110,7 @@ public class SysWorkDir extends BaseClass {
 	public String getLocalConfigPath() {
 		String path = "";
 		String serverPath = getServerletPath("");
-		String start = "/power/matrix/local/";  // TODO  etc/hjy/local 
+		String start = "/power/matrix/local/";   
 		// 判断如果是windows系统 则默认取系统所在路径的根目录
 		if (StringUtils.substring(serverPath, 1, 2).equals(":")) {
 			start = serverPath.substring(0, 2) + start;

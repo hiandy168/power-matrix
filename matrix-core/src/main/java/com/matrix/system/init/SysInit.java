@@ -37,7 +37,7 @@ public class SysInit extends RootInit {
 
  
 	/**
-	 * @descriptions 初始化删除操作
+	 * @descriptions 初始化|删除系统全局配置文件(所有配置文件)所在的临时文件夹 temp
 	 *
 	 * @date 2016年11月15日 下午8:30:54
 	 * @author Yangcl 
@@ -54,7 +54,7 @@ public class SysInit extends RootInit {
 
  
 	/**
-	 * @descriptions 初始化顶级配置
+	 * @descriptions 初始化顶级配置|将config和info配置文件刷新到ecache中
 	 *
 	 * @date 2016年11月15日 下午8:30:54
 	 * @author Yangcl 
