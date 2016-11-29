@@ -19,15 +19,14 @@ import com.matrix.system.cache.SysWorkDir;
  * 	1.删除系统临时目录中的文件
  * 	2.将系统所有垂直子工程的config.xxx.properties和info.xxxx.properties文件从jar包中拷入系统临时目录并加载
  * 	3.依次调用config.xxx.properties中initclass类,完成垂直子工程的初始工作
- * @alias TopInit
  *
  *
- * @author Yangcl 
- * @home https://github.com/PowerYangcl
+ * @author 张海涛 
+ * @home 北京市朝阳区甜水园儿北里，宝儿爷楼下
  * @date 2016年11月15日 下午8:28:41
  * @version 1.0.1
  */
-public class SysInit extends RootInit {
+public class SystemInit extends RootInit {
 
 	public synchronized boolean onInit() {
 		initDelete();
@@ -61,20 +60,19 @@ public class SysInit extends RootInit {
 	 * @version 1.0.0.1
 	 */
 	private void initProps() {
-		topInitCache(PropConfig.Instance, new PropInfo());
+		rootInitCache(PropConfig.Instance, new PropInfo());
 	}
 
 	/**
-	 * @descriptions 初始化加载各个类
+	 * @descriptions 初始化加载各个类：clazz extends RootInit 
 	 *
-	 * @return
 	 * @date 2016年11月15日 下午9:34:56
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
 	private boolean initClass() {
 		boolean bFlagInit = true;
-		String sConfigName = "matrix-core.initclass";         // TODO 这个是啥意思？？？？？
+		String sConfigName = "matrix-core.initclass";   
 		MStringMap mStringMap = PropVisitor.getConfigMap(sConfigName);
 		for (String sClassName : mStringMap.values()) {
 			if (!StringUtils.isEmpty(sClassName)) {

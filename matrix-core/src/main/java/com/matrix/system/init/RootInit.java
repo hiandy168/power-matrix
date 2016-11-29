@@ -17,18 +17,18 @@ public abstract class RootInit extends BaseClass {
 		getLogger().logInfo(0, "初始化调用类 : " + this.getClass().getName());
 	}
  
-	
+ 
 	/**
-	 * @descriptions 初始化缓存
-	 *
-	 * @param baseCaches
-	 * @date 2016年11月13日 下午1:36:27
+	 * @description: 初始化配置文件中的信息到缓存中
+	 * 
+	 * @param subCaches
 	 * @author Yangcl 
+	 * @date 2016年11月29日 下午2:56:27 
 	 * @version 1.0.0.1
 	 */
-	public void topInitCache(IBaseCache... baseCaches) {
-		for (IBaseCache iCache : baseCaches) {
-			iCache.refresh();
+	public void rootInitCache(IBaseCache... subCaches) {
+		for (IBaseCache cache : subCaches) {
+			cache.refresh();
 		}
 	}
 

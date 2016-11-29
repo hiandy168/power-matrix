@@ -49,7 +49,7 @@ public class ServerletLoader {
 				SpringCtxUtil.setApplicationContext(wac);
 				TopConst.CONST_TOP_DIR_SERVLET = servletContext.getRealPath("");
 				servletContext.log(TopConst.CONST_TOP_DIR_SERVLET);
-				bFlagSuccess= new SysInit().init();
+				bFlagSuccess= new SystemInit().init();
 				servletContext.log("Power Matrix Initializing Finished");
 			} catch (RuntimeException ex) {
 				bFlagSuccess=false;
@@ -68,7 +68,7 @@ public class ServerletLoader {
 	 * @return
 	 */
 	public synchronized boolean destory(ServletContext servletContext) {
-		return new SysInit().destory();
+		return new SystemInit().destory();
 	}
 
 	/*
