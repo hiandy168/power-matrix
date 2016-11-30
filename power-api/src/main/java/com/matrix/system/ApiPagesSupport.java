@@ -1,5 +1,12 @@
 package com.matrix.system;
 
+import java.io.File;
+
+import org.apache.commons.io.FileUtils;
+
+import com.matrix.system.cache.SysWorkDir;
+import com.matrix.util.IoUtil;
+
 /**
  * @description: 为ApiSystemInit.java提供远程火力 
  * 
@@ -10,4 +17,29 @@ package com.matrix.system;
  */
 public class ApiPagesSupport {
 
+	public boolean supportInit(){
+		try {
+			String path = new SysWorkDir().getServerletPath("jsp/api_pages/");
+			IoUtil.createDir(path);
+			new IoUtil().copyDir("classpath*:META-INF/api_pages/" ,  "D:\\");     // path
+			System.out.println("power-api 加载完成"); 
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public boolean supportDelete(){
+		try {
+			String path = new SysWorkDir().getServerletPath("jsp/api_pages/");
+			FileUtils.deleteDirectory(new File(path));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
+	}
 }

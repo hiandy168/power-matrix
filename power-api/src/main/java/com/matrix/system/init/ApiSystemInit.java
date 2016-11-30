@@ -1,5 +1,7 @@
 package com.matrix.system.init;
 
+import com.matrix.system.ApiPagesSupport;
+
 /**
  * @description: 复制api_pages下的资源到jsp中 
  * 
@@ -11,11 +13,11 @@ package com.matrix.system.init;
 public class ApiSystemInit extends RootInit {
 
 	public boolean onInit() {
-		return false;
+		return new ApiPagesSupport().supportInit();
 	}
 
 	public boolean onDestory() {
-		return false;
+		return new ApiPagesSupport().supportDelete();
 	}
 
 }
