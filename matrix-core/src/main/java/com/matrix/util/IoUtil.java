@@ -154,12 +154,12 @@ public class IoUtil {
         } catch (IOException e) {  
             e.printStackTrace();  
         }finally{  
-                try {  
-                    if(br!=null)  br.close();  
-                    if(ps!=null)  ps.close();  
-                } catch (IOException e) {  
-                    e.printStackTrace();  
-                }  
+            try {  
+                if(br!=null)  br.close();  
+                if(ps!=null)  ps.close();  
+            } catch (IOException e) {  
+                e.printStackTrace();  
+            }  
         }  
     }
 	
