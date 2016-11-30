@@ -25,3 +25,9 @@
 /matrix-admin/.settings/
 /matrix-admin/.project 
 /matrix-admin/.classpath
+
+
+/power-api/target/
+/power-api/.settings/
+/power-api/.project 
+/power-api/.classpath
