@@ -1,4 +1,4 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="zh-cn">
     <head>
@@ -13,13 +13,13 @@
         <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
 
-        <link href="../api_pages/css/bootthree/bootstrap.min.css" rel="stylesheet">
-        <link href="../api_pages/css/w.css" rel="stylesheet">
-        <link href="../api_pages/css/grumble/grumble.min.css" rel="stylesheet">
+        <link href="../jsp/api_pages/css/bootthree/bootstrap.min.css" rel="stylesheet">
+        <link href="../jsp/api_pages/css/w.css" rel="stylesheet">
+        <link href="../jsp/api_pages/css/grumble/grumble.min.css" rel="stylesheet">
         
-     	<script src="../api_pages/js/jquery-1.10.2.js"></script>
-		<script src="../api_pages/js/bootthree/bootstrap.min.js"></script>
-		<script src="../api_pages/js/grumble/jquery.grumble.min.js"></script>
+     	<script src="../jsp/api_pages/js/jquery-1.10.2.js"></script>
+		<script src="../jsp/api_pages/js/bootthree/bootstrap.min.js"></script>
+		<script src="../jsp/api_pages/js/grumble/jquery.grumble.min.js"></script>
         
 
         <style>
