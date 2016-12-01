@@ -101,8 +101,6 @@ public class IoUtil {
 	 * @date 2016年11月30日 下午10:01:42
 	 * @author Yangcl 
 	 * @version 1.0.0.1
-	 * @throws IOException 
-	 * @throws URISyntaxException 
 	 */
 	public void copyDir(String sources, String target) throws IOException, URISyntaxException {  
 		target = StringUtils.substringBefore(target, "api_pages/");
