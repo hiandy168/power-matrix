@@ -1,6 +1,7 @@
 package com.matrix.util;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,6 +10,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -84,10 +86,7 @@ public class IoUtil {
 				String sUrlString = StringUtils.substringAfter(r.getURI().toString(), sKeyName);
 				InputStream inStream = r.getInputStream(); // 读入原文件
 				new File(sToPath + sUrlString).getParentFile().mkdirs();
-				FileOutputStream fs = new FileOutputStream(sToPath + sUrlString);
-				IOUtils.copy(inStream, fs);
-				fs.flush();
-				fs.close();
+				this.fileCopy(inStream , sToPath + sUrlString); 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -106,62 +105,38 @@ public class IoUtil {
 	 * @throws URISyntaxException 
 	 */
 	public void copyDir(String sources, String target) throws IOException, URISyntaxException {  
+		target = StringUtils.substringBefore(target, "api_pages/");
 		Resource[] resources = upResources(sources);
-		File file1 = null;  
-		FileInputStream fis = null;
+		File mdir = null;
 		for (Resource r : resources) {
 			String path = StringUtils.substringAfter(r.getURI().toString(), "jar:file:/");
 			String jarName = path.split("!")[0];
 			JarFile jar = new JarFile(jarName);
 			Enumeration<JarEntry>  ens = jar.entries();
 			while(ens.hasMoreElements()){
-				JarEntry e = ens.nextElement();
-				if(e.getName().equals("META-INF/api_pages/")){
-					InputStream input = jar.getInputStream(e);
-//					fis = new FileInputStream(input);
+				JarEntry e = ens.nextElement(); 
+				if(StringUtils.startsWith(e.getName(), "META-INF/api_pages/")){
+					if(e.isDirectory()){
+						mdir = new File(target + StringUtils.substringAfter(e.getName(), "META-INF/")); 
+						if(!mdir.exists()){
+							mdir.mkdirs();
+						}
+					}else{
+						InputStream input = jar.getInputStream(e);
+						this.fileCopy(input, target + StringUtils.substringAfter(e.getName(), "META-INF/")); 
+					}
 				}
 			}
 		}
-		
-        File[] fs=file1.listFiles();  
-        File file2=new File(target);  
-        if(!file2.exists()){  
-            file2.mkdirs();  
-        }  
-        for (File f : fs) {  
-            if(f.isFile()){  
-                this.fileCopy(f.getPath(),target+"\\"+f.getName()); //调用文件拷贝的方法  
-            }else if(f.isDirectory()){  
-            	copyDir(f.getPath(),target+"\\"+f.getName());  
-            }  
-        }  
     }
 	
-	private void fileCopy(String src, String des) {  
-        BufferedReader br=null;  
-        PrintStream ps=null;  
-        try {  
-            br=new BufferedReader(new InputStreamReader(new FileInputStream(src)));  
-            ps=new PrintStream(new FileOutputStream(des));  
-            String s=null;  
-            while((s=br.readLine())!=null){  
-                ps.println(s);  
-                ps.flush();  
-            }  
-              
-        } catch (FileNotFoundException e) {  
-            e.printStackTrace();  
-        } catch (IOException e) {  
-            e.printStackTrace();  
-        }finally{  
-            try {  
-                if(br!=null)  br.close();  
-                if(ps!=null)  ps.close();  
-            } catch (IOException e) {  
-                e.printStackTrace();  
-            }  
-        }  
-    }
+	private void fileCopy(InputStream input, String target_) throws IOException{
+		File target = new File(target_);
+		FileOutputStream fs = new FileOutputStream(target);
+		IOUtils.copy(input, fs);
+		fs.flush();
+		fs.close();
+	}
 	
 }
 

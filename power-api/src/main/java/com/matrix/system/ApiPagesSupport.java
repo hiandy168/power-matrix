@@ -21,7 +21,7 @@ public class ApiPagesSupport {
 		try {
 			String path = new SysWorkDir().getServerletPath("jsp/api_pages/");
 			IoUtil.createDir(path);
-			new IoUtil().copyDir("classpath*:META-INF/api_pages/" ,  "D:\\");     // path
+			new IoUtil().copyDir("classpath*:META-INF/api_pages/" ,  path);    
 			System.out.println("power-api 加载完成"); 
 		} catch (Exception e) {
 			e.printStackTrace();
