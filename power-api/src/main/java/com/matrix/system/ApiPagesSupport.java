@@ -20,7 +20,7 @@ public class ApiPagesSupport {
 	public boolean supportInit(){
 		try {
 			String path = new SysWorkDir().getServerletPath("jsp/api_pages/");
-			FileUtils.deleteDirectory(new File(path));
+//			FileUtils.deleteDirectory(new File(path));
 			IoUtil.createDir(path);
 			new IoUtil().copyDir("classpath*:META-INF/api_pages/" ,  path);    
 			System.out.println("power-api 加载完成"); 

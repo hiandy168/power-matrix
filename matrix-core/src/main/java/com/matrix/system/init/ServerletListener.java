@@ -16,23 +16,17 @@ public class ServerletListener extends ServerletLoader implements ServletContext
 
 	private ServerletLoader contextLoader;
 
-	public void contextDestroyed(ServletContextEvent event) {
-		this.contextLoader.destory(event.getServletContext());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.servlet.ServletContextListener#contextInitialized(javax.servlet
-	 * .ServletContextEvent)
-	 */
 	public void contextInitialized(ServletContextEvent event) {
 		if (this.contextLoader == null) {
 			this.contextLoader = this;
 		}
 		this.contextLoader.init(event.getServletContext());
 	}
+	
+	public void contextDestroyed(ServletContextEvent event) {
+		this.contextLoader.destory(event.getServletContext());
+	}
+
 }
 
 
