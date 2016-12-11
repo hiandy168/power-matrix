@@ -10,11 +10,10 @@
 		<module>matrix-core</module>
 		<module>matrix-admin</module>
 		<module>matrix-quartz</module> 
-		<!--<module>matrix-cache</module>-->
 		<!--<module>matrix-session</module>-->
 		<!--<module>matrix-jms</module> -->
 		<module>power-api</module> 
-		<!--<module>power-redis</module>-->
+		<module>power-cache</module>
 		<!--<module>power-picture</module>-->
 		<!--<module>power-open-api</module> -->
 		<module>example-ui</module>
