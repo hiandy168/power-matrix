@@ -14,15 +14,21 @@
 	<url>https://github.com/PowerYangcl</url>
 	
 	<dependencies> 
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.power-matrix</groupId>
 			<artifactId>example-ui</artifactId>
 			<version>${project.version}</version>
-		</dependency> 
+		</dependency>  -->
+		
+		<!-- <dependency>
+			<groupId>com.power-matrix</groupId>
+			<artifactId>power-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>  -->
 		
 		<dependency>
 			<groupId>com.power-matrix</groupId>
-			<artifactId>power-api</artifactId>
+			<artifactId>power-cache</artifactId>
 			<version>${project.version}</version>
 		</dependency> 
 		

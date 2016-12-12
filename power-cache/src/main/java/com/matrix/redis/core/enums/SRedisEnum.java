@@ -9,5 +9,5 @@ package com.matrix.redis.core.enums;
  * @version 1.0.1
  */
 public enum SRedisEnum {
-
+	Test
 }
