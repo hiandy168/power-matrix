@@ -14,11 +14,11 @@
 	<url>https://github.com/PowerYangcl</url>
 	
 	<dependencies> 
-		<!-- <dependency>
+		<dependency>
 			<groupId>com.power-matrix</groupId>
 			<artifactId>example-ui</artifactId>
 			<version>${project.version}</version>
-		</dependency>  -->
+		</dependency> 
 		
 		<!-- <dependency>
 			<groupId>com.power-matrix</groupId>
@@ -32,11 +32,11 @@
 			<version>${project.version}</version>
 		</dependency> 
 		
-		<!-- <dependency>
+		<dependency>
 			<groupId>com.power-matrix</groupId>
 			<artifactId>matrix-quartz</artifactId>
 			<version>${project.version}</version>
-		</dependency>  -->
+		</dependency> 
 	</dependencies>
 	
 	<build>
