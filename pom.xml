@@ -17,6 +17,7 @@
 		<!--<module>power-picture</module>-->
 		<!--<module>power-open-api</module> -->
 		<module>example-ui</module>
+		<module>center-manager</module>
     </modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
