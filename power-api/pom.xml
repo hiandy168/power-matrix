@@ -15,7 +15,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.power-matrix</groupId>
-			<artifactId>matrix-quartz</artifactId>
+			<!-- <artifactId>matrix-quartz</artifactId> -->
+			<artifactId>matrix-core</artifactId>
 			<version>${project.version}</version>
 		</dependency> 
 	</dependencies>
