@@ -41,7 +41,10 @@
 
 
 
-
+/center-manager/target/
+/center-manager/.settings/
+/center-manager/.project 
+/center-manager/.classpath 
 
 
 
