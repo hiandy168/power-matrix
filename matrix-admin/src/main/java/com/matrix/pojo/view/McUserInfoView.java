@@ -1,4 +1,4 @@
-package com.matrix.pojo.model;
+package com.matrix.pojo.view;
 
 /**
  * @description: 多表联合视图
@@ -8,6 +8,6 @@ package com.matrix.pojo.model;
  * @date 2016年11月25日 下午3:05:01 
  * @version 1.0.0
  */
-public class McUserInfoModel {
+public class McUserInfoView {
 
 }
