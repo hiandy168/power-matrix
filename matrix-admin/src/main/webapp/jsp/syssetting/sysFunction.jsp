@@ -6,6 +6,10 @@
 	<%@ include file="/inc/head.jsp" %>
 	
 	<link rel="stylesheet" href="${css}/ztree/zTreeStyle.css" type="text/css" />
+	
+	<script type="text/javascript" src="${js}/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="${js}/utils/ajaxs.js"></script>
+    
 	<script type="text/javascript" src="${js}/ztree/jquery.ztree.all.js"></script>
     <script type="text/javascript" src="${js}/system/sys_function.js"></script>
 
@@ -20,11 +24,17 @@
             border: solid #78CE07 2px;
             height: 100%;
             width: 30%;
-            padding-top: 300px;
-            padding-bottom: 300px;
             margin-right: 400px;
             float: right;
             position:relative;
+        }
+        .right-padding{
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .right-size{
+            height: 25px;
+            width: 200px;
         }
     </style>
 
@@ -34,7 +44,7 @@
             var jsonObj = JSON.parse('${jsonTree}');
             if(jsonObj.status == 'success'){
                 var zNodes = jsonObj.list;
-                $.fn.zTree.init($("#sys-tree"), setting, zNodes);
+                $.fn.zTree.init($("#sys-tree"), setting, zNodes2);
                 $("#callbackTrigger").bind("change", {}, setTrigger);
             }
 
@@ -80,7 +90,9 @@
                         </div>
 
                         <div class="tree-right">
+                            <form id="tree-node-edit"  action="">
 
+                            </form>
                         </div>
                     </div>
                 </div>

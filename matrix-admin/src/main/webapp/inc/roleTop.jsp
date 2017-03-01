@@ -42,7 +42,7 @@
                             </li>
                             <li>
                                 <%-- TODO 非开发权限人员此处需要隐藏！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！--%>
-                                <a href="${basePath}sysfunction/showview.do">功能树维护</a>
+                                <a href="${basePath}sysrole/tree_page_index.do">功能树维护</a>
                             </li>
                             <li>
                                 <a href="">帮助</a>

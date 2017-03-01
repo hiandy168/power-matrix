@@ -8,11 +8,11 @@
                     <ul id="example">
                         <li class="current">
                         	<!-- 必须添加 $ { basePath } -->
-                        	<a href="${basePath}sysfunction/showview.do">导航与菜单维护</a>
+                        	<a href="${basePath}sysrole/tree_page_index.do">导航与菜单维护</a>
                         </li>
                         
                         <li class="gallery">
-                        	<a href="${basePath}example/pageFormExample.do">返回主页</a>
+                        	<a href="">返回主页</a>
                         </li>
                     </ul>
                 </li>
