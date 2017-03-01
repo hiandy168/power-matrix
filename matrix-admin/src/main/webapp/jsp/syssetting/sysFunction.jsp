@@ -7,7 +7,7 @@
 	
 	<link rel="stylesheet" href="${css}/ztree/zTreeStyle.css" type="text/css" />
 	
-	<script type="text/javascript" src="${js}/jquery-1.9.1.js"></script>
+	<%-- <script type="text/javascript" src="${js}/jquery-1.10.2.js"></script> --%>
     <script type="text/javascript" src="${js}/utils/ajaxs.js"></script>
     
 	<script type="text/javascript" src="${js}/ztree/jquery.ztree.all.js"></script>
@@ -44,7 +44,7 @@
             var jsonObj = JSON.parse('${jsonTree}');
             if(jsonObj.status == 'success'){
                 var zNodes = jsonObj.list;
-                $.fn.zTree.init($("#sys-tree"), setting, zNodes2);
+                $.fn.zTree.init($("#sys-tree"), setting, zNodes);
                 $("#callbackTrigger").bind("change", {}, setTrigger);
             }
 

@@ -79,7 +79,20 @@ public class SystemRoleController {
 		return mcSysFunctionService.addInfo(e, session);	
 	}
 	
-	
+	/**
+	 * @description: 更新一个节点到数据库
+	 * 
+	 * @param e
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年3月1日 下午5:33:30 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "edit_tree_node", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject editTreeNode(McSysFunction e , HttpSession session){
+		return mcSysFunctionService.editInfo(e, session);	
+	}
 }
 
 

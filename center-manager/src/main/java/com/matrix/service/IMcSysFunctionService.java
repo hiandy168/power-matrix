@@ -10,4 +10,6 @@ import com.matrix.pojo.entity.McSysFunction;
 public interface IMcSysFunctionService  extends IBaseService<McSysFunction, Integer> {
 
 	public JSONObject addInfo(McSysFunction entity , HttpSession session);
+	
+	public JSONObject editInfo(McSysFunction entity , HttpSession session);
 }

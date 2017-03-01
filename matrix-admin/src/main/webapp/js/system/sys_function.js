@@ -131,55 +131,55 @@
                     break;
             }
         },
+        
         /**
-         * 编辑商户节点      TODO 2016-06-20      需要计算同层所有节点，然后得出顺序码      |  添加是否成功尚未测试
+         * 编辑商户节点 
+         * 
          * @param event
          * @param treeNode
          */
         firstLevelEdit:function(event , treeNode){
             $($("#tree-node-edit")[0].childNodes).remove();
 
-            var html_ = '';
             var type_ = 'post';
-            var url_ = 'list_company.do';
-            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , null));
-            if(obj.status == 'success'){
-                url_ = 'add_info.do';  // url 重新赋值
-                var options = obj.list;
-                html_ = '<select name="companyId" class="uniformselect " style="height: 30px; width: 200px;margin-bottom: 10px;">';
-                html_ += '<option value="">请选择商户</option>';
-                for(var i = 0 ; i < options.length ; i ++){
-                    html_ += '<option value="' + options[i].id + '">' + options[i].companyName + '</option>';
-                }
-                html_ += '</select><br/>';
-                html_ += '<input type="text" name="name" class="smallinput " placeholder="功能名称" style="width: 190px; margin-bottom: 10px;">';
-                html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;"></textarea><br/>';
-                html_ += '<input type="hidden" name="parent_id" value="' + treeNode.parentId +'" >';
-
-
-                var preNode = treeNode.getPreNode();              // TODO 2016-06-20  seqnum  需要计算同层所有节点，然后得出顺序码
-
-                var aa = treeNode.getIndex();
-                var ab = treeNode.getNextNode();
-                var ac = treeNode.getParentNode();
-                var ad = treeNode.getPreNode();
-
-                html_ += '<input type="hidden" name="seqnum" value="' + treeNode.parentId +'" >';
-
-
-
-                html_ += '<input type="hidden" name="nav_type"  value="0" >';
-                html_ += '<input type="hidden" name="style_class" value="" >';
-                html_ += '<input type="hidden" name="style_key" value="" >';
-                html_ += '<input type="hidden" name="func_url" value="" >';
-
-                html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
+            var url_ = ''; 
+            
+            if(treeNode.name == "新建结点1"){
+            	url_ = 'add_tree_node.do';
+            	var html_ = '<input type="text" name="name" class="smallinput " placeholder="功能名称" style="width: 190px; margin-bottom: 10px;">';
+            	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;"></textarea><br/>';
+            	html_ += '<input type="hidden" name="parentId" value="' + treeNode.parentId +'" >';
+            	
+            	var preNode = treeNode.getPreNode();   // seqnum  需要计算同层所有节点，然后得出顺序码
+            	var seqnum_ = 1;
+            	if(preNode != null){
+            		seqnum_ = preNode.seqnum + 1;
+            	} 
+            	html_ += '<input type="hidden" name="seqnum" value="' + seqnum_ +'" >';
+            	html_ += '<input type="hidden" name="navType"  value="0" >';
+            	html_ += '<input type="hidden" name="styleClass" value="" >';
+            	html_ += '<input type="hidden" name="styleKey" value="" >';
+            	html_ += '<input type="hidden" name="funcUrl" value="" >';  
+            	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
             }else{
+            	url_ = 'edit_tree_node.do';
+            	var html_ = '<input type="text" name="name" class="smallinput " style="width: 190px; margin-bottom: 10px;" value="' + treeNode.name + '" >';
+            	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;">' + treeNode.remark + '</textarea><br/>';
+            	html_ += '<input type="hidden" name="id" value="' + treeNode.id +'" >'; 
+            	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
             }
-
+            
+            
+            
 
             $("#tree-node-edit").append(html_);
         },
+        
+      /*var aa = treeNode.getIndex();
+        var ab = treeNode.getNextNode();
+        var ac = treeNode.getParentNode();
+        var ad = treeNode.getPreNode();*/
+        
         /**
          * 编辑导航栏
          * @param event
@@ -221,7 +221,7 @@
 
         },
         /**
-         * 添加一个节点到数据库     TODO 2016-06-20
+         * 添加一个节点到数据库  
          * @param url_
          */
         addData:function(url_){

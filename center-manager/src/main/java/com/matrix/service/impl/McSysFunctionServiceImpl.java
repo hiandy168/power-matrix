@@ -27,8 +27,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	@Override
 	public JSONObject addInfo(McSysFunction entity, HttpSession session) {
 		JSONObject result = new JSONObject();
-		if(StringUtils.isNotBlank(entity.getName()) && StringUtils.isNotBlank(entity.getParentId()) && 
-										StringUtils.isNotBlank(entity.getMcSellerCompanyId().toString())){
+		if(StringUtils.isNotBlank(entity.getName()) && StringUtils.isNotBlank(entity.getParentId()) ){
 			McUserInfo userInfo = (McUserInfo) session.getAttribute("userInfo");
 			entity.setCreateTime(new Date());
 			entity.setUpdateTime(new Date());
@@ -44,7 +43,31 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 			}
 		}else{
 			result.put("status", "error");
-			result.put("msg", "商户|功能名称|父节点不能为空!");
+			result.put("msg", "功能名称|父节点不能为空!");
+		}
+		
+		return result;
+	}
+
+
+	@Override
+	public JSONObject editInfo(McSysFunction entity, HttpSession session) {
+		JSONObject result = new JSONObject();
+		if(StringUtils.isNotBlank(entity.getName())){
+			McUserInfo userInfo = (McUserInfo) session.getAttribute("userInfo");
+			entity.setUpdateTime(new Date());
+			entity.setUpdateUserId(userInfo.getId());
+			int count = dao.updateSelective(entity);
+			if(count == 1){
+				result.put("status", "success");
+				result.put("msg", "修改成功!");
+			}else{
+				result.put("status", "error");
+				result.put("msg", "修改失败!");
+			}
+		}else{
+			result.put("status", "error");
+			result.put("msg", "功能名称不能为空!");
 		}
 		
 		return result;
