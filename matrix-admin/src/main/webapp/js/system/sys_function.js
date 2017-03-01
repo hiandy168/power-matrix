@@ -109,6 +109,7 @@
 
             return true;
         },
+        
         ztOnClick:function(event, treeId, treeNode, clickFlag){
             var level_ = treeNode.level;
             switch(level_){
@@ -140,10 +141,8 @@
          */
         firstLevelEdit:function(event , treeNode){
             $($("#tree-node-edit")[0].childNodes).remove();
-
             var type_ = 'post';
             var url_ = ''; 
-            
             if(treeNode.name == "新建结点1"){
             	url_ = 'add_tree_node.do';
             	var html_ = '<input type="text" name="name" class="smallinput " placeholder="功能名称" style="width: 190px; margin-bottom: 10px;">';
@@ -168,10 +167,6 @@
             	html_ += '<input type="hidden" name="id" value="' + treeNode.id +'" >'; 
             	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
             }
-            
-            
-            
-
             $("#tree-node-edit").append(html_);
         },
         
