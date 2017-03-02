@@ -12,4 +12,7 @@ public interface IMcSysFunctionService  extends IBaseService<McSysFunction, Inte
 	public JSONObject addInfo(McSysFunction entity , HttpSession session);
 	
 	public JSONObject editInfo(McSysFunction entity , HttpSession session);
+
+	public JSONObject updateTreeNodes(String ustring, HttpSession session); 
+	
 }

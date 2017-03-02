@@ -93,6 +93,21 @@ public class SystemRoleController {
 	public JSONObject editTreeNode(McSysFunction e , HttpSession session){
 		return mcSysFunctionService.editInfo(e, session);	
 	}
+	
+	/**
+	 * @description: 更新拖拽后的同层节点
+	 * 
+	 * @param ustring id@seqnum,id@seqnum 
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年3月2日 下午5:33:07 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "update_tree_nodes", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject updateTreeNodes(String ustring , HttpSession session){
+		return mcSysFunctionService.updateTreeNodes(ustring, session);	
+	}
 }
 
 

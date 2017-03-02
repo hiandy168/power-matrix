@@ -1,36 +1,44 @@
 
     var tfunc = {
         /**
-         * function for edit.drag
+         * 允许移动到目标节点前面 即可以将同层最后一个节点放到同层的第一个。
          * @param treeId
          * @param nodes
          * @param targetNode
          * @returns {boolean}
          */
         dropPrev:function(treeId, nodes, targetNode) {
-            console.log("dropPrev");
-            return true;
+            if(nodes[0].parentId == targetNode.parentId){  // 只允许同层节点之间进行拖拽
+            	return true;
+            }else{
+            	return false;
+            }
         },
+        
         /**
-         * function for edit.drag
+         * 设置是否允许移动到同层节点的最后一个节点的后面 从而使被移动的节点成为最后一个节点
          * @param treeId
          * @param nodes
          * @param targetNode
          * @returns {boolean}
          */
         dropNext:function(treeId, nodes, targetNode) {
-            console.log("dropNext");
-            return true;
+//            console.log("dropNext");
+            if(nodes[0].parentId == targetNode.parentId){  // 只允许同层节点之间进行拖拽
+            	return true;
+            }else{
+            	return false;
+            } 
         },
         /**
-         * function for edit.drag
+         *  拖拽到目标节点时 设置是否允许成为目标节点的子节点。
          * @param treeId
          * @param nodes
          * @param targetNode
          * @returns {boolean}
          */
         dropInner:function(treeId, nodes, targetNode) {
-            console.log("dropInner");
+//            console.log("dropInner");
             return false;
         },
 
@@ -68,7 +76,7 @@
                         id:(100 + newCount),
                         pId:treeNode.id,
                         flag:3,  // 新增节点标记
-                        name:"新建结点" + (newCount++)
+                        name:"新建结点"  // + (newCount++)
                     };
                     zTree.addNodes(treeNode ,  new_);
                     return false;
@@ -90,7 +98,9 @@
             return true;
         },
         beforeDrop:function(treeId, treeNodes, targetNode, moveType, isCopy){
-
+//        	console.log("节点拖拽结束前：" + treeNodes[0].name + "|" + treeNodes[0].getIndex())
+//        	console.log("节点拖拽结束前：" + targetNode.name + "|" + targetNode.getIndex())
+        	
             return true;
         },
         beforeDragOpen:function(treeId, treeNode){
@@ -101,10 +111,40 @@
 
             return true;
         },
-        onDrop:function(event, treeId, treeNodes, targetNode, moveType, isCopy){
-
+        
+        /**
+         * 节点拖拽结束后|此处涉及到批量更新操作|同层节点之间的批量更新
+         * @returns {Boolean}
+         */
+        onDrop:function(event, treeId, treeNodes, targetNode, moveType, isCopy){  
+        	if(treeNodes[0].name == "新建结点"){
+        		return false;
+        	}
+        	
+        	var ustring = ""; // id@seqnum,id@seqnum   准备交给服务器解析处理的字符串
+        	var uparr = new Array();			// 保存有效的更新信息
+        	var parent = treeNodes[0].getParentNode();
+        	var arr = parent.children;
+        	if(arr.length > 0){
+        		for(var i = 0 ; i < arr.length ; i ++){
+        			if(arr[i].name != "新建结点"){
+        				uparr.push(arr[i]);
+        			}
+        		}
+        		if(uparr.length != 0){
+        			for(var k = 0 ; k < uparr.length ; k ++){
+        				var node = uparr[k];
+        				var seqnum = parseInt(k) + 1;  // node.getIndex() 会受到新建节点的影响造成seqnum值不准。
+        				ustring += node.id + "@" + seqnum + ","  ;
+        			}
+        			ustring = ustring.substring(0, ustring.length-1); 
+//                    var obj = JSON.parse();
+                    ajaxs.sendAjax('post' , 'update_tree_nodes.do' , {ustring:ustring})
+        		}
+        	}
             return true;
         },
+        
         onExpand:function(event, treeId, treeNode){
 
             return true;
@@ -143,7 +183,7 @@
             $($("#tree-node-edit")[0].childNodes).remove();
             var type_ = 'post';
             var url_ = ''; 
-            if(treeNode.name == "新建结点1"){
+            if(treeNode.name == "新建结点"){
             	url_ = 'add_tree_node.do';
             	var html_ = '<input type="text" name="name" class="smallinput " placeholder="功能名称" style="width: 190px; margin-bottom: 10px;">';
             	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;"></textarea><br/>';
@@ -238,9 +278,9 @@
         edit: {
             drag: {
                 autoExpandTrigger: true, // 拖拽时父节点自动展开是否触发 callback.onExpand 事件回调函数
-                prev: tfunc.dropPrev, //允许移动到目标节点前面 即可以将同层最后一个节点放到同层的第一个。此处可重写一个方法 dropPrev进行更多操作,
-                next: tfunc.dropNext,  // 设置是否允许移动到同层节点的最后一个节点的后面 从而使被移动的节点成为最后一个节点 此处可重写一个方法dropNext
-                inner: tfunc.dropInner  // 拖拽到目标节点时 设置是否允许成为目标节点的子节点。TODO 此处必须重写一个方法 dropInner 进行判断，如果是三级节点到二级节点则允许
+                prev: tfunc.dropPrev, //允许移动到目标节点前面 即可以将同层最后一个节点放到同层的第一个。 
+                next: tfunc.dropNext,  // 设置是否允许移动到同层节点的最后一个节点的后面 从而使被移动的节点成为最后一个节点 
+                inner: tfunc.dropInner  // 拖拽到目标节点时 设置是否允许成为目标节点的子节点。
             },
             enable: true,  // 设置 zTree 是否处于编辑状态默认false|初始化后需要改变编辑状态请使用 zTreeObj.setEditable() 方法
             showRemoveBtn: tfunc.showRemoveBtn, // 树形控件显示删除按钮
@@ -305,17 +345,7 @@
     ];
 
 
-    /**
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     */
+
 
     function setTrigger(){
         var zTree = $.fn.zTree.getZTreeObj("sys-tree");

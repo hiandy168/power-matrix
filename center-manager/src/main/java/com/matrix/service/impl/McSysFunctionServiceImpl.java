@@ -74,4 +74,55 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	}
 
 
+	/**
+	 * @description: 更新拖拽后的同层节点
+	 * 
+	 * @param ustring id@seqnum,id@seqnum 
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年3月2日 下午5:33:07 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject updateTreeNodes(String ustring, HttpSession session) {
+		McUserInfo userInfo = (McUserInfo) session.getAttribute("userInfo");
+		String [] arr = ustring.split(",");
+		for(int i = 0 ; i < arr.length ; i ++){
+			McSysFunction e = new McSysFunction();
+			e.setId( Integer.valueOf(arr[i].split("@")[0]) );
+			e.setSeqnum( Integer.valueOf(arr[i].split("@")[1]) );
+			e.setUpdateTime(new Date());
+			e.setUpdateUserId(userInfo.getId());
+			dao.updateSelective(e);
+		}
+		return null;
+	}
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

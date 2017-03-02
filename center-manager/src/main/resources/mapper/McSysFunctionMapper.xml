@@ -30,7 +30,13 @@
 	</select>
 	
 	<select id="findList" resultMap="BaseResultMap" parameterType="com.matrix.pojo.entity.McSysFunction" >
-	    select * from managercenter.mc_sys_function where flag = #{flag , jdbcType=INTEGER} 
+	    select 
+	    	* 
+    	from 
+    		managercenter.mc_sys_function 
+   		where 
+   			flag = #{flag , jdbcType=INTEGER} 
+   		order by parent_id,seqnum
 	</select>
 	
 	
