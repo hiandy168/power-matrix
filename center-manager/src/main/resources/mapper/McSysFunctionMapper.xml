@@ -29,7 +29,25 @@
 			id = #{id,jdbcType=INTEGER}
 	</select>
 	
-	<select id="findList" resultMap="BaseResultMap" parameterType="com.matrix.pojo.entity.McSysFunction" >
+	
+	<resultMap id="findListMap" type="com.matrix.pojo.view.McSysFunctionView"> 
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="mc_seller_company_id" property="mcSellerCompanyId" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+		<result column="seqnum" property="seqnum" jdbcType="INTEGER" />
+		<result column="nav_type" property="navType" jdbcType="INTEGER" />
+		<result column="style_class" property="styleClass" jdbcType="VARCHAR" />
+		<result column="style_key" property="styleKey" jdbcType="VARCHAR" />
+		<result column="func_url" property="funcUrl" jdbcType="VARCHAR" />
+		<result column="flag" property="flag" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+		<result column="update_user_id" property="updateUserId" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="findList" resultMap="findListMap" parameterType="com.matrix.pojo.entity.McSysFunction" >
 	    select 
 	    	* 
     	from 

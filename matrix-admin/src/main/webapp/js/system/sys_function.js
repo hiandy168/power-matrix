@@ -210,19 +210,42 @@
             $("#tree-node-edit").append(html_);
         },
         
-      /*var aa = treeNode.getIndex();
-        var ab = treeNode.getNextNode();
-        var ac = treeNode.getParentNode();
-        var ad = treeNode.getPreNode();*/
-        
         /**
-         * 编辑导航栏
+         * 导航栏相关操作
          * @param event
          * @param treeNode
          */
         navEdit:function(event , treeNode){
-
+        	$($("#tree-node-edit")[0].childNodes).remove();
+            var type_ = 'post';
+            var url_ = ''; 
+            if(treeNode.name == "新建结点"){
+            	url_ = 'add_tree_node.do';
+            	var html_ = '<input type="text" name="name" class="smallinput " placeholder="功能名称" style="width: 190px; margin-bottom: 10px;">';
+            	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;"></textarea><br/>';
+            	html_ += '<input type="hidden" name="parentId" value="' + treeNode.parentId +'" >';
+            	
+            	var preNode = treeNode.getPreNode();   // seqnum  需要计算同层所有节点，然后得出顺序码
+            	var seqnum_ = 1;
+            	if(preNode != null){
+            		seqnum_ = preNode.seqnum + 1;
+            	} 
+            	html_ += '<input type="hidden" name="seqnum" value="' + seqnum_ +'" >';
+            	html_ += '<input type="hidden" name="navType"  value="1" >';
+            	html_ += '<input type="hidden" name="styleClass" value="" >';
+            	html_ += '<input type="hidden" name="styleKey" value="" >';
+            	html_ += '<input type="hidden" name="funcUrl" value="" >';  
+            	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
+            }else{
+            	url_ = 'edit_tree_node.do';
+            	var html_ = '<input type="text" name="name" class="smallinput " style="width: 190px; margin-bottom: 10px;" value="' + treeNode.name + '" >';
+            	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;">' + treeNode.remark + '</textarea><br/>';
+            	html_ += '<input type="hidden" name="id" value="' + treeNode.id +'" >'; 
+            	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
+            }
+            $("#tree-node-edit").append(html_);
         },
+        
         /**
          * 编辑菜单栏
          * @param event
