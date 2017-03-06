@@ -162,13 +162,13 @@
                     tfunc.navEdit(event , treeNode);
                     break;
                 case 3: // 1级菜单栏
-                    tfunc.menuEdit(event , treeNode);
+                    tfunc.fMenuEdit(event , treeNode);
                     break;
                 case 4: // 2级菜单栏 - 此处对应具体页面
-                    tfunc.menuEdit(event , treeNode);
+                    tfunc.sMenuEdit(event , treeNode);
                     break;
-                case 5: // 页面按钮(添加|删除|修改等)
-                    tfunc.btnEdit(event , treeNode);
+                case 5: // 页面按钮(添加|删除|修改等)|跳转页等等
+                    tfunc.subMenuEdit(event , treeNode);
                     break;
             }
         },
@@ -246,21 +246,43 @@
             $("#tree-node-edit").append(html_);
         },
         
-        /**
-         * 编辑菜单栏
-         * @param event
-         * @param treeNode
-         */
-        menuEdit:function(event , treeNode){
-
-        },
+        
         /**
          * 编辑一级菜单栏
          * @param event
          * @param treeNode
          */
         fMenuEdit:function(event , treeNode){
-
+			$($("#tree-node-edit")[0].childNodes).remove();
+            var type_ = 'post';
+            var url_ = ''; 
+            if(treeNode.name == "新建结点"){
+            	url_ = 'add_tree_node.do';
+            	var html_ = '<input type="text" name="name" class="smallinput " placeholder="一级菜单栏名称" style="width: 190px; margin-bottom: 10px;"><br/>';
+            	html_ += '<input type="text" class="smallinput " placeholder="styleClass" style="width: 190px; margin-bottom: 10px;" name="styleClass" value="" ><br/>';
+            	html_ += '<input type="text" class="smallinput " placeholder="styleKey" style="width: 190px; margin-bottom: 10px;" name="styleKey" value="" ><br/>';
+            	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;"></textarea><br/>';
+            	html_ += '<input type="hidden" name="parentId" value="' + treeNode.parentId +'" >';
+            	
+            	var preNode = treeNode.getPreNode();   // seqnum  需要计算同层所有节点，然后得出顺序码
+            	var seqnum_ = 1;
+            	if(preNode != null){
+            		seqnum_ = preNode.seqnum + 1;
+            	} 
+            	html_ += '<input type="hidden" name="seqnum" value="' + seqnum_ +'" >';
+            	html_ += '<input type="hidden" name="navType"  value="2" >'; 
+            	html_ += '<input type="hidden" name="funcUrl" value="" >';  
+            	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
+            }else{
+            	url_ = 'edit_tree_node.do';
+            	var html_ = '<input type="text" name="name" class="smallinput " style="width: 190px; margin-bottom: 10px;" value="' + treeNode.name + '" ><br/>';
+            	html_ += '<input type="text" class="smallinput " placeholder="styleClass" style="width: 190px; margin-bottom: 10px;" name="styleClass" value="' + treeNode.styleClass + '" ><br/>';
+            	html_ += '<input type="text" class="smallinput " placeholder="styleKey" style="width: 190px; margin-bottom: 10px;" name="styleKey" value="' + treeNode.styleKey + '" ><br/>';
+            	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;">' + treeNode.remark + '</textarea><br/>';
+            	html_ += '<input type="hidden" name="id" value="' + treeNode.id +'" >'; 
+            	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
+            }
+            $("#tree-node-edit").append(html_);
         },
         /**
          * 编辑二级菜单栏
@@ -271,11 +293,11 @@
 
         },
         /**
-         * 编辑按钮节点
+         * 编辑按钮节点|跳转页等内容
          * @param event
          * @param treeNode
          */
-        btnEdit:function(event ,treeNode){
+        subMenuEdit:function(event ,treeNode){
 
         },
         /**
