@@ -19,17 +19,17 @@
 		select
 			*
 		from 
-			t_user
+			school_educational.t_user
 		where 
 			id = #{id,jdbcType=INTEGER}
 	</select>
 		
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from t_user where id = #{id,jdbcType=INTEGER}
+		delete from school_educational.t_user where id = #{id,jdbcType=INTEGER}
 	</delete>
 	
 	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.TUser">
-		insert into t_user
+		insert into school_educational.t_user
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
 				id,
@@ -97,7 +97,7 @@
 	</insert>
 	
 	<update id="updateSelective" parameterType="com.matrix.pojo.entity.TUser">
-		update t_user
+		update school_educational.t_user
 		<set>
 			<if test="uuid != null">
 				uuid = #{uuid,jdbcType=VARCHAR},
