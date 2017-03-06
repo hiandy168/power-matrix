@@ -27,13 +27,15 @@
 		info.matrix-quartz.2000.properties
 		info.power-api.3000.properties
 		info.power-cache.4000.properties
-		info.matrix-admin.5000.properties 暂时没有使用
-		info.center-manager.6000.properties
+		info.center-manager.5000.properties
+		info.center-educational.6000.properties
+		
+		
 		
 		info.example-ui.99999.properties
 
 
-
+		info.matrix-admin.7000.properties 暂时没有使用
 
 
 

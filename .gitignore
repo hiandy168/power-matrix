@@ -47,7 +47,10 @@
 /center-manager/.classpath 
 
 
-
+/center-educational/target/
+/center-educational/.settings/
+/center-educational/.project 
+/center-educational/.classpath 
 
 
 
