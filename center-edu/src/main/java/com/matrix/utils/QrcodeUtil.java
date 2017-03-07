@@ -9,6 +9,8 @@ import com.google.zxing.common.BitMatrix;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Hashtable;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
@@ -39,22 +41,40 @@ public class QrcodeUtil {
 	/**
 	 * @descriptions 将二维码写入到一个文件中 
 	 *
-	 * @param matrix
-	 * @param format
-	 * @param file
-	 * @throws IOException
-	 * @date 2017年3月7日 下午10:16:15
+	 * @param content
+	 * @param path
+	 * @param width
+	 * @param height
+	 * @date 2017年3月7日 下午10:56:11
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	public void writeToFile(BitMatrix matrix, String format, File file) throws IOException {
+	public void drawPic(String content , String path , int width , int height){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		String date = sdf.format(new Date());
+		//二维码的图片格式
+        String format = "jpg"; 
+        Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>(); 
+        //内容所使用编码 
+        hints.put(EncodeHintType.CHARACTER_SET, "utf-8"); 
+        try {
+        	BitMatrix bitMatrix = new MultiFormatWriter().encode(content , BarcodeFormat.QR_CODE, width, height, hints); 
+        	//生成二维码 
+        	File outputFile = new File(path + date + ".jpg");  
+        	QrcodeUtil.getInstance().writeToFile(bitMatrix, format, outputFile); 
+		} catch (Exception e) {
+			e.printStackTrace();  
+		}
+	}
+	
+	private void writeToFile(BitMatrix matrix, String format, File file) throws IOException {
 		BufferedImage image = this.toBufferedImage(matrix);
 		if (!ImageIO.write(image, format, file)) {
 			throw new IOException("Could not write an image of format " + format + " to " + file);
 		}
 	}
 	
-	public void writeToStream(BitMatrix matrix, String format, OutputStream stream) throws IOException {
+	private void writeToStream(BitMatrix matrix, String format, OutputStream stream) throws IOException {
 		BufferedImage image = this.toBufferedImage(matrix);
 		if (!ImageIO.write(image, format, stream)) {
 			throw new IOException("Could not write an image of format " + format);
