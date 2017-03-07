@@ -37,7 +37,51 @@ public class ApiEducationalController {
 		return service.findSignList(null, lcode);
 	}
 	
+	/**
+	 * @descriptions 教师开课接口
+	 *
+	 * @date 2017年3月7日 下午11:37:10
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "start_lesson", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	private JSONObject startLesson(String tcode , String lcode , HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin", "*"); 
+		return service.startLesson(tcode, lcode);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
