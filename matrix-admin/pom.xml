@@ -28,7 +28,7 @@
 		
 		<dependency>
 			<groupId>com.power-matrix</groupId>
-			<artifactId>center-educational</artifactId>
+			<artifactId>center-edu</artifactId>
 			<version>${project.version}</version>
 		</dependency> 
 		

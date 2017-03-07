@@ -7,9 +7,9 @@
 		<artifactId>power-matrix</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent> 
-	<artifactId>center-educational</artifactId>
+	<artifactId>center-edu</artifactId>
 	<packaging>jar</packaging>
-	<name>center-educational</name>
+	<name>center-edu</name>
 	<url>https://github.com/PowerYangcl</url>
 	
 	<dependencies>
