@@ -37,7 +37,7 @@ public class ApiEducationalController {
 	@RequestMapping(value = "sign_list", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	private JSONObject signList(String lcode , HttpServletResponse response){
-		response.setHeader("Access-Control-Allow-Origin", "*");  
+		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
 		
 		return service.findSignList(null, lcode);
 	}
