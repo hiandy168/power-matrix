@@ -51,6 +51,23 @@ public class EducationalServiceImpl implements IEducationalService {
 		
 		return result;
 	}
+
+	/**
+	 * @descriptions 教师开课
+	 *
+	 * @param tcode teacher code
+	 * @param lcode lesson code 
+	 * @return
+	 * @date 2017年3月7日 下午11:03:14
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject startLesson(String tcode, String lcode) {
+		JSONObject result = new JSONObject();
+		
+		
+		return result;
+	}
 	
 	
 }
