@@ -29,6 +29,15 @@
 			id = #{id,jdbcType=INTEGER}
 	</select>
 	
+	<select id="findEntityByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+			*
+		from 
+			educationalcenter.t_lesson
+		where 
+			code = #{lcode , jdbcType=VARCHAR}  
+	</select>
+	
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from educationalcenter.t_lesson

@@ -5,4 +5,5 @@ import com.matrix.pojo.entity.TTeacher;
 
 public interface ITTeacherDao extends IBaseDao<TTeacher, Integer> {
 
+		public TTeacher findEntityByCode(String tcode);
 }

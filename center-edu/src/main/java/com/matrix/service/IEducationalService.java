@@ -1,5 +1,7 @@
 package com.matrix.service;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.alibaba.fastjson.JSONObject;
 
 public interface IEducationalService {
@@ -25,5 +27,5 @@ public interface IEducationalService {
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	public JSONObject startLesson(String tcode , String lcode);
+	public JSONObject startLesson(String tcode , String lcode , HttpServletRequest request);
 }

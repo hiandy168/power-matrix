@@ -1,5 +1,6 @@
 package com.matrix.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
@@ -46,9 +47,9 @@ public class ApiEducationalController {
 	 */
 	@RequestMapping(value = "start_lesson", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	private JSONObject startLesson(String tcode , String lcode , HttpServletResponse response){
+	private JSONObject startLesson(String tcode , String lcode , HttpServletResponse response , HttpServletRequest request){
 		response.setHeader("Access-Control-Allow-Origin", "*"); 
-		return service.startLesson(tcode, lcode);
+		return service.startLesson(tcode, lcode , request);
 	}
 }
 

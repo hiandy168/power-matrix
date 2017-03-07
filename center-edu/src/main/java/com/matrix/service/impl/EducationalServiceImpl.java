@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
@@ -68,7 +69,7 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	public JSONObject startLesson(String tcode, String lcode) {
+	public JSONObject startLesson(String tcode, String lcode , HttpServletRequest request) {
 		JSONObject result = new JSONObject();
 		TLessonQrcode e =  new TLessonQrcode();
 		e.setUuid(UUID.randomUUID().toString().replace("-", ""));  
@@ -82,7 +83,11 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 			e.setQrcodeUrl(path);
 			lessonQrcodeDao.insertSelective(e);
 			result.put("status", true);
+			String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/" + path;
+			e.setQrcodeUrl(url);  
 			result.put("data", e);  
+			result.put("teacher", teacherDao.findEntityByCode(tcode));
+			result.put("lesson", lessonDao.findEntityByCode(lcode)); 
 		} catch (Exception e2) {
 			result.put("status", false);
 		}
