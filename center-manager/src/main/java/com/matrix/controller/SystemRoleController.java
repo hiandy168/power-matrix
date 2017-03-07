@@ -60,7 +60,7 @@ public class SystemRoleController {
 	 */
 	@RequestMapping(value = "company_list", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	private JSONObject companyList(){
+	public JSONObject companyList(){
 		return service.companyList();
 	}
 	

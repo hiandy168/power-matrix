@@ -25,6 +25,16 @@
 			id = #{id,jdbcType=INTEGER}
 	</select>
 	
+	<select id="findSignList" resultMap="BaseResultMap" parameterType="java.lang.String">
+		 select 
+			* 
+		 from 
+			educationalcenter.`t_student` s left join educationalcenter.`t_lesson_sign` l on l.student_code = s.code
+		 where 
+			l.lesson_code = #{lcode , jdbcType=VARCHAR}
+	</select>
+	
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from educationalcenter.t_student where id = #{id,jdbcType=INTEGER}
 	</delete>
