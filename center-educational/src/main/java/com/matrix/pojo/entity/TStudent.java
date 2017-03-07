@@ -14,6 +14,8 @@ public class TStudent {
     private Integer sex;
 
     private String classesCode;
+    
+    private String headPic;  
 
     private String createUser;
 

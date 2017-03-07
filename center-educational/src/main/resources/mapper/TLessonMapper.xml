@@ -5,6 +5,7 @@
 	<resultMap id="BaseResultMap" type="com.matrix.pojo.entity.TLesson">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="lesson_name" property="lessonName" jdbcType="VARCHAR" />
 		<result column="code" property="code" jdbcType="VARCHAR" />
 		<result column="type_code" property="typeCode" jdbcType="VARCHAR" />
 		<result column="teacher_code" property="teacherCode" jdbcType="VARCHAR" />
@@ -23,25 +24,28 @@
 		select
 			*
 		from 
-			school_educational.t_lesson
+			educationalcenter.t_lesson
 		where 
 			id = #{id,jdbcType=INTEGER}
 	</select>
 	
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from school_educational.t_lesson
+		delete from educationalcenter.t_lesson
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
 	
 	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.TLesson">
-		insert into school_educational.t_lesson
+		insert into educationalcenter.t_lesson
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
 				id,
 			</if>
 			<if test="uuid != null">
 				uuid,
+			</if>
+			<if test="lessonName != null">
+				lesson_name,
 			</if>
 			<if test="code != null">
 				code,
@@ -84,6 +88,9 @@
 			<if test="uuid != null">
 				#{uuid,jdbcType=VARCHAR},
 			</if>
+			<if test="lessonName != null">
+				#{lessonName , jdbcType=VARCHAR},
+			</if>
 			<if test="code != null">
 				#{code,jdbcType=VARCHAR},
 			</if>
@@ -122,10 +129,13 @@
 	
 	
 	<update id="updateSelective" parameterType="com.matrix.pojo.entity.TLesson">
-		update school_educational.t_lesson
+		update educationalcenter.t_lesson
 		<set>
 			<if test="uuid != null">
 				uuid = #{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="lessonName != null">
+				lesson_name = #{code,jdbcType=VARCHAR},
 			</if>
 			<if test="code != null">
 				code = #{code,jdbcType=VARCHAR},

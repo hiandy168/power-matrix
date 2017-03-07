@@ -16,17 +16,17 @@
 		select
 			*
 		from 
-			school_educational.t_lesson_sign
+			educationalcenter.t_lesson_sign
 		where 
 			id = #{id,jdbcType=INTEGER}
 	</select>
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from school_educational.t_lesson_sign where id = #{id,jdbcType=INTEGER}
+		delete from educationalcenter.t_lesson_sign where id = #{id,jdbcType=INTEGER}
 	</delete>
 	
 	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.TLessonSign">
-		insert into school_educational.t_lesson_sign
+		insert into educationalcenter.t_lesson_sign
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
 				id,
@@ -64,7 +64,7 @@
 	</insert>
 	
 	<update id="updateSelective" parameterType="com.matrix.pojo.entity.TLessonSign">
-		update school_educational.t_lesson_sign
+		update educationalcenter.t_lesson_sign
 		<set>
 			<if test="uuid != null">
 				uuid = #{uuid,jdbcType=VARCHAR},

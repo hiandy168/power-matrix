@@ -1,5 +1,7 @@
 package com.matrix.pojo.view;
 
-public class LessonSignView {
+import com.matrix.pojo.entity.TLessonSign;
+
+public class LessonSignView extends TLessonSign{
 
 }

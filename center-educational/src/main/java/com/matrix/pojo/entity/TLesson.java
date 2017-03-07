@@ -7,6 +7,8 @@ public class TLesson {
 
     private String uuid;
 
+    private String lessonName;  // 课程名称
+    
     private String code;
 
     private String typeCode;
@@ -45,7 +47,15 @@ public class TLesson {
         this.uuid = uuid == null ? null : uuid.trim();
     }
 
-    public String getCode() {
+    public String getLessonName() {
+		return lessonName;
+	}
+
+	public void setLessonName(String lessonName) {
+		this.lessonName = lessonName;
+	}
+
+	public String getCode() {
         return code;
     }
 
