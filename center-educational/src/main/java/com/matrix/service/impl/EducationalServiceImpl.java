@@ -12,6 +12,7 @@ import com.matrix.dao.ITLessonSignDao;
 import com.matrix.dao.ITStudentDao;
 import com.matrix.dao.ITTeacherDao;
 import com.matrix.pojo.entity.TStudent;
+import com.matrix.pojo.view.SignListView;
 import com.matrix.service.IEducationalService;
 
 @Service
@@ -42,7 +43,7 @@ public class EducationalServiceImpl implements IEducationalService {
 	public JSONObject findSignList(String tcode, String lcode) {
 		JSONObject result = new JSONObject();
 		result.put("status", false);
-		List<TStudent> list = sutdentDao.findSignList(lcode);
+		List<SignListView> list = sutdentDao.findSignList(lcode);
 		if(list != null && list.size() > 0){
 			result.put("status", true);
 			result.put("list", list);

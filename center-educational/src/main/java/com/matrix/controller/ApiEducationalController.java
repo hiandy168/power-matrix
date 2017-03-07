@@ -1,10 +1,16 @@
 package com.matrix.controller;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.http.HttpResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.service.IEducationalService;
@@ -30,7 +36,9 @@ public class ApiEducationalController {
 	 */
 	@RequestMapping(value = "sign_list", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	private JSONObject signList(String lcode){
+	private JSONObject signList(String lcode , HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin", "*");  
+		
 		return service.findSignList(null, lcode);
 	}
 	
