@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.dao.ITLessonDao;
+import com.matrix.dao.ITLessonQrcodeDao;
 import com.matrix.dao.ITLessonSignDao;
 import com.matrix.dao.ITStudentDao;
 import com.matrix.dao.ITTeacherDao;
-import com.matrix.pojo.entity.TStudent;
 import com.matrix.pojo.view.SignListView;
 import com.matrix.service.IEducationalService;
 
@@ -20,15 +20,16 @@ public class EducationalServiceImpl implements IEducationalService {
 
 	@Resource
 	private ITLessonSignDao lessonSignDao;
-	
 	@Resource
 	private ITTeacherDao teacherDao;
-	
 	@Resource
 	private ITStudentDao sutdentDao;
-	
 	@Resource 
 	private ITLessonDao lessonDao;
+	@Resource
+	private ITLessonQrcodeDao lessonQrcodeDao;
+	
+	
 
 	/**
 	 * @description: 获取签到列表
