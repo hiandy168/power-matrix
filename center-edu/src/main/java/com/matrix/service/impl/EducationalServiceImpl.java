@@ -87,7 +87,7 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 		String realPath = request.getServletContext().getRealPath("/") + File.separator + path;  // 获取tomcat真实部署路径 
 		
 		try {
-			QrcodeUtil.getInstance().drawPic(fname, realPath, 500, 500); 
+			QrcodeUtil.getInstance().drawPic("学生签到@" + fname, realPath, 500, 500); 
 			e.setQrcodeUrl(path);
 			lessonQrcodeDao.insertSelective(e);
 			result.put("status", true);
