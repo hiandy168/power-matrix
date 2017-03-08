@@ -1,5 +1,7 @@
 package com.matrix.service.impl;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -76,15 +78,19 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 		e.setTeacherCode(tcode);
 		e.setLessonCode(lcode);
 		e.setCreateTime(new Date()); 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
+		String date = sdf.format(new Date());
 		String fname = tcode + "@" + lcode;
-		String path = this.getConfig("center-edu.qrcode_save_path") + fname;
+		String path = "qrcode" +File.separator + fname + "," + date + ".jpg";
+		String realPath = request.getServletContext().getRealPath("/") + File.separator + path;  // 获取tomcat真实部署路径 
+		
 		try {
-			QrcodeUtil.getInstance().drawPic(fname, path, 500, 500); 
+			QrcodeUtil.getInstance().drawPic(fname, realPath, 500, 500); 
 			e.setQrcodeUrl(path);
 			lessonQrcodeDao.insertSelective(e);
 			result.put("status", true);
 			String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/" + path;
-			e.setQrcodeUrl(url);  
+			e.setQrcodeUrl(url);  // 设置真是浏览器路径并发送到前端
 			result.put("data", e);  
 			result.put("teacher", teacherDao.findEntityByCode(tcode));
 			result.put("lesson", lessonDao.findEntityByCode(lcode)); 

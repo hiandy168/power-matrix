@@ -50,8 +50,6 @@ public class QrcodeUtil {
 	 * @version 1.0.0.1
 	 */
 	public void drawPic(String content , String path , int width , int height){
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-		String date = sdf.format(new Date());
 		//二维码的图片格式
         String format = "jpg"; 
         Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>(); 
@@ -60,7 +58,7 @@ public class QrcodeUtil {
         try {
         	BitMatrix bitMatrix = new MultiFormatWriter().encode(content , BarcodeFormat.QR_CODE, width, height, hints); 
         	//生成二维码 
-        	File outputFile = new File(path + date + ".jpg");  
+        	File outputFile = new File(path);  
         	QrcodeUtil.getInstance().writeToFile(bitMatrix, format, outputFile); 
 		} catch (Exception e) {
 			e.printStackTrace();  
@@ -108,7 +106,7 @@ public class QrcodeUtil {
         
         BitMatrix bitMatrix = new MultiFormatWriter().encode(text , BarcodeFormat.QR_CODE, width, height, hints); 
         //生成二维码 
-        File outputFile = new File("d:"+File.separator+"ins.jpg"); 
+        File outputFile = new File("D:\\vmware"+File.separator+"ins.jpg"); 
         QrcodeUtil.getInstance().writeToFile(bitMatrix, format, outputFile); 
     } 
 	
