@@ -22,10 +22,37 @@ public interface IEducationalService {
 	 *
 	 * @param tcode teacher code
 	 * @param lcode lesson code 
-	 * @return
 	 * @date 2017年3月7日 下午11:03:14
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
 	public JSONObject startLesson(String tcode , String lcode , HttpServletRequest request);
+	
+	/**
+	 * @description: 学生签到接口
+	 * 
+	 * @param scode 学生编码
+	 * @param lcode 课程编码 
+	 * @param request
+	 * @return
+	 * @author Yangcl 
+	 * @date 2017年3月8日 下午4:47:00 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject studentSign(String scode , String lcode);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

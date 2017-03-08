@@ -19,8 +19,10 @@ import com.matrix.dao.ITLessonSignDao;
 import com.matrix.dao.ITStudentDao;
 import com.matrix.dao.ITTeacherDao;
 import com.matrix.pojo.entity.TLessonQrcode;
+import com.matrix.pojo.entity.TLessonSign;
 import com.matrix.pojo.view.SignListView;
 import com.matrix.service.IEducationalService;
+import com.matrix.util.UuidUtil;
 import com.matrix.utils.QrcodeUtil;
 
 @Service
@@ -74,7 +76,7 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	public JSONObject startLesson(String tcode, String lcode , HttpServletRequest request) {
 		JSONObject result = new JSONObject();
 		TLessonQrcode e =  new TLessonQrcode();
-		e.setUuid(UUID.randomUUID().toString().replace("-", ""));  
+		e.setUuid(UuidUtil.uid());  
 		e.setTeacherCode(tcode);
 		e.setLessonCode(lcode);
 		e.setCreateTime(new Date()); 
@@ -97,6 +99,37 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 		} catch (Exception e2) {
 			result.put("status", false);
 		}
+		return result;
+	}
+
+	
+	/**
+	 * @description: 学生签到接口
+	 * 
+	 * @param scode 学生编码
+	 * @param lcode 课程编码 
+	 * @param request
+	 * @return
+	 * @author Yangcl 
+	 * @date 2017年3月8日 下午4:47:00 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject studentSign(String scode, String lcode) {
+		JSONObject result = new JSONObject();
+		result.put("status", false);
+		
+		TLessonSign e = new TLessonSign();
+		e.setUuid(UuidUtil.uid());
+		e.setStudentCode(scode);
+		e.setLessonCode(lcode);
+		e.setCreateTime(new Date());
+		try {
+			lessonSignDao.insertSelective(e);
+			result.put("status", true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		
 		return result;
 	}
 	
