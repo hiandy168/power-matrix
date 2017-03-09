@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
+import com.matrix.pojo.dto.RegisteDto;
 import com.matrix.pojo.entity.TUser;
 import com.matrix.service.IEducationalService;
 
@@ -57,7 +58,6 @@ public class ApiEducationalController {
 	@ResponseBody
 	public JSONObject studentSign(String scode, String lcode, HttpServletResponse response){
 		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
-		
 		return service.studentSign(scode, lcode);
 	}
 	
@@ -65,8 +65,14 @@ public class ApiEducationalController {
 	@ResponseBody
 	public JSONObject login(TUser entity , HttpServletResponse response){
 		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
-		
 		return service.login(entity);  
+	}
+	
+	@RequestMapping(value = "registe", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject registe(RegisteDto entity , HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
+		return service.registe(entity);  
 	}
 }
 

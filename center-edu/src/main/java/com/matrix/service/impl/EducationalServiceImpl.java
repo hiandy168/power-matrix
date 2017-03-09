@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
@@ -18,8 +19,11 @@ import com.matrix.dao.ITLessonSignDao;
 import com.matrix.dao.ITStudentDao;
 import com.matrix.dao.ITTeacherDao;
 import com.matrix.dao.ITUserDao;
+import com.matrix.pojo.dto.RegisteDto;
 import com.matrix.pojo.entity.TLessonQrcode;
 import com.matrix.pojo.entity.TLessonSign;
+import com.matrix.pojo.entity.TStudent;
+import com.matrix.pojo.entity.TTeacher;
 import com.matrix.pojo.entity.TUser;
 import com.matrix.pojo.view.SignListView;
 import com.matrix.service.IEducationalService;
@@ -137,7 +141,6 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 		return result;
 	}
 
-	@Override
 	public JSONObject login(TUser entity) {
 		JSONObject result = new JSONObject();
 		result.put("status", false);
@@ -156,6 +159,60 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 		}
 		
 		
+		return result;
+	}
+
+	public JSONObject registe(RegisteDto e) {
+		JSONObject result = new JSONObject();
+		result.put("status", false);
+		if(StringUtils.isAnyBlank(e.getEmail(),e.getUsername(),e.getPassword(),e.getType())){
+			result.put("msg", "关键信息不可为空");
+			return result;
+		}
+		if(!e.getPassword().equals(e.getConfirm())){
+			result.put("msg", "两次密码输入不一致!");
+			return result;
+		}
+		String code = "";
+		TUser u =  new TUser();
+		u.setUuid(UuidUtil.uid()); 
+		u.setUsername(e.getUsername());
+		u.setPassword(e.getPassword());
+		u.setType(e.getType()); 
+		u.setEmail(e.getEmail());
+		u.setCreateUser("registe");
+		u.setCreateTime(new Date());
+		try {
+			if(e.getType().equals("T0001")){  // 教师注册
+				code = "T" +System.currentTimeMillis();
+				TTeacher t = new TTeacher();
+				t.setUuid(UuidUtil.uid());
+				t.setName(e.getRealName()); 
+				t.setCode(code); 
+				t.setSex(e.getSex()); 
+				t.setCreateUser("registe");
+				t.setCreateTime(new Date()); 
+				teacherDao.insertSelective(t);
+			}else{// 学生注册  
+				code = "S" +System.currentTimeMillis(); 
+				TStudent s = new TStudent();
+				s.setUuid(UuidUtil.uid());
+				s.setCode(code);
+				s.setName(e.getRealName());
+				s.setHeadPic("http://image-family.huijiayou.cn/cfiles/staticfiles/upload/2993e/b1db66d6b4a74c95816c495e12d858e8.jpg");
+				s.setCreateUser("registe");
+				SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				s.setCreateTime(sdf.format(new Date()));
+				sutdentDao.insertSelective(s);
+			}
+			u.setCode(code);
+			userDao.insertSelective(u);
+			result.put("status", true);
+			result.put("msg", "注册成功!"); 
+		} catch (Exception ex) { 
+			ex.printStackTrace();
+			result.put("msg", "服务器异常,请再次尝试"); 
+		}
 		return result;
 	}
 	

@@ -9,6 +9,7 @@
 		<result column="username" property="username" jdbcType="VARCHAR" />
 		<result column="password" property="password" jdbcType="VARCHAR" />
 		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
 		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
@@ -63,6 +64,9 @@
 			<if test="type != null">
 				type,
 			</if>
+			<if test="email != null">
+				email,
+			</if>
 			<if test="createUser != null">
 				create_user,
 			</if>
@@ -94,6 +98,9 @@
 			</if>
 			<if test="type != null">
 				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email , jdbcType=VARCHAR},
 			</if>
 			<if test="createUser != null">
 				#{createUser,jdbcType=VARCHAR},
@@ -127,6 +134,9 @@
 			</if>
 			<if test="type != null">
 				type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email , jdbcType=VARCHAR}, 
 			</if>
 			<if test="createUser != null">
 				create_user = #{createUser,jdbcType=VARCHAR},
