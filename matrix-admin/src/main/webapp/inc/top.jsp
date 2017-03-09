@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 		<div class="topheader">
             <div class="left">
-                <h1 class="logo"><a id="menu-open-close" style="cursor:pointer;" >Power.</a><span>Matrix</span></h1>
-                <span class="slogan">能量矩阵后台管理系统</span>
+            	<h1 class="logo"><a id="menu-open-close" style="cursor:pointer;" >能量矩阵后台管理系统</a></h1>
+                <h1 class="logo" style="display:none"><a id="menu-open-close" style="cursor:pointer;" >Power.</a><span>Matrix</span></h1>
+                <span class="slogan"  style="display:none">能量矩阵后台管理系统</span>
                 <br clear="all" />
 
             </div><!--left-->

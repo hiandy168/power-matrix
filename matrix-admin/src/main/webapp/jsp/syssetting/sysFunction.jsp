@@ -62,9 +62,9 @@
         <div class="centercontent">
 
             <div class="pageheader">
-                <h1 class="pagetitle" style="color:#ff0000;">FBI Warning</h1>
+                <h1 class="pagetitle" style="color:#ff0000;">简要说明</h1>
                 <span class="pagedesc">
-                    根据联邦法律规定，凡对未经授权，而对受版权保护的系统作品进行复制、发行或公开展出者，可导致严厉的民事或刑事处分（美国联邦法典第17篇，第501条与508条）。 
+                    【导航月菜单树】同层节点之间可以进行拖动来调整其先后顺序 
                 </span>
 
                 <ul class="hornav">
