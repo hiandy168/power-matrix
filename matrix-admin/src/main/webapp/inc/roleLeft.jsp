@@ -12,7 +12,7 @@
                         </li>
                         
                         <li class="gallery">
-                        	<a href="">返回主页</a>
+                        	<a href="${basePath}example/ajaxFormExample.do">返回主页</a>
                         </li>
                     </ul>
                 </li>
