@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
+import com.matrix.pojo.entity.TUser;
 import com.matrix.service.IEducationalService;
 
 @Controller
@@ -32,7 +33,7 @@ public class ApiEducationalController {
 	 */
 	@RequestMapping(value = "sign_list", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	private JSONObject signList(String lcode , HttpServletResponse response){
+	public JSONObject signList(String lcode , HttpServletResponse response){
 		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
 		
 		return service.findSignList(null, lcode);
@@ -47,17 +48,25 @@ public class ApiEducationalController {
 	 */
 	@RequestMapping(value = "start_lesson", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	private JSONObject startLesson(String tcode , String lcode , HttpServletResponse response , HttpServletRequest request){
+	public JSONObject startLesson(String tcode , String lcode , HttpServletResponse response , HttpServletRequest request){
 		response.setHeader("Access-Control-Allow-Origin", "*"); 
 		return service.startLesson(tcode, lcode , request);
 	}
 	
 	@RequestMapping(value = "student_sign", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	private JSONObject studentSign(String scode, String lcode, HttpServletResponse response){
+	public JSONObject studentSign(String scode, String lcode, HttpServletResponse response){
 		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
 		
 		return service.studentSign(scode, lcode);
+	}
+	
+	@RequestMapping(value = "login", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject login(TUser entity , HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
+		
+		return service.login(entity);  
 	}
 }
 

@@ -4,7 +4,6 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +17,10 @@ import com.matrix.dao.ITLessonQrcodeDao;
 import com.matrix.dao.ITLessonSignDao;
 import com.matrix.dao.ITStudentDao;
 import com.matrix.dao.ITTeacherDao;
+import com.matrix.dao.ITUserDao;
 import com.matrix.pojo.entity.TLessonQrcode;
 import com.matrix.pojo.entity.TLessonSign;
+import com.matrix.pojo.entity.TUser;
 import com.matrix.pojo.view.SignListView;
 import com.matrix.service.IEducationalService;
 import com.matrix.util.UuidUtil;
@@ -38,6 +39,9 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	private ITLessonDao lessonDao;
 	@Resource
 	private ITLessonQrcodeDao lessonQrcodeDao;
+	@Resource
+	private ITUserDao userDao;
+	
 	
 	
 
@@ -129,6 +133,28 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		
+		return result;
+	}
+
+	@Override
+	public JSONObject login(TUser entity) {
+		JSONObject result = new JSONObject();
+		result.put("status", false);
+		 
+		try {
+			TUser e = userDao.login(entity);
+			if(e != null){
+				result.put("status", true);
+				result.put("data", e); 
+				result.put("msg", "登陆成功");  
+			}else{
+				result.put("msg", "用户名或密码错误");  
+			}
+		} catch (Exception ex) {
+			result.put("msg", "服务器查询异常"); 
+		}
+		
 		
 		return result;
 	}
