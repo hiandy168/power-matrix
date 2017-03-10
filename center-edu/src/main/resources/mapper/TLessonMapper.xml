@@ -38,6 +38,14 @@
 			code = #{lcode , jdbcType=VARCHAR}  
 	</select>
 	
+	<select id="findLessonListByTcode" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+			*
+		from 
+			educationalcenter.t_lesson
+		where 
+			teacher_code = #{tcode , jdbcType=VARCHAR}  
+	</select>
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from educationalcenter.t_lesson

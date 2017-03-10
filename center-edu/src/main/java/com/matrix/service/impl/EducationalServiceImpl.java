@@ -20,6 +20,7 @@ import com.matrix.dao.ITStudentDao;
 import com.matrix.dao.ITTeacherDao;
 import com.matrix.dao.ITUserDao;
 import com.matrix.pojo.dto.RegisteDto;
+import com.matrix.pojo.entity.TLesson;
 import com.matrix.pojo.entity.TLessonQrcode;
 import com.matrix.pojo.entity.TLessonSign;
 import com.matrix.pojo.entity.TStudent;
@@ -213,6 +214,33 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 			ex.printStackTrace();
 			result.put("msg", "服务器异常,请再次尝试"); 
 		}
+		return result;
+	}
+
+	/**
+	 * @description: 查询指定老师下的课程列表
+	 * 
+	 * @param e
+	 * @author Yangcl 
+	 * @date 2017年3月10日 下午5:07:43 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject lessonList(TTeacher e) {
+		JSONObject result = new JSONObject();
+		result.put("status", false);
+		try {
+			List<TLesson> list = lessonDao.findLessonListByTcode(e.getCode());
+			if(list != null && list.size() > 0){
+				result.put("status", true);
+				result.put("list", list);
+			}else{
+				result.put("msg", "您暂时没有课程列表");
+			}
+		} catch (Exception ex) { 
+			ex.printStackTrace();
+			result.put("msg", "服务器异常");
+		}
+		
 		return result;
 	}
 	
