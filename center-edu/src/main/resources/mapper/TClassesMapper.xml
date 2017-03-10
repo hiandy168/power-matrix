@@ -23,6 +23,13 @@
 			id = #{id,jdbcType=INTEGER}
 	</select>
 	
+	<select id="findAllClasses" resultMap="BaseResultMap">
+		select
+			*
+		from 
+			educationalcenter.t_classes 
+	</select>
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from educationalcenter.t_classes where id = #{id,jdbcType=INTEGER}
 	</delete>

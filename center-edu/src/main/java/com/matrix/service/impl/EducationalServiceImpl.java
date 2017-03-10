@@ -2,6 +2,7 @@ package com.matrix.service.impl;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.base.BaseClass;
+import com.matrix.dao.ITClassesDao;
 import com.matrix.dao.ITLessonDao;
 import com.matrix.dao.ITLessonQrcodeDao;
 import com.matrix.dao.ITLessonSignDao;
@@ -20,12 +22,14 @@ import com.matrix.dao.ITStudentDao;
 import com.matrix.dao.ITTeacherDao;
 import com.matrix.dao.ITUserDao;
 import com.matrix.pojo.dto.RegisteDto;
+import com.matrix.pojo.entity.TClasses;
 import com.matrix.pojo.entity.TLesson;
 import com.matrix.pojo.entity.TLessonQrcode;
 import com.matrix.pojo.entity.TLessonSign;
 import com.matrix.pojo.entity.TStudent;
 import com.matrix.pojo.entity.TTeacher;
 import com.matrix.pojo.entity.TUser;
+import com.matrix.pojo.view.LessonView;
 import com.matrix.pojo.view.SignListView;
 import com.matrix.service.IEducationalService;
 import com.matrix.util.UuidUtil;
@@ -46,7 +50,8 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	private ITLessonQrcodeDao lessonQrcodeDao;
 	@Resource
 	private ITUserDao userDao;
-	
+	@Resource
+	private ITClassesDao classesDao;
 	
 	
 
@@ -233,6 +238,48 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 			if(list != null && list.size() > 0){
 				result.put("status", true);
 				result.put("list", list);
+			}else{
+				result.put("msg", "您暂时没有课程列表");
+			}
+		} catch (Exception ex) { 
+			ex.printStackTrace();
+			result.put("msg", "服务器异常");
+		}
+		
+		return result;
+	}
+
+	@Override
+	public JSONObject signLessonList(TTeacher e) {
+		JSONObject result = new JSONObject();
+		result.put("status", false);
+		List<LessonView> list_ = new ArrayList<>();
+		try {
+			List<TLesson> list = lessonDao.findLessonListByTcode(e.getCode());
+			if(list != null && list.size() > 0){
+				result.put("status", true);
+				List<TClasses> clalist = classesDao.findAllClasses();
+				for(TLesson le : list){
+					LessonView v = new LessonView();
+					v.setEntity(le); 
+					if(StringUtils.isBlank(le.getClassesCode())){
+						list_.add(v);
+						continue;
+					}
+					String[] arr = le.getClassesCode().split(",");
+					if(arr.length != 0){
+						for(int i = 0 ; i < arr.length ; i ++){
+							for(TClasses cls : clalist){
+								if(arr[i].equals(cls.getCode())){
+									v.getClaList().add(cls);
+								}
+							}
+						}
+					} 
+					list_.add(v);
+				}
+				
+				result.put("list", list_);
 			}else{
 				result.put("msg", "您暂时没有课程列表");
 			}

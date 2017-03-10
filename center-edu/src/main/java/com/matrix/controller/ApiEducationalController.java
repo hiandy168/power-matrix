@@ -35,10 +35,10 @@ public class ApiEducationalController {
 	 */
 	@RequestMapping(value = "sign_list", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject signList(String lcode , HttpServletResponse response){
+	public JSONObject signList(String tcode , String lcode , HttpServletResponse response){
 		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
 		
-		return service.findSignList(null, lcode);
+		return service.findSignList(tcode, lcode);
 	}
 	
 	/**
@@ -76,11 +76,36 @@ public class ApiEducationalController {
 		return service.registe(entity);  
 	}
 	
+	/**
+	 * @description: 生成二维码时所需的课程列表
+	 * 
+	 * @param entity
+	 * @param response
+	 * @author Yangcl 
+	 * @date 2017年3月10日 下午8:57:22 
+	 * @version 1.0.0.1
+	 */
 	@RequestMapping(value = "lesson_list", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject lessonList(TTeacher entity , HttpServletResponse response){
 		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
 		return service.lessonList(entity);  
+	}
+	
+	/**
+	 * @description: 查看签到时所需的课程列表
+	 * 
+	 * @param entity
+	 * @param response
+	 * @author Yangcl 
+	 * @date 2017年3月10日 下午8:56:53 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "sign_lesson_list", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject signLessonList(TTeacher entity , HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
+		return service.signLessonList(entity);  
 	}
 }
 

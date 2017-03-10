@@ -48,7 +48,9 @@ public interface IEducationalService {
 
 	public JSONObject registe(RegisteDto entity);
 
-	public JSONObject lessonList(TTeacher entity);   
+	public JSONObject lessonList(TTeacher entity);
+
+	public JSONObject signLessonList(TTeacher entity);    
 }
 
 
