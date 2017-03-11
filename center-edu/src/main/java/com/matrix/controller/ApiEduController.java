@@ -16,9 +16,9 @@ import com.matrix.service.IEducationalService;
 
 @Controller
 @RequestMapping("edu")
-public class ApiEducationalController {
+public class ApiEduController {
 	
-	private static Logger logger=Logger.getLogger(ApiEducationalController.class);
+	private static Logger logger=Logger.getLogger(ApiEduController.class);
 
 	@Autowired
 	private IEducationalService service;
@@ -69,7 +69,7 @@ public class ApiEducationalController {
 		return service.login(entity);  
 	}
 	
-	@RequestMapping(value = "registe", produces = { "application/json;charset=utf-8" })
+	@RequestMapping(value = "register", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject registe(RegisteDto entity , HttpServletResponse response){
 		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
