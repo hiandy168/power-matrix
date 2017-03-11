@@ -161,6 +161,7 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 				result.put("msg", "用户名或密码错误");  
 			}
 		} catch (Exception ex) {
+			ex.printStackTrace(); 
 			result.put("msg", "服务器查询异常"); 
 		}
 		

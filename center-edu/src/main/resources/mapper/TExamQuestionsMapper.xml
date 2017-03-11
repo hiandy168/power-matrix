@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.matrix.dao.ITExamQuestionsDao">
+	<resultMap id="BaseResultMap" type="com.matrix.pojo.entity.TExamQuestions">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="dept_code" property="deptCode" jdbcType="VARCHAR" />
+		<result column="profession_code" property="professionCode" jdbcType="VARCHAR" />
+		<result column="lesson_code" property="lessonCode" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="score" property="score" jdbcType="DOUBLE" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="question" property="question" jdbcType="LONGVARCHAR" />
+		<result column="answer" property="answer" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+			*
+		from 
+			educationalcenter.t_exam_questions
+		where 
+			id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from educationalcenter.t_exam_questions where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	
+	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.TExamQuestions">
+		insert into educationalcenter.t_exam_questions
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="uuid != null">
+				uuid,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="deptCode != null">
+				dept_code,
+			</if>
+			<if test="professionCode != null">
+				profession_code,
+			</if>
+			<if test="lessonCode != null">
+				lesson_code,
+			</if>
+			<if test="url != null">
+				url,
+			</if>
+			<if test="score != null">
+				score,
+			</if>
+			<if test="createUser != null">
+				create_user,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateUser != null">
+				update_user,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="question != null">
+				question,
+			</if>
+			<if test="answer != null">
+				answer,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="uuid != null">
+				#{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="deptCode != null">
+				#{deptCode,jdbcType=VARCHAR},
+			</if>
+			<if test="professionCode != null">
+				#{professionCode,jdbcType=VARCHAR},
+			</if>
+			<if test="lessonCode != null">
+				#{lessonCode,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="score != null">
+				#{score,jdbcType=DOUBLE},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				#{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="question != null">
+				#{question,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="answer != null">
+				#{answer,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateSelective" parameterType="com.matrix.pojo.entity.TExamQuestions">
+		update educationalcenter.t_exam_questions
+		<set>
+			<if test="uuid != null">
+				uuid = #{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="deptCode != null">
+				dept_code = #{deptCode,jdbcType=VARCHAR},
+			</if>
+			<if test="professionCode != null">
+				profession_code = #{professionCode,jdbcType=VARCHAR},
+			</if>
+			<if test="lessonCode != null">
+				lesson_code = #{lessonCode,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				url = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="score != null">
+				score = #{score,jdbcType=DOUBLE},
+			</if>
+			<if test="createUser != null">
+				create_user = #{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				update_user = #{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="question != null">
+				question = #{question,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="answer != null">
+				answer = #{answer,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>
+
+
+
+
+
