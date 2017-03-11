@@ -3,6 +3,8 @@ package com.matrix.pojo.model;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * @descriptions 每一道题的答案案模型 
  *
@@ -20,7 +22,8 @@ public class Answer {
 	 *     填空题：可能会多余一个空，所以 count >= 1
 	 */
 	private Integer count; 
-	private Map<Integer , String> map = new TreeMap<Integer, String>();
+	// key 答案的序号，value 答案 
+	private Map<String , String> map = new TreeMap<String, String>();
 	
 	public String getCode() {
 		return code;
@@ -34,10 +37,45 @@ public class Answer {
 	public void setCount(Integer count) {
 		this.count = count;
 	}
-	public Map<Integer, String> getMap() {
+	public Map<String, String> getMap() {
 		return map;
 	}
-	public void setMap(Map<Integer, String> map) {
+	public void setMap(Map<String, String> map) {
 		this.map = map;
 	}
+	
+	public static void main(String[] args) {
+		Answer a = new Answer();
+		a.setCode("Q76831253356799");
+		a.setCount(1);
+		a.getMap().put("1", "A");
+		a.getMap().put("2", "D");
+		String json = JSONObject.toJSONString(a);
+		System.out.println(json); 
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

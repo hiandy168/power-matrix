@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.base.BaseClass;
 import com.matrix.dao.ITClassesDao;
+import com.matrix.dao.ITExamQuestionsDao;
 import com.matrix.dao.ITLessonDao;
 import com.matrix.dao.ITLessonQrcodeDao;
 import com.matrix.dao.ITLessonSignDao;
@@ -23,6 +24,7 @@ import com.matrix.dao.ITTeacherDao;
 import com.matrix.dao.ITUserDao;
 import com.matrix.pojo.dto.RegisteDto;
 import com.matrix.pojo.entity.TClasses;
+import com.matrix.pojo.entity.TExamQuestions;
 import com.matrix.pojo.entity.TLesson;
 import com.matrix.pojo.entity.TLessonQrcode;
 import com.matrix.pojo.entity.TLessonSign;
@@ -52,7 +54,8 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	private ITUserDao userDao;
 	@Resource
 	private ITClassesDao classesDao;
-	
+	@Resource
+	private ITExamQuestionsDao examQuestionDao;
 	
 
 	/**
@@ -283,6 +286,38 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 				result.put("list", list_);
 			}else{
 				result.put("msg", "您暂时没有课程列表");
+			}
+		} catch (Exception ex) { 
+			ex.printStackTrace();
+			result.put("msg", "服务器异常");
+		}
+		
+		return result;
+	}
+
+	/**
+	 * @descriptions				
+	 * 	
+	 * 	
+	 *
+	 * @param lessonCode
+	 * @return
+	 * @date 2017年3月11日 下午9:07:01
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject questionList(String lessonCode) {
+		JSONObject result = new JSONObject();
+		result.put("status", false);
+		try {
+			TExamQuestions e = new TExamQuestions();
+			e.setLessonCode(lessonCode); 
+			List<TExamQuestions> list = examQuestionDao.findList(e);
+			if(list != null && list.size() > 0){
+				result.put("status", true);
+				result.put("list", list);
+			}else{
+				result.put("msg", "暂时没有该课程的题库列表");
 			}
 		} catch (Exception ex) { 
 			ex.printStackTrace();

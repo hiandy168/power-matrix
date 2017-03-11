@@ -9,14 +9,18 @@ public class TExamQuestions {
     private String deptCode;
     private String professionCode;
     private String lessonCode;
+    private Integer score;
+    private String type;
+    private Boolean picture;
     private String url;
-    private Double score;
+    private String options;
     private String createUser;
     private Date createTime;
     private String updateUser;
     private Date updateTime;
-    private String question;
+    private String content;
     private String answer;
+    
     
 	public Integer getId() {
 		return id;
@@ -54,17 +58,35 @@ public class TExamQuestions {
 	public void setLessonCode(String lessonCode) {
 		this.lessonCode = lessonCode;
 	}
+	public Integer getScore() {
+		return score;
+	}
+	public void setScore(Integer score) {
+		this.score = score;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public Boolean getPicture() {
+		return picture;
+	}
+	public void setPicture(Boolean picture) {
+		this.picture = picture;
+	}
 	public String getUrl() {
 		return url;
 	}
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public Double getScore() {
-		return score;
+	public String getOptions() {
+		return options;
 	}
-	public void setScore(Double score) {
-		this.score = score;
+	public void setOptions(String options) {
+		this.options = options;
 	}
 	public String getCreateUser() {
 		return createUser;
@@ -90,11 +112,11 @@ public class TExamQuestions {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-	public String getQuestion() {
-		return question;
+	public String getContent() {
+		return content;
 	}
-	public void setQuestion(String question) {
-		this.question = question;
+	public void setContent(String content) {
+		this.content = content;
 	}
 	public String getAnswer() {
 		return answer;

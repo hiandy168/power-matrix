@@ -8,15 +8,19 @@
 		<result column="dept_code" property="deptCode" jdbcType="VARCHAR" />
 		<result column="profession_code" property="professionCode" jdbcType="VARCHAR" />
 		<result column="lesson_code" property="lessonCode" jdbcType="VARCHAR" />
+		<result column="score" property="score" jdbcType="INTEGER" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="picture" property="picture" jdbcType="BIT" />
 		<result column="url" property="url" jdbcType="VARCHAR" />
-		<result column="score" property="score" jdbcType="DOUBLE" />
+		<result column="options" property="options" jdbcType="VARCHAR" />
 		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-		<result column="question" property="question" jdbcType="LONGVARCHAR" />
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
 		<result column="answer" property="answer" jdbcType="LONGVARCHAR" />
 	</resultMap>
+	
 	
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
@@ -28,10 +32,29 @@
 	</select>
 	
 	
+	<select id="findList" resultMap="BaseResultMap" parameterType="com.matrix.pojo.entity.TExamQuestions">
+		select
+			*
+		from 
+			educationalcenter.t_exam_questions
+		where 1= 1  
+			 <if test="code != null">
+				and code = #{code,jdbcType=VARCHAR} 
+			</if>
+			<if test="deptCode != null">
+				and dept_code = #{deptCode,jdbcType=VARCHAR} 
+			</if>
+			<if test="professionCode != null">
+				and profession_code = #{professionCode,jdbcType=VARCHAR} 
+			</if>
+			<if test="lessonCode != null">
+				and lesson_code = #{lessonCode,jdbcType=VARCHAR} 
+			</if>
+	</select>
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from educationalcenter.t_exam_questions where id = #{id,jdbcType=INTEGER}
 	</delete>
-	
 	
 	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.TExamQuestions">
 		insert into educationalcenter.t_exam_questions
@@ -54,11 +77,20 @@
 			<if test="lessonCode != null">
 				lesson_code,
 			</if>
+			<if test="score != null">
+				score,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="picture != null">
+				picture,
+			</if>
 			<if test="url != null">
 				url,
 			</if>
-			<if test="score != null">
-				score,
+			<if test="options != null">
+				options,
 			</if>
 			<if test="createUser != null">
 				create_user,
@@ -72,8 +104,8 @@
 			<if test="updateTime != null">
 				update_time,
 			</if>
-			<if test="question != null">
-				question,
+			<if test="content != null">
+				content,
 			</if>
 			<if test="answer != null">
 				answer,
@@ -98,11 +130,20 @@
 			<if test="lessonCode != null">
 				#{lessonCode,jdbcType=VARCHAR},
 			</if>
+			<if test="score != null">
+				#{score,jdbcType=INTEGER},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="picture != null">
+				#{picture,jdbcType=BIT},
+			</if>
 			<if test="url != null">
 				#{url,jdbcType=VARCHAR},
 			</if>
-			<if test="score != null">
-				#{score,jdbcType=DOUBLE},
+			<if test="options != null">
+				#{options,jdbcType=VARCHAR},
 			</if>
 			<if test="createUser != null">
 				#{createUser,jdbcType=VARCHAR},
@@ -116,14 +157,15 @@
 			<if test="updateTime != null">
 				#{updateTime,jdbcType=TIMESTAMP},
 			</if>
-			<if test="question != null">
-				#{question,jdbcType=LONGVARCHAR},
+			<if test="content != null">
+				#{content,jdbcType=LONGVARCHAR},
 			</if>
 			<if test="answer != null">
 				#{answer,jdbcType=LONGVARCHAR},
 			</if>
 		</trim>
 	</insert>
+	
 	
 	<update id="updateSelective" parameterType="com.matrix.pojo.entity.TExamQuestions">
 		update educationalcenter.t_exam_questions
@@ -143,11 +185,20 @@
 			<if test="lessonCode != null">
 				lesson_code = #{lessonCode,jdbcType=VARCHAR},
 			</if>
+			<if test="score != null">
+				score = #{score,jdbcType=INTEGER},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="picture != null">
+				picture = #{picture,jdbcType=BIT},
+			</if>
 			<if test="url != null">
 				url = #{url,jdbcType=VARCHAR},
 			</if>
-			<if test="score != null">
-				score = #{score,jdbcType=DOUBLE},
+			<if test="options != null">
+				options = #{options,jdbcType=VARCHAR},
 			</if>
 			<if test="createUser != null">
 				create_user = #{createUser,jdbcType=VARCHAR},
@@ -161,8 +212,8 @@
 			<if test="updateTime != null">
 				update_time = #{updateTime,jdbcType=TIMESTAMP},
 			</if>
-			<if test="question != null">
-				question = #{question,jdbcType=LONGVARCHAR},
+			<if test="content != null">
+				content = #{content,jdbcType=LONGVARCHAR},
 			</if>
 			<if test="answer != null">
 				answer = #{answer,jdbcType=LONGVARCHAR},
@@ -171,6 +222,27 @@
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

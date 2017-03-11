@@ -50,7 +50,9 @@ public interface IEducationalService {
 
 	public JSONObject lessonList(TTeacher entity);
 
-	public JSONObject signLessonList(TTeacher entity);    
+	public JSONObject signLessonList(TTeacher entity);
+
+	public JSONObject questionList(String lessonCode);     
 }
 
 

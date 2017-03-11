@@ -13,7 +13,24 @@ import java.util.List;
 public class StudentAnswer {
 	private String paperCode;
 	private String studentCode;
-	private List<Answer> list; 
+	private List<Answer> list;
 	
-	
+	public String getPaperCode() {
+		return paperCode;
+	}
+	public void setPaperCode(String paperCode) {
+		this.paperCode = paperCode;
+	}
+	public String getStudentCode() {
+		return studentCode;
+	}
+	public void setStudentCode(String studentCode) {
+		this.studentCode = studentCode;
+	}
+	public List<Answer> getList() {
+		return list;
+	}
+	public void setList(List<Answer> list) {
+		this.list = list;
+	} 
 }

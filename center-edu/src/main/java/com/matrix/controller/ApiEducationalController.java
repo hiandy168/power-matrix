@@ -107,6 +107,27 @@ public class ApiEducationalController {
 		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
 		return service.signLessonList(entity);  
 	}
+	
+	/**
+	 * @descriptions
+	 *
+	 * @param entity
+	 * @param response
+	 * @return
+	 * @date 2017年3月11日 下午9:00:21
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "question_list", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject questionList(String lessonCode , HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
+		return service.questionList(lessonCode);    
+	}
+	
+	
+	
+	
 }
 
 
