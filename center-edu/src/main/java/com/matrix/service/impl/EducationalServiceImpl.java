@@ -213,8 +213,19 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 			}
 			u.setCode(code);
 			userDao.insertSelective(u);
-			result.put("status", true);
-			result.put("msg", "注册成功!"); 
+			 
+			try {
+				TUser user = userDao.login(u);
+				if(user != null){
+					result.put("status", true);
+					result.put("data", user);
+					result.put("msg", "注册成功!"); 
+				}else{
+					result.put("msg", "用户名或密码错误");  
+				}
+			} catch (Exception ex) {
+				result.put("msg", "服务器查询异常"); 
+			}
 		} catch (Exception ex) { 
 			ex.printStackTrace();
 			result.put("msg", "服务器异常,请再次尝试"); 
@@ -235,8 +246,8 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 		result.put("status", false);
 		try {
 			List<TLesson> list = lessonDao.findLessonListByTcode(e.getCode());
+			result.put("status", true);
 			if(list != null && list.size() > 0){
-				result.put("status", true);
 				result.put("list", list);
 			}else{
 				result.put("msg", "您暂时没有课程列表");
