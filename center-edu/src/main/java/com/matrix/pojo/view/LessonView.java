@@ -1,27 +1,22 @@
 package com.matrix.pojo.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.matrix.pojo.entity.TClasses;
 import com.matrix.pojo.entity.TLesson;
 
-public class LessonView {
+public class LessonView extends TLesson{
 	
-	private TLesson entity;
-	private List<TClasses> claList = new ArrayList<>();
+	private Integer length;  // t_study_schedule 表的length  
+	private String classesCode; // t_study_schedule 表的class_code   
 
-	public TLesson getEntity() {
-		return entity;
+	public String getClassesCode() {
+		return classesCode;
 	}
-	public void setEntity(TLesson entity) {
-		this.entity = entity;
+	public void setClassesCode(String classesCode) {
+		this.classesCode = classesCode;
 	}
-	public List<TClasses> getClaList() {
-		return claList;
+	public Integer getLength() {
+		return length;
 	}
-	public void setClaList(List<TClasses> claList) {
-		this.claList = claList;
+	public void setLength(Integer length) {
+		this.length = length;
 	}
-	
 }

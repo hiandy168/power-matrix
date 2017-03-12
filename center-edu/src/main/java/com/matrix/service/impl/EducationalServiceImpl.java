@@ -4,9 +4,12 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.print.attribute.HashAttributeSet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +23,7 @@ import com.matrix.dao.ITLessonDao;
 import com.matrix.dao.ITLessonQrcodeDao;
 import com.matrix.dao.ITLessonSignDao;
 import com.matrix.dao.ITStudentDao;
+import com.matrix.dao.ITStudyScheduleDao;
 import com.matrix.dao.ITTeacherDao;
 import com.matrix.dao.ITUserDao;
 import com.matrix.pojo.dto.RegisteDto;
@@ -31,6 +35,7 @@ import com.matrix.pojo.entity.TLessonSign;
 import com.matrix.pojo.entity.TStudent;
 import com.matrix.pojo.entity.TTeacher;
 import com.matrix.pojo.entity.TUser;
+import com.matrix.pojo.view.LessonResponseView;
 import com.matrix.pojo.view.LessonView;
 import com.matrix.pojo.view.SignListView;
 import com.matrix.service.IEducationalService;
@@ -56,6 +61,8 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	private ITClassesDao classesDao;
 	@Resource
 	private ITExamQuestionsDao examQuestionDao;
+	@Resource
+	private ITStudyScheduleDao studyScheduleDao;
 	
 
 	/**
@@ -93,11 +100,9 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	public JSONObject startLesson(String tcode, String lcode , HttpServletRequest request) {
 		JSONObject result = new JSONObject();
 		TLessonQrcode e =  new TLessonQrcode();
-		e.setUuid(UuidUtil.uid());  
-		e.setTeacherCode(tcode);
-		e.setLessonCode(lcode);
+		e.setUuid(UuidUtil.uid());   
 		e.setCreateTime(new Date()); 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
 		String date = sdf.format(new Date());
 		String fname = tcode + "@" + lcode;
 		String path = "qrcode" +File.separator + fname + "," + date + ".jpg";
@@ -138,7 +143,7 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 		TLessonSign e = new TLessonSign();
 		e.setUuid(UuidUtil.uid());
 		e.setStudentCode(scode);
-		e.setLessonCode(lcode);
+//		e.setLessonCode(lcode);
 		e.setCreateTime(new Date());
 		try {
 			lessonSignDao.insertSelective(e);
@@ -211,8 +216,8 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 				s.setName(e.getRealName());
 				s.setHeadPic("http://image-family.huijiayou.cn/cfiles/staticfiles/upload/2993e/b1db66d6b4a74c95816c495e12d858e8.jpg");
 				s.setCreateUser("registe");
-				SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				s.setCreateTime(sdf.format(new Date()));
+				s.setSex(e.getSex());
+				s.setCreateTime(new Date());
 				sutdentDao.insertSelective(s);
 			}
 			u.setCode(code);
@@ -249,7 +254,7 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 		JSONObject result = new JSONObject();
 		result.put("status", false);
 		try {
-			List<TLesson> list = lessonDao.findLessonListByTcode(e.getCode());
+			List<LessonView> list = lessonDao.findLessonListByTcode(e.getCode());
 			result.put("status", true);
 			if(list != null && list.size() > 0){
 				result.put("list", list);
@@ -268,33 +273,41 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	public JSONObject signLessonList(TTeacher e) {
 		JSONObject result = new JSONObject();
 		result.put("status", false);
-		List<LessonView> list_ = new ArrayList<>();
+		List<LessonResponseView> list_ = new ArrayList<LessonResponseView>();
 		try {
-			List<TLesson> list = lessonDao.findLessonListByTcode(e.getCode());
+			List<LessonView> list = lessonDao.findClassLessonListByTcode(e.getCode()); 
 			if(list != null && list.size() > 0){
 				result.put("status", true);
 				List<TClasses> clalist = classesDao.findAllClasses();
-				for(TLesson le : list){
-					LessonView v = new LessonView();
-					v.setEntity(le); 
-					if(StringUtils.isBlank(le.getClassesCode())){
-						list_.add(v);
-						continue;
+				Map<String , List<LessonView>> map = new HashMap<String , List<LessonView>>();
+				List<LessonView> li = null;
+				for(LessonView v : list){
+					if(map.containsKey(v.getCode())){
+						map.get(v.getCode()).add(v);
+					}else{
+						li = new ArrayList<>();
+						li.add(v);
+						map.put(v.getCode(), li);
 					}
-					String[] arr = le.getClassesCode().split(",");
-					if(arr.length != 0){
-						for(int i = 0 ; i < arr.length ; i ++){
-							for(TClasses cls : clalist){
-								if(arr[i].equals(cls.getCode())){
-									v.getClaList().add(cls);
+				}
+				
+				for(String key : map.keySet()){
+					LessonResponseView v = new LessonResponseView();
+					List<LessonView> sli = map.get(key);
+					if(sli != null && sli.size() > 0){
+						v.setEntity(sli.get(0)); 
+						for (LessonView lv : sli){
+							for(TClasses tc : clalist){
+								if(tc.getCode().equals(lv.getClassesCode())){
+									v.getClaList().add(tc);
 								}
 							}
 						}
-					} 
-					list_.add(v);
+						list_.add(v);
+					}
 				}
-				
 				result.put("list", list_);
+				
 			}else{
 				result.put("msg", "您暂时没有课程列表");
 			}

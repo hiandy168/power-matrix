@@ -2,37 +2,20 @@ package com.matrix.pojo.entity;
 
 import java.util.Date;
 
-public class TLessonQrcode {
-	private Integer id;
-	private String uuid;
-	private String teacherCode;
-	private String lessonCode;
+import com.matrix.pojo.EduBaseEntity;
+
+public class TLessonQrcode  extends EduBaseEntity{
+	private String scheduleCode;
+//	private String teacherCode;
+//	private String lessonCode;
 	private String qrcodeUrl;
-	private Date createTime;
 	
-	public Integer getId() {
-		return id;
+	
+	public String getScheduleCode() {
+		return scheduleCode;
 	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getUuid() {
-		return uuid;
-	}
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-	public String getTeacherCode() {
-		return teacherCode;
-	}
-	public void setTeacherCode(String teacherCode) {
-		this.teacherCode = teacherCode;
-	}
-	public String getLessonCode() {
-		return lessonCode;
-	}
-	public void setLessonCode(String lessonCode) {
-		this.lessonCode = lessonCode;
+	public void setScheduleCode(String scheduleCode) {
+		this.scheduleCode = scheduleCode;
 	}
 	public String getQrcodeUrl() {
 		return qrcodeUrl;
@@ -40,10 +23,5 @@ public class TLessonQrcode {
 	public void setQrcodeUrl(String qrcodeUrl) {
 		this.qrcodeUrl = qrcodeUrl;
 	}
-	public Date getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+	
 }

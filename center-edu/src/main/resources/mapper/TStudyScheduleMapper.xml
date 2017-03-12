@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.matrix.dao.ITLessonEvaluateDao">
-	<resultMap id="BaseResultMap" type="com.matrix.pojo.entity.TLessonEvaluate">
+<mapper namespace="com.matrix.dao.ITStudyScheduleDao">
+
+	<resultMap id="BaseResultMap" type="com.matrix.pojo.entity.TStudySchedule">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="uuid" property="uuid" jdbcType="VARCHAR" />
 		<result column="code" property="code" jdbcType="VARCHAR" />
-		<result column="student_code" property="studentCode" jdbcType="VARCHAR" />
-		<result column="schedule_code" property="scheduleCode" jdbcType="VARCHAR" />
-		<result column="score" property="score" jdbcType="INTEGER" />
+		<result column="lesson_code" property="lessonCode" jdbcType="VARCHAR" />
+		<result column="teacher_code" property="teacherCode" jdbcType="VARCHAR" />
+		<result column="classes_code" property="classesCode" jdbcType="VARCHAR" />
+		<result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+		<result column="length" property="length" jdbcType="INTEGER" />
 		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-		<result column="content" property="content" jdbcType="LONGVARCHAR" />
 	</resultMap>
+	
 	
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
 			*
 		from 
-			educationalcenter.t_lesson_evaluate
+			educationalcenter.t_study_schedule
 		where 
 			id = #{id,jdbcType=INTEGER}
 	</select>
 	
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from educationalcenter.t_lesson_evaluate where id = #{id,jdbcType=INTEGER}
+		delete from educationalcenter.t_study_schedule
+		where id = #{id,jdbcType=INTEGER}
 	</delete>
 	
 	
-	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.TLessonEvaluate">
-		insert into educationalcenter.t_lesson_evaluate
+	
+	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.TStudySchedule">
+		insert into educationalcenter.t_study_schedule
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
 				id,
@@ -42,14 +47,20 @@
 			<if test="code != null">
 				code,
 			</if>
-			<if test="studentCode != null">
-				student_code,
+			<if test="lessonCode != null">
+				lesson_code,
 			</if>
-			<if test="scheduleCode != null">
-				schedule_code,
+			<if test="teacherCode != null">
+				teacher_code,
 			</if>
-			<if test="score != null">
-				score,
+			<if test="classesCode != null">
+				classes_code,
+			</if>
+			<if test="startTime != null">
+				start_time,
+			</if>
+			<if test="length != null">
+				length,
 			</if>
 			<if test="createUser != null">
 				create_user,
@@ -63,9 +74,6 @@
 			<if test="updateTime != null">
 				update_time,
 			</if>
-			<if test="content != null">
-				content,
-			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -77,14 +85,20 @@
 			<if test="code != null">
 				#{code,jdbcType=VARCHAR},
 			</if>
-			<if test="studentCode != null">
-				#{studentCode,jdbcType=VARCHAR},
+			<if test="lessonCode != null">
+				#{lessonCode,jdbcType=VARCHAR},
 			</if>
-			<if test="scheduleCode != null">
-				#{scheduleCode,jdbcType=VARCHAR},
+			<if test="teacherCode != null">
+				#{teacherCode,jdbcType=VARCHAR},
 			</if>
-			<if test="score != null">
-				#{score,jdbcType=INTEGER},
+			<if test="classesCode != null">
+				#{classesCode,jdbcType=VARCHAR},
+			</if>
+			<if test="startTime != null">
+				#{startTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="length != null">
+				#{length,jdbcType=INTEGER},
 			</if>
 			<if test="createUser != null">
 				#{createUser,jdbcType=VARCHAR},
@@ -98,15 +112,12 @@
 			<if test="updateTime != null">
 				#{updateTime,jdbcType=TIMESTAMP},
 			</if>
-			<if test="content != null">
-				#{content,jdbcType=LONGVARCHAR},
-			</if>
 		</trim>
 	</insert>
 	
 	
-	<update id="updateSelective" parameterType="com.matrix.pojo.entity.TLessonEvaluate">
-		update educationalcenter.t_lesson_evaluate
+	<update id="updateSelective" parameterType="com.matrix.pojo.entity.TStudySchedule">
+		update educationalcenter.t_study_schedule
 		<set>
 			<if test="uuid != null">
 				uuid = #{uuid,jdbcType=VARCHAR},
@@ -114,14 +125,20 @@
 			<if test="code != null">
 				code = #{code,jdbcType=VARCHAR},
 			</if>
-			<if test="studentCode != null">
-				student_code = #{studentCode,jdbcType=VARCHAR},
+			<if test="lessonCode != null">
+				lesson_code = #{lessonCode,jdbcType=VARCHAR},
 			</if>
-			<if test="scheduleCode != null">
-				schedule_code = #{scheduleCode,jdbcType=VARCHAR},
+			<if test="teacherCode != null">
+				teacher_code = #{teacherCode,jdbcType=VARCHAR},
 			</if>
-			<if test="score != null">
-				score = #{score,jdbcType=INTEGER},
+			<if test="classesCode != null">
+				classes_code = #{classesCode,jdbcType=VARCHAR},
+			</if>
+			<if test="startTime != null">
+				start_time = #{startTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="length != null">
+				length = #{length,jdbcType=INTEGER},
 			</if>
 			<if test="createUser != null">
 				create_user = #{createUser,jdbcType=VARCHAR},
@@ -135,20 +152,10 @@
 			<if test="updateTime != null">
 				update_time = #{updateTime,jdbcType=TIMESTAMP},
 			</if>
-			<if test="content != null">
-				content = #{content,jdbcType=LONGVARCHAR},
-			</if>
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
+	
+	
+	
 </mapper>
-
-
-
-
-
-
-
-
-
-

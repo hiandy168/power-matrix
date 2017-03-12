@@ -2,31 +2,15 @@ package com.matrix.pojo.entity;
 
 import java.util.Date;
 
-public class TStudent {
-    private Integer id;
-    private String uuid;
+import com.matrix.pojo.EduBaseEntity;
+
+public class TStudent  extends EduBaseEntity{
     private String code;
     private String name;
     private Integer sex;
     private String classesCode;
-    private String headPic;  
-    private String createUser;
-    private String createTime;
-    private String updateUser;
-    private String updateTime;
+    private String headPic;
     
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getUuid() {
-		return uuid;
-	}
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
 	public String getCode() {
 		return code;
 	}
@@ -56,29 +40,6 @@ public class TStudent {
 	}
 	public void setHeadPic(String headPic) {
 		this.headPic = headPic;
-	}
-	public String getCreateUser() {
-		return createUser;
-	}
-	public void setCreateUser(String createUser) {
-		this.createUser = createUser;
-	}
-	public String getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
-	}
-	public String getUpdateUser() {
-		return updateUser;
-	}
-	public void setUpdateUser(String updateUser) {
-		this.updateUser = updateUser;
-	}
-	public String getUpdateTime() {
-		return updateTime;
-	}
-	public void setUpdateTime(String updateTime) {
-		this.updateTime = updateTime;
-	}
+	}  
+    
 }

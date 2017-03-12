@@ -1,10 +1,8 @@
 package com.matrix.pojo.entity;
 
-import java.util.Date;
+import com.matrix.pojo.EduBaseEntity;
 
-public class TExamQuestions {
-    private Integer id;
-    private String uuid;
+public class TExamQuestions  extends EduBaseEntity{
     private String code;
     private String deptCode;
     private String professionCode;
@@ -14,26 +12,8 @@ public class TExamQuestions {
     private Boolean picture;
     private String url;
     private String options;
-    private String createUser;
-    private Date createTime;
-    private String updateUser;
-    private Date updateTime;
     private String content;
     private String answer;
-    
-    
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getUuid() {
-		return uuid;
-	}
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
 	public String getCode() {
 		return code;
 	}
@@ -87,30 +67,6 @@ public class TExamQuestions {
 	}
 	public void setOptions(String options) {
 		this.options = options;
-	}
-	public String getCreateUser() {
-		return createUser;
-	}
-	public void setCreateUser(String createUser) {
-		this.createUser = createUser;
-	}
-	public Date getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	public String getUpdateUser() {
-		return updateUser;
-	}
-	public void setUpdateUser(String updateUser) {
-		this.updateUser = updateUser;
-	}
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
 	}
 	public String getContent() {
 		return content;
