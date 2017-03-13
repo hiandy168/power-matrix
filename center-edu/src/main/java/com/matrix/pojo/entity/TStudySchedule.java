@@ -5,18 +5,19 @@ import java.util.Date;
 import com.matrix.pojo.EduBaseEntity;
 
 public class TStudySchedule  extends EduBaseEntity{
-    private String code;
+    private String scheduleCode;
     private String lessonCode;
     private String teacherCode;
     private String classesCode;
     private Date startTime;
     private Integer length;
     
-	public String getCode() {
-		return code;
+	
+	public String getScheduleCode() {
+		return scheduleCode;
 	}
-	public void setCode(String code) {
-		this.code = code;
+	public void setScheduleCode(String scheduleCode) {
+		this.scheduleCode = scheduleCode;
 	}
 	public String getLessonCode() {
 		return lessonCode;

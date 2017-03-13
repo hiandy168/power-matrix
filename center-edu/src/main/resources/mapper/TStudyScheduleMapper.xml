@@ -5,7 +5,7 @@
 	<resultMap id="BaseResultMap" type="com.matrix.pojo.entity.TStudySchedule">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="uuid" property="uuid" jdbcType="VARCHAR" />
-		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="schedule_code" property="scheduleCode" jdbcType="VARCHAR" />
 		<result column="lesson_code" property="lessonCode" jdbcType="VARCHAR" />
 		<result column="teacher_code" property="teacherCode" jdbcType="VARCHAR" />
 		<result column="classes_code" property="classesCode" jdbcType="VARCHAR" />
@@ -28,9 +28,30 @@
 	</select>
 	
 	
+	<select id="findList" resultMap="BaseResultMap" parameterType="com.matrix.pojo.entity.TStudySchedule">
+		select
+			*
+		from 
+			educationalcenter.t_study_schedule
+		where 1 = 1
+			<if test="scheduleCode != null">
+				and schedule_code = #{scheduleCode , jdbcType=VARCHAR} 
+			</if>
+			<if test="lessonCode != null">
+				and lesson_code = #{lessonCode,jdbcType=VARCHAR} 
+			</if>
+			<if test="teacherCode != null">
+				and teacher_code = #{teacherCode,jdbcType=VARCHAR} 
+			</if>
+			<if test="classesCode != null">
+				and classes_code = #{classesCode,jdbcType=VARCHAR} 
+			</if>
+			
+	</select>
+	
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from educationalcenter.t_study_schedule
-		where id = #{id,jdbcType=INTEGER}
+		delete from educationalcenter.t_study_schedule where id = #{id,jdbcType=INTEGER}
 	</delete>
 	
 	
@@ -44,8 +65,8 @@
 			<if test="uuid != null">
 				uuid,
 			</if>
-			<if test="code != null">
-				code,
+			<if test="scheduleCode  != null">
+				schedule_codecode,
 			</if>
 			<if test="lessonCode != null">
 				lesson_code,
@@ -82,8 +103,8 @@
 			<if test="uuid != null">
 				#{uuid,jdbcType=VARCHAR},
 			</if>
-			<if test="code != null">
-				#{code,jdbcType=VARCHAR},
+			<if test="scheduleCode != null">
+				#{scheduleCode,jdbcType=VARCHAR}, 
 			</if>
 			<if test="lessonCode != null">
 				#{lessonCode,jdbcType=VARCHAR},
@@ -122,8 +143,8 @@
 			<if test="uuid != null">
 				uuid = #{uuid,jdbcType=VARCHAR},
 			</if>
-			<if test="code != null">
-				code = #{code,jdbcType=VARCHAR},
+			<if test="scheduleCode != null">
+				schedule_code = #{scheduleCode , jdbcType=VARCHAR},
 			</if>
 			<if test="lessonCode != null">
 				lesson_code = #{lessonCode,jdbcType=VARCHAR},

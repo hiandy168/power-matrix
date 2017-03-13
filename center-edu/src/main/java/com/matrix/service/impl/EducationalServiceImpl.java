@@ -35,6 +35,7 @@ import com.matrix.pojo.entity.TLesson;
 import com.matrix.pojo.entity.TLessonQrcode;
 import com.matrix.pojo.entity.TLessonSign;
 import com.matrix.pojo.entity.TStudent;
+import com.matrix.pojo.entity.TStudySchedule;
 import com.matrix.pojo.entity.TTeacher;
 import com.matrix.pojo.entity.TUser;
 import com.matrix.pojo.view.LessonResponseView;
@@ -300,21 +301,25 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 					}
 				}
 				
+				// {L9970723=[C376765],L8293857=[C376765,C268676,C198797]}
 				for(String key : map.keySet()){
-					LessonResponseView v = new LessonResponseView();
-//					List<LessonView> sli = map.get(key);
-//					if(sli != null && sli.size() > 0){
-//						v.setEntity(sli.get(0)); 
-//						for (LessonView lv : sli){
-							for(TClasses tc : clalist){
-								System.out.println(key); 
-//								if(tc.getCode().equals(lv.getClassesCode())){
-//									v.getClaList().add(tc);
-//								}
+					LessonResponseView re = new LessonResponseView();
+					for(LessonView v : list){
+						if(v.getCode().equals(key)){
+							re.setEntity(v);
+							break;
+						}
+					}
+					Set<String> lcodes = map.get(key);
+					for(String lcode : lcodes){
+						for(TClasses tc : clalist){
+							if(tc.getCode().equals(lcode)){
+								re.getClaList().add(tc);
 							}
-//						}
-//						list_.add(v);
-//					}
+						}
+					}
+					list_.add(re);
+					
 				}
 				result.put("list", list_);
 				
@@ -352,6 +357,52 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 				result.put("list", list);
 			}else{
 				result.put("msg", "暂时没有该课程的题库列表");
+			}
+		} catch (Exception ex) { 
+			ex.printStackTrace();
+			result.put("msg", "服务器异常");
+		}
+		
+		return result;
+	}
+
+	@Override
+	public JSONObject lessonScheduleList(TStudySchedule e) {
+		JSONObject result = new JSONObject();
+		result.put("status", false);
+		if(StringUtils.isAnyBlank(e.getTeacherCode() , e.getLessonCode())){
+			result.put("msg", "关键字段不得为空");
+			return result;
+		}
+		try { 
+			List<LessonResponseView> list_ = new ArrayList<LessonResponseView>();
+			List<TStudySchedule> list = studyScheduleDao.findList(e);
+			if(list != null && list.size() > 0){
+				result.put("status", true);
+				List<TClasses> clalist = classesDao.findAllClasses();
+				for(TStudySchedule s : list){
+					LessonResponseView v = new LessonResponseView();
+					String [] arr = s.getClassesCode().split(",");
+					for( int i = 0 ; i < arr.length ; i ++){
+						for(TClasses c : clalist){
+							if(c.getCode().equals(arr[i])){
+								v.getClaList().add(c);
+							}
+						}
+					}
+					LessonView lv = new LessonView();
+					lv.setCode(e.getLessonCode());
+					lv.setScheduleCode(e.getScheduleCode());
+//					lv.setLessonName("");
+				}
+				
+				
+				
+				
+				result.put("status", true);
+				result.put("list", list_);
+			}else{
+				result.put("msg", "暂时没有您的排课列表");
 			}
 		} catch (Exception ex) { 
 			ex.printStackTrace();

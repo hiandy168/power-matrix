@@ -44,6 +44,7 @@
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="intro" property="intro" jdbcType="LONGVARCHAR" />
 		<result column="classes_code" property="classesCode" jdbcType="VARCHAR" />
+		<result column="schedule_code" property="scheduleCode" jdbcType="VARCHAR" /> 
 	</resultMap>
 	<select id="findLessonListByTcode" resultMap="LessonViewMap" parameterType="java.lang.String">
 		select

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.pojo.dto.RegisteDto;
+import com.matrix.pojo.entity.TStudySchedule;
 import com.matrix.pojo.entity.TTeacher;
 import com.matrix.pojo.entity.TUser;
 
@@ -52,7 +53,9 @@ public interface IEducationalService {
 
 	public JSONObject signLessonList(TTeacher entity);
 
-	public JSONObject questionList(String lessonCode);     
+	public JSONObject questionList(String lessonCode);
+
+	public JSONObject lessonScheduleList(TStudySchedule e);      
 }
 
 
