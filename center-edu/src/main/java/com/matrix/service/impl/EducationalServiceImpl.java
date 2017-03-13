@@ -5,8 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.print.attribute.HashAttributeSet;
@@ -270,41 +272,49 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	}
 
 	@Override
-	public JSONObject signLessonList(TTeacher e) {
+	public JSONObject signLessonList(TTeacher t) {
 		JSONObject result = new JSONObject();
 		result.put("status", false);
 		List<LessonResponseView> list_ = new ArrayList<LessonResponseView>();
 		try {
-			List<LessonView> list = lessonDao.findClassLessonListByTcode(e.getCode()); 
+			List<LessonView> list = lessonDao.findClassLessonListByTcode(t.getCode()); 
 			if(list != null && list.size() > 0){
 				result.put("status", true);
 				List<TClasses> clalist = classesDao.findAllClasses();
-				Map<String , List<LessonView>> map = new HashMap<String , List<LessonView>>();
-				List<LessonView> li = null;
+				// key:lesson_code  value:classes_code set 集合
+				Map<String , Set<String>> map = new HashMap<String , Set<String>>();
+				Set<String> set = null;
 				for(LessonView v : list){
 					if(map.containsKey(v.getCode())){
-						map.get(v.getCode()).add(v);
+						String [] arr = v.getClassesCode().split(",");
+						for(int i = 0 ; i < arr.length ; i ++){
+							map.get(v.getCode()).add(arr[i]);
+						}
 					}else{
-						li = new ArrayList<>();
-						li.add(v);
-						map.put(v.getCode(), li);
+						set = new HashSet<>();  
+						String [] arr = v.getClassesCode().split(",");
+						for(int i = 0 ; i < arr.length ; i ++){
+							set.add( arr[i] );
+						}
+						map.put(v.getCode(), set);
 					}
 				}
 				
 				for(String key : map.keySet()){
 					LessonResponseView v = new LessonResponseView();
-					List<LessonView> sli = map.get(key);
-					if(sli != null && sli.size() > 0){
-						v.setEntity(sli.get(0)); 
-						for (LessonView lv : sli){
+//					List<LessonView> sli = map.get(key);
+//					if(sli != null && sli.size() > 0){
+//						v.setEntity(sli.get(0)); 
+//						for (LessonView lv : sli){
 							for(TClasses tc : clalist){
-								if(tc.getCode().equals(lv.getClassesCode())){
-									v.getClaList().add(tc);
-								}
+								System.out.println(key); 
+//								if(tc.getCode().equals(lv.getClassesCode())){
+//									v.getClaList().add(tc);
+//								}
 							}
-						}
-						list_.add(v);
-					}
+//						}
+//						list_.add(v);
+//					}
 				}
 				result.put("list", list_);
 				
