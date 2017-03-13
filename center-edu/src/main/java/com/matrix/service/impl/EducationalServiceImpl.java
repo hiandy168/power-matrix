@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.matrix.base.BaseClass;
 import com.matrix.dao.ITClassesDao;
 import com.matrix.dao.ITExamQuestionsDao;
@@ -41,6 +42,7 @@ import com.matrix.pojo.entity.TUser;
 import com.matrix.pojo.view.LessonResponseView;
 import com.matrix.pojo.view.LessonView;
 import com.matrix.pojo.view.SignListView;
+import com.matrix.pojo.view.StudyScheduleView;
 import com.matrix.service.IEducationalService;
 import com.matrix.util.UuidUtil;
 import com.matrix.utils.QrcodeUtil;
@@ -375,12 +377,13 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 			return result;
 		}
 		try { 
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 			List<LessonResponseView> list_ = new ArrayList<LessonResponseView>();
-			List<TStudySchedule> list = studyScheduleDao.findList(e);
+			List<StudyScheduleView> list = studyScheduleDao.findListByType(e);
 			if(list != null && list.size() > 0){
 				result.put("status", true);
 				List<TClasses> clalist = classesDao.findAllClasses();
-				for(TStudySchedule s : list){
+				for(StudyScheduleView s : list){
 					LessonResponseView v = new LessonResponseView();
 					String [] arr = s.getClassesCode().split(",");
 					for( int i = 0 ; i < arr.length ; i ++){
@@ -391,16 +394,18 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 						}
 					}
 					LessonView lv = new LessonView();
-					lv.setCode(e.getLessonCode());
-					lv.setScheduleCode(e.getScheduleCode());
-//					lv.setLessonName("");
+					lv.setCode(s.getLessonCode());
+					lv.setScheduleCode(s.getScheduleCode());
+					lv.setLessonName(s.getLessonName());
+					lv.setTypeCode(s.getTypeCode());
+					lv.setIntro(s.getIntro());
+					lv.setStartTime(sdf.format(s.getStartTime())); 
+					v.setEntity(lv);
+					list_.add(v);
 				}
+				String json = JSONObject.toJSONString(list_, SerializerFeature.DisableCircularReferenceDetect);
+				result.put("list" , JSONObject.parse(json) ); // 解决 $ref 问题 
 				
-				
-				
-				
-				result.put("status", true);
-				result.put("list", list_);
 			}else{
 				result.put("msg", "暂时没有您的排课列表");
 			}

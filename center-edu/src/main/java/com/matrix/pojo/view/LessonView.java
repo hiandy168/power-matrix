@@ -1,5 +1,7 @@
 package com.matrix.pojo.view;
 
+import java.util.Date;
+
 import com.matrix.pojo.entity.TLesson;
 
 public class LessonView extends TLesson{
@@ -7,7 +9,15 @@ public class LessonView extends TLesson{
 	private String scheduleCode;
 	private Integer length;  // t_study_schedule 表的length  
 	private String classesCode; // t_study_schedule 表的class_code   
+	private String startTime;
 
+	
+	public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
 	public String getScheduleCode() {
 		return scheduleCode;
 	}
