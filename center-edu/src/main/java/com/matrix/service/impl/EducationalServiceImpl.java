@@ -80,10 +80,10 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	 * @date 2017年3月7日 下午2:01:34 
 	 * @version 1.0.0.1
 	 */
-	public JSONObject findSignList(String tcode, String lcode) {
+	public JSONObject findSignList(String scheduleCode) {
 		JSONObject result = new JSONObject();
 		result.put("status", false);
-		List<SignListView> list = sutdentDao.findSignList(lcode);
+		List<SignListView> list = sutdentDao.findSignList(scheduleCode); 
 		if(list != null && list.size() > 0){
 			result.put("status", true);
 			result.put("list", list);

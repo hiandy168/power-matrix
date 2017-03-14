@@ -36,10 +36,10 @@ public class ApiEduController {
 	 */
 	@RequestMapping(value = "sign_list", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject signList(String tcode , String lcode , HttpServletResponse response){
+	public JSONObject signList(String scheduleCode , HttpServletResponse response){
 		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
 		
-		return service.findSignList(tcode, lcode);
+		return service.findSignList(scheduleCode);
 	}
 	
 	/**

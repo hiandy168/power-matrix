@@ -42,7 +42,7 @@
 		 from 
 			educationalcenter.`t_student` s left join educationalcenter.`t_lesson_sign` l on l.student_code = s.code
 		 where 
-			l.lesson_code = #{lcode , jdbcType=VARCHAR}
+			l.schedule_code = #{scheduleCode , jdbcType=VARCHAR}
 	</select>
 	
 	

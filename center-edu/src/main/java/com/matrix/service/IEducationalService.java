@@ -19,7 +19,7 @@ public interface IEducationalService {
 	 * @date 2017年3月7日 下午2:01:34 
 	 * @version 1.0.0.1
 	 */
-	public JSONObject findSignList(String tcode , String lcode);
+	public JSONObject findSignList(String scheduleCode);
 	
 	/**
 	 * @descriptions 教师开课
