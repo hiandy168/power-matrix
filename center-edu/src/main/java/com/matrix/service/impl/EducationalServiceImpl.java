@@ -21,6 +21,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.matrix.base.BaseClass;
 import com.matrix.dao.ITClassesDao;
+import com.matrix.dao.ITExamPaperDao;
 import com.matrix.dao.ITExamQuestionsDao;
 import com.matrix.dao.ITLessonDao;
 import com.matrix.dao.ITLessonQrcodeDao;
@@ -29,8 +30,10 @@ import com.matrix.dao.ITStudentDao;
 import com.matrix.dao.ITStudyScheduleDao;
 import com.matrix.dao.ITTeacherDao;
 import com.matrix.dao.ITUserDao;
+import com.matrix.pojo.dto.ExamPaperDto;
 import com.matrix.pojo.dto.RegisteDto;
 import com.matrix.pojo.entity.TClasses;
+import com.matrix.pojo.entity.TExamPaper;
 import com.matrix.pojo.entity.TExamQuestions;
 import com.matrix.pojo.entity.TLesson;
 import com.matrix.pojo.entity.TLessonQrcode;
@@ -68,6 +71,8 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	private ITExamQuestionsDao examQuestionDao;
 	@Resource
 	private ITStudyScheduleDao studyScheduleDao;
+	@Resource
+	private ITExamPaperDao examPaperDao;
 	
 
 	/**
@@ -414,6 +419,32 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 			result.put("msg", "服务器异常");
 		}
 		
+		return result;
+	}
+
+	@Override
+	public JSONObject examPaperInsert(ExamPaperDto d) {
+		JSONObject result = new JSONObject();
+		result.put("status", false);
+		try {
+			String code = "P" + System.currentTimeMillis(); 
+			String scheduleCode = d.getScheduleCode();
+			List<String> list = d.getList();
+			for(String s : list){
+				TExamPaper e = new TExamPaper();
+				e.setUuid(UuidUtil.uid()); 
+				e.setCode(code);
+				e.setScheduleCode(scheduleCode);
+				e.setQuestionCode(s);
+				e.setStudentCode(d.getStudentCode());
+				e.setCreateUser(d.getTeacherCode());
+				e.setCreateTime(new Date(0));  
+				examPaperDao.insertSelective(e);
+			}
+			result.put("status", true);
+		} catch (Exception e) {
+			e.printStackTrace(); 
+		}
 		return result;
 	}
 	

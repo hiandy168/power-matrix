@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
+import com.matrix.pojo.dto.ExamPaperDto;
 import com.matrix.pojo.dto.RegisteDto;
 import com.matrix.pojo.entity.TStudySchedule;
 import com.matrix.pojo.entity.TTeacher;
@@ -133,6 +134,18 @@ public class ApiEduController {
 		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
 		return service.lessonScheduleList(e);    
 	}
+	
+	
+	@RequestMapping(value = "exam_paper_insert", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject examPaperInsert(String json , HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
+		
+		ExamPaperDto d = JSONObject.parseObject(json, ExamPaperDto.class); 	
+		return service.examPaperInsert(d);    
+	}
+	
+	
 	
 }
 
