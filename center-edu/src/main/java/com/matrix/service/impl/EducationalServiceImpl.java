@@ -447,10 +447,31 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 			result.put("status", true);
 		} catch (Exception e) {
 			e.printStackTrace(); 
+			result.put("msg", "服务器异常");
 		}
 		return result;
 	}
-	
+
+	// 学生的排课列表
+	public JSONObject studentScheduleList(String classesCode) {
+		JSONObject result = new JSONObject();
+		result.put("status", false);
+		try {
+			 TStudySchedule ss = new TStudySchedule();
+			 ss.setClassesCode(classesCode); 
+			 List<StudyScheduleView> list_ = studyScheduleDao.findListByType(ss);
+			 if(list_ != null && list_.size() != 0){ 
+				 result.put("list" , list_); 
+				 result.put("status", true);
+			 }else{
+				 result.put("msg", "您的排课列表暂时为空");
+			 }
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			result.put("msg", "服务器异常");
+		}
+		return result;
+	}
 	
 }
 

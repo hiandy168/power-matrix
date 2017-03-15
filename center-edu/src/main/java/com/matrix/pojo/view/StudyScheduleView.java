@@ -1,12 +1,22 @@
 package com.matrix.pojo.view;
 
+import java.text.SimpleDateFormat;
+
 import com.matrix.pojo.entity.TStudySchedule;
 
 public class StudyScheduleView extends TStudySchedule{
 	private String lessonName;  // 课程名称
 	private String typeCode;
 	private String intro;
+	private String beginTime;
 	
+	public String getBeginTime() {
+		SimpleDateFormat sdf= new SimpleDateFormat("yyyy-mm-dd HH:mm");
+		return sdf.format(this.getStartTime());
+	}
+	public void setBeginTime(String beginTime) {
+		this.beginTime = beginTime; 
+	}
 	public String getLessonName() {
 		return lessonName;
 	}

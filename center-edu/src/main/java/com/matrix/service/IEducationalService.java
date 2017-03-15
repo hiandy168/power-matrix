@@ -58,7 +58,9 @@ public interface IEducationalService {
 
 	public JSONObject lessonScheduleList(TStudySchedule e);
 
-	public JSONObject examPaperInsert(ExamPaperDto d);       
+	public JSONObject examPaperInsert(ExamPaperDto d);
+
+	public JSONObject studentScheduleList(String classesCode);        
 }
 
 

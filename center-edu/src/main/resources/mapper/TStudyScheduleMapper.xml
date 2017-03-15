@@ -58,7 +58,30 @@
 				and ss.teacher_code = #{teacherCode,jdbcType=VARCHAR} 
 			</if>
 			<if test="classesCode != null">
-				and ss.classes_code = #{classesCode,jdbcType=VARCHAR} 
+				and ss.classes_code like concat('%' , #{classesCode,jdbcType=VARCHAR} , '%') 
+			</if>
+	</select>
+	
+	<select id="findList" resultMap="BaseResultMap" parameterType="com.matrix.pojo.entity.TStudySchedule">
+		select
+			*
+		from 
+			educationalcenter.t_study_schedule
+		where 1 = 1
+			<if test="scheduleCode != null">
+				and schedule_code = #{scheduleCode , jdbcType=VARCHAR} 
+			</if>
+			<if test="lessonCode != null">
+				and lesson_code = #{lessonCode,jdbcType=VARCHAR} 
+			</if>
+			<if test="teacherCode != null">
+				and teacher_code = #{teacherCode,jdbcType=VARCHAR} 
+			</if>
+			<if test="classesCode != null">
+				and classes_code = #{classesCode,jdbcType=VARCHAR} 
+			</if>
+			<if test="startTime != null">
+				and start_time = #{startTime,jdbcType=TIMESTAMP} 
 			</if>
 	</select>
 	

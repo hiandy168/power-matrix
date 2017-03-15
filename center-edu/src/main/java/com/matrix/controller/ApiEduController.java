@@ -145,7 +145,22 @@ public class ApiEduController {
 		return service.examPaperInsert(d);    
 	}
 	
-	
+	/**
+	 * @descriptions  学生的排课列表  
+	 *
+	 * @param classesCode  
+	 * @return
+	 * @date 2017年3月15日 下午11:03:47
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "student_schedule_list", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject studentScheduleList(String classesCode , HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
+		
+		return service.studentScheduleList(classesCode);    
+	}
 	
 }
 
