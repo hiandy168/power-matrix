@@ -101,25 +101,28 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	 * @descriptions 教师开课
 	 *
 	 * @param tcode teacher code
-	 * @param lcode lesson code 
+	 * @param scheduleCode schedule_code 
 	 * @return
 	 * @date 2017年3月7日 下午11:03:14
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	public JSONObject startLesson(String tcode, String lcode , HttpServletRequest request) {
+	public JSONObject startLesson(String tcode, String scheduleCode , HttpServletRequest request) {
 		JSONObject result = new JSONObject();
 		TLessonQrcode e =  new TLessonQrcode();
 		e.setUuid(UuidUtil.uid());   
+		e.setScheduleCode(scheduleCode);
+		e.setCreateUser(tcode);
 		e.setCreateTime(new Date()); 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
 		String date = sdf.format(new Date());
-		String fname = tcode + "@" + lcode;
+		String fname = tcode + "@" + scheduleCode;
 		String path = "qrcode" +File.separator + fname + "," + date + ".jpg";
 		String realPath = request.getServletContext().getRealPath("/") + File.separator + path;  // 获取tomcat真实部署路径 
 		
 		try {
-			QrcodeUtil.getInstance().drawPic("学生签到@" + fname, realPath, 500, 500); 
+			// 学生签到 md5=831e77780188365d3c0e10791ca23826
+			QrcodeUtil.getInstance().drawPic("831e77780188365d3c0e10791ca23826@" + fname, realPath, 500, 500); 
 			e.setQrcodeUrl(path);
 			lessonQrcodeDao.insertSelective(e);
 			result.put("status", true);
@@ -127,7 +130,7 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 			e.setQrcodeUrl(url);  // 设置真是浏览器路径并发送到前端
 			result.put("data", e);  
 			result.put("teacher", teacherDao.findEntityByCode(tcode));
-			result.put("lesson", lessonDao.findEntityByCode(lcode)); 
+//			result.put("lesson", lessonDao.findEntityByCode(lcode)); 
 		} catch (Exception e2) {
 			result.put("status", false);
 		}
@@ -146,14 +149,14 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	 * @date 2017年3月8日 下午4:47:00 
 	 * @version 1.0.0.1
 	 */
-	public JSONObject studentSign(String scode, String lcode) {
+	public JSONObject studentSign(String scode, String scheduleCode) {
 		JSONObject result = new JSONObject();
 		result.put("status", false);
 		
 		TLessonSign e = new TLessonSign();
 		e.setUuid(UuidUtil.uid());
 		e.setStudentCode(scode);
-//		e.setLessonCode(lcode);
+		e.setScheduleCode(scheduleCode); 
 		e.setCreateTime(new Date());
 		try {
 			lessonSignDao.insertSelective(e);

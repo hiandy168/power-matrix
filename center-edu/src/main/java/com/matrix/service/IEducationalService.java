@@ -31,7 +31,7 @@ public interface IEducationalService {
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	public JSONObject startLesson(String tcode , String lcode , HttpServletRequest request);
+	public JSONObject startLesson(String tcode , String scheduleCode , HttpServletRequest request);
 	
 	/**
 	 * @description: 学生签到接口
@@ -44,7 +44,7 @@ public interface IEducationalService {
 	 * @date 2017年3月8日 下午4:47:00 
 	 * @version 1.0.0.1
 	 */
-	public JSONObject studentSign(String scode , String lcode);
+	public JSONObject studentSign(String scode , String scheduleCode);
 
 	public JSONObject login(TUser entity);
 

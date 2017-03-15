@@ -52,16 +52,16 @@ public class ApiEduController {
 	 */
 	@RequestMapping(value = "start_lesson", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject startLesson(String tcode , String lcode , HttpServletResponse response , HttpServletRequest request){
+	public JSONObject startLesson(String tcode , String scheduleCode , HttpServletResponse response , HttpServletRequest request){
 		response.setHeader("Access-Control-Allow-Origin", "*"); 
-		return service.startLesson(tcode, lcode , request);
+		return service.startLesson(tcode, scheduleCode , request);
 	}
 	
 	@RequestMapping(value = "student_sign", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject studentSign(String scode, String lcode, HttpServletResponse response){
+	public JSONObject studentSign(String scode, String scheduleCode, HttpServletResponse response){
 		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
-		return service.studentSign(scode, lcode);
+		return service.studentSign(scode, scheduleCode);
 	}
 	
 	@RequestMapping(value = "login", produces = { "application/json;charset=utf-8" })
