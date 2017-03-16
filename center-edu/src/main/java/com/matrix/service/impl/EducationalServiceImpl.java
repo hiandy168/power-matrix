@@ -390,6 +390,27 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 		
 		return result;
 	}
+	
+	public JSONObject questionListTeacher(String lessonCode) {
+		JSONObject result = new JSONObject();
+		result.put("status", false);
+		try {
+			TExamQuestions e = new TExamQuestions();
+			e.setLessonCode(lessonCode); 
+			List<TExamQuestions> list = examQuestionDao.findList(e);
+			if(list != null && list.size() > 0){
+				result.put("status", true);
+				result.put("list", list);
+			}else{
+				result.put("msg", "暂时没有该课程的题库列表");
+			}
+		} catch (Exception ex) { 
+			ex.printStackTrace();
+			result.put("msg", "服务器异常");
+		}
+		
+		return result;
+	}
 
 	@Override
 	public JSONObject lessonScheduleList(TStudySchedule e) {
@@ -456,7 +477,7 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 				e.setQuestionCode(s);
 				e.setStudentCode(d.getStudentCode());
 				e.setCreateUser(d.getTeacherCode());
-				e.setCreateTime(new Date(0));  
+				e.setCreateTime(new Date());  
 				examPaperDao.insertSelective(e);
 			}
 			result.put("status", true);
@@ -554,6 +575,24 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 			result.put("msg", "服务器异常");
 		}
 		return result;  
+	}
+
+	@Override
+	public JSONObject classStudentList(String classCodes) {
+		JSONObject result = new JSONObject();
+		result.put("status", false);
+		
+		try {
+			String [] arr = classCodes.split(",");
+			List<String> param = new ArrayList<String>(Arrays.asList(arr));  
+			
+			
+			result.put("status", true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			result.put("msg", "服务器异常");
+		}
+		return result;
 	}
 	
 }

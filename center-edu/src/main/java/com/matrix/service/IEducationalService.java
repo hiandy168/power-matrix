@@ -67,7 +67,11 @@ public interface IEducationalService {
 
 	public JSONObject studentPaperList(String scheduleCode);
 
-	public JSONObject studentInsertAnswer(String paperCode, String studentCode, String answers);            
+	public JSONObject studentInsertAnswer(String paperCode, String studentCode, String answers);
+
+	public JSONObject questionListTeacher(String lessonCode);
+
+	public JSONObject classStudentList(String classCodes);              
 }
 
 

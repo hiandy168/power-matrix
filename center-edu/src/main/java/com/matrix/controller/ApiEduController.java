@@ -114,7 +114,7 @@ public class ApiEduController {
 	}
 	
 	/**
-	 * @descriptions
+	 * @descriptions 题库列表页面 - 学生
 	 *
 	 * @param entity
 	 * @param response
@@ -128,6 +128,23 @@ public class ApiEduController {
 	public JSONObject questionList(String studentCode , String paperCode , String qcodes , HttpServletResponse response){
 		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
 		return service.questionList(studentCode , paperCode , qcodes);     
+	}
+	
+	/**
+	 * @descriptions 题库列表页面 - 教师
+	 *
+	 * @param lessonCode
+	 * @param response
+	 * @return
+	 * @date 2017年3月16日 下午10:26:16
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "question_list_teacher", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject questionListTeacher(String lessonCode, HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
+		return service.questionListTeacher(lessonCode);     
 	}
 	
 	
@@ -181,14 +198,31 @@ public class ApiEduController {
 		return service.studentPaperList(scheduleCode);    
 	}
 	
-	
-	
 	@RequestMapping(value = "student_insert_answer", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject studentInsertAnswer(String paperCode , String studentCode , String answers , HttpServletResponse response){
 		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
 		List<Answer> ans = JSONObject.parseArray(answers, Answer.class); 	
 		return service.studentInsertAnswer(paperCode , studentCode , answers);    
+	}
+	
+	
+	/**
+	 * @descriptions 查看测验时的班级学生列表 
+	 *		htm/inspection/list.html 
+	 *
+	 * @param classCodes
+	 * @param response
+	 * @return
+	 * @date 2017年3月16日 下午11:56:51
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "class_student_list", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject classStudentList(String classCodes , HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
+		return service.classStudentList(classCodes);    
 	}
 }
 
