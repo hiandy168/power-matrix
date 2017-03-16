@@ -1,5 +1,7 @@
 package com.matrix.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,6 +16,7 @@ import com.matrix.pojo.dto.RegisteDto;
 import com.matrix.pojo.entity.TStudySchedule;
 import com.matrix.pojo.entity.TTeacher;
 import com.matrix.pojo.entity.TUser;
+import com.matrix.pojo.model.Answer;
 import com.matrix.service.IEducationalService;
 
 @Controller
@@ -176,6 +179,16 @@ public class ApiEduController {
 	public JSONObject studentPaperList(String scheduleCode , HttpServletResponse response){
 		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
 		return service.studentPaperList(scheduleCode);    
+	}
+	
+	
+	
+	@RequestMapping(value = "student_insert_answer", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject studentInsertAnswer(String paperCode , String studentCode , String answers , HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
+		List<Answer> ans = JSONObject.parseArray(answers, Answer.class); 	
+		return service.studentInsertAnswer(paperCode , studentCode , answers);    
 	}
 }
 

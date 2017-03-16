@@ -1,5 +1,7 @@
 package com.matrix.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
@@ -8,6 +10,7 @@ import com.matrix.pojo.dto.RegisteDto;
 import com.matrix.pojo.entity.TStudySchedule;
 import com.matrix.pojo.entity.TTeacher;
 import com.matrix.pojo.entity.TUser;
+import com.matrix.pojo.model.Answer;
 
 public interface IEducationalService {
 	/**
@@ -62,7 +65,9 @@ public interface IEducationalService {
 
 	public JSONObject studentScheduleList(String classesCode);
 
-	public JSONObject studentPaperList(String scheduleCode);         
+	public JSONObject studentPaperList(String scheduleCode);
+
+	public JSONObject studentInsertAnswer(String paperCode, String studentCode, String answers);            
 }
 
 

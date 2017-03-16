@@ -46,6 +46,7 @@ import com.matrix.pojo.entity.TStudent;
 import com.matrix.pojo.entity.TStudySchedule;
 import com.matrix.pojo.entity.TTeacher;
 import com.matrix.pojo.entity.TUser;
+import com.matrix.pojo.model.Answer;
 import com.matrix.pojo.view.LessonResponseView;
 import com.matrix.pojo.view.LessonView;
 import com.matrix.pojo.view.SignListView;
@@ -521,6 +522,38 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 			result.put("msg", "服务器异常");
 		}
 		return result;
+	}
+
+	/**
+	 * @descriptions htm/student/question_list.html 页面向数据库插入数据
+	 *			t_exam_answer
+	 *
+	 * @param paperCode
+	 * @param studentCode
+	 * @param answers
+	 * @return
+	 * @date 2017年3月16日 下午9:45:58        ITExamAnswerDao examAnswerDao;  
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject studentInsertAnswer(String paperCode, String studentCode, String answers) {
+		JSONObject result = new JSONObject();
+		result.put("status", false);
+		try {
+			TExamAnswer e = new TExamAnswer();
+			e.setUuid(UuidUtil.uid());
+			e.setPaperCode(paperCode);
+			e.setStudentCode(studentCode);
+			e.setAnswer(answers);
+			e.setCreateUser(studentCode);
+			e.setCreateTime(new Date());
+			examAnswerDao.insertSelective(e);
+			result.put("status", true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			result.put("msg", "服务器异常");
+		}
+		return result;  
 	}
 	
 }
