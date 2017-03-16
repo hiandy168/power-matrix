@@ -23,6 +23,20 @@
 			id = #{id,jdbcType=INTEGER}
 	</select>
 	
+	<select id="findEntityByTpye" resultMap="BaseResultMap" parameterType="com.matrix.pojo.entity.TExamAnswer">
+		select
+			*
+		from 
+			educationalcenter.t_exam_answer
+		where 
+			1 = 1
+			<if test="paperCode != null">
+				and paper_code = #{paperCode,jdbcType=VARCHAR} 
+			</if>
+			<if test="studentCode != null">
+				and student_code = #{studentCode,jdbcType=VARCHAR} 
+			</if>
+	</select>
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from educationalcenter.t_exam_answer where id = #{id,jdbcType=INTEGER}

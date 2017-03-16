@@ -54,13 +54,15 @@ public interface IEducationalService {
 
 	public JSONObject signLessonList(TTeacher entity);
 
-	public JSONObject questionList(String lessonCode);
+	public JSONObject questionList(String studentCode , String paperCode , String qcodes );
 
 	public JSONObject lessonScheduleList(TStudySchedule e);
 
 	public JSONObject examPaperInsert(ExamPaperDto d);
 
-	public JSONObject studentScheduleList(String classesCode);        
+	public JSONObject studentScheduleList(String classesCode);
+
+	public JSONObject studentPaperList(String scheduleCode);         
 }
 
 

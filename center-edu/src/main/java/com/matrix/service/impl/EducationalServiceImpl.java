@@ -3,6 +3,7 @@ package com.matrix.service.impl;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,6 +15,7 @@ import javax.annotation.Resource;
 import javax.print.attribute.HashAttributeSet;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.matrix.base.BaseClass;
 import com.matrix.dao.ITClassesDao;
+import com.matrix.dao.ITExamAnswerDao;
 import com.matrix.dao.ITExamPaperDao;
 import com.matrix.dao.ITExamQuestionsDao;
 import com.matrix.dao.ITLessonDao;
@@ -33,6 +36,7 @@ import com.matrix.dao.ITUserDao;
 import com.matrix.pojo.dto.ExamPaperDto;
 import com.matrix.pojo.dto.RegisteDto;
 import com.matrix.pojo.entity.TClasses;
+import com.matrix.pojo.entity.TExamAnswer;
 import com.matrix.pojo.entity.TExamPaper;
 import com.matrix.pojo.entity.TExamQuestions;
 import com.matrix.pojo.entity.TLesson;
@@ -73,6 +77,8 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	private ITStudyScheduleDao studyScheduleDao;
 	@Resource
 	private ITExamPaperDao examPaperDao;
+	@Resource
+	private ITExamAnswerDao examAnswerDao;  
 	
 
 	/**
@@ -346,27 +352,35 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 
 	/**
 	 * @descriptions				
-	 * 	
-	 * 	
-	 *
+	 * 	 
 	 * @param lessonCode
 	 * @return
 	 * @date 2017年3月11日 下午9:07:01
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	public JSONObject questionList(String lessonCode) {
+	public JSONObject questionList(String studentCode , String paperCode , String qcodes ) {
 		JSONObject result = new JSONObject();
 		result.put("status", false);
 		try {
-			TExamQuestions e = new TExamQuestions();
-			e.setLessonCode(lessonCode); 
-			List<TExamQuestions> list = examQuestionDao.findList(e);
+			String [] arr = qcodes.split("@");
+			List<String> param = new ArrayList<String>(Arrays.asList(arr)); 
+			List<TExamQuestions> list = examQuestionDao.findListByCodes(param);
 			if(list != null && list.size() > 0){
 				result.put("status", true);
 				result.put("list", list);
+				// 查找是否已经回答过，如果回答过则返回答案
+				result.put("isAnswer", false);
+				TExamAnswer a = new TExamAnswer();
+				a.setStudentCode(studentCode);
+				a.setPaperCode(paperCode);
+				TExamAnswer answer = examAnswerDao.findEntityByTpye(a); 
+				if(answer != null){
+					result.put("isAnswer", true);
+					result.put("answer", JSONObject.parseArray(answer.getAnswer())); 
+				}
 			}else{
-				result.put("msg", "暂时没有该课程的题库列表");
+				result.put("msg", "暂时没有测试题");  
 			}
 		} catch (Exception ex) { 
 			ex.printStackTrace();
@@ -466,6 +480,42 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 			 }else{
 				 result.put("msg", "您的排课列表暂时为空");
 			 }
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			result.put("msg", "服务器异常");
+		}
+		return result;
+	}
+
+	/**
+	 * @description: 学生在某一节课的试卷列表，一节课可以包含多个课堂测验试卷
+	 * 
+	 * @param scheduleCode t_exam_paper 的 schedule_code  
+	 * @param response
+	 * @return
+	 * @author Yangcl 
+	 * @date 2017年3月16日 上午11:36:56                             ITExamPaperDao examPaperDao
+	 * @version 1.0.0.1
+	 */
+	public JSONObject studentPaperList(String scheduleCode) {
+		JSONObject result = new JSONObject();
+		result.put("status", false);
+		try {
+			Map<String , List<String>> map  = new HashMap<String , List<String>>(); 
+			List<TExamPaper> list_ = examPaperDao.findListByScheduleCode(scheduleCode);
+			if(list_ != null && list_.size() > 0 ){
+				for(TExamPaper e : list_){
+					if(map.containsKey(e.getCode())){
+						map.get(e.getCode()).add(e.getQuestionCode());
+					}else{
+						List<String> l = new ArrayList<>();
+						l.add(e.getQuestionCode());
+						map.put(e.getCode(), l);
+					}
+				}
+				result.put("map" , map); 
+				result.put("status", true);
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			result.put("msg", "服务器异常");

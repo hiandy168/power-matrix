@@ -122,9 +122,9 @@ public class ApiEduController {
 	 */
 	@RequestMapping(value = "question_list", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject questionList(String lessonCode , HttpServletResponse response){
+	public JSONObject questionList(String studentCode , String paperCode , String qcodes , HttpServletResponse response){
 		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
-		return service.questionList(lessonCode);    
+		return service.questionList(studentCode , paperCode , qcodes);     
 	}
 	
 	
@@ -158,10 +158,25 @@ public class ApiEduController {
 	@ResponseBody
 	public JSONObject studentScheduleList(String classesCode , HttpServletResponse response){
 		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
-		
 		return service.studentScheduleList(classesCode);    
 	}
 	
+	/**
+	 * @description: 学生在某一节课的试卷列表，一节课可以包含多个课堂测验试卷
+	 * 
+	 * @param scheduleCode t_exam_paper 的 schedule_code  
+	 * @param response
+	 * @return
+	 * @author Yangcl 
+	 * @date 2017年3月16日 上午11:36:56 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "student_paper_list", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject studentPaperList(String scheduleCode , HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
+		return service.studentPaperList(scheduleCode);    
+	}
 }
 
 

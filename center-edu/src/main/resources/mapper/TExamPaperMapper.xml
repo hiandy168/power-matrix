@@ -25,6 +25,18 @@
 			id = #{id,jdbcType=INTEGER}
 	</select>
 	
+	
+	<select id="findListByScheduleCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+			*
+		from 
+			educationalcenter.t_exam_paper
+		where 
+			schedule_code = #{scheduleCode , jdbcType=VARCHAR} 
+	</select>
+	
+	
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from educationalcenter.t_exam_paper where id = #{id,jdbcType=INTEGER}
 	</delete>

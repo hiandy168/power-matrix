@@ -52,6 +52,19 @@
 			</if>
 	</select>
 	
+	<select id="findListByCodes" resultMap="BaseResultMap" parameterType="java.util.List">
+		select
+			*
+		from 
+			educationalcenter.t_exam_questions
+		where 
+			code in
+			<foreach  item="item" index="index" collection="list"  open="(" close=")" separator="," >
+	          #{item}
+			</foreach>  
+	</select>
+	
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from educationalcenter.t_exam_questions where id = #{id,jdbcType=INTEGER}
 	</delete>
