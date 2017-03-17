@@ -10,12 +10,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.annotation.Resource;
-import javax.print.attribute.HashAttributeSet;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -39,17 +38,16 @@ import com.matrix.pojo.entity.TClasses;
 import com.matrix.pojo.entity.TExamAnswer;
 import com.matrix.pojo.entity.TExamPaper;
 import com.matrix.pojo.entity.TExamQuestions;
-import com.matrix.pojo.entity.TLesson;
 import com.matrix.pojo.entity.TLessonQrcode;
 import com.matrix.pojo.entity.TLessonSign;
 import com.matrix.pojo.entity.TStudent;
 import com.matrix.pojo.entity.TStudySchedule;
 import com.matrix.pojo.entity.TTeacher;
 import com.matrix.pojo.entity.TUser;
-import com.matrix.pojo.model.Answer;
 import com.matrix.pojo.view.LessonResponseView;
 import com.matrix.pojo.view.LessonView;
 import com.matrix.pojo.view.SignListView;
+import com.matrix.pojo.view.StudentView;
 import com.matrix.pojo.view.StudyScheduleView;
 import com.matrix.service.IEducationalService;
 import com.matrix.util.UuidUtil;
@@ -63,7 +61,7 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	@Resource
 	private ITTeacherDao teacherDao;
 	@Resource
-	private ITStudentDao sutdentDao;
+	private ITStudentDao studentDao;
 	@Resource 
 	private ITLessonDao lessonDao;
 	@Resource
@@ -95,7 +93,7 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	public JSONObject findSignList(String scheduleCode) {
 		JSONObject result = new JSONObject();
 		result.put("status", false);
-		List<SignListView> list = sutdentDao.findSignList(scheduleCode); 
+		List<SignListView> list = studentDao.findSignList(scheduleCode); 
 		if(list != null && list.size() > 0){
 			result.put("status", true);
 			result.put("list", list);
@@ -238,7 +236,7 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 				s.setCreateUser("registe");
 				s.setSex(e.getSex());
 				s.setCreateTime(new Date());
-				sutdentDao.insertSelective(s);
+				studentDao.insertSelective(s);
 			}
 			u.setCode(code);
 			userDao.insertSelective(u);
@@ -516,7 +514,7 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	 * @param response
 	 * @return
 	 * @author Yangcl 
-	 * @date 2017年3月16日 上午11:36:56                             ITExamPaperDao examPaperDao
+	 * @date 2017年3月16日 上午11:36:56                        
 	 * @version 1.0.0.1
 	 */
 	public JSONObject studentPaperList(String scheduleCode) {
@@ -581,13 +579,73 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	public JSONObject classStudentList(String classCodes) {
 		JSONObject result = new JSONObject();
 		result.put("status", false);
-		
+		List<StudentViewResponse> list_ = new ArrayList<StudentViewResponse>();  // 向页面返回的数据体
 		try {
 			String [] arr = classCodes.split(",");
 			List<String> param = new ArrayList<String>(Arrays.asList(arr));  
-			
-			
-			result.put("status", true);
+			List<StudentView> list = studentDao.findListByCodes(param);
+			if(list != null && list.size() != 0){
+				// 根据班级名称进行区分 key = class_name  value = list
+				Map<String , List<StudentView>> map = new TreeMap<String , List<StudentView>>(); 
+				for(StudentView v : list){
+					if(map.containsKey(v.getClassName())){
+						map.get(v.getClassName()).add(v);
+					}else{
+						List<StudentView> svList = new ArrayList<StudentView>();
+						svList.add(v);
+						map.put(v.getClassName(), svList);
+					}
+				}
+				for(String key : map.keySet()){
+					StudentViewResponse svr = new StudentViewResponse();
+					svr.setClassName(key);
+					svr.setList(map.get(key));
+					list_.add(svr);
+				}
+				result.put("data", list_); 
+				result.put("status", true);
+			}else{
+				result.put("msg", "这节课暂未关联班级信息");
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			result.put("msg", "服务器异常");
+		}
+		return result;
+	}
+
+	/**
+	 * @description: 学生在某一节课的试卷列表，一节课可以包含多个课堂测验试卷
+	 * 
+	 * @param scheduleCode t_exam_paper 的 schedule_code  
+	 * @param response
+	 * @return
+	 * @author Yangcl 
+	 * @date 2017年3月16日 上午11:36:56       
+	 * @version 1.0.0.1
+	 */
+	public JSONObject inspectStudentPaperList(String scheduleCode, String studentCode){
+		JSONObject result = new JSONObject();
+		result.put("status", false);
+		Map<String , String> pmap = new HashMap<>();
+		pmap.put("scheduleCode", scheduleCode);
+		pmap.put("studentCode", studentCode);
+		try {
+			Map<String , List<String>> map  = new HashMap<String , List<String>>(); 
+			List<TExamPaper> list_ = examPaperDao.findListByMap(pmap); 
+			if(list_ != null && list_.size() > 0 ){
+				for(TExamPaper e : list_){
+					if(map.containsKey(e.getCode())){
+						map.get(e.getCode()).add(e.getQuestionCode());
+					}else{
+						List<String> l = new ArrayList<>();
+						l.add(e.getQuestionCode());
+						map.put(e.getCode(), l);
+					}
+				}
+				result.put("map" , map); 
+				result.put("status", true);
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			result.put("msg", "服务器异常");
@@ -597,7 +655,22 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	
 }
 
-
+class StudentViewResponse{
+	private String className;
+	private List<StudentView> list;
+	public String getClassName() {
+		return className;
+	}
+	public void setClassName(String className) {
+		this.className = className;
+	}
+	public List<StudentView> getList() {
+		return list;
+	}
+	public void setList(List<StudentView> list) {
+		this.list = list;
+	}
+}
 
 
 
