@@ -224,42 +224,11 @@ public class ApiEduController {
 		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
 		return service.classStudentList(classCodes);    
 	}
+
+	@RequestMapping(value = "teacher_syllabus", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject teacherSyllabus(String code,HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
+		return service.teacherSyllabus(code);
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
