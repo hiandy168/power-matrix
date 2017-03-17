@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.matrix.dao.ITTeacherDao">
-	
+
 	<resultMap id="BaseResultMap" type="com.matrix.pojo.entity.TTeacher">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="uuid" property="uuid" jdbcType="VARCHAR" />
@@ -12,32 +12,43 @@
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="lesson_code" property="lessonCode" jdbcType="VARCHAR" />
+		<result column="lesson_name" property="lessonName" jdbcType="VARCHAR" />
+		<result column="intro" property="intro" jdbcType="VARCHAR" />
+		<result column="start_time" property="startTime" jdbcType="VARCHAR" />
+		<result column="classes_code" property="classesCode" jdbcType="VARCHAR" />
+		<result column="schedule_code" property="scheduleCode" jdbcType="VARCHAR" />
 	</resultMap>
-	
-	
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
 		select
-			*
-		from 
-			educationalcenter.t_teacher
-		where 
-			id = #{id,jdbcType=INTEGER}
+		*
+		from
+		educationalcenter.t_teacher
+		where
+		id =
+		#{id,jdbcType=INTEGER}
 	</select>
-	
-	<select id="findEntityByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+
+	<select id="findEntityByCode" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
 		select
-			*
-		from 
-			educationalcenter.t_teacher
-		where 
-			code = #{tcode , jdbcType=VARCHAR}
+		*
+		from
+		educationalcenter.t_teacher
+		where
+		code =
+		#{tcode , jdbcType=VARCHAR}
 	</select>
-	
-	
+
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from educationalcenter.t_teacher where id = #{id,jdbcType=INTEGER}
+		delete from
+		educationalcenter.t_teacher where id = #{id,jdbcType=INTEGER}
 	</delete>
-	
+
 	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.TTeacher">
 		insert into educationalcenter.t_teacher
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -99,8 +110,8 @@
 			</if>
 		</trim>
 	</insert>
-	
-	
+
+
 	<update id="updateSelective" parameterType="com.matrix.pojo.entity.TTeacher">
 		update educationalcenter.t_teacher
 		<set>
@@ -131,15 +142,43 @@
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
+	<!-- 获取教师课程表 2017-03-17 zhy -->
+	<select id="getSyllabus" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT
+		tl.lesson_name,
+		tl.intro,
+		DATE_FORMAT(
+		tss.start_time,
+		'%Y-%m-%d
+		%H:%i:%s'
+		) AS start_time,
+		tss.classes_code
+		FROM
+		educationalcenter.t_study_schedule AS tss,educationalcenter.t_lesson
+		AS tl
+		<where>
+			tss.lesson_code = tl.`code`
+			AND tss.teacher_code
+			=#{code,jdbcType=VARCHAR}
+		</where>
+	</select>
+	<!-- 获取教师授课列表 2017-03-17 zhy -->
+	<select id="getLessons" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT
+		tss.schedule_code,
+		tl.`code` AS lesson_code,
+		tl.lesson_name,
+		tss.start_time,
+		tss.classes_code
+		FROM
+		educationalcenter.t_study_schedule AS tss,
+		educationalcenter.t_lesson AS tl
+		<where>
+			tss.lesson_code = tl.`code`
+			AND tss.teacher_code =
+			#{code,jdbcType=VARCHAR}
+		</where>
+	</select>
 </mapper>
-
-
-
-
-
-
-
-
-
-
-

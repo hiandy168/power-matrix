@@ -13,27 +13,30 @@
 		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
 	</resultMap>
-	
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
 		select
-			*
-		from 
-			educationalcenter.t_classes
-		where 
-			id = #{id,jdbcType=INTEGER}
+		*
+		from
+		educationalcenter.t_classes
+		where
+		id =
+		#{id,jdbcType=INTEGER}
 	</select>
-	
+
 	<select id="findAllClasses" resultMap="BaseResultMap">
 		select
-			*
-		from 
-			educationalcenter.t_classes 
+		*
+		from
+		educationalcenter.t_classes
 	</select>
-	
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from educationalcenter.t_classes where id = #{id,jdbcType=INTEGER}
+		delete from
+		educationalcenter.t_classes where id = #{id,jdbcType=INTEGER}
 	</delete>
-	
+
 	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.TClasses">
 		insert into educationalcenter.t_classes
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -101,7 +104,7 @@
 			</if>
 		</trim>
 	</insert>
-	
+
 	<update id="updateSelective" parameterType="com.matrix.pojo.entity.TClasses">
 		update educationalcenter.t_classes
 		<set>
@@ -135,14 +138,13 @@
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
+	<!-- 根据班级编码集合查询班级信息 2017-03-17 zhy -->
+	<select id="findClassesByCodes" parameterType="list" resultMap="BaseResultMap">
+		select `code`,school_name,grade_name,class_name from
+		educationalcenter.t_classes where `code` in
+		<foreach collection="list" index="index" item="item" open="("
+			separator="," close=")">
+			#{item,jdbcType=VARCHAR}
+		</foreach>
+	</select>
 </mapper>
-
-
-
-
-
-
-
-
-
-
