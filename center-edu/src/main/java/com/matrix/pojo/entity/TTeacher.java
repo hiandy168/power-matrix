@@ -8,6 +8,10 @@ public class TTeacher extends EduBaseEntity {
 	private Integer sex;
 
 	/**
+	 * 课程编码
+	 */
+	private String lessonCode;
+	/**
 	 * 课程名称
 	 */
 	private String lessonName;
@@ -28,6 +32,14 @@ public class TTeacher extends EduBaseEntity {
 	 * 课程参加班级名称
 	 */
 	private String classesName;
+
+	public String getLessonCode() {
+		return lessonCode;
+	}
+
+	public void setLessonCode(String lessonCode) {
+		this.lessonCode = lessonCode;
+	}
 
 	public String getClassesName() {
 		return classesName;

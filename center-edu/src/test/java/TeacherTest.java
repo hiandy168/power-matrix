@@ -1,6 +1,7 @@
 
 import java.util.List;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -17,10 +18,16 @@ public class TeacherTest {
 	@Autowired
 	private ITTeacherDao dao;
 	
-	@org.junit.Test
 	public void getSyllabus(){
 		String code = "T1489071763988";
 		List<TTeacher> list = dao.getSyllabus(code);
+		System.out.println(JSONObject.toJSON(list));
+	}
+	
+	@Test
+	public void getLessons(){
+		String code = "T1489071763988";
+		List<TTeacher> list = dao.getLessons(code);
 		System.out.println(JSONObject.toJSON(list));
 	}
 }

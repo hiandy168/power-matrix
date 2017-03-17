@@ -13,18 +13,21 @@
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="sign_time" property="signTime" jdbcType="VARCHAR" />
 	</resultMap>
-	
-	
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
 		select
-			*
-		from 
-			educationalcenter.t_student
-		where 
-			id = #{id,jdbcType=INTEGER}
+		*
+		from
+		educationalcenter.t_student
+		where
+		id =
+		#{id,jdbcType=INTEGER}
 	</select>
-	
+
 	<resultMap id="SignListViewMap" type="com.matrix.pojo.view.SignListView">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="uuid" property="uuid" jdbcType="VARCHAR" />
@@ -32,25 +35,29 @@
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="sex" property="sex" jdbcType="INTEGER" />
 		<result column="classes_code" property="classesCode" jdbcType="VARCHAR" />
-		<result column="head_pic" property="headPic" jdbcType="VARCHAR" /> 
-		<result column="create_time" property="createTime" jdbcType="VARCHAR" /> 
+		<result column="head_pic" property="headPic" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="VARCHAR" />
 	</resultMap>
-	<select id="findSignList" resultMap="SignListViewMap" parameterType="java.lang.String">
-		 select 
-			* ,
-			l.create_time as createTime
-		 from 
-			educationalcenter.`t_student` s left join educationalcenter.`t_lesson_sign` l on l.student_code = s.code
-		 where 
-			l.schedule_code = #{scheduleCode , jdbcType=VARCHAR}
+	<select id="findSignList" resultMap="SignListViewMap"
+		parameterType="java.lang.String">
+		select
+		* ,
+		l.create_time as createTime
+		from
+		educationalcenter.`t_student` s left join
+		educationalcenter.`t_lesson_sign` l on l.student_code =
+		s.code
+		where
+		l.schedule_code = #{scheduleCode , jdbcType=VARCHAR}
 	</select>
-	
-	
+
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from educationalcenter.t_student where id = #{id,jdbcType=INTEGER}
+		delete from
+		educationalcenter.t_student where id = #{id,jdbcType=INTEGER}
 	</delete>
-	
-	
+
+
 	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.TStudent">
 		insert into educationalcenter.t_student
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -124,8 +131,8 @@
 			</if>
 		</trim>
 	</insert>
-	
-	
+
+
 	<update id="updateSelective" parameterType="com.matrix.pojo.entity.TStudent">
 		update educationalcenter.t_student
 		<set>
@@ -162,21 +169,28 @@
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
+	<!-- 根据课程编码，班级编码查询学生签到信息 2017-03-17 zhy -->
+	<select id="findStudentSignByLessonAndClass" parameterType="com.matrix.pojo.dto.LessonSignDto"
+		resultMap="BaseResultMap">
+		SELECT
+		ts.`name`,
+		DATE_FORMAT(tls.create_time,'%Y-%m-%d %H:%i:%s') as
+		sign_time
+		FROM
+		educationalcenter.t_study_schedule
+		AS tss
+		LEFT JOIN
+		educationalcenter.t_lesson_sign AS tls ON
+		tss.schedule_code =
+		tls.schedule_code
+		LEFT JOIN
+		educationalcenter.t_student AS ts ON
+		tls.student_code =
+		ts.`code`
+		<where>
+			tss.lesson_code = #{lessonCode,jdbcType=VARCHAR}
+			AND
+			tss.classes_code LIKE CONCAT('%',#{classCode,jdbcType=VARCHAR},'%');
+		</where>
+	</select>
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

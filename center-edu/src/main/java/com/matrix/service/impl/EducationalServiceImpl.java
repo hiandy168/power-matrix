@@ -13,6 +13,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.transform.Result;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -33,8 +34,8 @@ import com.matrix.dao.ITStudyScheduleDao;
 import com.matrix.dao.ITTeacherDao;
 import com.matrix.dao.ITUserDao;
 import com.matrix.pojo.dto.ExamPaperDto;
+import com.matrix.pojo.dto.LessonSignDto;
 import com.matrix.pojo.dto.RegisteDto;
-import com.matrix.pojo.dto.TUserDto;
 import com.matrix.pojo.entity.TClasses;
 import com.matrix.pojo.entity.TExamAnswer;
 import com.matrix.pojo.entity.TExamPaper;
@@ -61,7 +62,7 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	@Resource
 	private ITTeacherDao teacherDao;
 	@Resource
-	private ITStudentDao sutdentDao;
+	private ITStudentDao studentDao;
 	@Resource
 	private ITLessonDao lessonDao;
 	@Resource
@@ -94,7 +95,7 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	public JSONObject findSignList(String scheduleCode) {
 		JSONObject result = new JSONObject();
 		result.put("status", false);
-		List<SignListView> list = sutdentDao.findSignList(scheduleCode);
+		List<SignListView> list = studentDao.findSignList(scheduleCode);
 		if (list != null && list.size() > 0) {
 			result.put("status", true);
 			result.put("list", list);
@@ -241,7 +242,7 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 				s.setCreateUser("registe");
 				s.setSex(e.getSex());
 				s.setCreateTime(new Date());
-				sutdentDao.insertSelective(s);
+				studentDao.insertSelective(s);
 			}
 			u.setCode(code);
 			userDao.insertSelective(u);
@@ -597,35 +598,111 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 		return result;
 	}
 
+	/**
+	 * 
+	 * 方法: teacherSyllabus <br>
+	 * 
+	 * @param code
+	 * @return
+	 * @see com.matrix.service.IEducationalService#teacherSyllabus(java.lang.String)
+	 */
 	@Override
 	public JSONObject teacherSyllabus(String code) {
 		JSONObject result = new JSONObject();
-		List<TTeacher> teachers = teacherDao.getSyllabus(code);
-		if (teachers != null && teachers.size() > 0) {
-			for (TTeacher t : teachers) {
-				if (StringUtils.isNotBlank(t.getClassesCode())) {
-					String[] class_codes = t.getClassesCode().split(",");
-					List<String> codes = new ArrayList<String>(Arrays.asList(class_codes));
-					List<TClasses> classes = classesDao.findClassesByCodes(codes);
-					if (classes != null && classes.size() > 0) {
-						StringBuffer classNames = new StringBuffer();
-						for (TClasses c : classes) {
-							classNames.append(c.getSchoolName()).append(c.getGradeName()).append(c.getClassName())
-									.append(",");
+		try {
+			List<TTeacher> teachers = teacherDao.getSyllabus(code);
+			if (teachers != null && teachers.size() > 0) {
+				for (TTeacher t : teachers) {
+					if (StringUtils.isNotBlank(t.getClassesCode())) {
+						String[] class_codes = t.getClassesCode().split(",");
+						List<String> codes = new ArrayList<String>(Arrays.asList(class_codes));
+						List<TClasses> classes = classesDao.findClassesByCodes(codes);
+						if (classes != null && classes.size() > 0) {
+							StringBuffer classNames = new StringBuffer();
+							for (TClasses c : classes) {
+								classNames.append(c.getClassName()).append(",");
+							}
+							t.setClassesName(classNames.substring(0, classNames.length() - 1));
+						} else {
+							result.put("status", false);
+							result.put("msg", "查询班级信息失败");
+							break;
 						}
-						t.setClassesName(classNames.substring(0, classNames.length() - 1));
-					} else {
-						result.put("status", false);
-						result.put("msg", "查询班级信息失败");
-						break;
 					}
 				}
+				result.put("status", true);
+				result.put("data", teachers);
 			}
-			result.put("status", true);
-			result.put("data", teachers);
-		} else {
+		} catch (Exception e) {
 			result.put("status", false);
-			result.put("msg", "课程表为空");
+			result.put("msg", e.getMessage());
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * 方法: teacherLessons <br>
+	 * 
+	 * @param code
+	 * @return
+	 * @see com.matrix.service.IEducationalService#teacherLessons(java.lang.String)
+	 */
+	@Override
+	public JSONObject teacherLessons(String code) {
+		JSONObject result = new JSONObject();
+		try {
+			List<TTeacher> teachers = teacherDao.getLessons(code);
+			if (teachers != null && teachers.size() > 0) {
+				for (TTeacher t : teachers) {
+					if (StringUtils.isNotBlank(t.getClassesCode())) {
+						String[] class_codes = t.getClassesCode().split(",");
+						List<String> codes = new ArrayList<String>(Arrays.asList(class_codes));
+						List<TClasses> classes = classesDao.findClassesByCodes(codes);
+						if (classes != null && classes.size() > 0) {
+							t.setClassesName(JSONArray.toJSON(classes).toString());
+						} else {
+							result.put("status", false);
+							result.put("msg", "查询课程信息失败");
+							break;
+						}
+					}
+				}
+				result.put("status", true);
+				result.put("data", teachers);
+			}
+		} catch (Exception e) {
+			result.put("status", false);
+			result.put("msg", e.getMessage());
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * 方法: lessonClassStudents <br>
+	 * 
+	 * @param lessoncCode
+	 * @param classCode
+	 * @return
+	 * @see com.matrix.service.IEducationalService#lessonClassStudents(java.lang.String,
+	 *      java.lang.String)
+	 */
+	@Override
+	public JSONObject lessonClassStudents(String lessonCode, String classCode) {
+		JSONObject result = new JSONObject();
+		try {
+			LessonSignDto dto = new LessonSignDto();
+			dto.setLessonCode(lessonCode);
+			dto.setClassCode(classCode);
+			List<TStudent> list = studentDao.findStudentSignByLessonAndClass(dto);
+			if (list != null && list.size() > 0) {
+				result.put("status", true);
+				result.put("data", list);
+			}
+		} catch (Exception e) {
+			result.put("status", true);
+			result.put("msg", e.getMessage());
 		}
 		return result;
 	}
