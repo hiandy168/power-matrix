@@ -16,6 +16,16 @@ public class TStudent extends EduBaseEntity {
 	 */
 	private String signTime;
 
+	private String scheduleCode;
+
+	public String getScheduleCode() {
+		return scheduleCode;
+	}
+
+	public void setScheduleCode(String scheduleCode) {
+		this.scheduleCode = scheduleCode;
+	}
+
 	public String getSignTime() {
 		return signTime;
 	}

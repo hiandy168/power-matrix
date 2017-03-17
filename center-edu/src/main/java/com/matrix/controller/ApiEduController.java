@@ -261,8 +261,8 @@ public class ApiEduController {
 
 	@RequestMapping(value = "info/teacher_classstudents", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject lessonClassStudents(String lessonCode, String classCode,HttpServletResponse response){
+	public JSONObject lessonClassStudents(String scheduleCode,HttpServletResponse response){
 		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问
-		return service.lessonClassStudents(lessonCode, classCode);
+		return service.lessonClassStudents(scheduleCode);
 	}
 }

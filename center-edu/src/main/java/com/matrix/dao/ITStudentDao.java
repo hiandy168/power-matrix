@@ -3,7 +3,6 @@ package com.matrix.dao;
 import java.util.List;
 
 import com.matrix.base.interfaces.IBaseDao;
-import com.matrix.pojo.dto.LessonSignDto;
 import com.matrix.pojo.entity.TStudent;
 import com.matrix.pojo.view.SignListView;
 
@@ -18,8 +17,8 @@ public interface ITStudentDao extends IBaseDao<TStudent, Integer> {
 	 * 作者: zhy<br>
 	 * 时间: 2017年3月17日 下午2:11:30
 	 * 
-	 * @param dto
+	 * @param scheduleCode
 	 * @return
 	 */
-	List<TStudent> findStudentSignByLessonAndClass(LessonSignDto dto);
+	List<TStudent> findStudentSignByLessonAndClass(String scheduleCode);
 }

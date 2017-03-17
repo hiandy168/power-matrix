@@ -14,6 +14,8 @@
 		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
 		<result column="sign_time" property="signTime" jdbcType="VARCHAR" />
+		<result column="schedule_code" property="scheduleCode"
+			jdbcType="VARCHAR" />
 	</resultMap>
 
 
@@ -170,27 +172,25 @@
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 	<!-- 根据课程编码，班级编码查询学生签到信息 2017-03-17 zhy -->
-	<select id="findStudentSignByLessonAndClass" parameterType="com.matrix.pojo.dto.LessonSignDto"
+	<select id="findStudentSignByLessonAndClass" parameterType="java.lang.String"
 		resultMap="BaseResultMap">
 		SELECT
+		tss.schedule_code,
 		ts.`name`,
-		DATE_FORMAT(tls.create_time,'%Y-%m-%d %H:%i:%s') as
-		sign_time
+		DATE_FORMAT(
+		tls.create_time,
+		'%Y-%m-%d %H:%i:%s'
+		) AS sign_time
 		FROM
-		educationalcenter.t_study_schedule
-		AS tss
-		LEFT JOIN
-		educationalcenter.t_lesson_sign AS tls ON
-		tss.schedule_code =
-		tls.schedule_code
-		LEFT JOIN
-		educationalcenter.t_student AS ts ON
-		tls.student_code =
-		ts.`code`
+		educationalcenter.t_study_schedule AS tss,
+		educationalcenter.t_lesson_sign AS tls,
+		educationalcenter.t_student AS
+		ts
 		<where>
-			tss.lesson_code = #{lessonCode,jdbcType=VARCHAR}
-			AND
-			tss.classes_code LIKE CONCAT('%',#{classCode,jdbcType=VARCHAR},'%');
+			tss.schedule_code = tls.schedule_code
+			AND tls.student_code =
+			ts.`code`
+			AND tss.schedule_code = #{scheduleCode,jdbcType=VARCHAR}
 		</where>
 	</select>
 </mapper>

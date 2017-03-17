@@ -630,9 +630,9 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 						}
 					}
 				}
-				result.put("status", true);
 				result.put("data", teachers);
 			}
+			result.put("status", true);
 		} catch (Exception e) {
 			result.put("status", false);
 			result.put("msg", e.getMessage());
@@ -668,9 +668,9 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 						}
 					}
 				}
-				result.put("status", true);
 				result.put("data", teachers);
 			}
+			result.put("status", true);
 		} catch (Exception e) {
 			result.put("status", false);
 			result.put("msg", e.getMessage());
@@ -689,17 +689,14 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	 *      java.lang.String)
 	 */
 	@Override
-	public JSONObject lessonClassStudents(String lessonCode, String classCode) {
+	public JSONObject lessonClassStudents(String scheduleCode) {
 		JSONObject result = new JSONObject();
 		try {
-			LessonSignDto dto = new LessonSignDto();
-			dto.setLessonCode(lessonCode);
-			dto.setClassCode(classCode);
-			List<TStudent> list = studentDao.findStudentSignByLessonAndClass(dto);
+			List<TStudent> list = studentDao.findStudentSignByLessonAndClass(scheduleCode);
 			if (list != null && list.size() > 0) {
-				result.put("status", true);
 				result.put("data", list);
 			}
+			result.put("status", true);
 		} catch (Exception e) {
 			result.put("status", true);
 			result.put("msg", e.getMessage());

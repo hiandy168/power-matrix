@@ -111,5 +111,5 @@ public interface IEducationalService {
 	 * @param classCode
 	 * @return
 	 */
-	JSONObject lessonClassStudents(String lessonCode, String classCode);
+	JSONObject lessonClassStudents(String scheduleCode);
 }

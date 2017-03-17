@@ -33,6 +33,16 @@ public class TTeacher extends EduBaseEntity {
 	 */
 	private String classesName;
 
+	private String scheduleCode;
+
+	public String getScheduleCode() {
+		return scheduleCode;
+	}
+
+	public void setScheduleCode(String scheduleCode) {
+		this.scheduleCode = scheduleCode;
+	}
+
 	public String getLessonCode() {
 		return lessonCode;
 	}

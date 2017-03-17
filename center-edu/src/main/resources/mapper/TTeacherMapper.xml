@@ -17,6 +17,7 @@
 		<result column="intro" property="intro" jdbcType="VARCHAR" />
 		<result column="start_time" property="startTime" jdbcType="VARCHAR" />
 		<result column="classes_code" property="classesCode" jdbcType="VARCHAR" />
+		<result column="schedule_code" property="scheduleCode" jdbcType="VARCHAR" />
 	</resultMap>
 
 
@@ -147,26 +148,37 @@
 		SELECT
 		tl.lesson_name,
 		tl.intro,
-		DATE_FORMAT(tss.start_time,'%Y-%m-%d %H:%i:%s') as start_time,
+		DATE_FORMAT(
+		tss.start_time,
+		'%Y-%m-%d
+		%H:%i:%s'
+		) AS start_time,
 		tss.classes_code
 		FROM
-		educationalcenter.t_study_schedule AS tss
-		LEFT JOIN
-		educationalcenter.t_lesson AS tl ON tss.lesson_code = tl.`code`
-		WHERE
-		teacher_code =#{code,jdbcType=VARCHAR}
+		educationalcenter.t_study_schedule AS tss,educationalcenter.t_lesson
+		AS tl
+		<where>
+			tss.lesson_code = tl.`code`
+			AND tss.teacher_code
+			=#{code,jdbcType=VARCHAR}
+		</where>
 	</select>
 	<!-- 获取教师授课列表 2017-03-17 zhy -->
-	<select id="getLessons" parameterType="java.lang.String" resultMap="BaseResultMap">
+	<select id="getLessons" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
 		SELECT
-		tl.`code` as lesson_code,
+		tss.schedule_code,
+		tl.`code` AS lesson_code,
 		tl.lesson_name,
 		tss.start_time,
 		tss.classes_code
 		FROM
-		educationalcenter.t_study_schedule AS tss
-		LEFT JOIN educationalcenter.t_lesson AS tl ON tss.lesson_code = tl.`code`
-		WHERE
-		tss.teacher_code = #{code,jdbcType=VARCHAR}
+		educationalcenter.t_study_schedule AS tss,
+		educationalcenter.t_lesson AS tl
+		<where>
+			tss.lesson_code = tl.`code`
+			AND tss.teacher_code =
+			#{code,jdbcType=VARCHAR}
+		</where>
 	</select>
 </mapper>
