@@ -16,6 +16,8 @@
 		<result column="sign_time" property="signTime" jdbcType="VARCHAR" />
 		<result column="schedule_code" property="scheduleCode"
 			jdbcType="VARCHAR" />
+		<result column="flag_evaluate" property="flagEvaluate"
+			jdbcType="INTEGER" />
 	</resultMap>
 
 
@@ -52,8 +54,8 @@
 		where
 		l.schedule_code = #{scheduleCode , jdbcType=VARCHAR}
 	</select>
- 
-	 
+
+
 	<resultMap id="StudentViewMap" type="com.matrix.pojo.view.StudentView">
 		<result column="code" property="code" jdbcType="VARCHAR" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
@@ -64,18 +66,21 @@
 		<result column="grade_name" property="gradeName" jdbcType="VARCHAR" />
 		<result column="class_name" property="className" jdbcType="VARCHAR" />
 	</resultMap>
-	<select id="findListByCodes" resultMap="StudentViewMap" parameterType="java.util.List">
-		select 
-		  * 
+	<select id="findListByCodes" resultMap="StudentViewMap"
+		parameterType="java.util.List">
+		select
+		*
 		from
-		  educationalcenter.t_student s left join educationalcenter.t_classes c on s.classes_code = c.code
-		where 
-			s.classes_code in
-			<foreach  item="item" index="index" collection="list"  open="(" close=")" separator="," >
-	          #{item}
-			</foreach>  
+		educationalcenter.t_student s left join
+		educationalcenter.t_classes c on s.classes_code = c.code
+		where
+		s.classes_code in
+		<foreach item="item" index="index" collection="list" open="("
+			close=")" separator=",">
+			#{item}
+		</foreach>
 	</select>
-	 
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from
 		educationalcenter.t_student where id = #{id,jdbcType=INTEGER}
@@ -202,7 +207,8 @@
 		DATE_FORMAT(
 		tls.create_time,
 		'%Y-%m-%d %H:%i:%s'
-		) AS sign_time
+		) AS sign_time,
+		tls.flag_evaluate
 		FROM
 		educationalcenter.t_study_schedule AS tss,
 		educationalcenter.t_lesson_sign AS tls,

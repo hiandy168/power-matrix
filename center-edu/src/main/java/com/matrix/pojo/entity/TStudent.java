@@ -18,6 +18,16 @@ public class TStudent extends EduBaseEntity {
 
 	private String scheduleCode;
 
+	private Integer flagEvaluate;
+
+	public Integer getFlagEvaluate() {
+		return flagEvaluate;
+	}
+
+	public void setFlagEvaluate(Integer flagEvaluate) {
+		this.flagEvaluate = flagEvaluate;
+	}
+
 	public String getScheduleCode() {
 		return scheduleCode;
 	}

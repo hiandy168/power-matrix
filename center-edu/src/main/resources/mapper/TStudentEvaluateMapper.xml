@@ -32,7 +32,6 @@
 	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.TStudentEvaluate">
 		insert into educationalcenter.t_student_evaluate
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			id,
 			uuid,
 			schedule_code,
 			student_code,
@@ -44,7 +43,6 @@
 			create_time,
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			#{id,jdbcType=INTEGER},
 			#{uuid,jdbcType=VARCHAR},
 			#{scheduleCode,jdbcType=VARCHAR},
 			#{studentCode,jdbcType=VARCHAR},

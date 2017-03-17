@@ -225,26 +225,24 @@ public class ApiEduController {
 		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问题
 		return service.classStudentList(classCodes);
 	}
- 
-	
+
 	/**
-	 * @description: 老是查看 学生在某一节课的试卷列表，一节课可以包含多个课堂测验试卷 
+	 * @description: 老是查看 学生在某一节课的试卷列表，一节课可以包含多个课堂测验试卷
 	 * 
 	 * @param scheduleCode
 	 * @param studentCode
 	 * @param response
 	 * @return
-	 * @author Yangcl 
-	 * @date 2017年3月17日 下午3:20:54 
+	 * @author Yangcl
+	 * @date 2017年3月17日 下午3:20:54
 	 * @version 1.0.0.1
 	 */
 	@RequestMapping(value = "inspect_student_paper_list", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject inspectStudentPaperList(String scheduleCode , String studentCode , HttpServletResponse response){
-		response.setHeader("Access-Control-Allow-Origin", "*");  // 临时性解决跨域访问限制问题
-		return service.inspectStudentPaperList(scheduleCode , studentCode);    
+	public JSONObject inspectStudentPaperList(String scheduleCode, String studentCode, HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问题
+		return service.inspectStudentPaperList(scheduleCode, studentCode);
 	}
- 
 
 	/**
 	 * 
@@ -312,7 +310,8 @@ public class ApiEduController {
 	 */
 	@RequestMapping(value = "info/teacher_studentevaluate", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject studentEvaluateByTeacher(TStudentEvaluate entity) {
+	public JSONObject studentEvaluateByTeacher(TStudentEvaluate entity, HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问
 		return service.studentEvaluateByTeacher(entity);
 	}
 }

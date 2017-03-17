@@ -786,6 +786,11 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 			entity.setCreateTime(new Date());
 			int flag = studentEvaluateDao.insertSelective(entity);
 			if (flag > 0) {
+				TLessonSign sign = new TLessonSign();
+				sign.setFlagEvaluate(1);
+				sign.setUpdateUser(entity.getCreateUser());
+				sign.setUpdateTime(entity.getCreateTime());
+				lessonSignDao.updateEvaluate(sign);
 				result.put("status", true);
 			} else {
 				result.put("status", false);
