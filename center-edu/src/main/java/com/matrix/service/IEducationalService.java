@@ -77,6 +77,9 @@ public interface IEducationalService {
 
 	public JSONObject classStudentList(String classCodes);
 
+	public JSONObject inspectStudentPaperList(String scheduleCode, String studentCode);               
+ 
+
 	/**
 	 * 
 	 * 方法: teacherSyllabus <br>

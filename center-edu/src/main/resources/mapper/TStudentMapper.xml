@@ -52,8 +52,30 @@
 		where
 		l.schedule_code = #{scheduleCode , jdbcType=VARCHAR}
 	</select>
-
-
+ 
+	 
+	<resultMap id="StudentViewMap" type="com.matrix.pojo.view.StudentView">
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="INTEGER" />
+		<result column="classes_code" property="classesCode" jdbcType="VARCHAR" />
+		<result column="head_pic" property="headPic" jdbcType="VARCHAR" />
+		<result column="school_name" property="schoolName" jdbcType="VARCHAR" />
+		<result column="grade_name" property="gradeName" jdbcType="VARCHAR" />
+		<result column="class_name" property="className" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="findListByCodes" resultMap="StudentViewMap" parameterType="java.util.List">
+		select 
+		  * 
+		from
+		  educationalcenter.t_student s left join educationalcenter.t_classes c on s.classes_code = c.code
+		where 
+			s.classes_code in
+			<foreach  item="item" index="index" collection="list"  open="(" close=")" separator="," >
+	          #{item}
+			</foreach>  
+	</select>
+	 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from
 		educationalcenter.t_student where id = #{id,jdbcType=INTEGER}
