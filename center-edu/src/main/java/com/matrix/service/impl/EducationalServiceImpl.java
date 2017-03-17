@@ -13,7 +13,6 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.transform.Result;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -30,11 +29,11 @@ import com.matrix.dao.ITLessonDao;
 import com.matrix.dao.ITLessonQrcodeDao;
 import com.matrix.dao.ITLessonSignDao;
 import com.matrix.dao.ITStudentDao;
+import com.matrix.dao.ITStudentEvaluateDao;
 import com.matrix.dao.ITStudyScheduleDao;
 import com.matrix.dao.ITTeacherDao;
 import com.matrix.dao.ITUserDao;
 import com.matrix.pojo.dto.ExamPaperDto;
-import com.matrix.pojo.dto.LessonSignDto;
 import com.matrix.pojo.dto.RegisteDto;
 import com.matrix.pojo.entity.TClasses;
 import com.matrix.pojo.entity.TExamAnswer;
@@ -43,6 +42,7 @@ import com.matrix.pojo.entity.TExamQuestions;
 import com.matrix.pojo.entity.TLessonQrcode;
 import com.matrix.pojo.entity.TLessonSign;
 import com.matrix.pojo.entity.TStudent;
+import com.matrix.pojo.entity.TStudentEvaluate;
 import com.matrix.pojo.entity.TStudySchedule;
 import com.matrix.pojo.entity.TTeacher;
 import com.matrix.pojo.entity.TUser;
@@ -79,6 +79,8 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	private ITExamPaperDao examPaperDao;
 	@Resource
 	private ITExamAnswerDao examAnswerDao;
+	@Resource
+	private ITStudentEvaluateDao studentEvaluateDao;
 
 	/**
 	 * @description: 获取签到列表
@@ -700,6 +702,34 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 		} catch (Exception e) {
 			result.put("status", true);
 			result.put("msg", e.getMessage());
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * 方法: studentEvaluateByTeacher <br>
+	 * 
+	 * @param entity
+	 * @return
+	 * @see com.matrix.service.IEducationalService#studentEvaluateByTeacher(com.matrix.pojo.entity.TStudentEvaluate)
+	 */
+	@Override
+	public JSONObject studentEvaluateByTeacher(TStudentEvaluate entity) {
+		JSONObject result = new JSONObject();
+		try {
+			entity.setUuid(UuidUtil.uid());
+			entity.setCreateTime(new Date());
+			int flag = studentEvaluateDao.insertSelective(entity);
+			if (flag > 0) {
+				result.put("status", true);
+			} else {
+				result.put("status", false);
+				result.put("msg", "提交评价失败");
+			}
+		} catch (Exception e) {
+			result.put("status", false);
+			result.put("msg", "提交评价错误，错误原因:" + e.getMessage());
 		}
 		return result;
 	}

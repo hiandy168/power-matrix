@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.pojo.dto.ExamPaperDto;
 import com.matrix.pojo.dto.RegisteDto;
+import com.matrix.pojo.entity.TStudentEvaluate;
 import com.matrix.pojo.entity.TStudySchedule;
 import com.matrix.pojo.entity.TTeacher;
 import com.matrix.pojo.entity.TUser;
@@ -112,4 +113,16 @@ public interface IEducationalService {
 	 * @return
 	 */
 	JSONObject lessonClassStudents(String scheduleCode);
+
+	/**
+	 * 
+	 * 方法: studentEvaluateByTeacher <br>
+	 * 描述: 教师对学生进行课程点评 <br>
+	 * 作者: zhy<br>
+	 * 时间: 2017年3月17日 下午4:19:56
+	 * 
+	 * @param entity
+	 * @return
+	 */
+	JSONObject studentEvaluateByTeacher(TStudentEvaluate entity);
 }

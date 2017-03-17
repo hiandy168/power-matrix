@@ -19,10 +19,5 @@ public class TStudentTest {
 
 	@org.junit.Test
 	public void findStudentSignByLessonAndClass() {
-		LessonSignDto dto = new LessonSignDto();
-		dto.setClassCode("C268676");
-		dto.setLessonCode("L8293857");
-		List<TStudent> list = dao.findStudentSignByLessonAndClass(dto);
-		System.out.println(JSON.toJSON(list));
 	}
 }
