@@ -24,4 +24,15 @@ public interface ITStudentDao extends IBaseDao<TStudent, Integer> {
 	 * @return
 	 */
 	List<TStudent> findStudentSignByLessonAndClass(String scheduleCode);
+	
+	/**
+	 * 
+	 * 方法: getSyllabus <br>
+	 * 描述: 课程表 <br>
+	 * 作者: zhy<br>
+	 * 时间: 2017年3月18日 下午8:12:38
+	 * @param code
+	 * @return
+	 */
+	List<TStudent> getSyllabus(String code);
 }

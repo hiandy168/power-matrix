@@ -18,6 +18,8 @@ public class TStudentTest {
 	private ITStudentDao dao;
 
 	@org.junit.Test
-	public void findStudentSignByLessonAndClass() {
+	public void getSyllabus() {
+		List<TStudent> list = dao.getSyllabus("s1");
+		System.out.println(JSON.toJSON(list));
 	}
 }

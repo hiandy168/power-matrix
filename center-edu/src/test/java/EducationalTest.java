@@ -13,10 +13,4 @@ public class EducationalTest {
 
 	@Autowired
 	private IEducationalService service;
-
-	@Test
-	public void teacherSyllabus() {
-		JSONObject obj = service.teacherSyllabus("T1489071763988");
-		System.out.println(obj);
-	}
 }

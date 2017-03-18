@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.pojo.dto.ExamPaperDto;
 import com.matrix.pojo.dto.RegisteDto;
-import com.matrix.pojo.entity.TStudentEvaluate;
 import com.matrix.pojo.entity.TStudySchedule;
 import com.matrix.pojo.entity.TTeacher;
 import com.matrix.pojo.entity.TUser;
@@ -244,74 +243,4 @@ public class ApiEduController {
 		return service.inspectStudentPaperList(scheduleCode, studentCode);
 	}
 
-	/**
-	 * 
-	 * 方法: teacherSyllabus <br>
-	 * 描述: 个人中心-教师-课程表 <br>
-	 * 作者: zhy<br>
-	 * 时间: 2017年3月17日 上午11:13:18
-	 * 
-	 * @param code
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(value = "info/teacher_syllabus", produces = { "application/json;charset=utf-8" })
-	@ResponseBody
-	public JSONObject teacherSyllabus(String code, HttpServletResponse response) {
-		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问题
-		return service.teacherSyllabus(code);
-	}
-
-	/**
-	 * 
-	 * 方法: teacherLessons <br>
-	 * 描述: 个人中心-教师-课程点评 <br>
-	 * 作者: zhy<br>
-	 * 时间: 2017年3月17日 上午11:13:32
-	 * 
-	 * @param code
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(value = "info/teacher_lessons", produces = { "application/json;charset=utf-8" })
-	@ResponseBody
-	public JSONObject teacherLessons(String code, HttpServletResponse response) {
-		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问题
-		return service.teacherLessons(code);
-	}
-
-	/**
-	 * 
-	 * 方法: lessonClassStudents <br>
-	 * 描述: 获取课程班级学生列表 <br>
-	 * 作者: zhy<br>
-	 * 时间: 2017年3月17日 下午4:23:16
-	 * 
-	 * @param scheduleCode
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(value = "info/teacher_classstudents", produces = { "application/json;charset=utf-8" })
-	@ResponseBody
-	public JSONObject lessonClassStudents(String scheduleCode, HttpServletResponse response) {
-		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问
-		return service.lessonClassStudents(scheduleCode);
-	}
-
-	/**
-	 * 
-	 * 方法: studentEvaluateByTeacher <br>
-	 * 描述: 教师对学生进行课程点评 <br>
-	 * 作者: zhy<br>
-	 * 时间: 2017年3月17日 下午4:23:10
-	 * 
-	 * @param entity
-	 * @return
-	 */
-	@RequestMapping(value = "info/teacher_studentevaluate", produces = { "application/json;charset=utf-8" })
-	@ResponseBody
-	public JSONObject studentEvaluateByTeacher(TStudentEvaluate entity, HttpServletResponse response) {
-		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问
-		return service.studentEvaluateByTeacher(entity);
-	}
 }

@@ -1,6 +1,5 @@
 package com.matrix.pojo.entity;
 
-import java.util.Date;
 
 import com.matrix.pojo.EduBaseEntity;
 
@@ -19,6 +18,46 @@ public class TStudent extends EduBaseEntity {
 	private String scheduleCode;
 
 	private Integer flagEvaluate;
+
+	private String lessonName;
+
+	private String lessonStartTime;
+
+	private String lessonIntro;
+
+	private String teacherName;
+
+	public String getLessonIntro() {
+		return lessonIntro;
+	}
+
+	public void setLessonIntro(String lessonIntro) {
+		this.lessonIntro = lessonIntro;
+	}
+
+	public String getLessonName() {
+		return lessonName;
+	}
+
+	public void setLessonName(String lessonName) {
+		this.lessonName = lessonName;
+	}
+
+	public String getTeacherName() {
+		return teacherName;
+	}
+
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
+	}
+
+	public String getLessonStartTime() {
+		return lessonStartTime;
+	}
+
+	public void setLessonStartTime(String lessonStartTime) {
+		this.lessonStartTime = lessonStartTime;
+	}
 
 	public Integer getFlagEvaluate() {
 		return flagEvaluate;

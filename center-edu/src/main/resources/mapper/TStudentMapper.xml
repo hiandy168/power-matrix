@@ -18,6 +18,12 @@
 			jdbcType="VARCHAR" />
 		<result column="flag_evaluate" property="flagEvaluate"
 			jdbcType="INTEGER" />
+		<result column="lesson_name" property="lessonName" jdbcType="VARCHAR" />
+		<!-- lessonIntro -->
+		<result column="lesson_intro" property="lessonIntro" jdbcType="VARCHAR" />
+		<result column="lesson_start_time" property="lessonStartTime"
+			jdbcType="VARCHAR" />
+		<result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
 	</resultMap>
 
 
@@ -219,6 +225,33 @@
 			AND tls.student_code =
 			ts.`code`
 			AND tss.schedule_code = #{scheduleCode,jdbcType=VARCHAR}
+		</where>
+	</select>
+	<!-- 课程表 2017-03-18 zhy -->
+	<select id="getSyllabus" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT
+		tl.lesson_name,
+		DATE_FORMAT(
+		tss.start_time,
+		'%Y-%m-%d
+		%H:%i:%s'
+		) AS
+		lesson_start_time,
+		tl.intro as lesson_intro,
+		tt.`name` AS teacher_name
+		FROM
+		educationalcenter.t_study_schedule AS tss,
+		educationalcenter.t_lesson AS tl,
+		educationalcenter.t_student AS ts,
+		educationalcenter.t_teacher AS tt
+		<where>
+			tss.lesson_code = tl.`code`
+			AND
+			tss.teacher_code = tt.`code`
+			AND tss.classes_code LIKE CONCAT('%',
+			ts.classes_code, '%')
+			AND ts.`code`=#{code,jdbcType=VARCHAR}
 		</where>
 	</select>
 </mapper>
