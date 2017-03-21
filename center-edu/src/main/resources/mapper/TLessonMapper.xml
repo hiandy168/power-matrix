@@ -13,6 +13,7 @@
 		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
 		<result column="intro" property="intro" jdbcType="LONGVARCHAR" />
+		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	
@@ -104,6 +105,9 @@
 			<if test="intro != null">
 				intro,
 			</if>
+			<if test="imgUrl != null">
+				img_url,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -135,6 +139,9 @@
 			</if>
 			<if test="intro != null">
 				#{intro,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="imgUrl != null">
+				#{imgUrl , jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
@@ -169,6 +176,9 @@
 			</if>
 			<if test="intro != null">
 				intro = #{intro,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="imgUrl != null">
+				img_url = #{imgUrl , jdbcType=VARCHAR},
 			</if>
 		</set>
 		where id = #{id,jdbcType=INTEGER}
