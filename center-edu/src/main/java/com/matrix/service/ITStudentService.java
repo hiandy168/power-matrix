@@ -45,4 +45,39 @@ public interface ITStudentService {
 	 * @return
 	 */
 	JSONObject faqAnswer(String code);
+
+	/**
+	 * 
+	 * 方法: getStudentDetail <br>
+	 * 描述: 根据编码查询学生详情 <br>
+	 * 作者: zhy<br>
+	 * 时间: 2017年3月21日 下午5:24:06
+	 * 
+	 * @param code
+	 * @return
+	 */
+	JSONObject getStudentDetail(String code);
+
+	/**
+	 * 
+	 * 方法: getRollcallByStudent <br>
+	 * 描述: 根据学生编码查询课程点名列表 <br>
+	 * 作者: zhy<br>
+	 * 时间: 2017年3月21日 下午6:13:54
+	 * 
+	 * @param studentCode
+	 * @return
+	 */
+	JSONObject getRollcallByStudent(String studentCode);
+	
+	/**
+	 * 
+	 * 方法: rollcall <br>
+	 * 描述: 确认点名 <br>
+	 * 作者: zhy<br>
+	 * 时间: 2017年3月21日 下午6:27:19
+	 * @param code
+	 * @return
+	 */
+	JSONObject rollcall(String code,String studentCode);
 }

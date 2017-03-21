@@ -1,6 +1,7 @@
 package com.matrix.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.matrix.pojo.dto.RollcallDto;
 import com.matrix.pojo.entity.TStudentEvaluate;
 
 /**
@@ -48,25 +49,63 @@ public interface ITTeacherService {
 	 * @return
 	 */
 	JSONObject studentEvaluateByTeacher(TStudentEvaluate entity);
+
 	/**
 	 * 
 	 * 方法: syllabus <br>
 	 * 描述: 获取教师课程表 <br>
 	 * 作者: zhy<br>
 	 * 时间: 2017年3月18日 下午7:39:16
+	 * 
 	 * @return
 	 */
 	JSONObject syllabus(String code);
-	
-	
+
 	/**
 	 * 
 	 * 方法: faq <br>
 	 * 描述: 答疑列表 <br>
 	 * 作者: zhy<br>
 	 * 时间: 2017年3月18日 下午7:40:57
+	 * 
 	 * @param teacherCode
 	 * @return
 	 */
 	JSONObject faq(String code);
+
+	/**
+	 * 
+	 * 方法: rollcallCourses <br>
+	 * 描述: 根据scheduleCode查询点名学生列表 <br>
+	 * 作者: zhy<br>
+	 * 时间: 2017年3月21日 下午4:36:24
+	 * 
+	 * @param scheduleCode
+	 * @return
+	 */
+	JSONObject rollcallCourseStudents(String scheduleCode);
+
+	/**
+	 * 
+	 * 方法: rollcall <br>
+	 * 描述: 随机点名 <br>
+	 * 作者: zhy<br>
+	 * 时间: 2017年3月21日 下午4:09:28
+	 * 
+	 * @param dto
+	 * @return
+	 */
+	JSONObject rollcall(RollcallDto dto);
+
+	/**
+	 * 
+	 * 方法: getTeacherDetail <br>
+	 * 描述: 根据编码查询教师详情 <br>
+	 * 作者: zhy<br>
+	 * 时间: 2017年3月21日 下午5:37:15
+	 * 
+	 * @param code
+	 * @return
+	 */
+	JSONObject getTeacherDetail(String code);
 }

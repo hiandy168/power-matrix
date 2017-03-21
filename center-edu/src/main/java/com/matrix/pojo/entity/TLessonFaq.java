@@ -1,6 +1,5 @@
 package com.matrix.pojo.entity;
 
-import com.matrix.pojo.EduBaseEntity;
 
 public class TLessonFaq {
 

@@ -8,10 +8,13 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.base.BaseClass;
 import com.matrix.dao.ITLessonFaqDao;
+import com.matrix.dao.ITLessonRollcallDao;
 import com.matrix.dao.ITStudentDao;
 import com.matrix.pojo.entity.TLessonFaq;
+import com.matrix.pojo.entity.TLessonRollcall;
 import com.matrix.pojo.entity.TStudent;
 import com.matrix.service.ITStudentService;
+import com.matrix.util.DateUtil;
 
 /**
  * 
@@ -27,6 +30,8 @@ public class TStudentServiceImpl extends BaseClass implements ITStudentService {
 	private ITStudentDao dao;
 	@Autowired
 	private ITLessonFaqDao faqDao;
+	@Autowired
+	private ITLessonRollcallDao rollcallDao;
 
 	/**
 	 * 
@@ -41,7 +46,11 @@ public class TStudentServiceImpl extends BaseClass implements ITStudentService {
 		JSONObject result = new JSONObject();
 		try {
 			List<TStudent> list = dao.getSyllabus(code);
-			result.put("data", list);
+			if (list != null && list.size() > 0) {
+				result.put("data", list);
+			} else {
+				result.put("data", "");
+			}
 			result.put("status", true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -64,7 +73,11 @@ public class TStudentServiceImpl extends BaseClass implements ITStudentService {
 		JSONObject result = new JSONObject();
 		try {
 			List<TLessonFaq> list = faqDao.getFaqForStudent(code);
-			result.put("data", list);
+			if (list != null && list.size() > 0) {
+				result.put("data", list);
+			} else {
+				result.put("data", "");
+			}
 			result.put("status", true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -87,12 +100,90 @@ public class TStudentServiceImpl extends BaseClass implements ITStudentService {
 		JSONObject result = new JSONObject();
 		try {
 			List<TLessonFaq> list = faqDao.faqAnswerForStudent(code);
-			result.put("data", list);
+			if (list != null && list.size() > 0) {
+				result.put("data", list);
+			} else {
+				result.put("data", "");
+			}
 			result.put("status", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result.put("status", false);
 			result.put("msg", "查询失败，失败原因:" + e.getMessage());
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * 方法: getStudentDetail <br>
+	 * 
+	 * @param code
+	 * @return
+	 * @see com.matrix.service.ITStudentService#getStudentDetail(java.lang.String)
+	 */
+	@Override
+	public JSONObject getStudentDetail(String code) {
+		JSONObject result = new JSONObject();
+		try {
+			TStudent student = dao.getStudentDetail(code);
+			if (student != null) {
+				result.put("data", student);
+			} else {
+				result.put("data", "");
+			}
+
+			result.put("status", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("status", false);
+			result.put("msg", "查询失败，失败原因:" + e.getMessage());
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * 方法: getRollcallByStudent <br>
+	 * 
+	 * @param studentCode
+	 * @return
+	 * @see com.matrix.service.ITStudentService#getRollcallByStudent(java.lang.String)
+	 */
+	@Override
+	public JSONObject getRollcallByStudent(String studentCode) {
+		JSONObject result = new JSONObject();
+		try {
+			List<TLessonRollcall> students = rollcallDao.getRollcallByStudent(studentCode);
+			if (students != null && students.size() > 0) {
+				result.put("data", students);
+			} else {
+				result.put("data", "");
+			}
+			result.put("status", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("status", false);
+			result.put("msg", "查询失败，失败原因:" + e.getMessage());
+		}
+		return result;
+	}
+
+	@Override
+	public JSONObject rollcall(String code,String studentCode) {
+		JSONObject result = new JSONObject();
+		try {
+			TLessonRollcall entity = new TLessonRollcall();
+			entity.setCode(code);
+			entity.setUpdateUser(studentCode);
+			entity.setUpdateTime(DateUtil.getSysDateTime());
+			entity.setFlagSuccess(1);
+			rollcallDao.updateSelective(entity);
+			result.put("status", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("status", false);
+			result.put("msg", "确认点名失败，失败原因:" + e.getMessage());
 		}
 		return result;
 	}

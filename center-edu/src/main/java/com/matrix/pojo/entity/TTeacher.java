@@ -33,7 +33,27 @@ public class TTeacher extends EduBaseEntity {
 	 */
 	private String classesName;
 
+	private String headPic;
+
+	private String userName;
+
 	private String scheduleCode;
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getHeadPic() {
+		return headPic;
+	}
+
+	public void setHeadPic(String headPic) {
+		this.headPic = headPic;
+	}
 
 	public String getScheduleCode() {
 		return scheduleCode;

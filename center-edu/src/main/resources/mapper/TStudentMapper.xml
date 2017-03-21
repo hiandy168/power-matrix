@@ -24,6 +24,9 @@
 		<result column="lesson_start_time" property="lessonStartTime"
 			jdbcType="VARCHAR" />
 		<result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+		<result column="username" property="userName" jdbcType="VARCHAR" />
+		<result column="rollcall_success" property="rollcallSuccess"
+			jdbcType="INTEGER" />
 	</resultMap>
 
 
@@ -204,11 +207,12 @@
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
-	<!-- 根据课程编码，班级编码查询学生签到信息 2017-03-17 zhy -->
-	<select id="findStudentSignByLessonAndClass" parameterType="java.lang.String"
+	<!-- 根据scheduleCode查询学生签到信息 2017-03-17 zhy -->
+	<select id="findStudentSignByScheduleCode" parameterType="java.lang.String"
 		resultMap="BaseResultMap">
 		SELECT
 		tss.schedule_code,
+		ts.`code`,
 		ts.`name`,
 		DATE_FORMAT(
 		tls.create_time,
@@ -225,6 +229,52 @@
 			AND tls.student_code =
 			ts.`code`
 			AND tss.schedule_code = #{scheduleCode,jdbcType=VARCHAR}
+		</where>
+	</select>
+	<!-- 根据scheduleCode查询学生签到信息-随机dianm 2017-03-17 zhy -->
+	<select id="findStudentSignByScheduleCodeForRollcall"
+		parameterType="java.lang.String" resultMap="BaseResultMap">
+		SELECT
+		tmp.schedule_code,
+		tmp.`code`,
+		tmp.`name`,
+		tmp.sign_time,
+		tmp.flag_evaluate,
+		IFNULL(tmp.rollcall_success, - 1) AS
+		rollcall_success
+		FROM
+		(
+		SELECT
+		tss.schedule_code,
+		ts.`code`,
+		ts.`name`,
+		DATE_FORMAT(
+		tls.create_time,
+		'%Y-%m-%d %H:%i:%s'
+		) AS sign_time,
+		tls.flag_evaluate,
+		(
+		SELECT
+		tlr.flag_success
+		FROM
+		educationalcenter.t_lesson_rollcall AS tlr
+		WHERE
+		tlr.schedule_code =
+		tss.schedule_code
+		AND tlr.student_code = ts.`code`
+		) AS rollcall_success
+		FROM
+		educationalcenter.t_study_schedule AS tss,
+		educationalcenter.t_lesson_sign AS tls,
+		educationalcenter.t_student AS
+		ts
+		WHERE
+		tss.schedule_code = tls.schedule_code
+		AND tls.student_code =
+		ts.`code`
+		) AS tmp
+		<where>
+			tmp.schedule_code = #{scheduleCode,jdbcType=VARCHAR}
 		</where>
 	</select>
 	<!-- 课程表 2017-03-18 zhy -->
@@ -249,9 +299,24 @@
 			tss.lesson_code = tl.`code`
 			AND
 			tss.teacher_code = tt.`code`
-			AND tss.classes_code LIKE CONCAT('%',
+			AND
+			tss.classes_code LIKE CONCAT('%',
 			ts.classes_code, '%')
-			AND ts.`code`=#{code,jdbcType=VARCHAR}
+			AND
+			ts.`code`=#{code,jdbcType=VARCHAR}
 		</where>
+	</select>
+	<select id="getStudentDetail" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT
+		tu.username,
+		ts.`name`,
+		ts.head_pic
+		FROM
+		educationalcenter.t_user AS tu,
+		educationalcenter.t_student AS ts
+		WHERE
+		tu.`code` = ts.`code`
+		and ts.`code` = #{code,jdbcType=VARCHAR}
 	</select>
 </mapper>

@@ -1,6 +1,5 @@
 package com.matrix.pojo.entity;
 
-
 import com.matrix.pojo.EduBaseEntity;
 
 public class TStudent extends EduBaseEntity {
@@ -26,6 +25,26 @@ public class TStudent extends EduBaseEntity {
 	private String lessonIntro;
 
 	private String teacherName;
+
+	private Integer rollcallSuccess;
+
+	private String userName;
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public Integer getRollcallSuccess() {
+		return rollcallSuccess;
+	}
+
+	public void setRollcallSuccess(Integer rollcallSuccess) {
+		this.rollcallSuccess = rollcallSuccess;
+	}
 
 	public String getLessonIntro() {
 		return lessonIntro;

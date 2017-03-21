@@ -31,11 +31,19 @@ public class DateUtil {
 	 * 获取月度第一天
 	 */
 	public final static String CONST_PARSE_MONTH_FIRST_DAY = "yyyy-MM-01 00:00:00";
-	
+
 	/**
 	 * 获取每天0时0分0秒
 	 */
 	public final static String CONST_PARSE_DATETIME_0 = "yyyy-MM-dd 00:00:00";
+
+	public static final String DATE_FORMAT_DATEONLY = "yyyy-MM-dd"; // 年/月/日
+
+	public static final String DATE_FORMAT_DATETIME = "yyyy-MM-dd HH:mm:ss"; // 年/月/日
+
+	public static final SimpleDateFormat sdfDateOnly = new SimpleDateFormat(DateUtil.DATE_FORMAT_DATEONLY);
+
+	public static final SimpleDateFormat sdfDateTime = new SimpleDateFormat(DateUtil.DATE_FORMAT_DATETIME);
 
 	/**
 	 * 强制转换日期
@@ -54,8 +62,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * alias upDate
-	 * 获取日期的格式
+	 * alias upDate 获取日期的格式
 	 * 
 	 * @param dDate
 	 * @return
@@ -64,8 +71,8 @@ public class DateUtil {
 
 		return formatDate(dDate, CONST_PARSE_DATETIME);
 	}
-	
-	/** 
+
+	/**
 	 * 获取每天0时0分0秒
 	 * 
 	 * @param dDate
@@ -77,8 +84,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * alias upDate
-	 * 获取日期的格式
+	 * alias upDate 获取日期的格式
 	 * 
 	 * @param dDate
 	 * @param sParse
@@ -216,18 +222,18 @@ public class DateUtil {
 		int timeEle = 0;
 
 		switch (timeType) {
-			case Calendar.DAY_OF_MONTH:
-				timeEle = calendar.get(Calendar.DAY_OF_MONTH);
-				break;
-			case Calendar.MONTH:
-				timeEle = calendar.get(Calendar.MONTH) + 1;
-				break;
-			case Calendar.YEAR:
-				timeEle = calendar.get(Calendar.YEAR);
-				break;
-			default:
-				timeEle = -1;
-				break;
+		case Calendar.DAY_OF_MONTH:
+			timeEle = calendar.get(Calendar.DAY_OF_MONTH);
+			break;
+		case Calendar.MONTH:
+			timeEle = calendar.get(Calendar.MONTH) + 1;
+			break;
+		case Calendar.YEAR:
+			timeEle = calendar.get(Calendar.YEAR);
+			break;
+		default:
+			timeEle = -1;
+			break;
 		}
 
 		return timeEle;
@@ -259,6 +265,32 @@ public class DateUtil {
 		}
 
 		return bFlag;
+	}
+
+	/**
+	 * 
+	 * 方法: getSysDate <br>
+	 * 描述: 获取当前系统日期 <br>
+	 * 作者: zhy<br>
+	 * 时间: 2016年8月1日 上午7:26:21
+	 * 
+	 * @return
+	 */
+	public static String getSysDate() {
+		return sdfDateOnly.format(new Date());
+	}
+
+	/**
+	 * 
+	 * 方法: getSysDateTime <br>
+	 * 描述: 获取当前系统时间 <br>
+	 * 作者: zhy<br>
+	 * 时间: 2016年8月1日 上午7:26:54
+	 * 
+	 * @return
+	 */
+	public static String getSysDateTime() {
+		return sdfDateTime.format(new Date());
 	}
 
 }

@@ -32,4 +32,16 @@ public interface ITTeacherDao extends IBaseDao<TTeacher, Integer> {
 	 * @return
 	 */
 	List<TTeacher> getLessons(String code);
+
+	/**
+	 * 
+	 * 方法: getTeacherDetail <br>
+	 * 描述: 根据编码查询教师详情 <br>
+	 * 作者: zhy<br>
+	 * 时间: 2017年3月21日 下午5:37:15
+	 * 
+	 * @param code
+	 * @return
+	 */
+	TTeacher getTeacherDetail(String code);
 }

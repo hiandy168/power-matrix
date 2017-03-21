@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.matrix.dao.ITLessonRollcallDao">
+	<resultMap id="BaseResultMap" type="com.matrix.pojo.entity.TLessonRollcall">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="schedule_code" property="scheduleCode"
+			jdbcType="VARCHAR" />
+		<result column="student_code" property="studentCode" jdbcType="VARCHAR" />
+		<result column="verify_code" property="verifyCode" jdbcType="VARCHAR" />
+		<result column="flag_success" property="flagSuccess" jdbcType="INTEGER" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="VARCHAR" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+		<result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+		<result column="lesson_name" property="lessonName" jdbcType="VARCHAR" />
+		<result column="lesson_start_time" property="lessonStartTime"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, uuid,`code`, schedule_code, student_code, verify_code,
+		flag_success,
+		create_user,
+		DATE_FORMAT(
+		create_time,
+		'%Y-%m-%d
+		%H:%i:%s'
+		)
+		AS
+		create_time, update_user,
+		DATE_FORMAT(
+		update_time,
+		'%Y-%m-%d
+		%H:%i:%s'
+		)
+		AS update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from educationalcenter.t_lesson_rollcall
+		where id =
+		#{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		educationalcenter.t_lesson_rollcall
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.TLessonRollcall">
+		insert into educationalcenter.t_lesson_rollcall
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			uuid,
+			`code`,
+			schedule_code,
+			student_code,
+			verify_code,
+			create_user,
+			create_time,
+			update_user,
+			update_time,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{uuid,jdbcType=VARCHAR},
+			#{code,jdbcType=VARCHAR},
+			#{scheduleCode,jdbcType=VARCHAR},
+			#{studentCode,jdbcType=VARCHAR},
+			#{verifyCode,jdbcType=VARCHAR},
+			#{createUser,jdbcType=VARCHAR},
+			STR_TO_DATE(#{createTime,jdbcType=VARCHAR},'%Y-%m-%d %H:%i:%s'),
+			#{createUser,jdbcType=VARCHAR},
+			STR_TO_DATE(#{createTime,jdbcType=VARCHAR},'%Y-%m-%d %H:%i:%s'),
+		</trim>
+	</insert>
+	<insert id="batchInsert" parameterType="list">
+		insert into educationalcenter.t_lesson_rollcall( uuid,
+		`code`,
+		schedule_code,
+		student_code,
+		verify_code,
+		create_user,
+		create_time,
+		update_user,
+		update_time)
+		values
+		<foreach collection="list" index="index" item="item" open=""
+			separator="," close="">
+			(
+			#{item.uuid,jdbcType=VARCHAR},
+			#{item.code,jdbcType=VARCHAR},
+			#{item.scheduleCode,jdbcType=VARCHAR},
+			#{item.studentCode,jdbcType=VARCHAR},
+			#{item.verifyCode,jdbcType=VARCHAR},
+			#{item.createUser,jdbcType=VARCHAR},
+			STR_TO_DATE(#{item.createTime,jdbcType=VARCHAR},'%Y-%m-%d %H:%i:%s'),
+			#{item.createUser,jdbcType=VARCHAR},
+			STR_TO_DATE(#{item.createTime,jdbcType=VARCHAR},'%Y-%m-%d %H:%i:%s')
+			)
+		</foreach>
+	</insert>
+	<update id="updateSelective" parameterType="com.matrix.pojo.entity.TLessonRollcall">
+		update educationalcenter.t_lesson_rollcall
+		<set>
+			<if test="scheduleCode != null">
+				schedule_code = #{scheduleCode,jdbcType=VARCHAR},
+			</if>
+			<if test="studentCode != null">
+				student_code = #{studentCode,jdbcType=VARCHAR},
+			</if>
+			<if test="verifyCode != null">
+				verify_code = #{verifyCode,jdbcType=VARCHAR},
+			</if>
+			<if test="flagSuccess != null">
+				flag_success = #{flagSuccess,jdbcType=INTEGER},
+			</if>
+			update_user = #{updateUser,jdbcType=VARCHAR},
+			update_time =
+			STR_TO_DATE(#{updateTime,jdbcType=VARCHAR},'%Y-%m-%d %H:%i:%s'),
+		</set>
+		where `code` = #{code,jdbcType=VARCHAR}
+	</update>
+	<!-- 根据学生编码查询课程点名列表 2017-03-21 zhy -->
+	<select id="getRollcallByStudent" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT
+		tlr.`code`,
+		tl.lesson_name,
+		tt.`name` AS teacher_name,
+		DATE_FORMAT(
+		tss.start_time,
+		'%Y-%m-%d
+		%H:%i:%s'
+		) as lesson_start_time
+		FROM
+		educationalcenter.t_lesson_rollcall AS tlr,
+		educationalcenter.t_study_schedule AS tss,
+		educationalcenter.t_teacher
+		AS tt,
+		educationalcenter.t_lesson AS tl
+		<where>
+			tlr.schedule_code = tss.schedule_code
+			AND tl.`code` =
+			tss.lesson_code
+			AND tt.`code` = tss.teacher_code
+			AND tlr.flag_success =
+			0
+			AND tlr.student_code =
+			#{studentCode,jdbcType=VARCHAR}
+		</where>
+	</select>
+</mapper>

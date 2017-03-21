@@ -14,17 +14,21 @@ import com.alibaba.fastjson.JSONObject;
 import com.matrix.base.BaseClass;
 import com.matrix.dao.ITClassesDao;
 import com.matrix.dao.ITLessonFaqDao;
+import com.matrix.dao.ITLessonRollcallDao;
 import com.matrix.dao.ITLessonSignDao;
 import com.matrix.dao.ITStudentDao;
 import com.matrix.dao.ITStudentEvaluateDao;
 import com.matrix.dao.ITTeacherDao;
+import com.matrix.pojo.dto.RollcallDto;
 import com.matrix.pojo.entity.TClasses;
 import com.matrix.pojo.entity.TLessonFaq;
+import com.matrix.pojo.entity.TLessonRollcall;
 import com.matrix.pojo.entity.TLessonSign;
 import com.matrix.pojo.entity.TStudent;
 import com.matrix.pojo.entity.TStudentEvaluate;
 import com.matrix.pojo.entity.TTeacher;
 import com.matrix.service.ITTeacherService;
+import com.matrix.util.DateUtil;
 import com.matrix.util.UuidUtil;
 
 /**
@@ -53,6 +57,9 @@ public class TTeacherServiceImpl extends BaseClass implements ITTeacherService {
 	@Autowired
 	private ITLessonFaqDao faqDao;
 
+	@Autowired
+	private ITLessonRollcallDao rollcallDao;
+
 	@Override
 	public JSONObject teacherLessons(String code) {
 		JSONObject result = new JSONObject();
@@ -74,6 +81,8 @@ public class TTeacherServiceImpl extends BaseClass implements ITTeacherService {
 					}
 				}
 				result.put("data", teachers);
+			} else {
+				result.put("data", "");
 			}
 			result.put("status", true);
 		} catch (Exception e) {
@@ -87,9 +96,11 @@ public class TTeacherServiceImpl extends BaseClass implements ITTeacherService {
 	public JSONObject lessonClassStudents(String scheduleCode) {
 		JSONObject result = new JSONObject();
 		try {
-			List<TStudent> list = studentDao.findStudentSignByLessonAndClass(scheduleCode);
+			List<TStudent> list = studentDao.findStudentSignByScheduleCode(scheduleCode);
 			if (list != null && list.size() > 0) {
 				result.put("data", list);
+			} else {
+				result.put("data", "");
 			}
 			result.put("status", true);
 		} catch (Exception e) {
@@ -108,6 +119,8 @@ public class TTeacherServiceImpl extends BaseClass implements ITTeacherService {
 			int flag = studentEvaluateDao.insertSelective(entity);
 			if (flag > 0) {
 				TLessonSign sign = new TLessonSign();
+				sign.setStudentCode(entity.getStudentCode());
+				sign.setScheduleCode(entity.getScheduleCode());
 				sign.setFlagEvaluate(1);
 				sign.setUpdateUser(entity.getCreateUser());
 				sign.setUpdateTime(entity.getCreateTime());
@@ -171,7 +184,11 @@ public class TTeacherServiceImpl extends BaseClass implements ITTeacherService {
 		JSONObject result = new JSONObject();
 		try {
 			List<TLessonFaq> list = faqDao.getFaqForTeacher(teacherCode);
-			result.put("data", list);
+			if (list != null && list.size() > 0) {
+				result.put("data", list);
+			} else {
+				result.put("data", "");
+			}
 			result.put("status", true);
 		} catch (Exception e) {
 			result.put("status", false);
@@ -179,6 +196,87 @@ public class TTeacherServiceImpl extends BaseClass implements ITTeacherService {
 		}
 		return result;
 
+	}
+
+	/**
+	 * 
+	 * 方法: rollcall <br>
+	 * 
+	 * @param dto
+	 * @return
+	 * @see com.matrix.service.ITTeacherService#rollcall(com.matrix.pojo.dto.RollcallDto)
+	 */
+	@Override
+	public JSONObject rollcall(RollcallDto dto) {
+		JSONObject result = new JSONObject();
+		try {
+			String[] studentCodes = dto.getStudentCodes().split(",");
+			List<TLessonRollcall> list = new ArrayList<TLessonRollcall>();
+			for (int i = 0; i < studentCodes.length; i++) {
+				TLessonRollcall entity = new TLessonRollcall();
+				entity.setUuid(UuidUtil.uid());
+				entity.setCode("RC" + System.currentTimeMillis());
+				entity.setScheduleCode(dto.getScheduleCode());
+				entity.setVerifyCode(dto.getVerifyCode());
+				entity.setStudentCode(studentCodes[i]);
+				entity.setCreateUser(dto.getTeacherCode());
+				entity.setCreateTime(DateUtil.getSysDateTime());
+				list.add(entity);
+			}
+			rollcallDao.batchInsert(list);
+			result.put("status", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("status", false);
+			result.put("msg", "发送失败，失败原因:" + e.getMessage());
+		}
+		return result;
+	}
+
+	@Override
+	public JSONObject rollcallCourseStudents(String scheduleCode) {
+		JSONObject result = new JSONObject();
+		try {
+			List<TStudent> list = studentDao.findStudentSignByScheduleCodeForRollcall(scheduleCode);
+			if (list != null && list.size() > 0) {
+				result.put("data", list);
+			} else {
+				result.put("data", "");
+			}
+			result.put("status", true);
+		} catch (Exception e) {
+			result.put("status", true);
+			result.put("msg", e.getMessage());
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * 方法: getTeacherDetail <br>
+	 * 
+	 * @param code
+	 * @return
+	 * @see com.matrix.service.ITTeacherService#getTeacherDetail(java.lang.String)
+	 */
+	@Override
+	public JSONObject getTeacherDetail(String code) {
+		JSONObject result = new JSONObject();
+		try {
+			TTeacher teacher = dao.getTeacherDetail(code);
+			if (teacher != null) {
+				result.put("data", teacher);
+			} else {
+				result.put("data", "");
+			}
+
+			result.put("status", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("status", false);
+			result.put("msg", "查询失败，失败原因:" + e.getMessage());
+		}
+		return result;
 	}
 
 }

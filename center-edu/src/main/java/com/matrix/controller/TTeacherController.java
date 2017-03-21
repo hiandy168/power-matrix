@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.matrix.pojo.dto.RollcallDto;
 import com.matrix.pojo.entity.TStudentEvaluate;
 import com.matrix.service.ITTeacherService;
 
@@ -94,5 +95,26 @@ public class TTeacherController {
 	public JSONObject faq(String code, HttpServletResponse response) {
 		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问
 		return service.faq(code);
+	}
+
+	@RequestMapping(value = "rollcall_course_students", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject rollcallCourseStudents(String scheduleCode, HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问
+		return service.rollcallCourseStudents(scheduleCode);
+	}
+
+	@RequestMapping(value = "rollcall", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject rollcall(RollcallDto dto, HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问
+		return service.rollcall(dto);
+	}
+
+	@RequestMapping(value = "detail", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject detail(String code, HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问
+		return service.getTeacherDetail(code);
 	}
 }

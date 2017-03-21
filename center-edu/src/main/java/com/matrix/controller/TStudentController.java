@@ -70,4 +70,36 @@ public class TStudentController {
 		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问题
 		return service.faqAnswer(code);
 	}
+
+	/**
+	 * 
+	 * 方法: getStudentDetail <br>
+	 * 描述: 根据编码查询学生详情 <br>
+	 * 作者: zhy<br>
+	 * 时间: 2017年3月21日 下午5:25:39
+	 * 
+	 * @param code
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "detail", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject getStudentDetail(String code, HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问题
+		return service.getStudentDetail(code);
+	}
+
+	@RequestMapping(value = "rollcall_course", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject rollcallCourse(String code, HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问题
+		return service.getRollcallByStudent(code);
+	}
+
+	@RequestMapping(value = "rollcall", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject rollcall(String code, String studentCode, HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问题
+		return service.rollcall(code, studentCode);
+	}
 }
