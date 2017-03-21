@@ -18,8 +18,9 @@ public class StudyScheduleView extends TStudySchedule{
 		this.imgUrl = imgUrl;
 	}
 	public String getBeginTime() {
-		SimpleDateFormat sdf= new SimpleDateFormat("yyyy-mm-dd HH:mm");
-		return sdf.format(this.getStartTime());
+		SimpleDateFormat sdf= new SimpleDateFormat("MM月dd日 HH点mm分");
+		this.beginTime = sdf.format(this.getStartTime()); 
+		return beginTime;
 	}
 	public void setBeginTime(String beginTime) {
 		this.beginTime = beginTime; 
