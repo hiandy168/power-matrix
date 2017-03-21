@@ -41,6 +41,7 @@
 		<result column="lesson_name" property="lessonName" jdbcType="VARCHAR" />
 		<result column="type_code" property="typeCode" jdbcType="VARCHAR" />
 		<result column="intro" property="intro" jdbcType="VARCHAR" />
+		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
 	</resultMap>
 	<select id="findListByType" resultMap="StudyScheduleViewMap" parameterType="com.matrix.pojo.entity.TStudySchedule">
 		select
