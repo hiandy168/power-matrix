@@ -429,7 +429,7 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 			return result;
 		}
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日 HH点mm分");  // yyyy-MM-dd HH:mm
 			List<LessonResponseView> list_ = new ArrayList<LessonResponseView>();
 			List<StudyScheduleView> list = studyScheduleDao.findListByType(e);
 			if (list != null && list.size() > 0) {
