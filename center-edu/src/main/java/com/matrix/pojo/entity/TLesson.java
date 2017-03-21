@@ -9,6 +9,7 @@ public class TLesson  extends EduBaseEntity{
     private String code;
     private String typeCode;
     private String intro;
+    private String imgUrl;
     
 //    private String teacherCode;
 //    private String classesCode;
@@ -17,6 +18,12 @@ public class TLesson  extends EduBaseEntity{
     
 	public String getLessonName() {
 		return lessonName;
+	}
+	public String getImgUrl() {
+		return imgUrl;
+	}
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 	public void setLessonName(String lessonName) {
 		this.lessonName = lessonName;
