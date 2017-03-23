@@ -367,8 +367,26 @@
             	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
             }else{
             	url_ = 'edit_tree_node.do';
-            	var html_ = '<input type="text" name="name" class="smallinput " style="width: 190px; margin-bottom: 10px;" value="' + treeNode.name + '" ><br/>';
-            	html_ += '<input type="text" class="smallinput " placeholder="funcUrl" style="width: 190px; margin-bottom: 10px;" name="funcUrl" value="' + treeNode.funcUrl + '" ><br/>'; 
+            	var html_ = '节点名称：<input type="text" name="name" class="smallinput " style="width: 190px; margin-bottom: 10px;" value="' + treeNode.name + '" ><br/>';
+            	html_ += '节点类型：<select id="navType" name="navType" class="radius3" onchange="tfunc.changeNodeType()" style="margin-left:0px; width:204px;  margin-bottom: 10px;">'; 
+            	if(treeNode.navType == 4){
+            		html_ += '<option value="4" selected>页面按钮</option><option value="5">内部跳转页面</option></select><br/>';
+            		html_ += '<div id = "node-type" style="margin-bottom: 10px;">';
+            		if(treeNode.eleType == "elementId"){
+            			html_ += '<div style="margin-bottom: 10px;"><input type="radio" name="eleType" value="elementId" style="margin-left:10px" checked> 元素ID | <input type="radio" name="eleType" value="elementClass" style="margin-left:10px"> 元素Class</div>' 
+            		}else{
+            			html_ += '<div style="margin-bottom: 10px;"><input type="radio" name="eleType" value="elementId" style="margin-left:10px"> 元素ID | <input type="radio" name="eleType" value="elementClass" style="margin-left:10px" checked> 元素Class</div>' 
+            		}
+            		html_ += 'id|class：<input type="text" class="smallinput " placeholder="html的id 或 class值" style="width: 190px; margin-bottom: 10px;" name="eleValue" value="' + treeNode.eleValue + '" ><br/>';
+	            	html_ += '</div>';
+            	}else{
+            		html_ += '<option value="4">页面按钮</option><option value="5"  selected>内部跳转页面</option></select><br/>';
+            		html_ += '<div id = "node-type" style="margin-bottom: 10px;">';
+            		html_ += '跳转地址：<input type="text" class="smallinput " placeholder="funcUrl" style="width: 190px; margin-bottom: 10px;" name="funcUrl" value="' + treeNode.funcUrl + '" ><br/>'; 
+            		html_ += '</div>';
+            	}
+            	
+            	
             	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;">' + treeNode.remark + '</textarea><br/>';
             	html_ += '<input type="hidden" name="id" value="' + treeNode.id +'" >'; 
             	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
