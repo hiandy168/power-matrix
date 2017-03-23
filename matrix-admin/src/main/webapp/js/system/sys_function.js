@@ -379,11 +379,15 @@
             		}
             		html_ += 'id|class：<input type="text" class="smallinput " placeholder="html的id 或 class值" style="width: 190px; margin-bottom: 10px;" name="eleValue" value="' + treeNode.eleValue + '" ><br/>';
 	            	html_ += '</div>';
+	            	html_ += '<input type="hidden" name="funcUrl" value="" >';  // 更新时，此处置空
             	}else{
             		html_ += '<option value="4">页面按钮</option><option value="5"  selected>内部跳转页面</option></select><br/>';
             		html_ += '<div id = "node-type" style="margin-bottom: 10px;">';
             		html_ += '跳转地址：<input type="text" class="smallinput " placeholder="funcUrl" style="width: 190px; margin-bottom: 10px;" name="funcUrl" value="' + treeNode.funcUrl + '" ><br/>'; 
             		html_ += '</div>';
+            		
+            		html_ += '<input type="hidden" name="eleType" value="" >';  // 更新时，此处置空
+            		html_ += '<input type="hidden" name="eleValue" value="" >';  // 更新时，此处置空 
             	}
             	
             	
