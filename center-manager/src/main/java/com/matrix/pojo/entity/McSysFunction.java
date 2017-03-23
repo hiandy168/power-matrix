@@ -18,8 +18,22 @@ public class McSysFunction {
     private Integer createUserId;
     private Integer updateUserId;
     private String remark;
+    private String eleType;
+    private String eleValue;
     
     
+	public String getEleType() {
+		return eleType;
+	}
+	public void setEleType(String eleType) {
+		this.eleType = eleType;
+	}
+	public String getEleValue() {
+		return eleValue;
+	}
+	public void setEleValue(String eleValue) {
+		this.eleValue = eleValue;
+	}
 	public Integer getId() {
 		return id;
 	}

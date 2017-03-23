@@ -18,6 +18,8 @@
 		<result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
 		<result column="update_user_id" property="updateUserId" jdbcType="INTEGER" />
 		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="ele_type" property="eleType" jdbcType="VARCHAR" />
+		<result column="ele_value" property="eleValue" jdbcType="VARCHAR" />  
 	</resultMap>
 	
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -46,6 +48,8 @@
 		<result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
 		<result column="update_user_id" property="updateUserId" jdbcType="INTEGER" />
 		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="ele_type" property="eleType" jdbcType="VARCHAR" />
+		<result column="ele_value" property="eleValue" jdbcType="VARCHAR" />
 	</resultMap>
 	<select id="findList" resultMap="findListMap" parameterType="com.matrix.pojo.entity.McSysFunction" >
 	    select 
@@ -110,6 +114,12 @@
 			<if test="remark != null">
 				remark,
 			</if>
+			<if test="eleType != null">
+				ele_type,
+			</if>
+			<if test="eleValue != null">
+				ele_value,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -156,6 +166,12 @@
 			</if>
 			<if test="remark != null">
 				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="eleType != null">
+				#{eleType , jdbcType=VARCHAR},
+			</if>
+			<if test="eleValue != null">
+				#{eleValue , jdbcType=VARCHAR}, 
 			</if>
 		</trim>
 	</insert>
@@ -205,6 +221,12 @@
 			</if>
 			<if test="remark != null">
 				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="eleType != null">
+				ele_type = #{eleType , jdbcType=VARCHAR},
+			</if>
+			<if test="eleValue != null">
+				ele_value = #{eleValue , jdbcType=VARCHAR},
 			</if>
 		</set>
 		where id = #{id,jdbcType=INTEGER}

@@ -16,6 +16,7 @@ import com.matrix.dao.IMcSysFunctionDao;
 import com.matrix.pojo.entity.McSysFunction;
 import com.matrix.pojo.entity.McUserInfo;
 import com.matrix.service.IMcSysFunctionService;
+import com.matrix.util.UuidUtil;
 
 @Service("mcSysFunctionService") 
 public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Integer> implements IMcSysFunctionService {
@@ -33,6 +34,11 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 			entity.setUpdateTime(new Date());
 			entity.setCreateUserId(userInfo.getId());
 			entity.setUpdateUserId(userInfo.getId());
+			if(entity.getNavType() == 2){
+				entity.setStyleKey(UuidUtil.uid());
+			}else{
+				entity.setStyleKey(""); 
+			}
 			int count = dao.insertSelective(entity);
 			if(count == 1){
 				result.put("status", "success");

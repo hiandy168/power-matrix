@@ -290,9 +290,6 @@
             	var html_ = '<input type="text" name="name" class="smallinput " style="width: 190px; margin-bottom: 10px;" value="' + treeNode.name + '" ><br/>';
             	// html_ += '<input type="text" class="smallinput " placeholder="styleClass" style="width: 190px; margin-bottom: 10px;" name="styleClass" value="' + treeNode.styleClass + '" ><br/>';
             	// html_ += '<input type="text" class="smallinput " placeholder="styleKey" style="width: 190px; margin-bottom: 10px;" name="styleKey" value="' + treeNode.styleKey + '" ><br/>';
-            	
-            	// TODO navType  服务器要给styleKey生成uuid，只给一级菜单栏
-            	
             	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;">' + treeNode.remark + '</textarea><br/>';
             	html_ += '<input type="hidden" name="id" value="' + treeNode.id +'" >'; 
             	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
@@ -351,13 +348,14 @@
             var url_ = ''; 
             if(treeNode.name == "新建结点"){
             	url_ = 'add_tree_node.do';
-            	var html_ = '<input type="text" name="name" class="smallinput " placeholder="按钮节点|跳转页" style="width: 190px; margin-bottom: 10px;"><br/>';
-            	// html_ += '<input type="text" class="smallinput " placeholder="styleKey" style="width: 190px; margin-bottom: 10px;" name="styleKey" value="" ><br/>';
-            	html_ += '<input type="text" class="smallinput " placeholder="跳转地址：exa/example.do" style="width: 190px; margin-bottom: 10px;" name="funcUrl" value="" ><br/>';
-            	html_ += '<select id="navType" name="navType" class="radius3" style="margin-left:0px; width:204px;  margin-bottom: 10px;"><option value="4">页面按钮</option><option value="5">内部跳转页面</option></select>';            		
+            	var html_ = '节点名称：<input type="text" name="name" class="smallinput " placeholder="按钮节点|跳转页" style="width: 190px; margin-bottom: 10px;"><br/>';
+            	html_ += '节点类型：<select id="navType" name="navType" class="radius3" onchange="tfunc.changeNodeType()" style="margin-left:0px; width:204px;  margin-bottom: 10px;"><option value="4">页面按钮</option><option value="5">内部跳转页面</option></select><br/>';            		
+            	html_ += '<div id = "node-type" style="margin-bottom: 10px;">';
+            		html_ += '<div style="margin-bottom: 10px;"><input type="radio" name="eleType" value="elementId" style="margin-left:10px" checked> 元素ID | <input type="radio" name="eleType" value="elementClass" style="margin-left:10px"> 元素Class</div>' 
+            		html_ += 'id|class：<input type="text" class="smallinput " placeholder="html的id 或 class值" style="width: 190px; margin-bottom: 10px;" name="eleValue" value="" ><br/>';
+            	html_ += '</div>';
             	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;"></textarea><br/>';
             	html_ += '<input type="hidden" name="parentId" value="' + treeNode.parentId +'" >';
-            	
             	var preNode = treeNode.getPreNode();   // seqnum  需要计算同层所有节点，然后得出顺序码
             	var seqnum_ = 1;
             	if(preNode != null){
@@ -370,9 +368,7 @@
             }else{
             	url_ = 'edit_tree_node.do';
             	var html_ = '<input type="text" name="name" class="smallinput " style="width: 190px; margin-bottom: 10px;" value="' + treeNode.name + '" ><br/>';
-            	//html_ += '<input type="text" class="smallinput " placeholder="styleKey" style="width: 190px; margin-bottom: 10px;" name="styleKey" value="' + treeNode.styleKey + '" ><br/>';
             	html_ += '<input type="text" class="smallinput " placeholder="funcUrl" style="width: 190px; margin-bottom: 10px;" name="funcUrl" value="' + treeNode.funcUrl + '" ><br/>'; 
-            	
             	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;">' + treeNode.remark + '</textarea><br/>';
             	html_ += '<input type="hidden" name="id" value="' + treeNode.id +'" >'; 
             	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
@@ -387,8 +383,22 @@
          */
         addData:function(url_){
             var data_ = $("#tree-node-edit").serializeArray();
-            var obj = JSON.parse(ajaxs.sendAjax('post' , url_ , data_));
+            var obj = JSON.parse(ajaxs.sendAjax('post' , url_ , data_)); 
             var bb = 0;
+        },
+        
+        
+        changeNodeType:function(){
+        	var a = $("#node-type");
+        	$("#node-type").empty(); 
+        	var val_ = $("#navType").val();
+        	if(val_ == 4){      // 页面按钮
+        		var html_ = '<div style="margin-bottom: 10px;"><input type="radio" name="eleType" value="elementId" style="margin-left:10px" checked> 元素ID | <input type="radio" name="eleType" value="elementClass" style="margin-left:10px"> 元素Class</div>' 
+        		html_ += 'id|class：<input type="text" class="smallinput " placeholder="html的id 或 class值" style="width: 190px; margin-bottom: 10px;" name="eleValue" value="" ><br/>';
+        		$("#node-type").append(html_); 
+        	}else{  // 内部跳转页面
+        		$("#node-type").append('跳转地址：<input type="text" class="smallinput " placeholder="exa/example.do" style="width: 190px; margin-bottom: 10px;" name="funcUrl" value="" ><br/>');
+        	}
         }
 
     }

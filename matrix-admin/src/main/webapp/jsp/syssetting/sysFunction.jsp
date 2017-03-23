@@ -89,7 +89,7 @@
 							</div>
                         </div>
 
-                        <div class="tree-right">
+                        <div class="tree-right"  style="padding:5px">
                             <form id="tree-node-edit"  action="">
 
                             </form>
@@ -97,7 +97,7 @@
                     </div>
                 </div>
 
-                <div id="user-role" class="subcontent" style="display: none">
+                <div id="user-role" class="subcontent" style="display: none;padding:5px">
                     <form id="form1" class="stdform" method="post" action="">
 
                     </form>
