@@ -1,9 +1,12 @@
 package com.matrix.service.impl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -260,16 +263,22 @@ public class TTeacherServiceImpl extends BaseClass implements ITTeacherService {
 	 * @see com.matrix.service.ITTeacherService#getTeacherDetail(java.lang.String)
 	 */
 	@Override
-	public JSONObject getTeacherDetail(String code) {
+	public JSONObject getTeacherDetail(String code, HttpServletRequest request) {
+
 		JSONObject result = new JSONObject();
 		try {
 			TTeacher teacher = dao.getTeacherDetail(code);
 			if (teacher != null) {
+				//编写图片访问路径
+				String path = "images" + File.separator + "center-edu" + File.separator + "studentHead"
+						+ File.separator;
+				String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+						+ request.getContextPath() + File.separator + path;
+				teacher.setHeadPic(url + teacher.getHeadPic());
 				result.put("data", teacher);
 			} else {
 				result.put("data", "");
 			}
-
 			result.put("status", true);
 		} catch (Exception e) {
 			e.printStackTrace();

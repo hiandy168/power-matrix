@@ -1,5 +1,7 @@
 package com.matrix.service;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.pojo.dto.RollcallDto;
 import com.matrix.pojo.entity.TStudentEvaluate;
@@ -107,5 +109,5 @@ public interface ITTeacherService {
 	 * @param code
 	 * @return
 	 */
-	JSONObject getTeacherDetail(String code);
+	JSONObject getTeacherDetail(String code,HttpServletRequest request);
 }

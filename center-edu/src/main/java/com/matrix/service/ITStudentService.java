@@ -1,5 +1,7 @@
 package com.matrix.service;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -56,7 +58,7 @@ public interface ITStudentService {
 	 * @param code
 	 * @return
 	 */
-	JSONObject getStudentDetail(String code);
+	JSONObject getStudentDetail(String code, HttpServletRequest request);
 
 	/**
 	 * 
@@ -69,15 +71,16 @@ public interface ITStudentService {
 	 * @return
 	 */
 	JSONObject getRollcallByStudent(String studentCode);
-	
+
 	/**
 	 * 
 	 * 方法: rollcall <br>
 	 * 描述: 确认点名 <br>
 	 * 作者: zhy<br>
 	 * 时间: 2017年3月21日 下午6:27:19
+	 * 
 	 * @param code
 	 * @return
 	 */
-	JSONObject rollcall(String code,String studentCode);
+	JSONObject rollcall(String code, String studentCode);
 }
