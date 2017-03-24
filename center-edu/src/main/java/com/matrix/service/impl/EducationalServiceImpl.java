@@ -592,7 +592,7 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	}
 
 	@Override
-	public JSONObject classStudentList(String classCodes) {
+	public JSONObject classStudentList(String classCodes , HttpServletRequest request) {
 		JSONObject result = new JSONObject();
 		result.put("status", false);
 		List<StudentViewResponse> list_ = new ArrayList<StudentViewResponse>(); // 向页面返回的数据体
@@ -615,7 +615,16 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 				for (String key : map.keySet()) {
 					StudentViewResponse svr = new StudentViewResponse();
 					svr.setClassName(key);
-					svr.setList(map.get(key));
+					String path = "images" + File.separator + "center-edu" + File.separator + "studentHead" + File.separator; 
+					String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + File.separator + path;
+					List<StudentView> svlist = map.get(key);
+					if(svlist != null && svlist.size() != 0){
+						for(int i = 0 ; i < svlist.size() ; i ++){
+							String headUrl = url + svlist.get(i).getHeadPic();
+							svlist.get(i).setHeadPic(headUrl);  
+						}
+					}
+					svr.setList(svlist);
 					list_.add(svr);
 				}
 				result.put("data", list_);

@@ -219,9 +219,9 @@ public class ApiEduController {
 	 */
 	@RequestMapping(value = "class_student_list", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject classStudentList(String classCodes, HttpServletResponse response) {
+	public JSONObject classStudentList(String classCodes, HttpServletResponse response , HttpServletRequest request) {
 		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问题
-		return service.classStudentList(classCodes);
+		return service.classStudentList(classCodes , request);
 	}
 
 	/**

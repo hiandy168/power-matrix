@@ -74,7 +74,7 @@ public interface IEducationalService {
 
 	public JSONObject questionListTeacher(String lessonCode);
 
-	public JSONObject classStudentList(String classCodes);
+	public JSONObject classStudentList(String classCodes , HttpServletRequest request);
 
 	public JSONObject inspectStudentPaperList(String scheduleCode, String studentCode);               
  
