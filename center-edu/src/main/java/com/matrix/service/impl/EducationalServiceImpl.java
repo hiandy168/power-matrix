@@ -96,11 +96,17 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	 * @date 2017年3月7日 下午2:01:34
 	 * @version 1.0.0.1
 	 */
-	public JSONObject findSignList(String scheduleCode) {
+	public JSONObject findSignList(String scheduleCode ,HttpServletRequest request) {
 		JSONObject result = new JSONObject();
 		result.put("status", false);
 		List<SignListView> list = studentDao.findSignList(scheduleCode);
 		if (list != null && list.size() > 0) {
+			String path = "images" + File.separator + "center-edu" + File.separator + "studentHead" + File.separator; 
+			String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + File.separator + path;
+			for(int i = 0 ; i < list.size() ; i ++){
+				String headUrl = url + list.get(i).getHeadPic();
+				list.get(i).setHeadPic(headUrl);  
+			}
 			result.put("status", true);
 			result.put("list", list);
 		}
