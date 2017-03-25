@@ -54,6 +54,17 @@ public interface ITTeacherService {
 
 	/**
 	 * 
+	 * 方法: getEvaluateDetail <br>
+	 * 描述: 查看评价 <br>
+	 * 作者: zhy<br>
+	 * 时间: 2017年3月25日 下午8:34:49
+	 * @param code
+	 * @return
+	 */
+	JSONObject getEvaluateDetail(Integer id);
+
+	/**
+	 * 
 	 * 方法: syllabus <br>
 	 * 描述: 获取教师课程表 <br>
 	 * 作者: zhy<br>
@@ -109,5 +120,5 @@ public interface ITTeacherService {
 	 * @param code
 	 * @return
 	 */
-	JSONObject getTeacherDetail(String code,HttpServletRequest request);
+	JSONObject getTeacherDetail(String code, HttpServletRequest request);
 }

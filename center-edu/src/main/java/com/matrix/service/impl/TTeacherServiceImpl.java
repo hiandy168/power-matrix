@@ -269,7 +269,7 @@ public class TTeacherServiceImpl extends BaseClass implements ITTeacherService {
 		try {
 			TTeacher teacher = dao.getTeacherDetail(code);
 			if (teacher != null) {
-				//编写图片访问路径
+				// 编写图片访问路径
 				String path = "images" + File.separator + "center-edu" + File.separator + "studentHead"
 						+ File.separator;
 				String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
@@ -284,6 +284,33 @@ public class TTeacherServiceImpl extends BaseClass implements ITTeacherService {
 			e.printStackTrace();
 			result.put("status", false);
 			result.put("msg", "查询失败，失败原因:" + e.getMessage());
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * 方法: getEvaluateDetail <br>
+	 * 
+	 * @param code
+	 * @return
+	 * @see com.matrix.service.ITTeacherService#getEvaluateDetail(java.lang.String)
+	 */
+	@Override
+	public JSONObject getEvaluateDetail(Integer id) {
+		JSONObject result = new JSONObject();
+		try {
+			TStudentEvaluate entity = studentEvaluateDao.selectByPrimaryKey(id);
+			if (entity != null) {
+				result.put("data", entity);
+			} else {
+				result.put("data", "");
+			}
+			result.put("status", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("status", false);
+			result.put("msg", "查询评价错误，错误原因：" + e.getMessage());
 		}
 		return result;
 	}
