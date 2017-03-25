@@ -27,6 +27,8 @@
 		<result column="username" property="userName" jdbcType="VARCHAR" />
 		<result column="rollcall_success" property="rollcallSuccess"
 			jdbcType="INTEGER" />
+		<result column="evaluate_id" property="evaluateId"
+			jdbcType="INTEGER" />
 	</resultMap>
 
 
@@ -218,12 +220,20 @@
 		tls.create_time,
 		'%Y-%m-%d %H:%i:%s'
 		) AS sign_time,
-		tls.flag_evaluate
+		tls.flag_evaluate,
+		(
+		SELECT
+		tse.id
+		FROM
+		educationalcenter.t_student_evaluate AS tse
+		WHERE
+		tse.schedule_code = tss.schedule_code
+		AND tse.student_code = ts.`code`
+		) as evaluate_id
 		FROM
 		educationalcenter.t_study_schedule AS tss,
 		educationalcenter.t_lesson_sign AS tls,
-		educationalcenter.t_student AS
-		ts
+		educationalcenter.t_student AS ts
 		<where>
 			tss.schedule_code = tls.schedule_code
 			AND tls.student_code =

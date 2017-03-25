@@ -30,6 +30,16 @@ public class TStudent extends EduBaseEntity {
 
 	private String userName;
 
+	private Integer evaluateId;
+
+	public Integer getEvaluateId() {
+		return evaluateId;
+	}
+
+	public void setEvaluateId(Integer evaluateId) {
+		this.evaluateId = evaluateId;
+	}
+
 	public String getUserName() {
 		return userName;
 	}

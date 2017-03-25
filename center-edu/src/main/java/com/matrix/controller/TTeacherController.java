@@ -92,7 +92,7 @@ public class TTeacherController {
 	}
 
 	// getEvaluateDetail
-	@RequestMapping(value = "info/student_evaluate", produces = { "application/json;charset=utf-8" })
+	@RequestMapping(value = "student_evaluate", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject getEvaluateDetail(Integer id, HttpServletResponse response) {
 		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问
