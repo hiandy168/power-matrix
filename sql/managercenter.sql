@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v12.09 (64 bit)
-MySQL - 5.5.28 : Database - managercenter
+MySQL - 5.6.34 : Database - managercenter
 *********************************************************************
 */
 
@@ -9,16 +9,9 @@ MySQL - 5.5.28 : Database - managercenter
 /*!40101 SET SQL_MODE=''*/;
 
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`managercenter` /*!40100 DEFAULT CHARACTER SET utf8 */;
-
-USE `managercenter`;
-
 /*Table structure for table `mc_role` */
-
-DROP TABLE IF EXISTS `mc_role`;
 
 CREATE TABLE `mc_role` (
   `id` varchar(50) NOT NULL,
@@ -37,8 +30,6 @@ CREATE TABLE `mc_role` (
 
 /*Table structure for table `mc_role_function` */
 
-DROP TABLE IF EXISTS `mc_role_function`;
-
 CREATE TABLE `mc_role_function` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'zid',
   `mc_role_id` int(11) DEFAULT NULL COMMENT 'mc_role表主键',
@@ -56,8 +47,6 @@ CREATE TABLE `mc_role_function` (
 
 /*Table structure for table `mc_seller_company` */
 
-DROP TABLE IF EXISTS `mc_seller_company`;
-
 CREATE TABLE `mc_seller_company` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'zid',
   `mc_company_name` varchar(50) DEFAULT NULL COMMENT '商户名称',
@@ -73,11 +62,9 @@ CREATE TABLE `mc_seller_company` (
 
 /*Data for the table `mc_seller_company` */
 
-insert  into `mc_seller_company`(`id`,`mc_company_name`,`flag`,`create_time`,`update_time`,`create_user_id`,`update_user_id`,`remark`,`symbiosis`) values (125014,'dfasdf',1,'2016-09-27 21:28:57','2016-09-27 21:28:57',1,1,'asdfasd',NULL),(125015,'cc',1,'2016-09-27 21:29:39','2016-09-27 21:29:39',1,1,'c',NULL),(125016,'p',1,'2016-09-27 21:31:45','2016-09-27 21:31:45',1,1,'o',NULL);
+insert  into `mc_seller_company`(`id`,`mc_company_name`,`flag`,`create_time`,`update_time`,`create_user_id`,`update_user_id`,`remark`,`symbiosis`) values (125014,'惠家有',1,'2016-09-27 21:28:57','2016-09-27 21:28:57',1,1,'asdfasd',NULL),(125015,'Nick中国',1,'2016-09-27 21:29:39','2016-09-27 21:29:39',1,1,'c',NULL),(125016,'苹果中国',1,'2016-09-27 21:31:45','2016-09-27 21:31:45',1,1,'o',NULL);
 
 /*Table structure for table `mc_sys_function` */
-
-DROP TABLE IF EXISTS `mc_sys_function`;
 
 CREATE TABLE `mc_sys_function` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'zid',
@@ -85,26 +72,26 @@ CREATE TABLE `mc_sys_function` (
   `name` varchar(20) NOT NULL COMMENT '功能名称 导航栏与菜单栏所显示的名称',
   `parent_id` varchar(12) NOT NULL COMMENT '父节点。root为0 其下为:商户->导航栏->一级菜单栏->二级菜单栏->页面按钮',
   `seqnum` int(6) NOT NULL COMMENT '顺序码 同一层次显示顺序：导航栏 一级菜单栏 二级菜单栏 对应的显示顺序',
-  `nav_type` int(6) NOT NULL COMMENT '1 横向导航栏|2 为菜单栏|3 页面按钮|4 内部跳转页面',
+  `nav_type` int(6) NOT NULL COMMENT '1 横向导航栏|2 为1级菜单栏|3 2级菜单栏 |4 页面按钮|5 内部跳转页面',
   `style_class` varchar(20) DEFAULT NULL COMMENT '此项针对一级菜单栏 如：inbox   <a href="#example" class="inbox">开发者快速入门</a>',
-  `style_key` varchar(20) DEFAULT NULL COMMENT '此项针对一级菜单栏 如：example  <ul id="example">',
-  `func_url` varchar(255) DEFAULT NULL COMMENT '此项针对二级菜单栏 如：example/pageFormExample.do',
+  `style_key` varchar(50) DEFAULT NULL COMMENT '此项针对一级菜单栏 如：example  <ul id="example">',
+  `func_url` varchar(255) DEFAULT '' COMMENT '此项针对二级菜单栏 如：example/pageFormExample.do',
   `flag` int(6) DEFAULT '1' COMMENT '是否删除 1否 2是 3新加(数据库不会有此状态，只在页面新增节点时做判断用)',
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   `create_user_id` int(11) DEFAULT NULL,
   `update_user_id` int(11) DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `ele_type` varchar(20) DEFAULT '',
+  `ele_value` varchar(20) DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
 
 /*Data for the table `mc_sys_function` */
 
-insert  into `mc_sys_function`(`id`,`mc_seller_company_id`,`name`,`parent_id`,`seqnum`,`nav_type`,`style_class`,`style_key`,`func_url`,`flag`,`create_time`,`update_time`,`create_user_id`,`update_user_id`,`remark`) values (1,1,'root：系统功能树','-1',1,0,'root','root','rool',1,'2016-06-05 14:19:24','2016-06-05 14:19:26',1,1,'系统根节点');
+insert  into `mc_sys_function`(`id`,`mc_seller_company_id`,`name`,`parent_id`,`seqnum`,`nav_type`,`style_class`,`style_key`,`func_url`,`flag`,`create_time`,`update_time`,`create_user_id`,`update_user_id`,`remark`,`ele_type`,`ele_value`) values (1,1,'root：系统功能树','-1',1,0,'root','root','rool',1,'2016-06-05 14:19:24','2016-06-05 14:19:26',1,1,'系统根节点',NULL,NULL),(12,1,'惠家有电子商务有限公司','1',1,0,'','','',1,'2017-03-01 16:56:10','2017-03-01 16:56:10',1,1,'惠家有电子商务有限公司',NULL,NULL),(13,1,'耐克中国','1',2,0,'','','',1,'2017-03-01 16:56:37','2017-03-01 16:56:37',1,1,'爱对方',NULL,NULL),(14,1,'环球购物','1',3,0,'','','',1,'2017-03-01 17:28:32','2017-03-01 17:28:32',1,1,'环球购物',NULL,NULL),(15,1,'苏宁易购','1',4,0,'','','',1,'2017-03-01 17:35:00','2017-03-01 17:37:39',1,1,'阿斯蒂芬建安大书法家风',NULL,NULL),(16,1,'环球导航栏A','14',1,0,'','','',1,'2017-03-02 14:45:42','2017-03-03 22:06:52',1,1,'环球导航栏Ass',NULL,NULL),(17,1,'环球导航栏B','14',2,0,'','','',1,'2017-03-02 14:46:08','2017-03-02 18:27:39',1,1,'环球导航栏B',NULL,NULL),(18,1,'环球导航栏C','14',3,0,'','','',1,'2017-03-02 14:46:21','2017-03-02 18:27:39',1,1,'环球导航栏C',NULL,NULL),(19,1,'环球导航栏D','14',4,0,'','','',1,'2017-03-02 14:47:42','2017-03-02 18:27:39',1,1,'环球导航栏D',NULL,NULL),(20,1,'导航栏A','12',1,0,'','','',1,'2017-03-02 15:54:51','2017-03-07 18:12:07',1,1,'导航栏',NULL,NULL),(21,1,'导航栏B','12',3,0,'','','',1,'2017-03-02 15:55:02','2017-03-07 18:12:07',1,1,'导航栏',NULL,NULL),(22,1,'导航栏C','12',4,0,'','','',1,'2017-03-02 15:55:09','2017-03-07 18:12:07',1,1,'导航栏',NULL,NULL),(23,1,'导航栏D','12',5,0,'','','',1,'2017-03-02 15:55:19','2017-03-07 18:12:07',1,1,'导航栏',NULL,NULL),(24,1,'导航栏E','12',2,0,'','','',1,'2017-03-02 15:55:27','2017-03-07 18:12:07',1,1,'导航栏',NULL,NULL),(25,1,'惠家有导航栏F','12',6,1,'','','',1,'2017-03-03 22:07:42','2017-03-07 18:12:07',1,1,'水电费杀敌',NULL,NULL),(26,1,'苏宁A','15',1,1,'','','',1,'2017-03-03 22:15:42','2017-03-03 22:15:42',1,1,'阿萨德覅额',NULL,NULL),(27,1,'苏宁B','15',2,1,'','','',1,'2017-03-03 22:15:57','2017-03-03 22:15:57',1,1,'杀跌女兵莱钢',NULL,NULL),(28,1,'苏宁C','15',3,1,'','','',1,'2017-03-03 22:16:11','2017-03-03 22:16:11',1,1,'的刷覅恩波',NULL,NULL),(29,1,'耐克男装','13',1,1,'','','',1,'2017-03-03 22:16:42','2017-03-03 22:16:42',1,1,'稍等覅额',NULL,NULL),(30,1,'耐克女装','13',2,1,'','','',1,'2017-03-03 22:19:56','2017-03-03 22:19:56',1,1,'地平片吃捏',NULL,NULL),(31,1,'nick男鞋','13',3,1,'','','',1,'2017-03-03 23:26:40','2017-03-03 23:26:40',1,1,'阿斯兰蝶',NULL,NULL),(54,1,'一级菜单栏A','20',1,2,'editor','4c7d40fdfdcc45639714f1859f6fe035','',1,'2017-03-23 10:47:19','2017-03-23 10:47:19',1,1,'一级菜单栏A',NULL,NULL),(55,1,'一级菜单栏B','20',2,2,'editor','df7b8d9a08384693a094ba9fbe5e4d12','',1,'2017-03-23 10:47:47','2017-03-23 10:47:47',1,1,'一级菜单栏B',NULL,NULL),(56,1,'一级菜单栏C','20',3,2,'editor','de9364b1f7204a02ad39df674b0eb1f1','',1,'2017-03-23 10:47:58','2017-03-23 10:47:58',1,1,'一级菜单栏C',NULL,NULL),(57,1,'二级菜单A','55',1,3,'','','se/sea.do',1,'2017-03-23 10:48:41','2017-04-01 16:48:57',1,1,'二级菜单',NULL,NULL),(58,1,'二级菜单B','55',2,3,'','','se/seb.do',1,'2017-03-23 10:48:57','2017-04-01 16:48:57',1,1,'二级菜单',NULL,NULL),(59,1,'二级菜单C','55',3,3,'','','se/sec.do',1,'2017-03-23 10:49:11','2017-04-01 16:48:57',1,1,'二级菜单',NULL,NULL),(60,1,'二级菜单D','55',4,3,'','','se/sed.do',1,'2017-03-23 10:49:26','2017-04-01 16:48:57',1,1,'二级菜单',NULL,NULL),(61,1,'提交审核','57',1,4,'','','',1,'2017-03-23 10:52:33','2017-03-23 10:52:33',1,1,'',NULL,NULL),(62,1,'一级菜单栏D','20',4,2,'editor','c6ac86cd78be423b925f2eb95485dad6','',1,'2017-03-23 15:32:44','2017-03-23 15:32:44',1,1,'大鹅','',''),(63,1,'二级菜单栏D-1','62',1,3,'','','dw.do',1,'2017-03-23 15:33:10','2017-03-23 15:33:10',1,1,'','',''),(64,1,'查询','63',1,4,'','',NULL,1,'2017-03-23 15:33:58','2017-03-23 15:33:58',1,1,'表单查询','elementId','form-query'),(65,1,'重置','63',2,4,'','',NULL,1,'2017-03-23 15:34:34','2017-03-23 16:57:06',1,1,'查询条件重置','elementClass','query-reset'),(66,1,'查看详情','63',3,4,'','','',1,'2017-03-23 15:36:45','2017-03-23 17:02:53',1,1,'查看记录详情','elementClass','12523'),(67,1,'添加','63',4,4,'','','',1,'2017-03-23 15:39:00','2017-03-23 15:39:00',1,1,'添加信息','elementClass','add-info');
 
 /*Table structure for table `mc_user_info` */
-
-DROP TABLE IF EXISTS `mc_user_info`;
 
 CREATE TABLE `mc_user_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'zid',
@@ -129,8 +116,6 @@ insert  into `mc_user_info`(`id`,`mc_seller_company_id`,`user_name`,`password`,`
 
 /*Table structure for table `mc_user_role` */
 
-DROP TABLE IF EXISTS `mc_user_role`;
-
 CREATE TABLE `mc_user_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'zid',
   `mc_user_id` int(11) DEFAULT NULL COMMENT 'mc_user_info 表 主键',
@@ -147,6 +132,5 @@ CREATE TABLE `mc_user_role` (
 /*Data for the table `mc_user_role` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

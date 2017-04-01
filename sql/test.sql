@@ -1,6 +1,6 @@
 /*
-SQLyog Ultimate v11.11 (64 bit)
-MySQL - 5.5.28 : Database - test
+SQLyog Ultimate v12.09 (64 bit)
+MySQL - 5.6.34 : Database - test
 *********************************************************************
 */
 
