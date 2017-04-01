@@ -44,10 +44,16 @@ public class SystemRoleController {
 	 */
 	@RequestMapping("tree_page_index") 
 	public String treePageIndex(ModelMap model){
-		McSysFunction e = new McSysFunction();	
-		e.setFlag(1);
-		model.put("jsonTree", mcSysFunctionService.jsonList(e)); 
+//		McSysFunction e = new McSysFunction();	
+//		e.setFlag(1);
+//		model.put("jsonTree", mcSysFunctionService.jsonList(e)); 
 		return "jsp/syssetting/sysFunction"; 
+	}
+	
+	@RequestMapping(value = "tree_list", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject treeList(){
+		return mcSysFunctionService.treeList();
 	}
 	
 	

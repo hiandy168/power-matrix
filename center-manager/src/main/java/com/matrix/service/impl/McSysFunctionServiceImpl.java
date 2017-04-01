@@ -104,6 +104,24 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	}
 
 
+	
+	public JSONObject treeList() {
+		JSONObject result = new JSONObject();
+		
+		McSysFunction e = new McSysFunction();	
+		e.setFlag(1);
+		List<McSysFunction> list = baseDao.findList(e);
+		if (list != null && list.size() > 0) {
+			result.put("status", "success");
+			result.put("list", list);
+		} else {
+			result.put("status", "error");
+			result.put("msg", this.getInfo(100090001)); // 结果集为空
+		}
+		return result;  
+	}
+
+
 
 }
 

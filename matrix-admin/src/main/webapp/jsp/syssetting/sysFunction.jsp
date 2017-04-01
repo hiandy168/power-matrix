@@ -41,14 +41,30 @@
     <script type="text/javascript">
 
         $(document).ready(function(){
-            var jsonObj = JSON.parse('${jsonTree}');
+        	var type_ = 'post';
+            var url_ = 'tree_list.do';
+            var data_ = null;  // 可以为null，后台会进行默认处理
+            var jsonObj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));  
             if(jsonObj.status == 'success'){
                 var zNodes = jsonObj.list;
-                $.fn.zTree.init($("#sys-tree"), setting, zNodes);
-                $("#callbackTrigger").bind("change", {}, setTrigger);
+                $.fn.zTree.init($("#sys-tree") , setting_nav , zNodes);
+                $("#callbackTrigger").bind("change", {}, setting_nav.setTrigger);
             }
-
-        });
+        });  
+        
+        // 系统权限分配
+        function distributeUserRole(){
+        	$("#user-role-tree li").remove();
+        	var type_ = 'post';
+            var url_ = 'tree_list.do';
+            var data_ = null;  // 可以为null，后台会进行默认处理
+            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+            if(obj.status == 'success'){
+                var zNodes = obj.list;  
+                $.fn.zTree.init($("#user-role-tree") , setting_distribution , zNodes);  
+                $("#callbackTrigger").bind("change", {}, setting_distribution.setTrigger); 
+            }
+        }
 
     </script>
 </head>
@@ -72,7 +88,7 @@
                         <a href="#nav-menu">导航与菜单树</a>
                     </li>
                     <li>
-                        <a href="#user-role">系统权限分配</a>
+                        <a href="#user-role" onclick="distributeUserRole()">系统权限分配</a>
                     </li>
                 </ul>
             </div>
@@ -97,10 +113,23 @@
                     </div>
                 </div>
 
-                <div id="user-role" class="subcontent" style="display: none;padding:5px">
-                    <form id="form1" class="stdform" method="post" action="">
+                <div id="user-role" class="subcontent" style="display: none;padding:5px" >
+                    <div class="contenttitle2">
+                        <h3>勾线用户对应权限</h3>
+                    </div>
+                    <div class="stdform" >
+                        <div class="tree-left">
+							<div>
+								<ul id="user-role-tree" class="ztree"></ul>
+							</div>
+                        </div>
 
-                    </form>
+                        <div class="tree-right"  style="padding:5px">
+                            <form id="user-role-edit"  action="">
+
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
 
