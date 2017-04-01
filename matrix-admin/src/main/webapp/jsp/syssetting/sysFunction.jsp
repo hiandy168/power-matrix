@@ -36,6 +36,13 @@
             height: 25px;
             width: 200px;
         }
+        .a-btn{
+        	cursor: pointer;
+        	color:#FB9337; 
+        }
+        .a-btn:hover {
+        	color: red;
+       	}
     </style>
 
     <script type="text/javascript">
@@ -95,7 +102,7 @@
 
                 <div id="user-role" class="subcontent" style="display: none;padding:5px" >
                     <div class="contenttitle2">
-                        <h3>勾线用户对应权限</h3>
+                        <h3>勾选用户对应权限 | <a herf="javascript:void(0)" onclick="" class="a-btn" title="在弹框中勾选用户">【选择用户】</a></h3> 
                     </div>
                     <div class="stdform" >
                         <div class="tree-left">

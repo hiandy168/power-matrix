@@ -107,10 +107,9 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	
 	public JSONObject treeList() {
 		JSONObject result = new JSONObject();
-		
 		McSysFunction e = new McSysFunction();	
 		e.setFlag(1);
-		List<McSysFunction> list = baseDao.findList(e);
+		List<McSysFunction> list = dao.findList(e);
 		if (list != null && list.size() > 0) {
 			result.put("status", "success");
 			result.put("list", list);
@@ -119,6 +118,21 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 			result.put("msg", this.getInfo(100090001)); // 结果集为空
 		}
 		return result;  
+	}
+
+
+	@Override
+	public JSONObject deleteNode(Integer id, HttpSession session) {
+		JSONObject result = new JSONObject();
+		Integer flag = dao.deleteById(id);
+		if(flag == 1){
+			result.put("status", "success");
+			result.put("msg", this.getInfo(500090001)); // 删除成功
+		}else{
+			result.put("status", "error");
+			result.put("msg", this.getInfo(500090001)); // 删除失败
+		}
+		return result;
 	}
 
 

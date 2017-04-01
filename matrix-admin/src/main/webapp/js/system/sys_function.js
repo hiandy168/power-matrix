@@ -104,15 +104,27 @@
         	}
         	return type_;	
         },
+        
+        // 用于捕获删除节点之后的事件回调函数。
+        onRemove: function(event, treeId, treeNode){
+        	var type_ = 'post';
+            var url_ = 'delete_node.do';
+            var data_ = {id:treeNode.id};  
+            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+            if(obj.status == 'success'){
+            	jAlert(obj.msg , '系统提示! ');   
+            	return true;
+            }else{
+            	jAlert(obj.msg , '系统提示! '); 
+            	return false;
+            }
+        }, 
 
         beforeDrag:function(treeId, treeNodes) {
             // TODO
             return true;
         },
         beforeDrop:function(treeId, treeNodes, targetNode, moveType, isCopy){
-//        	console.log("节点拖拽结束前：" + treeNodes[0].name + "|" + treeNodes[0].getIndex())
-//        	console.log("节点拖拽结束前：" + targetNode.name + "|" + targetNode.getIndex())
-        	
             return true;
         },
         beforeDragOpen:function(treeId, treeNode){
@@ -406,9 +418,9 @@
         addData:function(url_){
             var data_ = $("#tree-node-edit").serializeArray();
             var obj = JSON.parse(ajaxs.sendAjax('post' , url_ , data_)); 
-            jAlert(obj.msg , '系统提示! ' , tfunc.aaa(obj));  
-        },
-        aaa:function(obj){
+            jAlert(obj.msg , '系统提示! ' , tfunc.add_data_call_back(obj));  
+        }, 
+        add_data_call_back : function(obj){
         	if(obj.status == 'success'){
         		tfunc.sysTreeOperation();
         	}else{
@@ -502,7 +514,8 @@
             onDrop: tfunc.onDrop,                     // 捕获节点拖拽操作结束的事件回调函数 |默认值：null
             onExpand: tfunc.onExpand,           // 捕获节点被展开的事件回调函数 |默认值：null
             onClick: tfunc.ztOnClick,
-            beforeRemove: tfunc.beforeRemove       // 捕获删除之前的数据 
+            beforeRemove: tfunc.beforeRemove,       // 捕获删除之前的数据 
+            onRemove:tfunc.onRemove                 // 用于捕获删除节点之后的事件回调函数。   
 
         },
         setTrigger:function(){

@@ -62,7 +62,7 @@
 	</select>
 	
 	
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	<delete id="deleteById" parameterType="java.lang.Integer">
 		delete from managercenter.mc_sys_function where id = #{id,jdbcType=INTEGER}
 	</delete>
 	

@@ -114,6 +114,13 @@ public class SystemRoleController {
 	public JSONObject updateTreeNodes(String ustring , HttpSession session){
 		return mcSysFunctionService.updateTreeNodes(ustring, session);	
 	}
+	
+	
+	@RequestMapping(value = "delete_node", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject deleteNode(Integer id , HttpSession session){
+		return mcSysFunctionService.deleteNode(id, session);	
+	}
 }
 
 

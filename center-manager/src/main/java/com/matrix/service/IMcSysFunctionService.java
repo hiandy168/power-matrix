@@ -15,6 +15,8 @@ public interface IMcSysFunctionService  extends IBaseService<McSysFunction, Inte
 
 	public JSONObject updateTreeNodes(String ustring, HttpSession session);
 
-	public JSONObject treeList();  
+	public JSONObject treeList();
+
+	public JSONObject deleteNode(Integer id, HttpSession session);   
 	
 }
