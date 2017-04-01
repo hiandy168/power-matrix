@@ -507,7 +507,7 @@
 
         },
         setTrigger:function(){
-            var zTree = $.fn.zTree.getZTreeObj("sys-tree");
+            var zTree = $.fn.zTree.getZTreeObj("user-role-tree");
             zTree.setting.edit.drag.autoExpandTrigger = $("#callbackTrigger").attr("checked");
         }
     };
