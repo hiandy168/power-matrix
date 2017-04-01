@@ -1,6 +1,9 @@
 package com.matrix.service.impl;
 
+import java.io.File;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -123,11 +126,17 @@ public class TStudentServiceImpl extends BaseClass implements ITStudentService {
 	 * @see com.matrix.service.ITStudentService#getStudentDetail(java.lang.String)
 	 */
 	@Override
-	public JSONObject getStudentDetail(String code) {
+	public JSONObject getStudentDetail(String code, HttpServletRequest request) {
 		JSONObject result = new JSONObject();
 		try {
 			TStudent student = dao.getStudentDetail(code);
 			if (student != null) {
+				// 编写图片访问路径
+				String path = "images" + File.separator + "center-edu" + File.separator + "studentHead"
+						+ File.separator;
+				String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+						+ request.getContextPath() + File.separator + path;
+				student.setHeadPic(url + student.getHeadPic());
 				result.put("data", student);
 			} else {
 				result.put("data", "");
@@ -170,7 +179,7 @@ public class TStudentServiceImpl extends BaseClass implements ITStudentService {
 	}
 
 	@Override
-	public JSONObject rollcall(String code,String studentCode) {
+	public JSONObject rollcall(String code, String studentCode) {
 		JSONObject result = new JSONObject();
 		try {
 			TLessonRollcall entity = new TLessonRollcall();

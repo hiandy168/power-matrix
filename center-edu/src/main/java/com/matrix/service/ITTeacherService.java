@@ -1,5 +1,7 @@
 package com.matrix.service;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.pojo.dto.RollcallDto;
 import com.matrix.pojo.entity.TStudentEvaluate;
@@ -49,6 +51,17 @@ public interface ITTeacherService {
 	 * @return
 	 */
 	JSONObject studentEvaluateByTeacher(TStudentEvaluate entity);
+
+	/**
+	 * 
+	 * 方法: getEvaluateDetail <br>
+	 * 描述: 查看评价 <br>
+	 * 作者: zhy<br>
+	 * 时间: 2017年3月25日 下午8:34:49
+	 * @param code
+	 * @return
+	 */
+	JSONObject getEvaluateDetail(Integer id);
 
 	/**
 	 * 
@@ -107,5 +120,5 @@ public interface ITTeacherService {
 	 * @param code
 	 * @return
 	 */
-	JSONObject getTeacherDetail(String code);
+	JSONObject getTeacherDetail(String code, HttpServletRequest request);
 }

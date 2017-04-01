@@ -1,5 +1,6 @@
 package com.matrix.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +91,14 @@ public class TTeacherController {
 		return service.studentEvaluateByTeacher(entity);
 	}
 
+	// getEvaluateDetail
+	@RequestMapping(value = "student_evaluate", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject getEvaluateDetail(Integer id, HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问
+		return service.getEvaluateDetail(id);
+	}
+
 	@RequestMapping(value = "faq", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject faq(String code, HttpServletResponse response) {
@@ -113,8 +122,8 @@ public class TTeacherController {
 
 	@RequestMapping(value = "detail", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject detail(String code, HttpServletResponse response) {
+	public JSONObject detail(String code, HttpServletResponse response, HttpServletRequest request) {
 		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问
-		return service.getTeacherDetail(code);
+		return service.getTeacherDetail(code, request);
 	}
 }
