@@ -41,30 +41,10 @@
     <script type="text/javascript">
 
         $(document).ready(function(){
-        	var type_ = 'post';
-            var url_ = 'tree_list.do';
-            var data_ = null;  // 可以为null，后台会进行默认处理
-            var jsonObj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));  
-            if(jsonObj.status == 'success'){
-                var zNodes = jsonObj.list;
-                $.fn.zTree.init($("#sys-tree") , setting_nav , zNodes);
-                $("#callbackTrigger").bind("change", {}, setting_nav.setTrigger);
-            }
+        	tfunc.sysTreeOperation(); 
         });  
         
-        // 系统权限分配
-        function distributeUserRole(){
-        	$("#user-role-tree li").remove();
-        	var type_ = 'post';
-            var url_ = 'tree_list.do';
-            var data_ = null;  // 可以为null，后台会进行默认处理
-            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
-            if(obj.status == 'success'){
-                var zNodes = obj.list;  
-                $.fn.zTree.init($("#user-role-tree") , setting_distribution , zNodes);  
-                $("#callbackTrigger").bind("change", {}, setting_distribution.setTrigger); 
-            }
-        }
+        
 
     </script>
 </head>
@@ -85,10 +65,10 @@
 
                 <ul class="hornav">
                     <li class="current">
-                        <a href="#nav-menu">导航与菜单树</a>
+                        <a href="#nav-menu" onclick="tfunc.sysTreeOperation()">导航与菜单树</a>
                     </li>
                     <li>
-                        <a href="#user-role" onclick="distributeUserRole()">系统权限分配</a>
+                        <a href="#user-role" onclick="tfunc.distributeUserRole()">系统权限分配</a>
                     </li>
                 </ul>
             </div>
@@ -106,7 +86,7 @@
                         </div>
 
                         <div class="tree-right"  style="padding:5px">
-                            <form id="tree-node-edit"  action="">
+                            <form id="tree-node-edit"  action="#">
 
                             </form>
                         </div>
@@ -125,7 +105,7 @@
                         </div>
 
                         <div class="tree-right"  style="padding:5px">
-                            <form id="user-role-edit"  action="">
+                            <form id="user-role-edit"  action="#">
 
                             </form>
                         </div>

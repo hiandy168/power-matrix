@@ -406,9 +406,13 @@
         addData:function(url_){
             var data_ = $("#tree-node-edit").serializeArray();
             var obj = JSON.parse(ajaxs.sendAjax('post' , url_ , data_)); 
-            var bb = 0;
+            jAlert(obj.msg , '系统提示! '); 
+            if(obj.status == 'success'){
+            	tfunc.sysTreeOperation();
+            }else{
+            	
+            }
         },
-        
         
         changeNodeType:function(){
         	var a = $("#node-type");
@@ -421,6 +425,35 @@
         	}else{  // 内部跳转页面
         		$("#node-type").append('跳转地址：<input type="text" class="smallinput " placeholder="exa/example.do" style="width: 190px; margin-bottom: 10px;" name="funcUrl" value="" ><br/>');
         	}
+        },
+        
+        // 导航与菜单树
+        sysTreeOperation: function(){
+        	$("#sys-tree li").remove();
+        	$($("#tree-node-edit")[0].childNodes).remove();
+        	var type_ = 'post';
+            var url_ = 'tree_list.do';
+            var data_ = null;  // 可以为null，后台会进行默认处理
+            var jsonObj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));  
+            if(jsonObj.status == 'success'){
+                var zNodes = jsonObj.list;
+                $.fn.zTree.init($("#sys-tree") , setting_nav , zNodes);
+                $("#callbackTrigger").bind("change", {}, setting_nav.setTrigger);
+            }
+        }, 
+        
+        // 系统权限分配
+        distributeUserRole: function(){
+        	$("#user-role-tree li").remove();
+        	var type_ = 'post';
+            var url_ = 'tree_list.do';
+            var data_ = null;  // 可以为null，后台会进行默认处理
+            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+            if(obj.status == 'success'){
+                var zNodes = obj.list;  
+                $.fn.zTree.init($("#user-role-tree") , setting_distribution , zNodes);  
+                $("#callbackTrigger").bind("change", {}, setting_distribution.setTrigger); 
+            }
         }
 
     }
@@ -476,6 +509,9 @@
             removeHoverDom: false,
             selectedMulti: false    // 不允许同时选中多个节点
         },
+        check:{
+        	enable:true
+        }, 
         edit: {
             drag: {
                 autoExpandTrigger: true, // 拖拽时父节点自动展开是否触发 callback.onExpand 事件回调函数
