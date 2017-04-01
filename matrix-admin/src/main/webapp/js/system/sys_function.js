@@ -406,24 +406,33 @@
         addData:function(url_){
             var data_ = $("#tree-node-edit").serializeArray();
             var obj = JSON.parse(ajaxs.sendAjax('post' , url_ , data_)); 
-            jAlert(obj.msg , '系统提示! '); 
-            if(obj.status == 'success'){
-            	tfunc.sysTreeOperation();
-            }else{
-            	
-            }
+            jAlert(obj.msg , '系统提示! ' , tfunc.aaa(obj));  
+        },
+        aaa:function(obj){
+        	if(obj.status == 'success'){
+        		tfunc.sysTreeOperation();
+        	}else{
+        		
+        	}
         },
         
-        changeNodeType:function(){
-        	var a = $("#node-type");
+        changeNodeType:function(){ 
         	$("#node-type").empty(); 
         	var val_ = $("#navType").val();
+        	$("input[name='funcUrl']").remove();
+        	$("input[name='eleType']").remove();
+        	$("input[name='eleValue']").remove();
+        	var html_ = '';
         	if(val_ == 4){      // 页面按钮
-        		var html_ = '<div style="margin-bottom: 10px;"><input type="radio" name="eleType" value="elementId" style="margin-left:10px" checked> 元素ID | <input type="radio" name="eleType" value="elementClass" style="margin-left:10px"> 元素Class</div>' 
+        		html_ = '<div style="margin-bottom: 10px;"><input type="radio" name="eleType" value="elementId" style="margin-left:10px" checked> 元素ID | <input type="radio" name="eleType" value="elementClass" style="margin-left:10px"> 元素Class</div>' 
         		html_ += 'id|class：<input type="text" class="smallinput " placeholder="html的id 或 class值" style="width: 190px; margin-bottom: 10px;" name="eleValue" value="" ><br/>';
+        		html_ += '<input type="hidden" name="funcUrl" value="" >';
         		$("#node-type").append(html_); 
-        	}else{  // 内部跳转页面
-        		$("#node-type").append('跳转地址：<input type="text" class="smallinput " placeholder="exa/example.do" style="width: 190px; margin-bottom: 10px;" name="funcUrl" value="" ><br/>');
+        	}else{  // 内部跳转页面 
+        		html_ += '<input type="hidden" name="eleType" value="" >';  // 更新时，此处置空
+        		html_ += '<input type="hidden" name="eleValue" value="" >';  // 更新时，此处置空 
+        		html_ += '跳转地址：<input type="text" class="smallinput " placeholder="exa/example.do" style="width: 190px; margin-bottom: 10px;" name="funcUrl" value="" ><br/>';
+        		$("#node-type").append(html_); 
         	}
         },
         
