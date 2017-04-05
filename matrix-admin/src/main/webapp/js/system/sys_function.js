@@ -174,6 +174,12 @@
             return true;
         },
         
+        // 捕获 勾选 或 取消勾选 之前的事件回调函数
+        beforeCheck : function(treeId, treeNode){
+        	console.log("A");
+        	return true;
+        },
+        
         ztOnClick:function(event, treeId, treeNode, clickFlag){
             var level_ = treeNode.level;
             switch(level_){
@@ -474,6 +480,8 @@
                 var zNodes = obj.list;  
                 $.fn.zTree.init($("#user-role-tree") , setting_distribution , zNodes);  
                 $("#callbackTrigger").bind("change", {}, setting_distribution.setTrigger); 
+                // $("#user-role-tree_1_check").css("display", "none");  // 隐藏root节点的复选框  
+                $("#user-role-tree_1_check").remove(); // 隐藏root节点的复选框  
             }
         }
 
@@ -561,8 +569,8 @@
             onDrop: false,                     // 捕获节点拖拽操作结束的事件回调函数 |默认值：null
             onExpand: false,           // 捕获节点被展开的事件回调函数 |默认值：null
             onClick: false,
-            beforeRemove: false       // 捕获删除之前的数据 
-
+            beforeRemove: false,       // 捕获删除之前的数据 
+            beforeCheck: tfunc.beforeCheck    // 捕获 勾选 或 取消勾选 之前的事件回调函数
         },
         setTrigger:function(){
             var zTree = $.fn.zTree.getZTreeObj("user-role-tree");
