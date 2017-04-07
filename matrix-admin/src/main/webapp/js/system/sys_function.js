@@ -178,23 +178,22 @@
         /**
          * 捕获 勾选 或 取消勾选 之前的事件回调函数
          */
-        beforeCheck : function(treeId, treeNode){
-        	var flag = tfunc.isSellerNodeBeCheck(treeId, treeNode); 
-        	return flag;
+        beforeCheck : function(treeId, node){  
+        	return tfunc.isSellerNodeBeCheck(treeId, node , node.navType == 0);  
         }, 
         
         onCheck : function(event, treeId, treeNode){
-//        	var flag = tfunc.isSellerNodeBeCheck(treeId, treeNode); 
         	return true; 
         },
         
         /**
-         * 检查二级节点是否被选择(商户节点)
+         * 商户节点选择唯一性验证
          * @param node -> treeNode
+         * @param isSellerNode 是否为商户节点|true是 false 不是
          */
-        isSellerNodeBeCheck : function(treeId, node){ 
+        isSellerNodeBeCheck : function(treeId , node , isSellerNode){ 
         	var flag = false;
-        	if(node.navType == 0){   
+        	if(isSellerNode && node.navType == 0){   // 从商户节点开始选择
         		if($(".seller-node").length != 0){
         			if(node.tId == $(".seller-node")[0].id){  // 如果是选择【已选商户节点】则允许取消选择      checkbox_true_part  checkbox_true_full
         				$("#" + node.tId).removeClass("seller-node");  
@@ -207,23 +206,26 @@
         			$("#" + node.tId).addClass("seller-node");
         			flag =  true;
         		}
-        	}else{ // 如果是二级以下的节点则递归判断其父节点
+        	}else if(!isSellerNode){ // 从子节点开始选择
         		var par = node.getParentNode();  
-        		flag = tfunc.isSellerNodeBeCheck(treeId , par);
+        		if(par.navType == 0){
+        			if($(".seller-node").length == 0){ // 没有被选择的商户节点
+        				$("#" + par.tId).addClass("seller-node");
+        				flag =  true;
+            		}else {
+            			if(par.tId != $(".seller-node")[0].id){
+                			jAlert("只能选择一个商户节点!" , '系统提示! ');
+                			flag =  false; 
+                		}else{
+                			flag =  true;  
+                		}
+            		}
+        		}else{
+        			flag = tfunc.isSellerNodeBeCheck(treeId , par , false); 
+        		}
         	} 
         	return flag;
         },
-        
-        
-//		var cname =  $("#" + node.tId)[0].children[1].className;
-//		if(cname.indexOf("checkbox_true_full") != -1 || cname.indexOf("checkbox_true_part") != -1){ 			// 如果二级菜单不包括 类似checkbox_true字符串的class定义 则删除 
-//			$("#" + node.tId).removeClass("seller-node");  
-//		}
-        
-		/*var cname =  $("#" + node.tId)[0].children[1].className;
-		if(cname.indexOf("checkbox_true") == -1){ // 如果二级菜单不包括 类似checkbox_true字符串的class定义 则删除 
-			$("#" + node.tId).removeClass("seller-node");
-		}*/
         
         ztOnClick:function(event, treeId, treeNode, clickFlag){
             var level_ = treeNode.level;
@@ -260,7 +262,7 @@
             var url_ = ''; 
             if(treeNode.name == "新建结点"){
             	url_ = 'add_tree_node.do';
-            	var html_ = '<input type="text" name="name" class="smallinput " placeholder="功能名称" style="width: 190px; margin-bottom: 10px;">';
+            	var html_ = '<input type="text" name="name" class="smallinput " placeholder="商户名称" style="width: 190px; margin-bottom: 10px;">';
             	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;"></textarea><br/>';
             	html_ += '<input type="hidden" name="parentId" value="' + treeNode.parentId +'" >';
             	
@@ -296,7 +298,7 @@
             var url_ = ''; 
             if(treeNode.name == "新建结点"){
             	url_ = 'add_tree_node.do';
-            	var html_ = '<input type="text" name="name" class="smallinput " placeholder="功能名称" style="width: 190px; margin-bottom: 10px;">';
+            	var html_ = '<input type="text" name="name" class="smallinput " placeholder="导航栏名称" style="width: 190px; margin-bottom: 10px;">';
             	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;"></textarea><br/>';
             	html_ += '<input type="hidden" name="parentId" value="' + treeNode.parentId +'" >';
             	
