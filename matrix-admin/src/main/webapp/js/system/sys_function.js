@@ -174,11 +174,56 @@
             return true;
         },
         
-        // 捕获 勾选 或 取消勾选 之前的事件回调函数
+        
+        /**
+         * 捕获 勾选 或 取消勾选 之前的事件回调函数
+         */
         beforeCheck : function(treeId, treeNode){
-        	console.log("A");
-        	return true;
+        	var flag = tfunc.isSellerNodeBeCheck(treeId, treeNode); 
+        	return flag;
+        }, 
+        
+        onCheck : function(event, treeId, treeNode){
+//        	var flag = tfunc.isSellerNodeBeCheck(treeId, treeNode); 
+        	return true; 
         },
+        
+        /**
+         * 检查二级节点是否被选择(商户节点)
+         * @param node -> treeNode
+         */
+        isSellerNodeBeCheck : function(treeId, node){ 
+        	var flag = false;
+        	if(node.navType == 0){   
+        		if($(".seller-node").length != 0){
+        			if(node.tId == $(".seller-node")[0].id){  // 如果是选择【已选商户节点】则允许取消选择      checkbox_true_part  checkbox_true_full
+        				$("#" + node.tId).removeClass("seller-node");  
+        				flag =  true;
+        			}else{
+        				jAlert("只能选择一个商户节点!" , '系统提示! ');
+        				flag =  false; 
+        			}
+        		}else{
+        			$("#" + node.tId).addClass("seller-node");
+        			flag =  true;
+        		}
+        	}else{ // 如果是二级以下的节点则递归判断其父节点
+        		var par = node.getParentNode();  
+        		flag = tfunc.isSellerNodeBeCheck(treeId , par);
+        	} 
+        	return flag;
+        },
+        
+        
+//		var cname =  $("#" + node.tId)[0].children[1].className;
+//		if(cname.indexOf("checkbox_true_full") != -1 || cname.indexOf("checkbox_true_part") != -1){ 			// 如果二级菜单不包括 类似checkbox_true字符串的class定义 则删除 
+//			$("#" + node.tId).removeClass("seller-node");  
+//		}
+        
+		/*var cname =  $("#" + node.tId)[0].children[1].className;
+		if(cname.indexOf("checkbox_true") == -1){ // 如果二级菜单不包括 类似checkbox_true字符串的class定义 则删除 
+			$("#" + node.tId).removeClass("seller-node");
+		}*/
         
         ztOnClick:function(event, treeId, treeNode, clickFlag){
             var level_ = treeNode.level;
@@ -570,7 +615,8 @@
             onExpand: false,           // 捕获节点被展开的事件回调函数 |默认值：null
             onClick: false,
             beforeRemove: false,       // 捕获删除之前的数据 
-            beforeCheck: tfunc.beforeCheck    // 捕获 勾选 或 取消勾选 之前的事件回调函数
+            beforeCheck: tfunc.beforeCheck,    // 捕获 勾选 或 取消勾选 之前的事件回调函数
+            onCheck : tfunc.onCheck
         },
         setTrigger:function(){
             var zTree = $.fn.zTree.getZTreeObj("user-role-tree");
