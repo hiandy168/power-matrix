@@ -64,7 +64,7 @@
         }
         
         /**
-         * @描述: 打开dialog insert BlockUI弹框
+         * @描述: 打开dialog insert BlockUI弹框            勾选用户对应权限 -> <a herf="javascript:void(0)" onclick="openDialogPage()" class="a-btn" title="在弹框中勾选用户">【选择用户】</a>|
          * @作者: Yangcl
          * @时间: 2016-08-19 : 15-20-56
          */
@@ -153,7 +153,10 @@
                         <a href="#nav-menu" onclick="tfunc.sysTreeOperation()">导航与菜单树</a>
                     </li>
                     <li>
-                        <a href="#user-role" onclick="tfunc.distributeUserRole()">系统权限分配</a>
+                        <a href="#user-role" onclick="tfunc.distributeUserRole()">系统角色创建</a>
+                    </li>
+                    <li>
+                        <a href="#user-role-func" onclick="tfunc.distributeUserRole()">用户权限分配</a>
                     </li>
                 </ul>
             </div>
@@ -180,7 +183,9 @@
 
                 <div id="user-role" class="subcontent" style="display: none;padding:5px" >
                     <div class="contenttitle2">
-                        <h3>勾选用户对应权限 | <a herf="javascript:void(0)" onclick="openDialogPage()" class="a-btn" title="在弹框中勾选用户">【选择用户】</a></h3> 
+                        <h3>
+                        	角色列表 -> <a herf="javascript:void(0)" onclick="" class="a-btn" title="角色列表在弹出框中">【查看角色列表】</a>
+                        </h3> 
                     </div>
                     <div class="stdform" >
                         <div class="tree-left">
@@ -191,8 +196,45 @@
 
                         <div class="tree-right"  style="padding:5px">
                             <form id="user-role-edit"  action="#">
-
+                            	<table >
+                            		<tbody>
+                            			<tr>
+                            				<td style="width: 60px; margin-bottom: 10px;">角色名称：</td>
+                            				<td><input type="text" id ="ids" name="roleName" class="smallinput " placeholder="角色名称" style="width: 190px; margin-bottom: 10px;"></td>
+                            			</tr>
+                            			<tr>
+                            				<td style="width:60px;  vertical-align : middle; ">角色描述：</td>
+                            				<td><textarea cols="80" rows="5" maxlength="250" name="roleDesc" class="longinput " placeholder="角色描述"  ></textarea></td>
+                            			</tr>
+                            			<tr> 
+                            				<td colspan="2"><input type="hidden" name="mcSysFunctionIdList" value=""></td>
+                            			</tr>
+                            			<tr> 
+                            				<td colspan="2"><button class="stdbtn btn_orange " style="width: 60px;margin-top:10px" onclick="tfunc.addMcRole()"> 提 交 </button></td>
+                            			</tr>
+                            		</tbody>
+                            	</table>
                             </form>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div id="user-role-func" class="subcontent" style="display: none;padding:5px" >
+                    <div class="contenttitle2">
+                        <h3>
+                        	TODOOOOOOOOO
+                        </h3> 
+                    </div>
+                    <div class="stdform" >
+                        <div class="tree-left">
+							<div>
+								<!-- <ul id="" class="ztree"></ul> -->
+							</div>
+                        </div>
+
+                        <div class="tree-right"  style="padding:5px">
+                            <!-- <form id=""  action="#"></form> -->
                         </div>
                     </div>
                 </div>

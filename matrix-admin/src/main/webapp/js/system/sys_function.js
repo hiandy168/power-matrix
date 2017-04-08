@@ -1,5 +1,6 @@
 
     var tfunc = {
+    		
         /**
          * 允许移动到目标节点前面 即可以将同层最后一个节点放到同层的第一个。
          * @param treeId
@@ -29,6 +30,7 @@
             	return false;
             } 
         },
+        
         /**
          *  拖拽到目标节点时 设置是否允许成为目标节点的子节点。
          * @param treeId
@@ -83,6 +85,7 @@
             }
 
         },
+        
         /**
          * 移除添加按钮
          * @param treeId
@@ -112,10 +115,10 @@
             var data_ = {id:treeNode.id};  
             var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
             if(obj.status == 'success'){
-            	jAlert(obj.msg , '系统提示! ');   
+            	jAlert(obj.msg , '系统提示 ');   
             	return true;
             }else{
-            	jAlert(obj.msg , '系统提示! '); 
+            	jAlert(obj.msg , '系统提示 '); 
             	return false;
             }
         }, 
@@ -124,13 +127,16 @@
             // TODO
             return true;
         },
+        
         beforeDrop:function(treeId, treeNodes, targetNode, moveType, isCopy){
             return true;
         },
+        
         beforeDragOpen:function(treeId, treeNode){
 
             return true;
         },
+        
         onDrag:function(event, treeId, treeNodes){
 
             return true;
@@ -174,7 +180,6 @@
             return true;
         },
         
-        
         /**
          * 捕获 勾选 或 取消勾选 之前的事件回调函数
          */
@@ -199,7 +204,7 @@
         				$("#" + node.tId).removeClass("seller-node");  
         				flag =  true;
         			}else{
-        				jAlert("只能选择一个商户节点!" , '系统提示! ');
+        				jAlert("只能选择一个商户节点!" , '系统提示 ');
         				flag =  false; 
         			}
         		}else{
@@ -214,7 +219,7 @@
         				flag =  true;
             		}else {
             			if(par.tId != $(".seller-node")[0].id){
-                			jAlert("只能选择一个商户节点!" , '系统提示! ');
+                			jAlert("只能选择一个商户节点!" , '系统提示 ');
                 			flag =  false; 
                 		}else{
                 			flag =  true;  
@@ -463,7 +468,6 @@
             $("#tree-node-edit").append(html_);
         },
         
-        
         /**
          * 添加一个节点到数据库  
          * @param url_
@@ -471,7 +475,7 @@
         addData:function(url_){
             var data_ = $("#tree-node-edit").serializeArray();
             var obj = JSON.parse(ajaxs.sendAjax('post' , url_ , data_)); 
-            jAlert(obj.msg , '系统提示! ' , tfunc.add_data_call_back(obj));  
+            jAlert(obj.msg , '系统提示 ' , tfunc.add_data_call_back(obj));  
         }, 
         add_data_call_back : function(obj){
         	if(obj.status == 'success'){
@@ -530,9 +534,42 @@
                 // $("#user-role-tree_1_check").css("display", "none");  // 隐藏root节点的复选框  
                 $("#user-role-tree_1_check").remove(); // 隐藏root节点的复选框  
             }
-        }
+        },
 
-    }
+        /**
+         * 开始创建角色
+         * 向managercenter.mc_role表、managercenter.mc_role_function表添加数据
+         */
+        addMcRole:function(){
+        	// 开始判断树是否没有被勾选
+        	var tree = $.fn.zTree.getZTreeObj("user-role-tree");
+        	var checkArray = tree.getChangeCheckedNodes(); // 获取所有被选节点
+        	if(checkArray.length == 0){
+        		jAlert("至少选择一个商户节点!" , '系统提示 ');
+        		return; 
+        	}
+        	
+        	var ids = ''; 
+        	for(var i = 0 ; i < checkArray.length ; i ++){
+        		var t = checkArray[i];
+        		if(t.navType != -1){
+        			ids += t.id + ",";
+        		}
+        	}
+        	ids = ids.substring(0 , ids.length -1);
+        	$("#ids").val(ids); 
+        	
+        	var type_ = 'post';
+            var url_ = 'add_mc_role.do';
+        	var data_ = $("#user-role-edit").serializeArray();
+        	var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+            if(obj.status == 'success'){
+            	jAlert("角色添加成功!" , '系统提示 ');
+            }else{
+            	jAlert(obj.msg , '系统提示 ');
+            }
+        }
+    };
     
     // 请参阅：zTree_v3-master/api/API_cn.html 和 文件路径: exedit/drag_super.html
     // 导航与菜单树 
