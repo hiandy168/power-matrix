@@ -1,4 +1,4 @@
-import com.matrix.cache.redis.core.enums.SRedisEnum;
+import com.matrix.cache.enums.SCacheEnum;
 import com.matrix.cache.redis.launch.RedisLaunch;
 
 /**
@@ -12,7 +12,7 @@ import com.matrix.cache.redis.launch.RedisLaunch;
 public class RedisLaunchTest {
 
 	public static void main(String[] args) {
-		RedisLaunch.setFactoryService(SRedisEnum.Test).del("22222222");  
+		RedisLaunch.setFactoryService(SCacheEnum.Test).del("22222222");  
 		System.out.println("aaa"); 
 	}
 }

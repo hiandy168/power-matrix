@@ -1,7 +1,7 @@
 package com.matrix.cache.redis.launch;
 
-import com.matrix.cache.redis.core.enums.DRedisEnum;
-import com.matrix.cache.redis.core.enums.SRedisEnum;
+import com.matrix.cache.enums.DCacheEnum;
+import com.matrix.cache.enums.SCacheEnum;
 import com.matrix.cache.redis.core.support.RedisFactory;
 
 /**
@@ -23,7 +23,7 @@ public class RedisLaunch {
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	public static RedisFactory setFactoryService(SRedisEnum enum_) {
+	public static RedisFactory setFactoryService(SCacheEnum enum_) {
 		return new RedisFactory("s-" + enum_.toString() + "-");
 	}
 	
@@ -35,7 +35,7 @@ public class RedisLaunch {
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	public static RedisFactory setFactoryDict(DRedisEnum enum_) {
+	public static RedisFactory setFactoryDict(DCacheEnum enum_) {
 		return new RedisFactory("d-" + enum_.toString() + "-");
 	}
 }

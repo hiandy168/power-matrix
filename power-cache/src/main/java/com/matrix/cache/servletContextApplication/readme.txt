@@ -1,1 +1,0 @@
-针对小型项目，使用ServletContextApplication 作为全局缓存 

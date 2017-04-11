@@ -1,4 +1,4 @@
-package com.matrix.cache.redis.core.enums;
+package com.matrix.cache.enums;
 
 /**
  * @descriptions 系统业务功能相关枚举
@@ -8,6 +8,6 @@ package com.matrix.cache.redis.core.enums;
  * @date 2016年12月11日 下午4:48:31
  * @version 1.0.1
  */
-public enum SRedisEnum {
+public enum SCacheEnum {
 	Test
 }
