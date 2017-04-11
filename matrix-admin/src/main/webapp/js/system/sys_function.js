@@ -542,12 +542,12 @@
          */
         addMcRole:function(){
         	// 开始判断树是否没有被勾选
-        	var tree = $.fn.zTree.getZTreeObj("user-role-tree");
-        	var checkArray = tree.getChangeCheckedNodes(); // 获取所有被选节点
-        	if(checkArray.length == 0){
-        		jAlert("至少选择一个商户节点!" , '系统提示 ');
-        		return; 
-        	}
+//        	var tree = $.fn.zTree.getZTreeObj("user-role-tree");
+//        	var checkArray = tree.getChangeCheckedNodes(); // 获取所有被选节点
+//        	if(checkArray.length == 0){
+//        		jAlert("至少选择一个商户节点!" , '系统提示 ');
+//        		return; 
+//        	}
         	
         	var ids = ''; 
         	for(var i = 0 ; i < checkArray.length ; i ++){
@@ -564,9 +564,11 @@
         	var data_ = $("#user-role-edit").serializeArray();
         	var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
             if(obj.status == 'success'){
-            	jAlert("角色添加成功!" , '系统提示 ');
+//            	jAlert("角色添加成功!" , '系统提示 ');
+            	alert("角色添加成功!");
             }else{
-            	jAlert(obj.msg , '系统提示 ');
+//            	jAlert(obj.msg , '系统提示 ');
+            	alert(obj.msg); 
             }
         }
     };

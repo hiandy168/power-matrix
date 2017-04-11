@@ -3,7 +3,7 @@
 <mapper namespace="com.matrix.dao.IMcRoleDao">
 
 	<resultMap id="BaseResultMap" type="com.matrix.pojo.entity.McRole">
-		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="role_name" property="roleName" jdbcType="VARCHAR" />
 		<result column="role_desc" property="roleDesc" jdbcType="VARCHAR" />
 		<result column="flag" property="flag" jdbcType="INTEGER" />
@@ -20,14 +20,14 @@
 		from 
 			managercenter.mc_role
 		where 
-			id = #{id,jdbcType=VARCHAR}
+			id = #{id,jdbcType=INTEGER}
 	</select>
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-		delete from managercenter.mc_role where id = #{id,jdbcType=VARCHAR}
+		delete from managercenter.mc_role where id = #{id,jdbcType=INTEGER}
 	</delete>
 	
-	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.McRole">
+	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.McRole" >
 		insert into managercenter.mc_role
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -60,7 +60,69 @@
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
-				#{id,jdbcType=VARCHAR},
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="roleName != null">
+				#{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="roleDesc != null">
+				#{roleDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="flag != null">
+				#{flag,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="updateUserId != null">
+				#{updateUserId,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelectiveGetZid" parameterType="com.matrix.pojo.entity.McRole"  useGeneratedKeys="true" keyProperty="id">
+		insert into managercenter.mc_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="roleName != null">
+				role_name,
+			</if>
+			<if test="roleDesc != null">
+				role_desc,
+			</if>
+			<if test="flag != null">
+				flag,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="updateUserId != null">
+				update_user_id,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
 			</if>
 			<if test="roleName != null">
 				#{roleName,jdbcType=VARCHAR},
@@ -117,7 +179,7 @@
 				remark = #{remark,jdbcType=VARCHAR},
 			</if>
 		</set>
-		where id = #{id,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
 	</update>
 </mapper>
 

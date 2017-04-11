@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.matrix.pojo.dto.McRoleDto;
 import com.matrix.pojo.entity.McSysFunction;
 import com.matrix.service.IManagerCenterService;
 import com.matrix.service.IMcSysFunctionService;
@@ -120,6 +121,22 @@ public class SystemRoleController {
 	@ResponseBody
 	public JSONObject deleteNode(Integer id , HttpSession session){
 		return mcSysFunctionService.deleteNode(id, session);	
+	}
+	
+	/**
+	 * @description: 创建系统角色
+	 * 
+	 * @param d
+	 * @param session
+	 * @return
+	 * @author Yangcl 
+	 * @date 2017年4月11日 上午10:45:06 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "add_mc_role", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject addMcRole(McRoleDto d , HttpSession session){
+		return mcSysFunctionService.addMcRole(d, session);	
 	}
 }
 

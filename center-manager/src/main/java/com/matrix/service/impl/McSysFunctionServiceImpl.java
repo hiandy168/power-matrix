@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -12,7 +11,12 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.base.BaseServiceImpl;
+import com.matrix.dao.IMcRoleDao;
+import com.matrix.dao.IMcRoleFunctionDao;
 import com.matrix.dao.IMcSysFunctionDao;
+import com.matrix.pojo.dto.McRoleDto;
+import com.matrix.pojo.entity.McRole;
+import com.matrix.pojo.entity.McRoleFunction;
 import com.matrix.pojo.entity.McSysFunction;
 import com.matrix.pojo.entity.McUserInfo;
 import com.matrix.service.IMcSysFunctionService;
@@ -23,6 +27,12 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 
 	@Resource
 	private IMcSysFunctionDao dao;
+	
+	@Resource
+	private IMcRoleDao roleDao;
+	
+	@Resource
+	private IMcRoleFunctionDao roleFunctionDao;
 	
 	
 	@Override
@@ -131,6 +141,60 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 		}else{
 			result.put("status", "error");
 			result.put("msg", this.getInfo(500090001)); // 删除失败
+		}
+		return result;
+	}
+	
+	/**
+	 * @description: 创建系统角色
+	 * 
+	 * @param d
+	 * @param session
+	 * @return
+	 * @author Yangcl 
+	 * @date 2017年4月11日 上午11:22:52 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject addMcRole(McRoleDto d, HttpSession session) {
+		JSONObject result = new JSONObject();
+		if(StringUtils.isBlank(d.getIds())){
+			result.put("status", "error");
+			result.put("msg", this.getInfo(500090003)); // 请勾选系统功能
+		}else{
+			Date createTime = new Date();
+			McUserInfo userInfo = (McUserInfo) session.getAttribute("userInfo");
+			
+			McRole role = new McRole();
+			role.setRoleName(d.getRoleName());
+			role.setRoleDesc(d.getRoleDesc());
+			role.setFlag(1);
+			role.setCreateTime(createTime);
+			role.setUpdateTime(createTime);
+			role.setRemark("");
+			role.setCreateUserId(userInfo.getId());
+			role.setUpdateUserId(userInfo.getId());
+			try {
+				roleDao.insertSelectiveGetZid(role);
+				
+				String[] arr = d.getIds().split(",");
+				for(int i = 0 ; i < arr.length ; i ++){
+					McRoleFunction rf = new McRoleFunction();
+					rf.setMcRoleId(role.getId());
+					rf.setMcSysFunctionId(Integer.valueOf(arr[i])); 
+					rf.setFlag(1);
+					rf.setRemark("");
+					rf.setCreateTime(createTime);
+					rf.setUpdateTime(createTime);
+					rf.setCreateUserId(userInfo.getId());
+					rf.setUpdateUserId(userInfo.getId());
+					roleFunctionDao.insertSelective(rf);
+				}
+				result.put("status", "success");
+			} catch (Exception e) {
+				e.printStackTrace();
+				result.put("status", "error");
+				result.put("msg", this.getInfo(500090004)); // 系统角色创建失败
+			}
 		}
 		return result;
 	}

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.base.interfaces.IBaseService;
+import com.matrix.pojo.dto.McRoleDto;
 import com.matrix.pojo.entity.McSysFunction;
 
 public interface IMcSysFunctionService  extends IBaseService<McSysFunction, Integer> {
@@ -17,6 +18,8 @@ public interface IMcSysFunctionService  extends IBaseService<McSysFunction, Inte
 
 	public JSONObject treeList();
 
-	public JSONObject deleteNode(Integer id, HttpSession session);   
+	public JSONObject deleteNode(Integer id, HttpSession session);
+
+	public JSONObject addMcRole(McRoleDto d, HttpSession session);    
 	
 }
