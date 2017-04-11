@@ -123,6 +123,10 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 		if (list != null && list.size() > 0) {
 			result.put("status", "success");
 			result.put("list", list);
+			
+			
+			
+			
 		} else {
 			result.put("status", "error");
 			result.put("msg", this.getInfo(100090001)); // 结果集为空

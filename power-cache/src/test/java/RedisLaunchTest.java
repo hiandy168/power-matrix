@@ -1,5 +1,5 @@
-import com.matrix.redis.core.enums.SRedisEnum;
-import com.matrix.redis.launch.RedisLaunch;
+import com.matrix.cache.redis.core.enums.SRedisEnum;
+import com.matrix.cache.redis.launch.RedisLaunch;
 
 /**
  * @descriptions 测试类

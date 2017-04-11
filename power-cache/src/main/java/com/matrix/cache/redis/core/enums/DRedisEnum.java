@@ -1,4 +1,4 @@
-package com.matrix.redis.core.enums;
+package com.matrix.cache.redis.core.enums;
 
 /**
  * @descriptions 数据字典相关枚举

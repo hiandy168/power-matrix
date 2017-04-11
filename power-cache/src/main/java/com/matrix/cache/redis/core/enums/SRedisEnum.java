@@ -1,4 +1,4 @@
-package com.matrix.redis.core.enums;
+package com.matrix.cache.redis.core.enums;
 
 /**
  * @descriptions 系统业务功能相关枚举

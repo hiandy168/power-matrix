@@ -1,12 +1,12 @@
-package com.matrix.redis.core.support;
+package com.matrix.cache.redis.core.support;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.matrix.cache.redis.core.interfaces.IRedisCall;
 import com.matrix.map.MDataMap;
-import com.matrix.redis.core.interfaces.IRedisCall;
 
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;

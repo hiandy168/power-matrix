@@ -1,7 +1,7 @@
-package com.matrix.redis.core.support;
+package com.matrix.cache.redis.core.support;
 
 import com.matrix.base.BaseClass;
-import com.matrix.redis.core.interfaces.IRedisCall;
+import com.matrix.cache.redis.core.interfaces.IRedisCall;
 
 public class RedisInit extends BaseClass {
 	private static RedisCacheConfig CONFIG = new RedisCacheConfig();

@@ -1,8 +1,8 @@
-package com.matrix.redis.launch;
+package com.matrix.cache.redis.launch;
 
-import com.matrix.redis.core.enums.DRedisEnum;
-import com.matrix.redis.core.enums.SRedisEnum;
-import com.matrix.redis.core.support.RedisFactory;
+import com.matrix.cache.redis.core.enums.DRedisEnum;
+import com.matrix.cache.redis.core.enums.SRedisEnum;
+import com.matrix.cache.redis.core.support.RedisFactory;
 
 /**
  * @descriptions redis核心工具类，供外部调用。
