@@ -7,7 +7,7 @@ import com.matrix.cache.redis.core.support.RedisFactory;
 /**
  * @descriptions redis核心工具类，供外部调用。
  * 
- * @test RedisLaunch.setFactoryService(SRedisEnum.Product).del(i);
+ * @test String value = RedisLaunch.initServiceCache(SCacheEnum.Test).get("xs-Test-001");
  *
  * @author Yangcl 
  * @home https://github.com/PowerYangcl
@@ -23,7 +23,7 @@ public class RedisLaunch {
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	public static RedisFactory setFactoryService(SCacheEnum enum_) {
+	public static RedisFactory initServiceCache(SCacheEnum enum_) {
 		return new RedisFactory("s-" + enum_.toString() + "-");
 	}
 	
@@ -35,7 +35,17 @@ public class RedisLaunch {
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	public static RedisFactory setFactoryDict(DCacheEnum enum_) {
+	public static RedisFactory initDictCache(DCacheEnum enum_) {
 		return new RedisFactory("d-" + enum_.toString() + "-");
 	}
 }
+
+
+
+
+
+
+
+
+
+

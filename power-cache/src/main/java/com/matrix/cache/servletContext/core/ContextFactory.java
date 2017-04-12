@@ -2,7 +2,17 @@ package com.matrix.cache.servletContext.core;
 
 import javax.servlet.ServletContext;
 
-public class ContextFactory <T>{
+import org.apache.commons.lang3.StringUtils;
+
+/**
+ * @description: 针对缓存提供基本的增删改查操作 
+ * 
+ * @author Yangcl
+ * @home https://github.com/PowerYangcl
+ * @date 2017年4月12日 下午6:31:56 
+ * @version 1.0.0
+ */
+public class ContextFactory{
 	
 	private String baseKey = "";
 	private ServletContext context = ContextCore.getInstance().getApplication();
@@ -11,31 +21,93 @@ public class ContextFactory <T>{
 		this.baseKey = baseKey;
 	}
 	
+
+	
 	/**
-	 * @descriptions 根据泛型类型获取一个缓存
-	 *
+	 * @description: 添加一个缓存 
+	 * 
 	 * @param key
-	 * @return
+	 * @param value
+	 * @author Yangcl 
+	 * @date 2017年4月12日 下午6:14:23 
+	 * @version 1.0.0.1
+	 */
+	public void set(String key , String value){
+		context.setAttribute(key, value);
+	}
+	
+	/**
+	 * @description: 删除一个缓存
+	 * 
+	 * @param key
+	 * @author Yangcl 
+	 * @date 2017年4月12日 下午6:27:44 
+	 * @version 1.0.0.1
+	 */
+	public void delete(String key){
+		context.removeAttribute(key);  
+	}
+	
+	/**
+	 * @description: 更新一条缓存信息
+	 * 
+	 * @param key
+	 * @param value
+	 * @author Yangcl 
+	 * @date 2017年4月12日 下午6:31:03 
+	 * @version 1.0.0.1
+	 */
+	public void update(String key , String value){
+		this.delete(key); 
+		this.set(key, value); 
+	}
+	
+	
+	/**
+	 * @descriptions 获取一个缓存
+	 *
+	 * @param key 
 	 * @date 2017年4月11日 下午11:09:33
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	@SuppressWarnings("unchecked")
-	public T get(String key){
-		return (T) context.getAttribute(this.baseKey + key);
+	public String get(String key){
+		return (String) context.getAttribute(this.baseKey + key);
 	}
 	
 	/**
-	 * @descriptions 设置一个泛型指定类型的缓存 
-	 *
-	 * @param key
-	 * @param t
-	 * @date 2017年4月11日 下午11:09:58
+	 * @description: 批量删除缓存，多参数
+	 * 
+	 * @param keys
 	 * @author Yangcl 
+	 * @date 2017年4月12日 下午6:36:28 
 	 * @version 1.0.0.1
 	 */
-	public void set(String key , T t){
-		context.setAttribute(key, t);
+	public void batchDelete(String... keys){
+		if(keys.length == 0){
+			return;
+		}
+		for(String key : keys){
+			context.removeAttribute(key);  
+		}
+	}
+	
+	/**
+	 * @description: 批量删除缓存，逗号分隔
+	 * 
+	 * @param keys
+	 * @author Yangcl 
+	 * @date 2017年4月12日 下午6:36:28 
+	 * @version 1.0.0.1
+	 */
+	public void batchDelete(String keys){
+		if(StringUtils.isBlank(keys)){
+			return;
+		}
+		String [] arr = keys.split(",");
+		for(String key : arr){
+			context.removeAttribute(key);  
+		}
 	}
 }
 

@@ -12,7 +12,7 @@ import com.matrix.cache.redis.launch.RedisLaunch;
 public class RedisLaunchTest {
 
 	public static void main(String[] args) {
-		RedisLaunch.setFactoryService(SCacheEnum.Test).del("22222222");  
+		RedisLaunch.initServiceCache(SCacheEnum.Test).del("22222222");  
 		System.out.println("aaa"); 
 	}
 }

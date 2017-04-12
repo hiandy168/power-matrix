@@ -2,6 +2,7 @@ package com.matrix.cache.enums;
 
 /**
  * @descriptions 数据字典相关枚举
+ * 	dict cache enum
  *
  * @author Yangcl 
  * @home https://github.com/PowerYangcl
