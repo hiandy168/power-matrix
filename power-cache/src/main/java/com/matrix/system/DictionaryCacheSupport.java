@@ -21,12 +21,7 @@ public class DictionaryCacheSupport extends BaseClass{
 	public boolean supportInit(){
 		try {
 			// TODO 加载缓存数据字典相关的表中的内容到Redis中
-			String cacheLaunchType = this.getConfig("power-cache.cache_launch_type");
-			if(cacheLaunchType.equals("redis")){
-				
-			}else if(cacheLaunchType.equals("application")){
-				
-			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

@@ -10,7 +10,7 @@ import com.matrix.base.BaseClass;
 
 /**
  * @descriptions 提供ServletContext变量
- * 	调用方式如下：ServletContext application = ApplicationCore.getInstance().getApplication();
+ * 	调用方式如下：ServletContext context = ApplicationCore.getInstance().getApplication();
  *
  * @author Yangcl 
  * @home https://github.com/PowerYangcl
@@ -19,7 +19,13 @@ import com.matrix.base.BaseClass;
  */
 @Inject
 public class ContextCore extends BaseClass{
+	private WebApplicationContext webApplicationContext;
+	private ServletContext context;
 	private ContextCore() { 
+		if (webApplicationContext == null) { // 创建全局缓存 - Yangcl
+			webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
+			context = webApplicationContext.getServletContext();
+		}
 	}
 	private static class LazyHolder {
 		private static final ContextCore INSTANCE = new ContextCore();
@@ -27,16 +33,8 @@ public class ContextCore extends BaseClass{
 	public static final ContextCore getInstance() {
 		return LazyHolder.INSTANCE; 
 	}
-
-
-	private WebApplicationContext webApplicationContext;
-	private ServletContext context;
 	
 	public ServletContext getApplication() {
-		if (webApplicationContext == null) { // 创建全局缓存 - Yangcl
-			webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
-			context = webApplicationContext.getServletContext();
-		}
 		return context;
 	}
 	
