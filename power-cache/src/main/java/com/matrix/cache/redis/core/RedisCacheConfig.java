@@ -1,7 +1,7 @@
-package com.matrix.cache.redis.core.support;
+package com.matrix.cache.redis.core;
 
 import com.matrix.cache.RootCache;
-import com.matrix.cache.redis.core.interfaces.IRedisCall;
+import com.matrix.cache.inf.IRedisCall;
 
 /**
  * @descriptions redis操作的缓存的类 | TODO 目前默认只支持一个实例

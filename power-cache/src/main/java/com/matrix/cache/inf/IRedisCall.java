@@ -1,4 +1,4 @@
-package com.matrix.cache.redis.core.interfaces;
+package com.matrix.cache.inf;
 
 import com.matrix.map.MDataMap;
 

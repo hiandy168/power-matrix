@@ -2,7 +2,7 @@ package com.matrix.cache.inf;
 
 import com.matrix.cache.enums.DCacheEnum;
 import com.matrix.cache.enums.SCacheEnum;
-import com.matrix.cache.redis.core.support.RedisFactory;
+import com.matrix.cache.redis.core.RedisFactory;
 
 public interface IBaseLaunch<T> {
 	

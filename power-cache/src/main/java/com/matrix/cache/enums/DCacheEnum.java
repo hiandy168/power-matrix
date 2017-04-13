@@ -10,5 +10,5 @@ package com.matrix.cache.enums;
  * @version 1.0.1
  */
 public enum DCacheEnum {
-
+	UserRole
 }

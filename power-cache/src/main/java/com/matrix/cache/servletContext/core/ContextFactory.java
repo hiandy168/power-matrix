@@ -4,6 +4,8 @@ import javax.servlet.ServletContext;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.matrix.cache.inf.ICacheFactory;
+
 /**
  * @description: 针对缓存提供基本的增删改查操作 
  * 
@@ -12,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
  * @date 2017年4月12日 下午6:31:56 
  * @version 1.0.0
  */
-public class ContextFactory{
+public class ContextFactory implements ICacheFactory{
 	
 	private String baseKey = "";
 	private ServletContext context = ContextCore.getInstance().getApplication();
@@ -32,7 +34,7 @@ public class ContextFactory{
 	 * @date 2017年4月12日 下午6:14:23 
 	 * @version 1.0.0.1
 	 */
-	public void set(String key , String value){
+	public void setCache(String key , String value){
 		context.setAttribute(key, value);
 	}
 	
@@ -44,7 +46,7 @@ public class ContextFactory{
 	 * @date 2017年4月12日 下午6:27:44 
 	 * @version 1.0.0.1
 	 */
-	public void delete(String key){
+	public void deleteCache(String key){
 		context.removeAttribute(key);  
 	}
 	
@@ -57,9 +59,9 @@ public class ContextFactory{
 	 * @date 2017年4月12日 下午6:31:03 
 	 * @version 1.0.0.1
 	 */
-	public void update(String key , String value){
-		this.delete(key); 
-		this.set(key, value); 
+	public void updateCache(String key , String value){
+		this.deleteCache(key); 
+		this.setCache(key, value); 
 	}
 	
 	
@@ -71,7 +73,7 @@ public class ContextFactory{
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	public String get(String key){
+	public String getCache(String key){
 		return (String) context.getAttribute(this.baseKey + key);
 	}
 	
@@ -83,7 +85,7 @@ public class ContextFactory{
 	 * @date 2017年4月12日 下午6:36:28 
 	 * @version 1.0.0.1
 	 */
-	public void batchDelete(String... keys){
+	public void batchDeleteCache(String... keys){
 		if(keys.length == 0){
 			return;
 		}
@@ -100,7 +102,7 @@ public class ContextFactory{
 	 * @date 2017年4月12日 下午6:36:28 
 	 * @version 1.0.0.1
 	 */
-	public void batchDelete(String keys){
+	public void batchDeleteCache(String keys){
 		if(StringUtils.isBlank(keys)){
 			return;
 		}

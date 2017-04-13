@@ -1,10 +1,17 @@
 package com.matrix.pojo.dto;
 
 public class McRoleDto {
+	private Integer mcRoleId;
 	private String roleName;
 	private String roleDesc;
 	private String ids;
 	
+	public Integer getMcRoleId() {
+		return mcRoleId;
+	}
+	public void setMcRoleId(Integer mcRoleId) {
+		this.mcRoleId = mcRoleId;
+	}
 	public String getRoleName() {
 		return roleName;
 	}

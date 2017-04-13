@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.base.BaseServiceImpl;
+import com.matrix.cache.CacheLaunch;
+import com.matrix.cache.enums.DCacheEnum;
+import com.matrix.cache.inf.IBaseLaunch;
+import com.matrix.cache.inf.ICacheFactory;
 import com.matrix.dao.IMcRoleDao;
 import com.matrix.dao.IMcRoleFunctionDao;
 import com.matrix.dao.IMcSysFunctionDao;
@@ -25,6 +29,8 @@ import com.matrix.util.UuidUtil;
 @Service("mcSysFunctionService") 
 public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Integer> implements IMcSysFunctionService {
 
+	private IBaseLaunch<ICacheFactory> launch = CacheLaunch.getInstance().Launch();
+	
 	@Resource
 	private IMcSysFunctionDao dao;
 	
@@ -194,6 +200,10 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 					roleFunctionDao.insertSelective(rf);
 				}
 				result.put("status", "success");
+				d.setMcRoleId(role.getId()); 
+				
+				launch.loadDictCache(DCacheEnum.UserRole).setCache(d.getMcRoleId()+"@"+d.getRoleName(), JSONObject.toJSONString(d));  
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 				result.put("status", "error");

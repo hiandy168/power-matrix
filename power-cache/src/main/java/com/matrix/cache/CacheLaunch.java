@@ -1,19 +1,15 @@
 package com.matrix.cache;
 
-import org.apache.commons.codec.language.bm.Lang;
 
 import com.matrix.base.BaseClass;
 import com.matrix.cache.inf.IBaseLaunch;
+import com.matrix.cache.inf.ICacheFactory;
 import com.matrix.cache.redis.launch.RedisLaunch;
 import com.matrix.cache.servletContext.launch.ContextLaunch;
 
 /**
  * @description: 缓存对外服务入口|单例
- * 	
- * 	使用cglib动态为Java类添加方法
- * 	http://rensanning.iteye.com/blog/1924274
- * 
- * 	https://zhidao.baidu.com/question/1540712568691888627.html
+ * 	调用方式如下：IBaseLaunch launch = CacheLaunch.getInstance().Launch();
  * 
  * @author Yangcl
  * @home https://github.com/PowerYangcl
@@ -22,13 +18,13 @@ import com.matrix.cache.servletContext.launch.ContextLaunch;
  */
 public class CacheLaunch extends BaseClass{ 
  
-	private IBaseLaunch<?> launch; 
+	private IBaseLaunch<ICacheFactory> launch; 
 	
 	private CacheLaunch() {
 		String cacheLaunchType = this.getConfig("power-cache.cache_launch_type");
 		if(cacheLaunchType.equals("redis")){ 
 			launch = new RedisLaunch();
-		}else if(cacheLaunchType.equals("application")){ 
+		}else if(cacheLaunchType.equals("context")){ 
 			launch = new ContextLaunch();
 		}
 	} 
@@ -39,7 +35,7 @@ public class CacheLaunch extends BaseClass{
 		return LazyHolder.INSTANCE; 
 	}
 	
-	public IBaseLaunch<?> Launch(){ 
+	public IBaseLaunch<ICacheFactory> Launch(){ 
 		return launch;
 	}
 }
