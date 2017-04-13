@@ -1,5 +1,6 @@
 package com.matrix.service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
@@ -16,7 +17,7 @@ public interface IMcSysFunctionService  extends IBaseService<McSysFunction, Inte
 
 	public JSONObject updateTreeNodes(String ustring, HttpSession session);
 
-	public JSONObject treeList();
+	public JSONObject treeList(HttpServletRequest request);
 
 	public JSONObject deleteNode(Integer id, HttpSession session);
 

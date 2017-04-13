@@ -49,7 +49,7 @@ public class RedisLaunch implements IBaseLaunch<ICacheFactory> {
 
 	@Override
 	public RedisFactory loadDictCache(DCacheEnum enum_) {
-		return new RedisFactory("xs-" + enum_.toString() + "-");
+		return new RedisFactory("xd-" + enum_.toString() + "-");
 	}
 
 

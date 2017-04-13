@@ -510,7 +510,7 @@
         	$("#sys-tree li").remove();
         	$($("#tree-node-edit")[0].childNodes).remove();
         	var type_ = 'post';
-            var url_ = 'tree_list.do';
+            var url_ = 'tree_list.do?type=list';
             var data_ = null;  // 可以为null，后台会进行默认处理
             var jsonObj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));  
             if(jsonObj.status == 'success'){
@@ -520,11 +520,11 @@
             }
         }, 
         
-        // 系统权限分配
+        // 系统权限分配 - 左侧树
         distributeUserRole: function(){
         	$("#user-role-tree li").remove();
         	var type_ = 'post';
-            var url_ = 'tree_list.do';
+            var url_ = 'tree_list.do?type=role';
             var data_ = null;  // 可以为null，后台会进行默认处理
             var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
             if(obj.status == 'success'){
@@ -534,6 +534,13 @@
                 // $("#user-role-tree_1_check").css("display", "none");  // 隐藏root节点的复选框  
                 $("#user-role-tree_1_check").remove(); // 隐藏root节点的复选框  
             }
+        },
+        
+        /**
+         * 系统权限分配 - 右侧已创建的角色列表
+         */
+        distributeUserRoleList: function(roles){
+        	
         },
 
         /**

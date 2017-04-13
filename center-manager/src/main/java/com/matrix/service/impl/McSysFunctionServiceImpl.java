@@ -1,9 +1,11 @@
 package com.matrix.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -120,8 +122,15 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	}
 
 
-	
-	public JSONObject treeList() {
+	/**
+	 * @description: 权限树同时获得角色列表
+	 * 
+	 * @return
+	 * @author Yangcl 
+	 * @date 2017年4月13日 下午5:30:03 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject treeList(HttpServletRequest request) {
 		JSONObject result = new JSONObject();
 		McSysFunction e = new McSysFunction();	
 		e.setFlag(1);
@@ -129,10 +138,23 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 		if (list != null && list.size() > 0) {
 			result.put("status", "success");
 			result.put("list", list);
-			
-			
-			
-			
+			if(request.getParameter("type").equals("role")){
+				List<McRoleDto> roles = new ArrayList<McRoleDto>(); 
+				McRole role = new McRole();
+				role.setFlag(1); 
+				List<McRole> roleList = roleDao.findList(role);
+				if(roleList.size() != 0){
+					for(McRole m : roleList){
+						String json = launch.loadDictCache(DCacheEnum.UserRole).getCache(m.getId().toString());
+						if(StringUtils.isBlank(json)){
+							continue;
+						}
+						McRoleDto d = JSONObject.parseObject(json, McRoleDto.class);
+						roles.add(d);
+					}
+				}
+				result.put("roles", roles);
+			}
 		} else {
 			result.put("status", "error");
 			result.put("msg", this.getInfo(100090001)); // 结果集为空

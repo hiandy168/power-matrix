@@ -1,5 +1,6 @@
 package com.matrix.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -53,8 +54,8 @@ public class SystemRoleController {
 	
 	@RequestMapping(value = "tree_list", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject treeList(){
-		return mcSysFunctionService.treeList();
+	public JSONObject treeList(HttpServletRequest request){
+		return mcSysFunctionService.treeList(request);
 	}
 	
 	
