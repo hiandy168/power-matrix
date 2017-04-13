@@ -27,7 +27,7 @@ public class RedisLaunch implements IBaseLaunch<ICacheFactory> {
 	 * @version 1.0.0.1
 	 */
 	public static RedisFactory initServiceCache(SCacheEnum enum_) {
-		return new RedisFactory("s-" + enum_.toString() + "-");
+		return new RedisFactory("xs-" + enum_.toString() + "-");
 	}
 	
 	/**
@@ -39,17 +39,17 @@ public class RedisLaunch implements IBaseLaunch<ICacheFactory> {
 	 * @version 1.0.0.1
 	 */
 	public static RedisFactory initDictCache(DCacheEnum enum_) {
-		return new RedisFactory("d-" + enum_.toString() + "-");
+		return new RedisFactory("xd-" + enum_.toString() + "-");
 	}
 
 	@Override
 	public RedisFactory loadServiceCache(SCacheEnum enum_) {
-		return new RedisFactory("s-" + enum_.toString() + "-");
+		return new RedisFactory("xs-" + enum_.toString() + "-");
 	}
 
 	@Override
 	public RedisFactory loadDictCache(DCacheEnum enum_) {
-		return new RedisFactory("s-" + enum_.toString() + "-");
+		return new RedisFactory("xs-" + enum_.toString() + "-");
 	}
 
 

@@ -29,7 +29,7 @@ public class ContextLaunch  implements IBaseLaunch<ICacheFactory>{
 	 * @version 1.0.0.1
 	 */
 	public static ContextFactory initServiceCache(SCacheEnum enum_) {
-		return new ContextFactory("s-" + enum_.toString() + "-");
+		return new ContextFactory("xs-" + enum_.toString() + "-");
 	}
 	
 	/**
@@ -41,17 +41,17 @@ public class ContextLaunch  implements IBaseLaunch<ICacheFactory>{
 	 * @version 1.0.0.1
 	 */
 	public static ContextFactory initDictCache(DCacheEnum enum_) {
-		return new ContextFactory("d-" + enum_.toString() + "-");
+		return new ContextFactory("xd-" + enum_.toString() + "-");
 	}
 
 	@Override
 	public ContextFactory loadServiceCache(SCacheEnum enum_) {
-		return new ContextFactory("d-" + enum_.toString() + "-");
+		return new ContextFactory("xs-" + enum_.toString() + "-");
 	}
 
 	@Override
 	public ContextFactory loadDictCache(DCacheEnum enum_) {
-		return new ContextFactory("d-" + enum_.toString() + "-");
+		return new ContextFactory("xd-" + enum_.toString() + "-");
 	}
 }
 

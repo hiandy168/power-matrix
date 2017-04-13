@@ -542,8 +542,8 @@
          */
         addMcRole:function(){
         	// 开始判断树是否没有被勾选
-//        	var tree = $.fn.zTree.getZTreeObj("user-role-tree");
-//        	var checkArray = tree.getChangeCheckedNodes(); // 获取所有被选节点
+        	var tree = $.fn.zTree.getZTreeObj("user-role-tree");
+        	var checkArray = tree.getChangeCheckedNodes(); // 获取所有被选节点
 //        	if(checkArray.length == 0){
 //        		jAlert("至少选择一个商户节点!" , '系统提示 ');
 //        		return; 

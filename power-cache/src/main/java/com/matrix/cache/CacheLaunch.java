@@ -8,7 +8,7 @@ import com.matrix.cache.redis.launch.RedisLaunch;
 import com.matrix.cache.servletContext.launch.ContextLaunch;
 
 /**
- * @description: 缓存对外服务入口|单例
+ * @description: 缓存对外服务入口|单例|隔离Redis或其他缓存
  * 	调用方式如下：IBaseLaunch launch = CacheLaunch.getInstance().Launch();
  * 
  * @author Yangcl

@@ -202,7 +202,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 				result.put("status", "success");
 				d.setMcRoleId(role.getId()); 
 				
-				launch.loadDictCache(DCacheEnum.UserRole).setCache(d.getMcRoleId()+"@"+d.getRoleName(), JSONObject.toJSONString(d));  
+				launch.loadDictCache(DCacheEnum.UserRole).setCache(d.getMcRoleId().toString() , JSONObject.toJSONString(d));  
 				
 			} catch (Exception e) {
 				e.printStackTrace();
