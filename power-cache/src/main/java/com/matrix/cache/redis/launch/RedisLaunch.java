@@ -2,6 +2,7 @@ package com.matrix.cache.redis.launch;
 
 import com.matrix.cache.enums.DCacheEnum;
 import com.matrix.cache.enums.SCacheEnum;
+import com.matrix.cache.inf.IBaseLaunch;
 import com.matrix.cache.redis.core.support.RedisFactory;
 
 /**
@@ -14,7 +15,8 @@ import com.matrix.cache.redis.core.support.RedisFactory;
  * @date 2016年12月11日 下午4:56:24
  * @version 1.0.1
  */
-public class RedisLaunch {
+public class RedisLaunch implements IBaseLaunch<RedisFactory>{
+	
 	/**
 	 * @descriptions 操作业务相关的缓存数据
 	 *
@@ -38,6 +40,18 @@ public class RedisLaunch {
 	public static RedisFactory initDictCache(DCacheEnum enum_) {
 		return new RedisFactory("d-" + enum_.toString() + "-");
 	}
+
+	@Override
+	public RedisFactory loadServiceCache(SCacheEnum enum_) {
+		return new RedisFactory("s-" + enum_.toString() + "-");
+	}
+
+	@Override
+	public RedisFactory loadDictCache(DCacheEnum enum_) {
+		return new RedisFactory("s-" + enum_.toString() + "-");
+	}
+
+
 }
 
 

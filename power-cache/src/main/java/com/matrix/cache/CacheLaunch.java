@@ -1,6 +1,9 @@
 package com.matrix.cache;
 
+import org.apache.commons.codec.language.bm.Lang;
+
 import com.matrix.base.BaseClass;
+import com.matrix.cache.inf.IBaseLaunch;
 import com.matrix.cache.redis.launch.RedisLaunch;
 import com.matrix.cache.servletContext.launch.ContextLaunch;
 
@@ -17,29 +20,28 @@ import com.matrix.cache.servletContext.launch.ContextLaunch;
  * @date 2017年4月12日 下午6:51:17 
  * @version 1.0.0
  */
-public class CacheLaunch<T> extends BaseClass{ 
+public class CacheLaunch extends BaseClass{ 
  
-	private T launch;
+	private IBaseLaunch<?> launch; 
 	
-	private void setLaunch(T t){
-		this.launch = t;
-	}
-
-	public T getLaunch(){
-		return launch;
-	} 
-	
-	public CacheLaunch() {
+	private CacheLaunch() {
 		String cacheLaunchType = this.getConfig("power-cache.cache_launch_type");
-		if(cacheLaunchType.equals("redis")){
-			this.setLaunch((T) new RedisLaunch());
-		}else if(cacheLaunchType.equals("application")){
-			this.setLaunch((T) new ContextLaunch());  
+		if(cacheLaunchType.equals("redis")){ 
+			launch = new RedisLaunch();
+		}else if(cacheLaunchType.equals("application")){ 
+			launch = new ContextLaunch();
 		}
 	} 
+	private static class LazyHolder {
+		private static final CacheLaunch INSTANCE = new CacheLaunch();
+	}
+	public static final CacheLaunch getInstance() {
+		return LazyHolder.INSTANCE; 
+	}
 	
-	
-	
+	public IBaseLaunch<?> Launch(){ 
+		return launch;
+	}
 }
 
 

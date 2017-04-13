@@ -2,6 +2,7 @@ package com.matrix.cache.servletContext.launch;
 
 import com.matrix.cache.enums.DCacheEnum;
 import com.matrix.cache.enums.SCacheEnum;
+import com.matrix.cache.inf.IBaseLaunch;
 import com.matrix.cache.servletContext.core.ContextFactory;
 
 /**
@@ -16,7 +17,7 @@ import com.matrix.cache.servletContext.core.ContextFactory;
  * @date 2017年4月12日 下午6:21:24 
  * @version 1.0.0
  */
-public class ContextLaunch {
+public class ContextLaunch  implements IBaseLaunch<ContextFactory>{
 	
 	/**
 	 * @descriptions 操作业务相关的缓存数据
@@ -39,6 +40,16 @@ public class ContextLaunch {
 	 * @version 1.0.0.1
 	 */
 	public static ContextFactory initDictCache(DCacheEnum enum_) {
+		return new ContextFactory("d-" + enum_.toString() + "-");
+	}
+
+	@Override
+	public ContextFactory loadServiceCache(SCacheEnum enum_) {
+		return new ContextFactory("d-" + enum_.toString() + "-");
+	}
+
+	@Override
+	public ContextFactory loadDictCache(DCacheEnum enum_) {
 		return new ContextFactory("d-" + enum_.toString() + "-");
 	}
 }
