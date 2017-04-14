@@ -30,6 +30,14 @@
             float: right;
             position:relative;
         }
+        .tree-table-right{
+            border: solid #78CE07 2px;
+            height: 100%;
+            width: 40%;
+            margin-right: 400px;
+            float: right;
+            position:relative;
+        }
         .right-padding{
             padding-top: 10px;
             padding-bottom: 10px;
@@ -157,8 +165,48 @@
 							</div>
                         </div>
 
-                        <div class="tree-right"  style="padding:5px">
-                            
+                        <div class="tree-table-right"  style="padding:5px">
+                            <div id="contentwrapper" class="">
+				                <div id="table-form" class="dataTables_wrapper" >
+				                    <div class="contenttitle2" style="margin-top: 5px;margin-bottom: 8px;">
+				                        <p style="margin: 0px">
+				                            <label style="width:65px">角色名称：</label>
+											<span>
+												<input id="role-name" type="text" name="roleName"  class="form-search"/>
+											</span>   
+				                            <a onclick="searchReset()" class="btn btn_orange btn_search radius50" style="float:right; cursor: pointer; margin-left: 10px">
+				                                <span> 重 置 </span>
+				                            </a>
+				                            <a onclick="searchUser()" class="btn btn_orange btn_search radius50" style="float:right; cursor: pointer;margin-left: 20px">
+				                                <span> 查 询 </span>
+				                            </a>
+				                        </p>
+				                    </div>
+				
+				                    <div id="dyntable2_length" class="dataTables_length">
+				                        当前显示10 条记录<input type="hidden" id="select-page-size" value="1"/>
+				                    </div> 
+				
+				                    <table id="dyntable2" cellpadding="0" cellspacing="0" border="0" class="stdtable">
+				                        <thead>
+				                            <tr>
+				                                <th class="head0" style="width:50px">
+				                                    <input type="checkbox"/>
+				                                </th> 
+				                                <th class="head0 ">角色名称</th>
+				                                <th class="head0 ">角色描述</th> 
+				                                <th class="head0 " width="100px">操作</th>
+				                            </tr>
+				                        </thead> 
+				
+				                        <tbody id="ajax-tbody-1">
+				                            <%-- 等待填充 --%>
+				                        </tbody>
+				                    </table>
+				                    
+				                </div>
+            				</div>
+            
                         </div>
                     </div>
                 </div>

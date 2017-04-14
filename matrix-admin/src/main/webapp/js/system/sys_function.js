@@ -533,6 +533,7 @@
                 $("#callbackTrigger").bind("change", {}, setting_distribution.setTrigger); 
                 // $("#user-role-tree_1_check").css("display", "none");  // 隐藏root节点的复选框  
                 $("#user-role-tree_1_check").remove(); // 隐藏root节点的复选框  
+                tfunc.distributeUserRoleList(obj.roles); 
             }
         },
         
@@ -550,12 +551,7 @@
         addMcRole:function(){
         	// 开始判断树是否没有被勾选
         	var tree = $.fn.zTree.getZTreeObj("user-role-tree");
-        	var checkArray = tree.getChangeCheckedNodes(); // 获取所有被选节点
-//        	if(checkArray.length == 0){
-//        		jAlert("至少选择一个商户节点!" , '系统提示 ');
-//        		return; 
-//        	}
-        	
+        	var checkArray = tree.getChangeCheckedNodes(); // 获取所有被选节点 
         	var ids = ''; 
         	for(var i = 0 ; i < checkArray.length ; i ++){
         		var t = checkArray[i];
