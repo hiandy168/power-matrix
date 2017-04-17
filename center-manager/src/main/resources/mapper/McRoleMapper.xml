@@ -37,6 +37,20 @@
 			</if>
 	</select>
 	
+	<resultMap id="McRoleDtoMap" type="com.matrix.pojo.dto.McRoleDto"></resultMap>
+	<select id="findMcRoleDtoList" resultMap="McRoleDtoMap" >  
+		select 
+			r.role_name as roleName,
+			r.role_desc as roleDesc,
+			r.id as mcRoleId,	  
+			GROUP_CONCAT(rf.mc_sys_function_id) as ids
+		from managercenter.`mc_role_function` rf  left join managercenter.`mc_role` r on r.id = rf.mc_role_id
+		where 
+			r.flag = 1
+		group by rf.mc_role_id
+		order by r.id asc
+	</select>
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from managercenter.mc_role where id = #{id,jdbcType=INTEGER}
 	</delete>
