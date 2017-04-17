@@ -17,7 +17,7 @@ import com.matrix.base.BaseClass;
  * @date 2017年4月11日 下午10:43:55
  * @version 1.0.1
  */
-@Inject
+
 public class ContextCore extends BaseClass{
 	private WebApplicationContext webApplicationContext;
 	private ServletContext context;

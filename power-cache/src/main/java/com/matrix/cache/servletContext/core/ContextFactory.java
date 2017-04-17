@@ -35,7 +35,7 @@ public class ContextFactory implements ICacheFactory{
 	 * @version 1.0.0.1
 	 */
 	public void setCache(String key , String value){
-		context.setAttribute(key, value);
+		context.setAttribute(baseKey + key, value);
 	}
 	
 	/**
@@ -47,7 +47,7 @@ public class ContextFactory implements ICacheFactory{
 	 * @version 1.0.0.1
 	 */
 	public void deleteCache(String key){
-		context.removeAttribute(key);  
+		context.removeAttribute(baseKey + key);  
 	}
 	
 	/**
@@ -74,7 +74,7 @@ public class ContextFactory implements ICacheFactory{
 	 * @version 1.0.0.1
 	 */
 	public String getCache(String key){
-		return (String) context.getAttribute(this.baseKey + key);
+		return (String) context.getAttribute(baseKey + key);
 	}
 	
 	/**
