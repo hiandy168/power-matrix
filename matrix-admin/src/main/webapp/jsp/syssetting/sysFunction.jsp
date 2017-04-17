@@ -190,16 +190,16 @@
 				                    <table id="dyntable2" cellpadding="0" cellspacing="0" border="0" class="stdtable">
 				                        <thead>
 				                            <tr>
-				                                <th class="head0" style="width:50px">
-				                                    <input type="checkbox"/>
+				                                <th class="head0" style="width:20px">
+				                                    状态
 				                                </th> 
 				                                <th class="head0 ">角色名称</th>
 				                                <th class="head0 ">角色描述</th> 
-				                                <th class="head0 " width="100px">操作</th>
+				                                <th class="head0 " width="50px">操作</th>
 				                            </tr>
 				                        </thead> 
 				
-				                        <tbody id="ajax-tbody-1">
+				                        <tbody id="ajax-tbody-role">
 				                            <%-- 等待填充 --%>
 				                        </tbody>
 				                    </table>

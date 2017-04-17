@@ -533,16 +533,65 @@
                 $("#callbackTrigger").bind("change", {}, setting_distribution.setTrigger); 
                 // $("#user-role-tree_1_check").css("display", "none");  // 隐藏root节点的复选框  
                 $("#user-role-tree_1_check").remove(); // 隐藏root节点的复选框  
-                tfunc.distributeUserRoleList(obj.roles); 
+                if(obj.roles.length != 0){
+                	tfunc.showUserRoleList(obj.roles); 
+                }
             }
         },
         
         /**
-         * 系统权限分配 - 右侧已创建的角色列表
+         * 系统权限分配 - 右侧已创建的角色列表 
          */
-        distributeUserRoleList: function(roles){
-        	
+        showUserRoleList: function(roles){
+        	$("#ajax-tbody-role tr").remove();
+        	var html = '';
+        	for(var i = 0 ; i < roles.length ; i ++){
+        		html += '<tr>' +'<td width="20px" align="center">';
+        		html += '<input type="radio"  id="' + roles[i].mcRoleId + '" name="status" value="' + roles[i].ids + '" onclick="tfunc.showRoleInTree(this)"/>';
+        		html += '</td>';
+        		html += '<td width="100px">' + roles[i].roleName + '</td>';
+        		html += '<td width="100px">' + roles[i].roleDesc + '</td>';
+        		html += '<td width="50px" align="center">' ;
+        		html += '<a href="javascript:void(0)" title="修改" style="cursor: pointer;" roleId="' + roles[i].mcRoleId + '"  onclick="tfunc.editMcRole(this)">修改</a>';
+        		html += '&nbsp&nbsp|&nbsp&nbsp'; 
+        		html += '<a href="javascript:void(0)" title="删除这个角色" style="cursor: pointer;">删除</a>';
+        		html +=  '</td></tr>';
+        	}
+        	$("#ajax-tbody-role").append(html);
         },
+        
+        /**
+         * 系统权限分配 - 选择右侧已创建的角色列表时，展示已选权限到左侧的树上    
+         */
+        showRoleInTree:function(obj){
+        	if(obj.value.length == 0){
+        		return;
+        	}
+        	var tree = $.fn.zTree.getZTreeObj("user-role-tree");
+        	var nodes = tree.transformToArray(tree.getNodes()); 
+        	if(nodes.length == 0){
+        		return;
+        	}
+        	for(var n = 0 ; n < nodes.length ; n ++){
+        		tree.checkNode(nodes[n], false, false); 
+        	}
+        	
+        	var node; // node.navType = 0|商户节点选择唯一性验证 使用
+        	var arr = obj.value.split(",");  // sys_function array
+        	for(var n = 0 ; n < nodes.length ; n ++){
+        		for(var i = 0 ; i < arr.length ; i ++){
+            		if(nodes[n].id == arr[i]){
+            			tree.checkNode(nodes[n], true, false);
+            			if(i == 0){ // 商户节点
+            				node = nodes[n];
+            			}
+            		}
+            	} 
+        	} 
+        	$($(".seller-node")[0]).removeClass("seller-node");  
+        	$("#" + node.tId).addClass("seller-node"); 
+        },
+        
 
         /**
          * 开始创建角色
@@ -573,6 +622,15 @@
 //            	jAlert(obj.msg , '系统提示 ');
             	alert(obj.msg); 
             }
+        },
+        
+        /**
+         * 开始更新角色信息
+         * @param obj
+         */
+        editMcRole:function(obj){
+        	console.log("adfad asdf asdf asdf asfd "); 
+        	console.log("adfad asdf asdf asdf asfd "); 
         }
     };
     
