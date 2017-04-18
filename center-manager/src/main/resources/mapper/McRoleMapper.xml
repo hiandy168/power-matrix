@@ -43,7 +43,7 @@
 			r.role_name as roleName,
 			r.role_desc as roleDesc,
 			r.id as mcRoleId,	  
-			GROUP_CONCAT(rf.mc_sys_function_id) as ids
+			GROUP_CONCAT(rf.mc_sys_function_id order by rf.mc_sys_function_id asc) as ids
 		from managercenter.`mc_role_function` rf  left join managercenter.`mc_role` r on r.id = rf.mc_role_id
 		where 
 			r.flag = 1

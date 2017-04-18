@@ -1,7 +1,6 @@
 package com.matrix.dict;
 
 import java.util.List;
-
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.annotation.Inject;
 import com.matrix.base.BaseClass;
@@ -41,7 +40,6 @@ public class CacheUserRole extends BaseClass implements IBaseCache{
 			List<McRoleDto> list = roleDao.findMcRoleDtoList();
 			if(list != null && list.size() != 0){
 				for(McRoleDto d : list){
-					// TODO 需要对ids字段进行大小顺序排列 TreeMap
 					launch.loadDictCache(DCacheEnum.UserRole).setCache(d.getMcRoleId().toString() , JSONObject.toJSONString(d));
 				}
 			}
