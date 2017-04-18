@@ -552,7 +552,7 @@
         		html += '<td width="100px">' + roles[i].roleName + '</td>';
         		html += '<td width="100px">' + roles[i].roleDesc + '</td>';
         		html += '<td width="50px" align="center">' ;
-        		html += '<a href="javascript:void(0)" title="修改" style="cursor: pointer;" roleId="' + roles[i].mcRoleId + '"  onclick="tfunc.editMcRole(this)">修改</a>';
+        		html += '<a href="javascript:void(0)" title="修改" style="cursor: pointer;" roleId="' + roles[i].mcRoleId + '"  onclick="tfunc.openEditDialog(this)">修改</a>';
         		html += '&nbsp&nbsp|&nbsp&nbsp'; 
         		html += '<a href="javascript:void(0)" title="删除这个角色" style="cursor: pointer;">删除</a>';
         		html +=  '</td></tr>';
@@ -592,6 +592,34 @@
         	$("#" + node.tId).addClass("seller-node"); 
         },
         
+        showDialog:function(){
+        	// 清空上一次遗留的内容  
+        	$("input[name='roleName']").val("");
+        	$("input[name='roleDesc']").val("");
+        	$("#ids").val("");
+        	
+	      	var tree = $.fn.zTree.getZTreeObj("user-role-tree");
+	      	var checkArray = tree.getChangeCheckedNodes(); // 获取所有被选节点
+	      	if(checkArray.length == 0){
+	      		jAlert("至少选择一个商户节点!" , '系统提示 ');
+	      		return; 
+	      	}
+	          $.blockUI({
+	              showOverlay:true ,
+	              css:  {
+	                  cursor:'auto',
+	                  left:($(window).width() - $("#role-create-div").width())/2 + 'px',
+	                  width:$("#role-create-div").width()+'px',
+	                  top:($(window).height()-$("#role-create-div").height())/2 + 'px',
+	                  position:'fixed'	, 	//居中
+	                  textAlign : 'left',    
+	                  border: '3px solid #FB9337'  // 边界
+	              },
+	              message: $('#role-create-div'),
+	              fadeIn: 500,//淡入时间
+	              fadeOut: 1000  //淡出时间
+	          });
+	      },
 
         /**
          * 开始创建角色
@@ -625,13 +653,61 @@
         },
         
         /**
+         * 打开更新角色信息窗口
+         * @param obj
+         */
+        openEditDialog:function(obj){
+        	var roleId = $(obj).attr("roleId");
+        	if(!$("#" + roleId)[0].checked){
+        		jAlert("请修改选择的角色!" , '系统提示 ');
+        		return
+        	}
+        	
+        	 $("#dialog-title")[0].innerText="修改角色";
+        	 $("#submit-btn button").remove();
+        	 $("#submit-btn").append('<button class="stdbtn btn_orange " style="width: 60px;margin-top:10px" onclick="tfunc.editMcRole(' + roleId + ')"> 提 交 </button>');
+        	 tfunc.showDialog();
+        	 
+        	 var arr = obj.parentElement.parentElement.children; // td array 
+        	 $("input[name='roleName']").val(arr[1].innerText);
+         	 $("input[name='roleDesc']").val(arr[2].innerText);
+        },
+        
+        /**
          * 开始更新角色信息
          * @param obj
          */
-        editMcRole:function(obj){
-        	console.log("adfad asdf asdf asdf asfd "); 
-        	console.log("adfad asdf asdf asdf asfd "); 
-        }
+        editMcRole:function(roleId){
+//        	var roleId = $(obj).attr("roleId"); 
+        	var tree = $.fn.zTree.getZTreeObj("user-role-tree");
+        	var checkArray = tree.getChangeCheckedNodes(); // 获取所有被选节点 
+        	var ids = ''; 
+        	for(var i = 0 ; i < checkArray.length ; i ++){
+        		var t = checkArray[i];
+        		if(t.navType != -1){
+        			ids += t.id + ",";
+        		}
+        	}
+        	ids = ids.substring(0 , ids.length -1);
+        	$("#ids").val(ids); 
+        	
+        	var type_ = 'post';
+            var url_ = 'edit_mc_role.do';
+        	var data_ = $("#user-role-edit").serializeArray();
+        	var obj = new Object();
+        	obj.name = "mcRoleId"; 
+        	obj.value = roleId;
+        	data_.push(obj);
+        	var a = 0;
+//        	var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+//            if(obj.status == 'success'){
+////            	jAlert("角色修改成功!" , '系统提示 ');
+//            	alert("角色修改成功!");
+//            }else{
+////            	jAlert(obj.msg , '系统提示 ');
+//            	alert(obj.msg); 
+//            }
+        },
     };
     
     // 请参阅：zTree_v3-master/api/API_cn.html 和 文件路径: exedit/drag_super.html

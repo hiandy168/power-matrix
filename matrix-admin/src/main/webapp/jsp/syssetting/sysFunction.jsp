@@ -77,28 +77,10 @@
          * @时间: 2016-08-19 : 15-20-56
          */
         function openDialogRole(){
-//            dialogFormClear(dialogFormId)        // TODO 可选：清空上一次遗留的内容 
-        	var tree = $.fn.zTree.getZTreeObj("user-role-tree");
-        	var checkArray = tree.getChangeCheckedNodes(); // 获取所有被选节点
-        	if(checkArray.length == 0){
-        		jAlert("至少选择一个商户节点!" , '系统提示 ');
-        		return; 
-        	}
-            $.blockUI({
-                showOverlay:true ,
-                css:  {
-                    cursor:'auto',
-                    left:($(window).width() - $("#role-create-div").width())/2 + 'px',
-                    width:$("#role-create-div").width()+'px',
-                    top:($(window).height()-$("#role-create-div").height())/2 + 'px',
-                    position:'fixed'	, 	//居中
-                    textAlign : 'left',    
-                    border: '3px solid #FB9337'  // 边界
-                },
-                message: $('#role-create-div'),
-                fadeIn: 500,//淡入时间
-                fadeOut: 1000  //淡出时间
-            });
+        	 $("#dialog-title")[0].innerText="创建角色";
+        	 $("#submit-btn button").remove();
+        	 $("#submit-btn").append('<button class="stdbtn btn_orange " style="width: 60px;margin-top:10px" onclick="tfunc.addMcRole()"> 提 交 </button>');
+        	 tfunc.showDialog();
         }
         
 
@@ -191,7 +173,7 @@
 				                        <thead>
 				                            <tr>
 				                                <th class="head0" style="width:20px">
-				                                    状态
+				                                    查看
 				                                </th> 
 				                                <th class="head0 ">角色名称</th>
 				                                <th class="head0 ">角色描述</th> 
@@ -245,7 +227,9 @@
 <div id="role-create-div" style="display: none;width: 508px;height: 230px">
     <p class="dialog-title">
         <a href="#" onclick="closeDialog()" class="dialog-close"></a>
-        创建角色
+        <span id="dialog-title">
+        	<!-- 创建角色 -->
+        </span>
     </p>
 
     <div id="dialog-content-wrapper" class="contentwrapper" style="padding-top:5px">
@@ -265,7 +249,9 @@
                				<td colspan="2"><input type="hidden" id="ids" name="ids" value=""></td>
                			</tr>
                			<tr> 
-               				<td colspan="2"><button class="stdbtn btn_orange " style="width: 60px;margin-top:10px" onclick="tfunc.addMcRole()"> 提 交 </button></td>
+               				<td id="submit-btn" colspan="2">
+               					<!-- <button class="stdbtn btn_orange " style="width: 60px;margin-top:10px" onclick="tfunc.addMcRole()"> 提 交 </button> -->
+              				</td>
                			</tr>
 					</tbody>
 				</table>            	
