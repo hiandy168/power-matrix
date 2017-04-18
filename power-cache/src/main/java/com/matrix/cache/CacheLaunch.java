@@ -21,10 +21,10 @@ public class CacheLaunch extends BaseClass{
 	private IBaseLaunch<ICacheFactory> launch; 
 	
 	private CacheLaunch() {
-		String cacheLaunchType = this.getConfig("power-cache.cache_launch_type");
-		if(cacheLaunchType.equals("redis")){ 
+		String cacheType = this.getConfig("power-cache.cache_launch_type");
+		if(cacheType.equals("redis")){ 
 			launch = new RedisLaunch();
-		}else if(cacheLaunchType.equals("context")){ 
+		}else if(cacheType.equals("context")){ 
 			launch = new ContextLaunch();
 		}
 	} 

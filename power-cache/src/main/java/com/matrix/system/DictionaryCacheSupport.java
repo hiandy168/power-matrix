@@ -26,19 +26,19 @@ public class DictionaryCacheSupport extends BaseClass{
 	 */
 	public boolean supportInit(){
 		try {
-//			String cacheLaunchType = this.getConfig("power-cache.cache_launch_type");
-//			if(cacheLaunchType.equals("redis")){ 
-//			}else if(cacheLaunchType.equals("context")){ 
-//			}
-			String package_ = this.getConfig("power-cache.default_package_url");
-			String dictCacheClass = this.getConfig("power-cache.sub_project_cache_init");
-			if(StringUtils.isNotBlank(dictCacheClass)){
-				String [] arr = dictCacheClass.split(",");
-				for(int i = 0 ; i < arr.length ; i ++){
-					Class<?> clazz = Class.forName(package_ + arr[i]);   
-					if (clazz != null && clazz.getDeclaredMethods() != null){
-						dictCache = (IBaseCache) clazz.newInstance();
-						dictCache.refresh();
+			String cacheType = this.getConfig("power-cache.cache_launch_type");
+			String cacheReload = this.getConfig("power-cache.cache_reload");
+			if(!cacheType.equals("redis") || cacheReload.equals("true")){ 
+				String package_ = this.getConfig("power-cache.default_package_url");
+				String dictCacheClass = this.getConfig("power-cache.sub_project_cache_init");
+				if(StringUtils.isNotBlank(dictCacheClass)){
+					String [] arr = dictCacheClass.split(",");
+					for(int i = 0 ; i < arr.length ; i ++){
+						Class<?> clazz = Class.forName(package_ + arr[i]);   
+						if (clazz != null && clazz.getDeclaredMethods() != null){
+							dictCache = (IBaseCache) clazz.newInstance();
+							dictCache.refresh();
+						}
 					}
 				}
 			}
@@ -58,15 +58,19 @@ public class DictionaryCacheSupport extends BaseClass{
 	 */
 	public boolean supportDelete(){
 		try {
-			String package_ = this.getConfig("power-cache.default_package_url");
-			String dictCacheClass = this.getConfig("power-cache.sub_project_cache_init");
-			if(StringUtils.isNotBlank(dictCacheClass)){
-				String [] arr = dictCacheClass.split(",");
-				for(int i = 0 ; i < arr.length ; i ++){
-					Class<?> clazz = Class.forName(package_ + arr[i]);   
-					if (clazz != null && clazz.getDeclaredMethods() != null){
-						dictCache = (IBaseCache) clazz.newInstance();
-						dictCache.removeAll(); 
+			String cacheType = this.getConfig("power-cache.cache_launch_type");
+			String cacheReload = this.getConfig("power-cache.cache_reload");
+			if(cacheType.equals("redis") && cacheReload.equals("true")){  // 缓存为redis且需要重新加载部分字典类型的缓存
+				String package_ = this.getConfig("power-cache.default_package_url");
+				String dictCacheClass = this.getConfig("power-cache.sub_project_cache_init");
+				if(StringUtils.isNotBlank(dictCacheClass)){
+					String [] arr = dictCacheClass.split(",");
+					for(int i = 0 ; i < arr.length ; i ++){
+						Class<?> clazz = Class.forName(package_ + arr[i]);   
+						if (clazz != null && clazz.getDeclaredMethods() != null){
+							dictCache = (IBaseCache) clazz.newInstance();
+							dictCache.removeAll(); 
+						}
 					}
 				}
 			}
