@@ -562,6 +562,7 @@
         		html +=  '</td></tr>';
         	}
         	$("#ajax-tbody-role").append(html);
+        	$("#role-count").text($("#ajax-tbody-role tr").length); 
         },
         
         /**
@@ -648,8 +649,9 @@
         	var data_ = $("#user-role-edit").serializeArray();
         	var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
             if(obj.status == 'success'){
-            	alert("角色添加成功!");
             	tfunc.drawTable(obj.cache);   
+            	alert("角色添加成功!");
+            	tfunc.closeDialog();
             }else{ 
             	alert(obj.msg); 
             }

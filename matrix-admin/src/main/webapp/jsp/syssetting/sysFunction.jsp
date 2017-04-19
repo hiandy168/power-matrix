@@ -165,11 +165,11 @@
 				                        </p>
 				                    </div>
 				
-				                    <div id="dyntable2_length" class="dataTables_length">
-				                        当前显示10 条记录<input type="hidden" id="select-page-size" value="1"/>
+				                    <div style="padding-bottom: 5px;">
+				                        当前显示<span id="role-count"><!-- 等待填充角色数量 --></span> 条记录
 				                    </div> 
 				
-				                    <table id="dyntable2" cellpadding="0" cellspacing="0" border="0" class="stdtable">
+				                    <table id="dyntable" cellpadding="0" cellspacing="0" border="0" class="stdtable">
 				                        <thead>
 				                            <tr>
 				                                <th class="head0" style="width:20px">
