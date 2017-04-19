@@ -21,6 +21,8 @@ public interface IMcSysFunctionService  extends IBaseService<McSysFunction, Inte
 
 	public JSONObject deleteNode(Integer id, HttpSession session);
 
-	public JSONObject addMcRole(McRoleDto d, HttpSession session);    
+	public JSONObject addMcRole(McRoleDto d, HttpSession session);
+
+	public JSONObject editMcRole(McRoleDto d, HttpSession session);    
 	
 }

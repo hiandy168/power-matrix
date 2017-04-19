@@ -544,6 +544,10 @@
          */
         showUserRoleList: function(roles){
         	$("#ajax-tbody-role tr").remove();
+        	tfunc.drawTable(roles);
+        },
+        
+        drawTable:function(roles){
         	var html = '';
         	for(var i = 0 ; i < roles.length ; i ++){
         		html += '<tr>' +'<td width="20px" align="center">';
@@ -595,7 +599,7 @@
         showDialog:function(){
         	// 清空上一次遗留的内容  
         	$("input[name='roleName']").val("");
-        	$("input[name='roleDesc']").val("");
+        	$("#role-desc").val("");
         	$("#ids").val("");
         	
 	      	var tree = $.fn.zTree.getZTreeObj("user-role-tree");
@@ -644,10 +648,9 @@
         	var data_ = $("#user-role-edit").serializeArray();
         	var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
             if(obj.status == 'success'){
-//            	jAlert("角色添加成功!" , '系统提示 ');
             	alert("角色添加成功!");
-            }else{
-//            	jAlert(obj.msg , '系统提示 ');
+            	tfunc.drawTable(obj.cache);   
+            }else{ 
             	alert(obj.msg); 
             }
         },
@@ -667,18 +670,16 @@
         	 $("#submit-btn button").remove();
         	 $("#submit-btn").append('<button class="stdbtn btn_orange " style="width: 60px;margin-top:10px" onclick="tfunc.editMcRole(' + roleId + ')"> 提 交 </button>');
         	 tfunc.showDialog();
-        	 
         	 var arr = obj.parentElement.parentElement.children; // td array 
         	 $("input[name='roleName']").val(arr[1].innerText);
-         	 $("input[name='roleDesc']").val(arr[2].innerText);
+         	 $("#role-desc").val(arr[2].innerText); 
         },
         
         /**
          * 开始更新角色信息
          * @param obj
          */
-        editMcRole:function(roleId){
-//        	var roleId = $(obj).attr("roleId"); 
+        editMcRole:function(roleId){ 
         	var tree = $.fn.zTree.getZTreeObj("user-role-tree");
         	var checkArray = tree.getChangeCheckedNodes(); // 获取所有被选节点 
         	var ids = ''; 
@@ -698,16 +699,25 @@
         	obj.name = "mcRoleId"; 
         	obj.value = roleId;
         	data_.push(obj);
-        	var a = 0;
-//        	var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
-//            if(obj.status == 'success'){
-////            	jAlert("角色修改成功!" , '系统提示 ');
-//            	alert("角色修改成功!");
-//            }else{
-////            	jAlert(obj.msg , '系统提示 ');
-//            	alert(obj.msg); 
-//            }
+        	
+        	var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+            if(obj.status == 'success'){
+            	var cache = obj.cache;
+            	var radio_ = $("#" + cache.mcRoleId);
+            	radio_.val(cache.ids); 
+            	var arr = radio_[0].parentElement.parentElement.children; // td array 
+            	arr[1].innerText = cache.roleName;
+            	arr[2].innerText = cache.roleDesc;
+            	alert("角色修改成功!");
+            	tfunc.closeDialog();
+            }else{
+            	alert(obj.msg); 
+            }
         },
+        
+        closeDialog:function(){
+            $.unblockUI();
+        }
     };
     
     // 请参阅：zTree_v3-master/api/API_cn.html 和 文件路径: exedit/drag_super.html

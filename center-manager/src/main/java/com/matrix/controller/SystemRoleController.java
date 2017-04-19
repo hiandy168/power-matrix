@@ -129,7 +129,6 @@ public class SystemRoleController {
 	 * 
 	 * @param d
 	 * @param session
-	 * @return
 	 * @author Yangcl 
 	 * @date 2017年4月11日 上午10:45:06 
 	 * @version 1.0.0.1
@@ -138,6 +137,21 @@ public class SystemRoleController {
 	@ResponseBody
 	public JSONObject addMcRole(McRoleDto d , HttpSession session){
 		return mcSysFunctionService.addMcRole(d, session);	
+	}
+	
+	/**
+	 * @description: 修改系统角色
+	 * 
+	 * @param d
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年4月19日 下午4:22:28 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "edit_mc_role", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject editMcRole(McRoleDto d , HttpSession session){
+		return mcSysFunctionService.editMcRole(d, session);	
 	}
 }
 

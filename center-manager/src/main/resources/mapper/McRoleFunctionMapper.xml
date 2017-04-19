@@ -27,6 +27,10 @@
 		delete from managercenter.mc_role_function where id = #{id,jdbcType=INTEGER}
 	</delete>
 	
+	<delete id="deleteByMcRoleId" parameterType="java.lang.Integer">
+		delete from managercenter.mc_role_function where mc_role_id = #{mcRoleId , jdbcType=INTEGER} 
+	</delete>
+	
 	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.McRoleFunction">
 		insert into managercenter.mc_role_function
 		<trim prefix="(" suffix=")" suffixOverrides=",">

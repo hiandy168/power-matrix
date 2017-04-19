@@ -225,7 +225,65 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 				d.setMcRoleId(role.getId()); 
 				
 				launch.loadDictCache(DCacheEnum.UserRole).setCache(d.getMcRoleId().toString() , JSONObject.toJSONString(d));  
+				List<McRoleDto> list = new ArrayList<McRoleDto>();
+				list.add(d);
+				result.put("cache", list); 
+			} catch (Exception e) {
+				e.printStackTrace();
+				result.put("status", "error");
+				result.put("msg", this.getInfo(500090004)); // 系统角色创建失败
+			}
+		}
+		return result;
+	}
+
+
+	/**
+	 * @description: 修改系统角色
+	 * 
+	 * @param d
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年4月19日 下午4:22:28 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject editMcRole(McRoleDto d, HttpSession session) {
+		JSONObject result = new JSONObject();
+		if(StringUtils.isBlank(d.getIds())){
+			result.put("status", "error");
+			result.put("msg", this.getInfo(500090003)); // 请勾选系统功能
+		}else{
+			Date currentTime = new Date();
+			McUserInfo userInfo = (McUserInfo) session.getAttribute("userInfo");
+			
+			McRole role = new McRole();
+			role.setId(d.getMcRoleId()); 
+			role.setRoleName(d.getRoleName());
+			role.setRoleDesc(d.getRoleDesc()); 
+			role.setUpdateTime(currentTime); 
+			role.setUpdateUserId(userInfo.getId());
+			try {
+				roleDao.updateSelective(role);
 				
+				roleFunctionDao.deleteByMcRoleId(d.getMcRoleId()); 
+				launch.loadDictCache(DCacheEnum.UserRole).deleteCache(d.getMcRoleId().toString());  
+				
+				String[] arr = d.getIds().split(",");
+				for(int i = 0 ; i < arr.length ; i ++){
+					McRoleFunction rf = new McRoleFunction();
+					rf.setMcRoleId(role.getId());
+					rf.setMcSysFunctionId(Integer.valueOf(arr[i])); 
+					rf.setFlag(1);
+					rf.setRemark("");
+					rf.setCreateTime(currentTime);
+					rf.setUpdateTime(currentTime);
+					rf.setCreateUserId(userInfo.getId());
+					rf.setUpdateUserId(userInfo.getId());
+					roleFunctionDao.insertSelective(rf);
+				}
+				result.put("status", "success");
+				launch.loadDictCache(DCacheEnum.UserRole).setCache(d.getMcRoleId().toString() , JSONObject.toJSONString(d));  
+				result.put("cache", d);
 			} catch (Exception e) {
 				e.printStackTrace();
 				result.put("status", "error");

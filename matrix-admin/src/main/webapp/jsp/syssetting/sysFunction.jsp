@@ -243,7 +243,7 @@
               			</tr>
                			<tr>
                				<td style="width:60px;  vertical-align : middle; ">角色描述：</td>
-               				<td><textarea cols="80" rows="5" maxlength="250" name="roleDesc" class="longinput " placeholder="角色描述"  ></textarea></td>
+               				<td><textarea cols="80" id="role-desc" rows="5" maxlength="250" name="roleDesc" class="longinput " placeholder="角色描述"  ></textarea></td>
                			</tr>
                			<tr> 
                				<td colspan="2"><input type="hidden" id="ids" name="ids" value=""></td>

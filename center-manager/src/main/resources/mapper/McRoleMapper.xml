@@ -51,7 +51,7 @@
 		order by r.id asc
 	</select>
 	
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from managercenter.mc_role where id = #{id,jdbcType=INTEGER}
 	</delete>
 	
