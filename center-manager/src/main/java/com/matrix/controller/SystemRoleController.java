@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.pojo.dto.McRoleDto;
 import com.matrix.pojo.entity.McSysFunction;
+import com.matrix.pojo.entity.McUserInfo;
+import com.matrix.pojo.entity.McUserRole;
 import com.matrix.service.IManagerCenterService;
 import com.matrix.service.IMcSysFunctionService;
+import com.matrix.service.IMcUserInfoService;
 
 /**
  * @description: 系统权限控制器
@@ -35,6 +38,8 @@ public class SystemRoleController {
 	@Autowired
 	private IMcSysFunctionService mcSysFunctionService;   
 	
+	@Autowired
+	private IMcUserInfoService mcUserInfoService;
 	
 	/**
 	 * @description: 前往树形维护页面
@@ -168,6 +173,38 @@ public class SystemRoleController {
 	public JSONObject deleteMcRole(McRoleDto d , HttpSession session){
 		return mcSysFunctionService.deleteMcRole(d, session);	
 	}
+	
+	/**
+	 * @description: 【系统角色创建】->【勾选用户】->【后台人员列表】
+	 * 
+	 * @param entity						TODO 需要过滤已经有角色的用户
+	 * @param request
+	 * @author Yangcl 
+	 * @date 2017年4月20日 下午7:25:12 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "mc_user_list", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject mcUserList(McUserInfo entity , HttpServletRequest request){
+		return mcUserInfoService.ajaxPageData(entity, request);
+	}
+	
+	
+	/**
+	 * @description: 
+	 * 
+	 * @param entity
+	 * @return
+	 * @author Yangcl 
+	 * @date 2017年4月20日 下午7:29:12 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "add_user_role", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject addUserRole(McUserRole entity , HttpSession session){
+		return mcSysFunctionService.addUserRole(entity , session);
+	}
+	
 }
 
 

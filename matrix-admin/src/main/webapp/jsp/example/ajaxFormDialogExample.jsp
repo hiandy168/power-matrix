@@ -202,7 +202,7 @@
                         </p>
                     </div>
 
-                    <div id="dyntable2_length" class="dataTables_length">
+                    <div id="dyntable2_length" class="dataTables_length dialog-show-count">
                         <label>
                             当前显示
                             <%-- TODO 注意：select-page-size 这个ID是写定的，如果没有这个显示条数，则默认显示10条 - Yangcl --%>

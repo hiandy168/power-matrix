@@ -20,11 +20,13 @@ import com.matrix.cache.inf.ICacheFactory;
 import com.matrix.dao.IMcRoleDao;
 import com.matrix.dao.IMcRoleFunctionDao;
 import com.matrix.dao.IMcSysFunctionDao;
+import com.matrix.dao.IMcUserRoleDao;
 import com.matrix.pojo.dto.McRoleDto;
 import com.matrix.pojo.entity.McRole;
 import com.matrix.pojo.entity.McRoleFunction;
 import com.matrix.pojo.entity.McSysFunction;
 import com.matrix.pojo.entity.McUserInfo;
+import com.matrix.pojo.entity.McUserRole;
 import com.matrix.service.IMcSysFunctionService;
 import com.matrix.util.UuidUtil;
 
@@ -42,6 +44,8 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	@Resource
 	private IMcRoleFunctionDao roleFunctionDao;
 	
+	@Resource
+	private IMcUserRoleDao userRoleDao;
 	
 	@Override
 	public JSONObject addInfo(McSysFunction entity, HttpSession session) {
@@ -294,7 +298,6 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	}
 
 
-	@Override
 	public JSONObject deleteMcRole(McRoleDto d, HttpSession session) {
 		JSONObject result = new JSONObject();
 		try {
@@ -308,6 +311,38 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 			result.put("msg", this.getInfo(500090006)); // 系统角色删除失败
 		}
 		
+		return result;
+	}
+
+
+	public JSONObject addUserRole(McUserRole e , HttpSession session) {
+		JSONObject result = new JSONObject();
+		Date createTime = new Date();
+		McUserInfo userInfo = (McUserInfo) session.getAttribute("userInfo");
+		e.setFlag(1);
+		e.setRemark("");
+		e.setCreateTime(createTime);
+		e.setUpdateTime(createTime);
+		e.setCreateUserId(userInfo.getId());
+		e.setUpdateUserId(userInfo.getId());
+		try {
+			Integer count = userRoleDao.insertSelective(e);
+			if(count != 0){
+				result.put("status", "success");
+				
+				// TODO 实例化缓存 
+				
+				
+				
+				
+			}else{
+				result.put("status", "error");
+				result.put("msg", this.getInfo(500090007)); // 用户与角色关联失败
+			}
+		} catch (Exception e2) {
+			result.put("status", "error");
+			result.put("msg", this.getInfo(500090008)); // 系统异常
+		}
 		return result;
 	}
 

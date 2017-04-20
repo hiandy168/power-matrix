@@ -63,15 +63,6 @@
         });  
         
         /**
-         * @描述: 关闭BlockUI弹框
-         * @作者: Yangcl
-         * @时间: 2016-08-19 : 15-20-56
-         */
-        function closeDialog(){
-            $.unblockUI();
-        }
-        
-        /**
          * @描述: 打开dialog insert BlockUI弹框     
          * @作者: Yangcl
          * @时间: 2016-08-19 : 15-20-56
@@ -83,6 +74,8 @@
         	 tfunc.showDialog();
         }
         
+        
+       
 
     </script>
 </head>
@@ -109,7 +102,7 @@
                         <a href="#user-role" onclick="tfunc.distributeUserRole()">系统角色创建</a>
                     </li>
                     <li>
-                        <a href="#user-role-func" onclick="tfunc.distributeUserRole()">用户权限分配</a>
+                        <a href="#user-role-func" onclick="tfunc.distributeUserRole()">用户列表</a>
                     </li>
                 </ul>
             </div>
@@ -177,7 +170,7 @@
 				                                </th> 
 				                                <th class="head0 ">角色名称</th>
 				                                <th class="head0 ">角色描述</th> 
-				                                <th class="head0 " width="50px">操作</th>
+				                                <th class="head0 " width="75px">操作</th>
 				                            </tr>
 				                        </thead> 
 				
@@ -223,17 +216,16 @@
 </body>
 </html>
 
-<%-- 弹窗分页 --%>
+<%-- 弹窗-角色创建与修改 --%>
 <div id="role-create-div" style="display: none;width: 508px;height: 230px">
     <p class="dialog-title">
-        <a href="#" onclick="closeDialog()" class="dialog-close"></a>
+        <a href="#" onclick="tfunc.closeDialog()" class="dialog-close"></a>
         <span id="dialog-title">
         	<!-- 创建角色 -->
         </span>
     </p>
-
     <div id="dialog-content-wrapper" class="contentwrapper" style="padding-top:5px">
-        <div id="dialog-table-form" class="dataTables_wrapper" >
+        <div class="dataTables_wrapper" >
 			<form id="user-role-edit"  action="javascript:void(0)">
                 <table >
 					<tbody>
@@ -258,8 +250,81 @@
              </form>
         </div>
     </div>
+</div>
+
+
+
+<%-- 弹窗分页-用户勾选 --%>
+<div id="user-dialog-page-div" class="" style="display: none;width: 1200px;height: 600px">
+    <p class="dialog-title">
+        <a href="#" onclick="tfunc.closeDialog()" class="dialog-close"></a>
+        后台人员列表
+    </p>
+
+    <div class="contentwrapper">
+        <div id="dialog-table-form" class="dataTables_wrapper" >
+            <div class="dialog-show-count" >
+                <label>
+                    当前显示 
+                    <select id="dialog-select-page-size" size="1" name="dyntable2_length" onchange="dForm.formPaging('1')">
+                        <option value="10">10</option>
+                    </select>
+                    条记录
+                </label>
+            </div>
+
+            <%-- 以下内容根据你自己的业务需要进行修改--%>
+            <table id="dialog-table" cellpadding="0" cellspacing="0" border="0" class="stdtable"> 
+                <thead>
+	                <tr>
+	                    <!-- <th class="head0" width="50px">
+	                        <input type="checkbox"/>
+	                    </th>  -->                                                                 
+	                    <th class="head0">ID(升序排序)</th> 
+	                    <th class="head0"> 姓名(降序排序)</th>  
+	                    <th class="head0">手机(s)</th>
+	                    <th class="head0">E-mail</th>
+	                    <th class="head0" width="100px">操作</th>
+	                </tr>
+                </thead>
+
+                <tbody id="user-dialog-ajax-tbody">
+                	<%-- 等待填充 --%>  
+                </tbody>
+            </table>
+
+        </div>
+    </div>
 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

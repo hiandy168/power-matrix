@@ -50,7 +50,7 @@
                         <h3>Dynamic Table with Checkbox Column</h3>
                     </div>
 
-                    <div id="dyntable2_length" class="dataTables_length">
+                    <div id="dyntable2_length" class="dataTables_length dialog-show-count">
                         <label>
                             当前显示
                             <select id="select-page-size" size="1" name="dyntable2_length" onchange="formPaging('1')">

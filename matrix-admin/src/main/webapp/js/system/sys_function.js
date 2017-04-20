@@ -1,6 +1,7 @@
 
     var tfunc = {
-    		
+    	
+		roleElement:null,
         /**
          * 允许移动到目标节点前面 即可以将同层最后一个节点放到同层的第一个。
          * @param treeId
@@ -555,10 +556,12 @@
         		html += '</td>';
         		html += '<td width="100px">' + roles[i].roleName + '</td>';
         		html += '<td width="100px">' + roles[i].roleDesc + '</td>';
-        		html += '<td width="50px" align="center">' ;
+        		html += '<td width="75px" align="center">' ;
         		html += '<a href="javascript:void(0)" title="修改" style="cursor: pointer;" roleId="' + roles[i].mcRoleId + '"  onclick="tfunc.openEditDialog(this)">修改</a>';
         		html += '&nbsp&nbsp|&nbsp&nbsp'; 
-        		html += '<a href="javascript:void(0)" title="删除这个角色" style="cursor: pointer;" roleId="' + roles[i].mcRoleId + '"  onclick="tfunc.deleteUserRole(this)">删除</a>';
+        		html += '<a href="javascript:void(0)" title="删除这个角色" style="cursor: pointer;" roleId="' + roles[i].mcRoleId + '"  onclick="tfunc.deleteMcRole(this)">删除</a>';
+        		html += '|&nbsp&nbsp'; 
+        		html += '<a href="javascript:void(0)" title="为用户分配这个角色" style="cursor: pointer;" roleId="' + roles[i].mcRoleId + '"  onclick="tfunc.openUserListDialogPage(this)">勾选用户</a>';
         		html +=  '</td></tr>';
         	}
         	$("#ajax-tbody-role").append(html);
@@ -717,9 +720,8 @@
             }
         },
         
-        deleteUserRole:function(ele){
+        deleteMcRole:function(ele){
         	var roleId = $(ele).attr("roleId");
-        	
         	jConfirm('您确定要删除这个角色吗？', '系统提示', function(flag) {
         		if(flag){
 					var type_ = 'post';
@@ -738,10 +740,100 @@
 			});
         },
         
+        /**
+         * @描述: 打开dialog insert BlockUI弹框
+         * @作者: Yangcl
+         * @时间: 2016-08-19 : 15-20-56
+         */
+        openUserListDialogPage:function(ele){ 
+            var type_ = 'post';
+            var url_ = 'mc_user_list.do';  
+            var data_ = null;
+            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+            dForm.launch(url_ , 'dialog-table-form' , obj).init().drawForm(tfunc.loadUserListDialogTable);
+            tfunc.roleElement = ele;
+            
+            $.blockUI({
+                showOverlay:true ,
+                css:  {
+                    cursor:'auto',
+                    left:($(window).width() - $("#user-dialog-page-div").width())/2 + 'px',
+                    width:$("#user-dialog-page-div").width()+'px',
+                    top:($(window).height()-$("#user-dialog-page-div").height())/2 + 'px',
+                    position:'fixed', //居中
+                    border: '3px solid #FB9337'  // 边界
+                },
+                message: $('#user-dialog-page-div'),  
+                fadeIn: 500,//淡入时间
+                fadeOut: 1000  //淡出时间
+            });
+        },
+        
+        // 回调函数
+        loadUserListDialogTable:function(url_){
+            if(url_ == undefined){ // 首次加载表单
+                tfunc.drawUserListDialog(dForm.jsonObj);
+                return;
+            }
+            // 这种情况是响应上一页或下一页的触发事件
+            var type_ = 'post';
+            var data_ = null;
+            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+            dForm.launch(url_ , 'dialog-table-form' , obj).init();
+            tfunc.drawUserListDialog(obj);
+        },
+
+        drawUserListDialog:function(obj){
+            $('#user-dialog-ajax-tbody tr').remove();
+            var html_ = '';
+            var list = obj.data.list;
+            if(list.length>0){
+	            for(var i = 0 ; i < list.length ; i ++){
+	                html_ += '<tr id="tr-d-' + list[i].id + '" class="gradeX">'   
+	               // +'<td align="center"><span class="center"> <input type="checkbox"/> </span></td>'
+	                +'<td width="100px">' + list[i].id + '</td>'
+	                +'<td>' + list[i].userName + '</td>' 
+	                +'<td class="center">' + list[i].mobile + '</td>'
+	                +'<td class="center">' + list[i].email + '</td>'
+	                +'<td width="150px" align="center">'
+	                +'<a title="将会给您选择的用户赋予权限"  style="cursor: pointer;" userInfoId="' + list[i].id + '" onclick="tfunc.addUserRole(this)">赋予权限</a>  '
+	                +'</td></tr>'
+	            }
+            }else{
+            	html_='<tr><td colspan="11" style="text-align: center;">'+obj.msg+'</td></tr>';
+            }
+            $('#user-dialog-ajax-tbody').append(html_);
+        }, 
+        
+        /**
+         * 关联用户与这个角色
+         * @param obj
+         */
+        addUserRole:function(ele){
+        	var userInfoId = $(ele).attr("userInfoId"); 
+        	var roleId = $( tfunc.roleElement).attr("roleId");
+        	var type_ = 'post';
+            var url_ = 'add_user_role.do';
+        	var data_ = {
+        			mcRoleId : roleId,
+        			mcUserId : userInfoId
+    			}; 
+        	var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+            if(obj.status == 'success'){
+            	ele.innerText="完成";
+            }else{
+            	jAlert(obj.msg , '系统提示 ');
+            }
+        },
+        
+        
         closeDialog:function(){
             $.unblockUI();
         }
     };
+    
+    
+    
     
     // 请参阅：zTree_v3-master/api/API_cn.html 和 文件路径: exedit/drag_super.html
     // 导航与菜单树 
