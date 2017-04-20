@@ -558,7 +558,7 @@
         		html += '<td width="50px" align="center">' ;
         		html += '<a href="javascript:void(0)" title="修改" style="cursor: pointer;" roleId="' + roles[i].mcRoleId + '"  onclick="tfunc.openEditDialog(this)">修改</a>';
         		html += '&nbsp&nbsp|&nbsp&nbsp'; 
-        		html += '<a href="javascript:void(0)" title="删除这个角色" style="cursor: pointer;">删除</a>';
+        		html += '<a href="javascript:void(0)" title="删除这个角色" style="cursor: pointer;" roleId="' + roles[i].mcRoleId + '"  onclick="tfunc.deleteUserRole(this)">删除</a>';
         		html +=  '</td></tr>';
         	}
         	$("#ajax-tbody-role").append(html);
@@ -715,6 +715,27 @@
             }else{
             	alert(obj.msg); 
             }
+        },
+        
+        deleteUserRole:function(ele){
+        	var roleId = $(ele).attr("roleId");
+        	
+        	jConfirm('您确定要删除这个角色吗？', '系统提示', function(flag) {
+        		if(flag){
+					var type_ = 'post';
+		            var url_ = 'delete_mc_role.do';
+		        	var data_ = {
+		        			mcRoleId:roleId
+	        			}; 
+		        	var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+		            if(obj.status == 'success'){
+		            	var tr_ = ele.parentElement.parentElement;  
+		            	$(tr_).remove();
+		            }else{
+		            	jAlert(obj.msg , '系统提示 ');
+		            }
+				}
+			});
         },
         
         closeDialog:function(){

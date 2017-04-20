@@ -287,9 +287,27 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 			} catch (Exception e) {
 				e.printStackTrace();
 				result.put("status", "error");
-				result.put("msg", this.getInfo(500090004)); // 系统角色创建失败
+				result.put("msg", this.getInfo(500090005)); // 系统角色修改失败
 			}
 		}
+		return result;
+	}
+
+
+	@Override
+	public JSONObject deleteMcRole(McRoleDto d, HttpSession session) {
+		JSONObject result = new JSONObject();
+		try {
+			roleDao.deleteById(d.getMcRoleId());
+			roleFunctionDao.deleteByMcRoleId(d.getMcRoleId()); 
+			launch.loadDictCache(DCacheEnum.UserRole).deleteCache(d.getMcRoleId().toString());  
+			result.put("status", "success");
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("status", "error");
+			result.put("msg", this.getInfo(500090006)); // 系统角色删除失败
+		}
+		
 		return result;
 	}
 

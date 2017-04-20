@@ -153,6 +153,21 @@ public class SystemRoleController {
 	public JSONObject editMcRole(McRoleDto d , HttpSession session){
 		return mcSysFunctionService.editMcRole(d, session);	
 	}
+	
+	/**
+	 * @description: 删除系统角色
+	 * 
+	 * @param d
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年4月20日 上午11:02:30 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "delete_mc_role", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject deleteMcRole(McRoleDto d , HttpSession session){
+		return mcSysFunctionService.deleteMcRole(d, session);	
+	}
 }
 
 
