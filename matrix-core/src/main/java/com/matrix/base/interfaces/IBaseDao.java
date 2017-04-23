@@ -155,6 +155,7 @@ public interface IBaseDao<T, PK extends Serializable> {
      */
     public List<T> findList(T entity); 
     
+    public List<T> selectByPrimaryKey(Integer id);
     
     /**
      * @descriptions 根据数据传输对象中的条件进行查询。此方法常用于分组查询：group by 

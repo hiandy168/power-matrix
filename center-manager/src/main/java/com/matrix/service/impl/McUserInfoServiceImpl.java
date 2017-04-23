@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.base.BaseServiceImpl;
+import com.matrix.cache.CacheLaunch;
+import com.matrix.cache.enums.DCacheEnum;
+import com.matrix.cache.inf.IBaseLaunch;
+import com.matrix.cache.inf.ICacheFactory;
 import com.matrix.dao.IMcUserInfoDao;
 import com.matrix.pojo.entity.McUserInfo;
 import com.matrix.service.IMcUserInfoService;
@@ -23,6 +27,9 @@ import com.matrix.service.IMcUserInfoService;
  */
 @Service("mcUserInfo") 
 public class McUserInfoServiceImpl extends BaseServiceImpl<McUserInfo, Integer> implements IMcUserInfoService{
+	
+	private IBaseLaunch<ICacheFactory> launch = CacheLaunch.getInstance().Launch();
+	
 	@Resource
 	private IMcUserInfoDao mcUserInfoDao;
 	
@@ -45,6 +52,10 @@ public class McUserInfoServiceImpl extends BaseServiceImpl<McUserInfo, Integer> 
 		McUserInfo info = mcUserInfoDao.login(userInfo);  
 		if (null != info) {
 			session.setAttribute("userInfo", info);   // 写入session
+			
+//			String key = "xd-" + DCacheEnum.UserInfo.toString() + "-" + info.getUserName();
+//			String json = launch.loadDictCache(DCacheEnum.UserInfo).getCache(key);  
+			
 			result.put("data", info);
 			result.put("status", "success");
 			result.put("msg", "调用成功");

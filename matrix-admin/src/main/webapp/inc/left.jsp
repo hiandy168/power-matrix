@@ -41,7 +41,7 @@
 		<%-- nav 类代表导航栏 无任何样式应用|每个导航栏对应的菜单显示与否由id来决定--%>
         <div id="nav-bar-1" class="vernav2 iconmenu nav">
             <ul class="nav-bar-ul">
-                <li class="current">
+                <!-- <li class="current">
                     <a href="#formsub222222" class="editor">一级菜单栏A</a>
                     <span class="arrow"></span>
                     <ul id="formsub222222">
@@ -55,7 +55,7 @@
                             <a href="">二级菜单栏 - 3</a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
 
                 <!-- 此处应放入到系统维护导航栏中-->
                  <li class="current">
@@ -89,7 +89,7 @@
                 </li>
 
                 <!-- 此处应放入到系统维护导航栏中-->
-                <li class="current">
+                <!-- <li class="current">
                     <a href="#platform-user" class="inbox">平台用户指南</a>
                     <span class="arrow"></span>
                     <ul id="platform-user">
@@ -109,19 +109,19 @@
                             <a href="">其他事项</a>
                         </li>
 
-                        <li id="li-13">                     <!-- 此处应包括人员创建时间、注销时间、注销原因以及开发所涉及的模块 等 -->
+                        <li id="li-13">                     此处应包括人员创建时间、注销时间、注销原因以及开发所涉及的模块 等
                             <a href="">后台开发组名单</a>
                         </li>
 
-                        <li id="li-14">                      <!-- 此处应包括人员创建时间、注销时间和注销原因等 -->
+                        <li id="li-14">                      此处应包括人员创建时间、注销时间和注销原因等
                             <a href="">运维组名单</a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
 
                 <!-- 此处应放入到系统维护导航栏中-->
-                <li class="current">
-                    <a href="#platform-log" class="inbox">平台更新日志</a>   <!--  -->
+                <!-- <li class="current">
+                    <a href="#platform-log" class="inbox">平台更新日志</a>   
                     <span class="arrow"></span>
                     <ul id="platform-log">
                         <li id="li-15">
@@ -133,7 +133,7 @@
                         </li>
 
                     </ul>
-                </li>
+                </li> -->
             </ul>
             <a class="togglemenu"></a>
             <br />

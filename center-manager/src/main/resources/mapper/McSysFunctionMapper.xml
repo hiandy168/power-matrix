@@ -66,7 +66,7 @@
 		delete from managercenter.mc_sys_function where id = #{id,jdbcType=INTEGER}
 	</delete>
 	
-	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.McSysFunction">
+	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.McSysFunction"  useGeneratedKeys="true" keyProperty="id">
 		insert into managercenter.mc_sys_function
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">

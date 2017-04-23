@@ -53,7 +53,15 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	@Resource
 	private IMcUserInfoDao mcUserInfoDao;
 	
-	@Override
+	/**
+	 * @description: 添加一个节点到数据库
+	 * 
+	 * @param e
+	 * @param session 
+	 * @author Yangcl 
+	 * @date 2017年3月1日 上午11:05:51 
+	 * @version 1.0.0.1
+	 */
 	public JSONObject addInfo(McSysFunction entity, HttpSession session) {
 		JSONObject result = new JSONObject();
 		if(StringUtils.isNotBlank(entity.getName()) && StringUtils.isNotBlank(entity.getParentId()) ){
@@ -71,6 +79,8 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 			if(count == 1){
 				result.put("status", "success");
 				result.put("msg", "添加成功!");
+				// 开始创建缓存
+				launch.loadDictCache(DCacheEnum.McRoleFunc).setCache(entity.getId().toString(), JSONObject.toJSONString(entity)); 
 			}else{
 				result.put("status", "error");
 				result.put("msg", "添加失败!");
@@ -83,8 +93,15 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 		return result;
 	}
 
-
-	@Override
+	/**
+	 * @description: 更新一个节点到数据库
+	 * 
+	 * @param e
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年3月1日 下午5:33:30 
+	 * @version 1.0.0.1
+	 */
 	public JSONObject editInfo(McSysFunction entity, HttpSession session) {
 		JSONObject result = new JSONObject();
 		if(StringUtils.isNotBlank(entity.getName())){
@@ -95,6 +112,8 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 			if(count == 1){
 				result.put("status", "success");
 				result.put("msg", "修改成功!");
+				// 开始修改缓存
+				launch.loadDictCache(DCacheEnum.McRoleFunc).updateCache(entity.getId().toString(), JSONObject.toJSONString(entity)); 
 			}else{
 				result.put("status", "error");
 				result.put("msg", "修改失败!");
@@ -127,13 +146,15 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 			e.setUpdateTime(new Date());
 			e.setUpdateUserId(userInfo.getId());
 			dao.updateSelective(e);
+			// 开始修改缓存
+			launch.loadDictCache(DCacheEnum.McRoleFunc).updateCache(e.getId().toString(), JSONObject.toJSONString(e)); 
 		}
 		return null;
 	}
 
 
 	/**
-	 * @description: 权限树同时获得角色列表
+	 * @description:系统权限分配 如果type=role则同时获得角色列表
 	 * 
 	 * @return
 	 * @author Yangcl 
@@ -155,7 +176,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 				List<McRole> roleList = roleDao.findList(role);
 				if(roleList.size() != 0){
 					for(McRole m : roleList){
-						String json = launch.loadDictCache(DCacheEnum.UserRole).getCache(m.getId().toString());
+						String json = launch.loadDictCache(DCacheEnum.McRole).getCache(m.getId().toString());
 						if(StringUtils.isBlank(json)){
 							continue;
 						}
@@ -173,7 +194,16 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	}
 
 
-	@Override
+	/**
+	 * @descriptions 删除节点 mc_sys_function表 	TODO 删除功能存在缺陷，等待完善中。
+	 *										TODO 此处需要单独写一个内存树，将mc_sys_function表的数据组织到二叉树中
+	 *													 指定一个颗树，可以获得他的所有父节点以及所有子节点 
+	 * @param id
+	 * @param session
+	 * @date 2017年4月23日 下午6:53:32
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
 	public JSONObject deleteNode(Integer id, HttpSession session) {
 		JSONObject result = new JSONObject();
 		Integer flag = dao.deleteById(id);
@@ -234,7 +264,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 				result.put("status", "success");
 				d.setMcRoleId(role.getId()); 
 				
-				launch.loadDictCache(DCacheEnum.UserRole).setCache(d.getMcRoleId().toString() , JSONObject.toJSONString(d));  
+				launch.loadDictCache(DCacheEnum.McRole).setCache(d.getMcRoleId().toString() , JSONObject.toJSONString(d));  
 				List<McRoleDto> list = new ArrayList<McRoleDto>();
 				list.add(d);
 				result.put("cache", list); 
@@ -276,7 +306,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 				roleDao.updateSelective(role);
 				
 				roleFunctionDao.deleteByMcRoleId(d.getMcRoleId()); 
-				launch.loadDictCache(DCacheEnum.UserRole).deleteCache(d.getMcRoleId().toString());  
+				launch.loadDictCache(DCacheEnum.McRole).deleteCache(d.getMcRoleId().toString());  
 				
 				String[] arr = d.getIds().split(",");
 				for(int i = 0 ; i < arr.length ; i ++){
@@ -292,7 +322,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 					roleFunctionDao.insertSelective(rf);
 				}
 				result.put("status", "success");
-				launch.loadDictCache(DCacheEnum.UserRole).setCache(d.getMcRoleId().toString() , JSONObject.toJSONString(d));  
+				launch.loadDictCache(DCacheEnum.McRole).setCache(d.getMcRoleId().toString() , JSONObject.toJSONString(d));  
 				result.put("cache", d);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -304,13 +334,31 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	}
 
 
+	/**
+	 * @descriptions 删除一条角色信息
+	 * 	
+	 *  需要判断 mc_user_role 表中是否已经关联了用户，如果关联了，则不允许删除；
+	 *  如果想删除则必选先将用户与该角色解除绑定，即：删除mc_user_role表中的关联记录
+	 *
+	 * @param d
+	 * @param session
+	 * @return
+	 * @date 2017年4月23日 下午2:50:56
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
 	public JSONObject deleteMcRole(McRoleDto d, HttpSession session) {
 		JSONObject result = new JSONObject();
 		try {
-			roleDao.deleteById(d.getMcRoleId());
-			roleFunctionDao.deleteByMcRoleId(d.getMcRoleId()); 
-			launch.loadDictCache(DCacheEnum.UserRole).deleteCache(d.getMcRoleId().toString());  
-			result.put("status", "success");
+			if(userRoleDao.selectByPrimaryKey(d.getMcRoleId()).size() != 0){
+				result.put("status", "error");
+				result.put("msg", this.getInfo(500090009)); // 该角色已经关联了用户，如果想删除则必选先将用户与该角色解除绑定
+			}else{
+				roleDao.deleteById(d.getMcRoleId());
+				roleFunctionDao.deleteByMcRoleId(d.getMcRoleId()); 
+				launch.loadDictCache(DCacheEnum.McRole).deleteCache(d.getMcRoleId().toString());  
+				result.put("status", "success");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			result.put("status", "error");
@@ -320,60 +368,17 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 		return result;
 	}
 
-
-	/**
-	 * @descriptions 关联用户与某一个角色
-	 *
-	 * @param e
-	 * @param session
-	 * @return
-	 * @date 2017年4月23日 上午11:55:29
-	 * @author Yangcl 
-	 * @version 1.0.0.1
-	 */
-	public JSONObject addUserRole(McUserRole e , HttpSession session) {
-		JSONObject result = new JSONObject();
-		Date createTime = new Date();
-		McUserInfo userInfo = (McUserInfo) session.getAttribute("userInfo");
-		e.setFlag(1);
-		e.setRemark("");
-		e.setCreateTime(createTime);
-		e.setUpdateTime(createTime);
-		e.setCreateUserId(userInfo.getId());
-		e.setUpdateUserId(userInfo.getId());
-		try {
-			Integer count = userRoleDao.insertSelective(e);
-			if(count != 0){
-				result.put("status", "success");
-				
-				// TODO 实例化缓存   
-				
-				
-				
-				
-			}else{
-				result.put("status", "error");
-				result.put("msg", this.getInfo(500090007)); // 用户与角色关联失败
-			}
-		} catch (Exception e2) {
-			result.put("status", "error");
-			result.put("msg", this.getInfo(500090008)); // 系统异常
-		}
-		return result;
-	}
-
-
+	
 	/**
 	 * @descriptions 【系统角色创建】->【勾选用户】，显示没有关联任何角色的用户列表
 	 *
 	 * @param entity                  
 	 * @param request
-	 * @return
 	 * @date 2017年4月23日 上午11:25:50
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	public JSONObject mcUserList(McUserInfo entity, HttpServletRequest request) {
+	public JSONObject mcUserList(McUserInfo entity , HttpServletRequest request){
 		JSONObject result = new JSONObject();
 		String pageNum = request.getParameter("pageNum"); // 当前第几页
 		String pageSize = request.getParameter("pageSize"); // 当前页所显示记录条数
@@ -398,10 +403,52 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 		result.put("data", pageList);
 		result.put("entity", entity);
 		return result;
-		
 	}
 
-
+	
+	/**
+	 * @descriptions 关联用户与某一个角色
+	 *
+	 * @param e
+	 * @param session
+	 * @date 2017年4月23日 上午11:55:29
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject addUserRole(McUserRole e , HttpSession session) {
+		JSONObject result = new JSONObject();
+		Date createTime = new Date();
+		McUserInfo userInfo = (McUserInfo) session.getAttribute("userInfo");
+		e.setFlag(1);
+		e.setRemark("");
+		e.setCreateTime(createTime);
+		e.setUpdateTime(createTime);
+		e.setCreateUserId(userInfo.getId());
+		e.setUpdateUserId(userInfo.getId());
+		try {
+			Integer count = userRoleDao.insertSelective(e);
+			if(count != 0){
+				result.put("status", "success");
+				
+				McRoleFunction rf = new McRoleFunction();
+				// 实例化缓存   
+				String roleJson = launch.loadDictCache(DCacheEnum.McRole).getCache(e.getMcRoleId().toString());
+				McRoleDto role = JSONObject.parseObject(roleJson, McRoleDto.class);
+				
+				launch.loadDictCache(DCacheEnum.McUserRole).setCache(e.getMcUserId().toString(), roleJson);
+				
+				
+				
+			}else{
+				result.put("status", "error");
+				result.put("msg", this.getInfo(500090007)); // 用户与角色关联失败
+			}
+		} catch (Exception e2) {
+			result.put("status", "error");
+			result.put("msg", this.getInfo(500090008)); // 系统异常
+		}
+		return result;
+	}
 
 }
 

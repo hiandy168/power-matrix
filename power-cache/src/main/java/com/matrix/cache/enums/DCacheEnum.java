@@ -10,5 +10,11 @@ package com.matrix.cache.enums;
  * @version 1.0.1
  */
 public enum DCacheEnum {
-	UserRole
+	McRoleFunc,     // mc_sys_function 表的缓存标识
+	
+	McRole,        // 角色信息
+	
+	McUserRole,       // 用户与角色关联
+	
+	UserInfo         // 用户登陆信息
 }

@@ -22,7 +22,7 @@ import com.matrix.pojo.dto.McRoleDto;
  * @date 2017年4月17日 下午8:25:32
  * @version 1.0.1
  */
-public class CacheUserRole extends BaseClass implements IBaseCache{
+public class CacheMcRole extends BaseClass implements IBaseCache{
 	
 	private IBaseLaunch<ICacheFactory> launch = CacheLaunch.getInstance().Launch();
 	
@@ -40,7 +40,7 @@ public class CacheUserRole extends BaseClass implements IBaseCache{
 			List<McRoleDto> list = roleDao.findMcRoleDtoList();
 			if(list != null && list.size() != 0){
 				for(McRoleDto d : list){
-					launch.loadDictCache(DCacheEnum.UserRole).setCache(d.getMcRoleId().toString() , JSONObject.toJSONString(d));
+					launch.loadDictCache(DCacheEnum.McRole).setCache(d.getMcRoleId().toString() , JSONObject.toJSONString(d));
 				}
 			}
 		} catch (Exception e) { 
@@ -54,7 +54,7 @@ public class CacheUserRole extends BaseClass implements IBaseCache{
 			List<McRoleDto> list = roleDao.findMcRoleDtoList();
 			if(list != null && list.size() != 0){
 				for(McRoleDto d : list){
-					launch.loadDictCache(DCacheEnum.UserRole).deleteCache(d.getMcRoleId().toString()); 
+					launch.loadDictCache(DCacheEnum.McRole).deleteCache(d.getMcRoleId().toString()); 
 				}
 			}
 		} catch (Exception e) { 
