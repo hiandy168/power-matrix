@@ -37,9 +37,7 @@ public class SystemRoleController {
 	
 	@Autowired
 	private IMcSysFunctionService mcSysFunctionService;   
-	
-	@Autowired
-	private IMcUserInfoService mcUserInfoService;
+	 
 	
 	/**
 	 * @description: 前往树形维护页面
@@ -186,12 +184,12 @@ public class SystemRoleController {
 	@RequestMapping(value = "mc_user_list", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject mcUserList(McUserInfo entity , HttpServletRequest request){
-		return mcUserInfoService.ajaxPageData(entity, request);
+		return mcSysFunctionService.mcUserList(entity, request);
 	}
 	
 	
 	/**
-	 * @description: 
+	 * @description: 关联用户与某一个角色
 	 * 
 	 * @param entity
 	 * @return

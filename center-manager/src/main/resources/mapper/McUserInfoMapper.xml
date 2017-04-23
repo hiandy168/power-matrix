@@ -49,6 +49,16 @@
 		</where>
 	</select>
 	
+	
+	<select id="mcUserList" resultMap="BaseResultMap" parameterType="com.matrix.pojo.entity.McUserInfo">
+		select 
+		  * 
+		from
+		  managercenter.`mc_user_info` info left join managercenter.`mc_user_role` ur on info.id = ur.mc_user_id 
+		where ur.id is null 
+	</select>
+	
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from managercenter.mc_user_info where id = #{id,jdbcType=INTEGER}
 	</delete>

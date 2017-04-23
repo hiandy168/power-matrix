@@ -64,6 +64,9 @@
          * @param treeNode
          */
         addHoverDom:function(treeId, treeNode) {
+        	if((treeNode.level == 0 && treeNode.children.length != 0) || treeNode.level == 5){
+        		return false
+        	}
             var newCount = 1;
             var sObj = $("#" + treeNode.tId + "_span");
             if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0)
@@ -820,6 +823,7 @@
     			}; 
         	var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
             if(obj.status == 'success'){
+            	ele.onclick = null;
             	ele.innerText="完成";
             }else{
             	jAlert(obj.msg , '系统提示 ');

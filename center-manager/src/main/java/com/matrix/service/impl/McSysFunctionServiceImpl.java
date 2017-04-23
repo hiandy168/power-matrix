@@ -12,6 +12,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.matrix.base.BaseServiceImpl;
 import com.matrix.cache.CacheLaunch;
 import com.matrix.cache.enums.DCacheEnum;
@@ -20,6 +22,7 @@ import com.matrix.cache.inf.ICacheFactory;
 import com.matrix.dao.IMcRoleDao;
 import com.matrix.dao.IMcRoleFunctionDao;
 import com.matrix.dao.IMcSysFunctionDao;
+import com.matrix.dao.IMcUserInfoDao;
 import com.matrix.dao.IMcUserRoleDao;
 import com.matrix.pojo.dto.McRoleDto;
 import com.matrix.pojo.entity.McRole;
@@ -46,6 +49,9 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	
 	@Resource
 	private IMcUserRoleDao userRoleDao;
+	
+	@Resource
+	private IMcUserInfoDao mcUserInfoDao;
 	
 	@Override
 	public JSONObject addInfo(McSysFunction entity, HttpSession session) {
@@ -315,6 +321,16 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	}
 
 
+	/**
+	 * @descriptions 关联用户与某一个角色
+	 *
+	 * @param e
+	 * @param session
+	 * @return
+	 * @date 2017年4月23日 上午11:55:29
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
 	public JSONObject addUserRole(McUserRole e , HttpSession session) {
 		JSONObject result = new JSONObject();
 		Date createTime = new Date();
@@ -330,7 +346,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 			if(count != 0){
 				result.put("status", "success");
 				
-				// TODO 实例化缓存 
+				// TODO 实例化缓存   
 				
 				
 				
@@ -344,6 +360,45 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 			result.put("msg", this.getInfo(500090008)); // 系统异常
 		}
 		return result;
+	}
+
+
+	/**
+	 * @descriptions 【系统角色创建】->【勾选用户】，显示没有关联任何角色的用户列表
+	 *
+	 * @param entity                  
+	 * @param request
+	 * @return
+	 * @date 2017年4月23日 上午11:25:50
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject mcUserList(McUserInfo entity, HttpServletRequest request) {
+		JSONObject result = new JSONObject();
+		String pageNum = request.getParameter("pageNum"); // 当前第几页
+		String pageSize = request.getParameter("pageSize"); // 当前页所显示记录条数
+		int num = 1;
+		int size = 10;
+		if (StringUtils.isNotBlank(pageNum)) {
+			num = Integer.parseInt(pageNum);
+		}
+		if (StringUtils.isNotBlank(pageSize)) {
+			size = Integer.parseInt(pageSize);
+		}
+		
+		PageHelper.startPage(num, size);
+		List<McUserInfo> list = mcUserInfoDao.mcUserList(entity);
+		if (list != null && list.size() > 0) {
+			result.put("status", "success");
+		} else {
+			result.put("status", "error");
+			result.put("msg", this.getInfo(100090002));  // 没有查询到可以显示的数据 
+		}
+		PageInfo<McUserInfo> pageList = new PageInfo<McUserInfo>(list);
+		result.put("data", pageList);
+		result.put("entity", entity);
+		return result;
+		
 	}
 
 

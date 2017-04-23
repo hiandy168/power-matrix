@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.matrix.base.interfaces.IBaseService;
 import com.matrix.pojo.dto.McRoleDto;
 import com.matrix.pojo.entity.McSysFunction;
+import com.matrix.pojo.entity.McUserInfo;
 import com.matrix.pojo.entity.McUserRole;
 
 public interface IMcSysFunctionService  extends IBaseService<McSysFunction, Integer> {
@@ -28,6 +29,8 @@ public interface IMcSysFunctionService  extends IBaseService<McSysFunction, Inte
 
 	public JSONObject deleteMcRole(McRoleDto d, HttpSession session);
 
-	public JSONObject addUserRole(McUserRole entity , HttpSession session);       
+	public JSONObject addUserRole(McUserRole entity , HttpSession session);
+
+	public JSONObject mcUserList(McUserInfo entity, HttpServletRequest request);        
 	
 }
