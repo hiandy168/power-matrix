@@ -300,7 +300,7 @@ public class TTeacherServiceImpl extends BaseClass implements ITTeacherService {
 	public JSONObject getEvaluateDetail(Integer id) {
 		JSONObject result = new JSONObject();
 		try {
-			TStudentEvaluate entity = studentEvaluateDao.selectByPrimaryKey(id);
+			TStudentEvaluate entity = studentEvaluateDao.selectByPrimaryIds(id);
 			if (entity != null) {
 				result.put("data", entity);
 			} else {
