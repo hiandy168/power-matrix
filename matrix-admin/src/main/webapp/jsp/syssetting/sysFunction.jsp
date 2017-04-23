@@ -102,7 +102,7 @@
                         <a href="#user-role" onclick="tfunc.distributeUserRole()">系统角色创建</a>
                     </li>
                     <li>
-                        <a href="#user-role-func" onclick="tfunc.distributeUserRole()">用户列表</a>
+                        <a href="#user-role-func" onclick="">用户列表</a>
                     </li>
                 </ul>
             </div>
