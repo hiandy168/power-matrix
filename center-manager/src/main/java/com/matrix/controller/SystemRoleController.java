@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
-import com.matrix.pojo.dto.McRoleDto;
+import com.matrix.pojo.cache.McRoleCache;
 import com.matrix.pojo.entity.McSysFunction;
 import com.matrix.pojo.entity.McUserInfo;
 import com.matrix.pojo.entity.McUserRole;
@@ -138,7 +138,7 @@ public class SystemRoleController {
 	 */
 	@RequestMapping(value = "add_mc_role", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject addMcRole(McRoleDto d , HttpSession session){
+	public JSONObject addMcRole(McRoleCache d , HttpSession session){
 		return mcSysFunctionService.addMcRole(d, session);	
 	}
 	
@@ -153,7 +153,7 @@ public class SystemRoleController {
 	 */
 	@RequestMapping(value = "edit_mc_role", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject editMcRole(McRoleDto d , HttpSession session){
+	public JSONObject editMcRole(McRoleCache d , HttpSession session){
 		return mcSysFunctionService.editMcRole(d, session);	
 	}
 	
@@ -168,7 +168,7 @@ public class SystemRoleController {
 	 */
 	@RequestMapping(value = "delete_mc_role", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject deleteMcRole(McRoleDto d , HttpSession session){
+	public JSONObject deleteMcRole(McRoleCache d , HttpSession session){
 		return mcSysFunctionService.deleteMcRole(d, session);	
 	}
 	

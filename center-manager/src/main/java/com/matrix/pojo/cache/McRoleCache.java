@@ -1,6 +1,6 @@
-package com.matrix.pojo.dto;
+package com.matrix.pojo.cache;
 
-public class McRoleDto {
+public class McRoleCache {
 	private Integer mcRoleId;
 	private String roleName;
 	private String roleDesc;

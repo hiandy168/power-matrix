@@ -12,7 +12,7 @@ import com.matrix.cache.inf.ICacheFactory;
 import com.matrix.dao.IMcRoleDao;
 import com.matrix.dao.IMcRoleFunctionDao;
 import com.matrix.dao.IMcSysFunctionDao;
-import com.matrix.pojo.dto.McRoleDto;
+import com.matrix.pojo.cache.McRoleCache;
 
 /**
  * @descriptions 加载角色相关缓存到数据库
@@ -37,9 +37,9 @@ public class CacheMcRole extends BaseClass implements IBaseCache{
 	@Override
 	public void refresh() {
 		try {
-			List<McRoleDto> list = roleDao.findMcRoleDtoList();
+			List<McRoleCache> list = roleDao.findMcRoleDtoList();
 			if(list != null && list.size() != 0){
-				for(McRoleDto d : list){
+				for(McRoleCache d : list){
 					launch.loadDictCache(DCacheEnum.McRole).setCache(d.getMcRoleId().toString() , JSONObject.toJSONString(d));
 				}
 			}
@@ -51,9 +51,9 @@ public class CacheMcRole extends BaseClass implements IBaseCache{
 	@Override
 	public void removeAll() {
 		try {
-			List<McRoleDto> list = roleDao.findMcRoleDtoList();
+			List<McRoleCache> list = roleDao.findMcRoleDtoList();
 			if(list != null && list.size() != 0){
-				for(McRoleDto d : list){
+				for(McRoleCache d : list){
 					launch.loadDictCache(DCacheEnum.McRole).deleteCache(d.getMcRoleId().toString()); 
 				}
 			}

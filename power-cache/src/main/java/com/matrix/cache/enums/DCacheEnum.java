@@ -10,7 +10,7 @@ package com.matrix.cache.enums;
  * @version 1.0.1
  */
 public enum DCacheEnum {
-	McRoleFunc,     // mc_sys_function 表的缓存标识
+	McSysFunc,     // mc_sys_function 表的缓存标识
 	
 	McRole,        // 角色信息
 	

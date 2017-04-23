@@ -24,7 +24,8 @@ import com.matrix.dao.IMcRoleFunctionDao;
 import com.matrix.dao.IMcSysFunctionDao;
 import com.matrix.dao.IMcUserInfoDao;
 import com.matrix.dao.IMcUserRoleDao;
-import com.matrix.pojo.dto.McRoleDto;
+import com.matrix.pojo.cache.McRoleCache;
+import com.matrix.pojo.cache.McUserRoleCache;
 import com.matrix.pojo.entity.McRole;
 import com.matrix.pojo.entity.McRoleFunction;
 import com.matrix.pojo.entity.McSysFunction;
@@ -80,7 +81,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 				result.put("status", "success");
 				result.put("msg", "添加成功!");
 				// 开始创建缓存
-				launch.loadDictCache(DCacheEnum.McRoleFunc).setCache(entity.getId().toString(), JSONObject.toJSONString(entity)); 
+				launch.loadDictCache(DCacheEnum.McSysFunc).setCache(entity.getId().toString(), JSONObject.toJSONString(entity)); 
 			}else{
 				result.put("status", "error");
 				result.put("msg", "添加失败!");
@@ -113,7 +114,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 				result.put("status", "success");
 				result.put("msg", "修改成功!");
 				// 开始修改缓存
-				launch.loadDictCache(DCacheEnum.McRoleFunc).updateCache(entity.getId().toString(), JSONObject.toJSONString(entity)); 
+				launch.loadDictCache(DCacheEnum.McSysFunc).updateCache(entity.getId().toString(), JSONObject.toJSONString(entity)); 
 			}else{
 				result.put("status", "error");
 				result.put("msg", "修改失败!");
@@ -147,7 +148,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 			e.setUpdateUserId(userInfo.getId());
 			dao.updateSelective(e);
 			// 开始修改缓存
-			launch.loadDictCache(DCacheEnum.McRoleFunc).updateCache(e.getId().toString(), JSONObject.toJSONString(e)); 
+			launch.loadDictCache(DCacheEnum.McSysFunc).updateCache(e.getId().toString(), JSONObject.toJSONString(e)); 
 		}
 		return null;
 	}
@@ -170,7 +171,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 			result.put("status", "success");
 			result.put("list", list);
 			if(request.getParameter("type").equals("role")){
-				List<McRoleDto> roles = new ArrayList<McRoleDto>(); 
+				List<McRoleCache> roles = new ArrayList<McRoleCache>(); 
 				McRole role = new McRole();
 				role.setFlag(1); 
 				List<McRole> roleList = roleDao.findList(role);
@@ -180,7 +181,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 						if(StringUtils.isBlank(json)){
 							continue;
 						}
-						McRoleDto d = JSONObject.parseObject(json, McRoleDto.class);
+						McRoleCache d = JSONObject.parseObject(json, McRoleCache.class);
 						roles.add(d);
 					}
 				}
@@ -227,7 +228,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	 * @date 2017年4月11日 上午11:22:52 
 	 * @version 1.0.0.1
 	 */
-	public JSONObject addMcRole(McRoleDto d, HttpSession session) {
+	public JSONObject addMcRole(McRoleCache d, HttpSession session) {
 		JSONObject result = new JSONObject();
 		if(StringUtils.isBlank(d.getIds())){
 			result.put("status", "error");
@@ -265,7 +266,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 				d.setMcRoleId(role.getId()); 
 				
 				launch.loadDictCache(DCacheEnum.McRole).setCache(d.getMcRoleId().toString() , JSONObject.toJSONString(d));  
-				List<McRoleDto> list = new ArrayList<McRoleDto>();
+				List<McRoleCache> list = new ArrayList<McRoleCache>();
 				list.add(d);
 				result.put("cache", list); 
 			} catch (Exception e) {
@@ -287,7 +288,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	 * @date 2017年4月19日 下午4:22:28 
 	 * @version 1.0.0.1
 	 */
-	public JSONObject editMcRole(McRoleDto d, HttpSession session) {
+	public JSONObject editMcRole(McRoleCache d, HttpSession session) {
 		JSONObject result = new JSONObject();
 		if(StringUtils.isBlank(d.getIds())){
 			result.put("status", "error");
@@ -347,7 +348,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	public JSONObject deleteMcRole(McRoleDto d, HttpSession session) {
+	public JSONObject deleteMcRole(McRoleCache d, HttpSession session) {
 		JSONObject result = new JSONObject();
 		try {
 			if(userRoleDao.selectByPrimaryKey(d.getMcRoleId()).size() != 0){
@@ -429,16 +430,34 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 			Integer count = userRoleDao.insertSelective(e);
 			if(count != 0){
 				result.put("status", "success");
-				
-				McRoleFunction rf = new McRoleFunction();
 				// 实例化缓存   
 				String roleJson = launch.loadDictCache(DCacheEnum.McRole).getCache(e.getMcRoleId().toString());
-				McRoleDto role = JSONObject.parseObject(roleJson, McRoleDto.class);
-				
-				launch.loadDictCache(DCacheEnum.McUserRole).setCache(e.getMcUserId().toString(), roleJson);
-				
-				
-				
+				if(StringUtils.isNotBlank(roleJson)){
+					McRoleCache role = JSONObject.parseObject(roleJson, McRoleCache.class);
+					if(role == null){
+						return result;
+					}
+					McUserRoleCache cache = new McUserRoleCache();
+					cache.setMcUserId(e.getMcUserId());
+					cache.setMcRoleId(e.getMcRoleId());
+					cache.setRoleName(role.getRoleName());
+					cache.setRoleDesc(role.getRoleDesc());
+					if(StringUtils.isNotBlank(role.getIds())){
+						String [] arr = role.getIds().split(",");
+						for(String s : arr){
+							String rfJson = launch.loadDictCache(DCacheEnum.McSysFunc).getCache(s);
+							if(StringUtils.isNotBlank(rfJson)){
+								McRoleFunction rf = JSONObject.parseObject(rfJson, McRoleFunction.class);
+								if(rf == null){
+									continue;
+								}
+								cache.getMrfList().add(rf);
+							}
+						}
+					}
+					
+					launch.loadDictCache(DCacheEnum.McUserRole).setCache(e.getMcUserId().toString(), JSONObject.toJSONString(cache)); 
+				}
 			}else{
 				result.put("status", "error");
 				result.put("msg", this.getInfo(500090007)); // 用户与角色关联失败
