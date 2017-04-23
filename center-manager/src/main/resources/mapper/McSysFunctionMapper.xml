@@ -62,6 +62,18 @@
 	</select>
 	
 	
+	<select id="getSysFuncList" resultMap="BaseResultMap" parameterType="com.matrix.pojo.entity.McSysFunction" >
+	    select 
+	    	* 
+    	from 
+    		managercenter.mc_sys_function 
+   		where 1=1 
+			<if test="flag != null">
+				and flag = #{flag,jdbcType=INTEGER} 
+			</if>
+	</select>
+	
+	
 	<delete id="deleteById" parameterType="java.lang.Integer">
 		delete from managercenter.mc_sys_function where id = #{id,jdbcType=INTEGER}
 	</delete>

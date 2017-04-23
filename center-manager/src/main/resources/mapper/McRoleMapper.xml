@@ -37,7 +37,7 @@
 			</if>
 	</select>
 	
-	<resultMap id="McRoleDtoMap" type="com.matrix.pojo.dto.McRoleDto"></resultMap>
+	<resultMap id="McRoleDtoMap" type="com.matrix.pojo.cache.McRoleCache"></resultMap>
 	<select id="findMcRoleDtoList" resultMap="McRoleDtoMap" >  
 		select 
 			r.role_name as roleName,

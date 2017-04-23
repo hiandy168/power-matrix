@@ -22,22 +22,20 @@ import com.matrix.pojo.cache.McRoleCache;
  * @date 2017年4月17日 下午8:25:32
  * @version 1.0.1
  */
-public class CacheMcRole extends BaseClass implements IBaseCache{
+public class LoadCacheMcRole extends BaseClass implements IBaseCache{
 	
 	private IBaseLaunch<ICacheFactory> launch = CacheLaunch.getInstance().Launch();
 	
+	private List<McRoleCache> list;
+	 
 	@Inject
-	private IMcSysFunctionDao sysFunctionDao;
-	@Inject
-	private IMcRoleDao roleDao;
-	@Inject
-	private IMcRoleFunctionDao roleFunctionDao;
+	private IMcRoleDao roleDao; 
 	
 	
 	@Override
 	public void refresh() {
 		try {
-			List<McRoleCache> list = roleDao.findMcRoleDtoList();
+			list = roleDao.findMcRoleDtoList();
 			if(list != null && list.size() != 0){
 				for(McRoleCache d : list){
 					launch.loadDictCache(DCacheEnum.McRole).setCache(d.getMcRoleId().toString() , JSONObject.toJSONString(d));
@@ -46,12 +44,13 @@ public class CacheMcRole extends BaseClass implements IBaseCache{
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}
+		System.out.println(this.getClass().getName() + "********* 初始化完成!"); 
 	}
 
 	@Override
 	public void removeAll() {
 		try {
-			List<McRoleCache> list = roleDao.findMcRoleDtoList();
+			list = roleDao.findMcRoleDtoList();
 			if(list != null && list.size() != 0){
 				for(McRoleCache d : list){
 					launch.loadDictCache(DCacheEnum.McRole).deleteCache(d.getMcRoleId().toString()); 
@@ -60,8 +59,8 @@ public class CacheMcRole extends BaseClass implements IBaseCache{
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}
+		System.out.println(this.getClass().getName() + "********* 缓存删除完成!"); 
 	}
-
 }
 
 
