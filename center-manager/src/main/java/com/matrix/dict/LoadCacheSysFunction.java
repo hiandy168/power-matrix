@@ -16,6 +16,27 @@ import com.matrix.pojo.entity.McSysFunction;
 /**
  * @descriptions 加载系统功能名称 
  *
+ * key: xd-McSysFunc-75
+ * value: 
+				{
+				    "createTime": 1491383651000,
+				    "createUserId": 1,
+				    "eleType": "",
+				    "eleValue": "",
+				    "flag": 1,
+				    "funcUrl": "",
+				    "id": 75,
+				    "mcSellerCompanyId": 1,
+				    "name": "惠家有促销系统",
+				    "navType": 0,
+				    "parentId": "1",
+				    "remark": "惠家有促销系统2",
+				    "seqnum": 1,
+				    "styleClass": "",
+				    "styleKey": "",
+				    "updateTime": 1492933675000,
+				    "updateUserId": 2
+				}
  * @author Yangcl 
  * @home https://github.com/PowerYangcl
  * @date 2017年4月23日 下午9:49:49

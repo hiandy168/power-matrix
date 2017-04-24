@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.matrix.pojo.entity.McRoleFunction;
+import com.matrix.pojo.entity.McSysFunction;
 
 public class McUserRoleCache {
 	private Integer mcUserId;
 	private Integer mcRoleId;
 	private String roleName;
 	private String roleDesc;
-	private List<McRoleFunction> mrfList = new ArrayList<McRoleFunction>();
+	private List<McSysFunction> msfList = new ArrayList<McSysFunction>();
 	
 	public Integer getMcUserId() {
 		return mcUserId;
@@ -36,10 +37,10 @@ public class McUserRoleCache {
 	public void setRoleDesc(String roleDesc) {
 		this.roleDesc = roleDesc;
 	}
-	public List<McRoleFunction> getMrfList() {
-		return mrfList;
+	public List<McSysFunction> getMsfList() {
+		return msfList;
 	}
-	public void setMrfList(List<McRoleFunction> mrfList) {
-		this.mrfList = mrfList;
+	public void setMsfList(List<McSysFunction> msfList) {
+		this.msfList = msfList;
 	}
 }

@@ -447,11 +447,11 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 						for(String s : arr){
 							String rfJson = launch.loadDictCache(DCacheEnum.McSysFunc).getCache(s);
 							if(StringUtils.isNotBlank(rfJson)){
-								McRoleFunction rf = JSONObject.parseObject(rfJson, McRoleFunction.class);
+								McSysFunction rf = JSONObject.parseObject(rfJson, McSysFunction.class);
 								if(rf == null){
 									continue;
 								}
-								cache.getMrfList().add(rf);
+								cache.getMsfList().add(rf); 
 							}
 						}
 					}
