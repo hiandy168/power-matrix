@@ -879,6 +879,10 @@
              $('#ajax-tbody-user-role-func-list').append(html_);
         },
         
+        /**
+         * 解除后台用户的权限
+         * @param obj
+         */
         deleteUserRole:function(obj){
         	var userId = $(obj).attr("userId");
         	var zId = $(obj).attr("zId");  
