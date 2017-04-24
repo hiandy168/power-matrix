@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.base.interfaces.IBaseService;
 import com.matrix.pojo.cache.McRoleCache;
+import com.matrix.pojo.dto.McUserRoleDto;
 import com.matrix.pojo.entity.McSysFunction;
 import com.matrix.pojo.entity.McUserInfo;
 import com.matrix.pojo.entity.McUserRole;
@@ -31,6 +32,10 @@ public interface IMcSysFunctionService  extends IBaseService<McSysFunction, Inte
 
 	public JSONObject addUserRole(McUserRole entity , HttpSession session);
 
-	public JSONObject mcUserList(McUserInfo entity, HttpServletRequest request);        
+	public JSONObject mcUserList(McUserInfo entity, HttpServletRequest request);
+
+	public JSONObject userRoleFuncList(McUserRoleDto dto, HttpServletRequest request);
+
+	public JSONObject deleteUserRole(McUserRoleDto d, HttpSession session);          
 	
 }

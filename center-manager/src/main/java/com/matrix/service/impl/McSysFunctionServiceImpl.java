@@ -26,11 +26,13 @@ import com.matrix.dao.IMcUserInfoDao;
 import com.matrix.dao.IMcUserRoleDao;
 import com.matrix.pojo.cache.McRoleCache;
 import com.matrix.pojo.cache.McUserRoleCache;
+import com.matrix.pojo.dto.McUserRoleDto;
 import com.matrix.pojo.entity.McRole;
 import com.matrix.pojo.entity.McRoleFunction;
 import com.matrix.pojo.entity.McSysFunction;
 import com.matrix.pojo.entity.McUserInfo;
 import com.matrix.pojo.entity.McUserRole;
+import com.matrix.pojo.view.McUserRoleView;
 import com.matrix.service.IMcSysFunctionService;
 import com.matrix.util.UuidUtil;
 
@@ -463,6 +465,67 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 				result.put("msg", this.getInfo(500090007)); // 用户与角色关联失败
 			}
 		} catch (Exception e2) {
+			result.put("status", "error");
+			result.put("msg", this.getInfo(500090008)); // 系统异常
+		}
+		return result;
+	}
+
+	/**
+	 * @description: 已赋权限用户列表
+	 * 
+	 * @param dto
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年4月24日 下午2:43:35 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject userRoleFuncList(McUserRoleDto dto, HttpServletRequest request) {
+		JSONObject result = new JSONObject();
+		String pageNum = request.getParameter("pageNum"); // 当前第几页
+		String pageSize = request.getParameter("pageSize"); // 当前页所显示记录条数
+		int num = 1;
+		int size = 10;
+		if (StringUtils.isNotBlank(pageNum)) {
+			num = Integer.parseInt(pageNum);
+		}
+		if (StringUtils.isNotBlank(pageSize)) {
+			size = Integer.parseInt(pageSize);
+		}
+		
+		PageHelper.startPage(num, size);
+		List<McUserRoleView> list = userRoleDao.userRoleFuncList(dto);
+		if (list != null && list.size() > 0) {
+			result.put("status", "success");
+		} else {
+			result.put("status", "error");
+			result.put("msg", this.getInfo(100090002));  // 没有查询到可以显示的数据 
+		}
+		PageInfo<McUserRoleView> pageList = new PageInfo<McUserRoleView>(list);
+		result.put("data", pageList); 
+		return result;
+	}
+
+	
+	/**
+	 * @description: 解除角色绑定，同时删除缓存
+	 * 
+	 * @param d
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年4月24日 下午3:27:22 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject deleteUserRole(McUserRoleDto d, HttpSession session) {
+		JSONObject result = new JSONObject();
+		try {
+			userRoleDao.deleteById(d.getId());
+			launch.loadDictCache(DCacheEnum.McUserRole).deleteCache(d.getUserId().toString()); 
+			
+			result.put("status", "success");
+			result.put("msg", this.getInfo(500090010)); // 角色绑定解除成功! 
+		} catch (Exception e) {
+			e.printStackTrace(); 
 			result.put("status", "error");
 			result.put("msg", this.getInfo(500090008)); // 系统异常
 		}

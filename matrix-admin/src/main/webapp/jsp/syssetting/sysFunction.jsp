@@ -102,7 +102,7 @@
                         <a href="#user-role" onclick="tfunc.distributeUserRole()">系统角色创建</a>
                     </li>
                     <li>
-                        <a href="#user-role-func" onclick="">用户列表</a>
+                        <a href="#user-role-func-list" onclick="tfunc.userRoleFuncList()">赋权列表</a>
                     </li>
                 </ul>
             </div>
@@ -141,7 +141,7 @@
                         </div>
 
                         <div class="tree-table-right"  style="padding:5px">
-                            <div id="contentwrapper" class="">
+                            <div>
 				                <div id="table-form" class="dataTables_wrapper" >
 				                    <div class="contenttitle2" style="margin-top: 5px;margin-bottom: 8px;">
 				                        <p style="margin: 0px">
@@ -185,26 +185,55 @@
                         </div>
                     </div>
                 </div>
-                
-                
-                <div id="user-role-func" class="subcontent" style="display: none;padding:5px" >
+
+                <div id="user-role-func-list" class="subcontent" style="display: none;padding:5px; width:800px" >
                     <div class="contenttitle2">
                         <h3>
-                        	TODOOOOOOOOO
+                        	已赋权限用户列表
                         </h3> 
                     </div>
-                    <div class="stdform" >
-                        <div class="tree-left">
-							<div>
-								<!-- <ul id="" class="ztree"></ul> -->
-							</div>
-                        </div>
+                    <div>
+                        <div>
+                        	<!-- table列表填充 -->
+                        	<div >
+                                <div>
+                                    <div id="user-role-func-list-table-form"  class="dataTables_wrapper" >
+                                        <%-- 此处填充 查询条件 div--%>
+                                        <div class="dataTables_length dialog-show-count">
+                                            <label>
+                                                当前显示
+                                                <select size="1" onchange="aForm.formPaging('1')">
+                                                    <option value="10">10</option>
+                                                    <option value="25" >25</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                </select>
+                                                条记录
+                                            </label>
+                                        </div>
+                                        <table id="user-role-func-list-table" cellpadding="0" cellspacing="0" border="0" class="stdtable">
+                                            <thead>
+                                                <tr>
+                                                    <!-- <th class="head0" width="50px">
+                                                        <input type="checkbox"/>
+                                                    </th> --> 
+                                                    <th class="head0"> 用户姓名</th>
+                                                    <th class="head0">角色名称</th> 
+                                                    <th class="head0 " width="100px">操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="ajax-tbody-user-role-func-list">
+                                                <%-- 等待填充 --%>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div><%-- 列表内容结束 --%>
 
-                        <div class="tree-right"  style="padding:5px">
-                            <!-- <form id=""  action="#"></form> -->
-                        </div>
+                        </div> 
                     </div>
                 </div>
+                <%--已赋权限用户列表 结束--%>
             </div>
 
 

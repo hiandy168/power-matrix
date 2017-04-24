@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.pojo.cache.McRoleCache;
+import com.matrix.pojo.dto.McUserRoleDto;
 import com.matrix.pojo.entity.McSysFunction;
 import com.matrix.pojo.entity.McUserInfo;
 import com.matrix.pojo.entity.McUserRole;
@@ -203,6 +204,37 @@ public class SystemRoleController {
 		return mcSysFunctionService.addUserRole(entity , session);
 	}
 	
+	
+	/**
+	 * @description: 已赋权限用户列表
+	 * 
+	 * @param dto
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年4月24日 下午2:43:35 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "user_role_func_list", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject userRoleFuncList(McUserRoleDto dto , HttpServletRequest request){
+		return mcSysFunctionService.userRoleFuncList(dto , request);
+	}
+	
+	
+	/**
+	 * @description: 解除角色绑定，同时删除缓存
+	 * 
+	 * @param d
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年4月24日 下午3:27:22 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "delete_user_role", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject deleteUserRole(McUserRoleDto d , HttpSession session){
+		return mcSysFunctionService.deleteUserRole(d, session);	
+	}
 }
 
 

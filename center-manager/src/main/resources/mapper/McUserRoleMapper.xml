@@ -35,7 +35,27 @@
 			</if>
 	</select>
 	
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	
+	<resultMap id="McUserRoleViewMap" type="com.matrix.pojo.view.McUserRoleView"></resultMap>
+	<select id="userRoleFuncList" resultMap="McUserRoleViewMap" parameterType="com.matrix.pojo.dto.McUserRoleDto">
+		select 
+		  ur.id as id,
+		  ur.mc_user_id as userId,
+  		  ur.mc_role_id as roleId,
+		  r.role_name as roleName,
+		  r.role_desc as roleDesc,
+		  ui.user_name as userName
+		from
+		  managercenter.`mc_user_role` ur left join managercenter.`mc_role` r on ur.mc_role_id = r.id left join managercenter.`mc_user_info` ui on ur.mc_user_id = ui.id
+		where 
+			r.flag = 1
+		and
+			ur.flag = 1
+		order by ur.id desc
+	</select>
+	
+	
+	<delete id="deleteById" parameterType="java.lang.Integer">
 		delete from managercenter.mc_user_role where id = #{id,jdbcType=INTEGER}
 	</delete>
 	

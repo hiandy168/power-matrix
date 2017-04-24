@@ -830,6 +830,71 @@
             }
         },
         
+        /**
+         * 已赋权限用户列表
+         */
+        userRoleFuncList: function(){
+        	var type_ = 'post';
+            var url_ = 'user_role_func_list.do'; 
+            var data_ = null;  // 可以为null，后台会进行默认处理
+            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+            aForm.launch(url_ , 'user-role-func-list-table-form' , obj).init().drawForm(tfunc.userRoleFuncListLoadTable);
+        },
+        
+        userRoleFuncListLoadTable:function(url_){
+        	if(url_ == undefined){ // 首次加载表单
+                tfunc.userRoleFuncListDraw(aForm.jsonObj);
+                return;
+            }
+            // 这种情况是响应上一页或下一页的触发事件
+            var type_ = 'post';
+            /*var data_ = {            // TODO 后期如果有查询的需求修改此处
+                userName: $("#user-name").val(),
+                mobile: $("#mobile").val(),
+                sex: $("#sex").val()
+            }*/
+            var data_ = null;
+            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+            aForm.launch(url_ , 'user-role-func-list-table-form' , obj).init();
+            tfunc.userRoleFuncListDraw(obj); 
+        },
+        
+        userRoleFuncListDraw:function(obj){
+        	$('#ajax-tbody-user-role-func-list tr').remove();
+            var html_ = '';
+            var list = obj.data.list;
+            if(list.length>0){
+ 	            for(var i = 0 ; i < list.length ; i ++){
+ 	                html_ += '<tr>'  
+ 	                +'<td>' + list[i].userName + '</td>'
+ 	                +'<td>' + list[i].roleName + '</td>' 
+ 	                +'<td width="80px" align="center">'
+ 	                +'<a onclick="tfunc.deleteUserRole(this)" userId="' + list[i].userId + '" zId="' + list[i].id + '" title="解除后台用户【' + list[i].userName + '】的权限"  style="cursor: pointer;">解除权限</a> ' 
+ 	                +'</td></tr>'
+ 	            }
+             }else{
+             	html_='<tr><td colspan="11" style="text-align: center;">'+obj.msg+'</td></tr>';
+             }
+             
+             $('#ajax-tbody-user-role-func-list').append(html_);
+        },
+        
+        deleteUserRole:function(obj){
+        	var userId = $(obj).attr("userId");
+        	var zId = $(obj).attr("zId");  
+        	var type_ = 'post';
+            var data_ = {
+        		userId: userId,
+                id: zId 
+            }
+            var url_ = 'delete_user_role.do'; 
+            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+            if(obj.status == 'success'){ 
+            	var currentPageNumber = $(".paginate_active").html();   // 定位到当前分页的页码，然后重新加载数据
+                aForm.formPaging(currentPageNumber);
+            } 
+            jAlert(obj.msg , '系统提示 ');
+        },
         
         closeDialog:function(){
             $.unblockUI();

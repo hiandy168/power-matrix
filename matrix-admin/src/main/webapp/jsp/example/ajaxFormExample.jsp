@@ -117,7 +117,7 @@
 
             <div id="contentwrapper" class="contentwrapper">
 
-                <%-- dyntable2_wrapper --%>
+                <%-- table-form 这个id分页使用 --%>
                 <div id="table-form" class="dataTables_wrapper" >
                     <div class="contenttitle2">
                         <p style="margin: 0px">
