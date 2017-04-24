@@ -110,7 +110,10 @@
             <div id="contentwrapper" class="contentwrapper">
                 <div id="nav-menu" class="subcontent">
                     <div class="contenttitle2">
-                        <h3>功能等级层次码 root=0 导航栏=1 一级菜单栏=2 二级菜单栏=3</h3>
+                        <h3>
+                        	<a herf="javascript:void(0)" onclick="tfunc.closeNavi('sys-tree')" class="a-btn" title="收起导航栏从而方便您的操作">【收起导航栏】</a>|
+                        	<a herf="javascript:void(0)" onclick="tfunc.closeMenu('sys-tree')" class="a-btn" title="收起一级菜单栏从而方便您的操作">【收起菜单栏】</a>
+						</h3>
                     </div>
                     <div class="stdform" >
                         <div class="tree-left">
@@ -130,7 +133,9 @@
                 <div id="user-role" class="subcontent" style="display: none;padding:5px" >
                     <div class="contenttitle2">
                         <h3>
-                        	<a herf="javascript:void(0)" onclick="openDialogRole()" class="a-btn" title="角色列表在弹出框中">【创建角色】</a>
+                        	<a herf="javascript:void(0)" onclick="openDialogRole()" class="a-btn" title="角色列表在弹出框中">【创建角色】</a>|
+                        	<a herf="javascript:void(0)" onclick="tfunc.closeNavi('user-role-tree')" class="a-btn" title="收起导航栏从而方便您的操作">【收起导航栏】</a>|
+                        	<a herf="javascript:void(0)" onclick="tfunc.closeMenu('user-role-tree')" class="a-btn" title="收起一级菜单栏从而方便您的操作">【收起菜单栏】</a>
                         </h3> 
                     </div>
                     <div class="stdform" >

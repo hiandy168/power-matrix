@@ -213,6 +213,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 		if(flag == 1){
 			result.put("status", "success");
 			result.put("msg", this.getInfo(500090001)); // 删除成功
+			launch.loadDictCache(DCacheEnum.McSysFunc).deleteCache(id.toString()); 
 		}else{
 			result.put("status", "error");
 			result.put("msg", this.getInfo(500090001)); // 删除失败

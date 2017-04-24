@@ -900,6 +900,41 @@
             jAlert(obj.msg , '系统提示 ');
         },
         
+        /**
+         * 收起导航栏从而方便操作
+         */
+        closeNavi:function(treeId){
+        	var tree = $.fn.zTree.getZTreeObj(treeId);  
+        	var nodes = tree.transformToArray(tree.getNodes()); 
+        	if(nodes.length == 0){
+        		return;
+        	}
+        	for(var n = 0 ; n < nodes.length ; n ++){
+        		var node = nodes[n];
+        		if(node.navType == 1){
+        			tree.expandNode(node , false , false ,false ,false );
+        		}
+        	}
+        },
+        
+        /**
+         * 收起一级菜单栏从而方便操作
+         */
+        closeMenu:function(treeId){ 
+        	var tree = $.fn.zTree.getZTreeObj(treeId);  
+        	var nodes = tree.transformToArray(tree.getNodes()); 
+        	if(nodes.length == 0){
+        		return;
+        	}
+        	for(var n = 0 ; n < nodes.length ; n ++){
+        		var node = nodes[n];
+        		if(node.navType == 2){
+        			tree.expandNode(node , false , false ,false ,false );
+        		}
+        	}
+        },
+        
+        
         closeDialog:function(){
             $.unblockUI();
         }
