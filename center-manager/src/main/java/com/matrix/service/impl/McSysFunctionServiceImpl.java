@@ -354,7 +354,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	public JSONObject deleteMcRole(McRoleCache d, HttpSession session) {
 		JSONObject result = new JSONObject();
 		try {
-			if(userRoleDao.selectByPrimaryKey(d.getMcRoleId()).size() != 0){
+			if(userRoleDao.selectByMcRoleId(d.getMcRoleId()).size() != 0){ 
 				result.put("status", "error");
 				result.put("msg", this.getInfo(500090009)); // 该角色已经关联了用户，如果想删除则必选先将用户与该角色解除绑定
 			}else{

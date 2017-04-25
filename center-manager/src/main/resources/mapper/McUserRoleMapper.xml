@@ -23,6 +23,15 @@
 			id = #{id,jdbcType=INTEGER}
 	</select>
 	
+	<select id="selectByMcRoleId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+			* 
+		from 
+			managercenter.mc_user_role
+		where 
+			mc_role_id = #{mcRoleId ,jdbcType=INTEGER}
+	</select>
+	
 	<select id="findList" resultMap="BaseResultMap" parameterType="com.matrix.pojo.entity.McUserRole">
 		select
 			* 
