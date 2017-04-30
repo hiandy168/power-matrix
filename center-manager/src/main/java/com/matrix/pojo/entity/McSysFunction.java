@@ -18,15 +18,27 @@ public class McSysFunction {
     private Integer createUserId;
     private Integer updateUserId;
     private String remark;
-    private String eleType;
-    private String eleValue;
+    
+    /**
+     * 按钮节点所在页面的位置，只有只有导航树的最后一层：按钮节点才会有。
+     * 	10001：功能区域(在查询区域上部。如：添加按钮、导出按钮等等)；
+     * 	10002：查询区域(查询、重置等等)；
+     * 	10003：数据区域 (即：页面列表所在区域。如：编辑、修改、删除、授权、弹出层等等，多数为a标签。)
+     */
+    private String btnArea; 
+    
+    /**
+     * 元素ID标识 配合btn_area使用。btnArea = 10003，则eleValue在页面表达为一个类(html class)
+     * btnArea = 10001 或 btnArea = 10002 则eleValue在页面表达为一个id(html id)
+     */
+    private String eleValue;   
     
     
-	public String getEleType() {
-		return eleType;
+	public String getBtnArea() {
+		return btnArea;
 	}
-	public void setEleType(String eleType) {
-		this.eleType = eleType;
+	public void setBtnArea(String btnArea) {
+		this.btnArea = btnArea;
 	}
 	public String getEleValue() {
 		return eleValue;

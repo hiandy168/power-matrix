@@ -423,11 +423,13 @@
             if(treeNode.name == "新建结点"){
             	url_ = 'add_tree_node.do';
             	var html_ = '节点名称：<input type="text" name="name" class="smallinput " placeholder="按钮节点|跳转页" style="width: 190px; margin-bottom: 10px;"><br/>';
-            	html_ += '节点类型：<select id="navType" name="navType" class="radius3" onchange="tfunc.changeNodeType()" style="margin-left:0px; width:204px;  margin-bottom: 10px;"><option value="4">页面按钮</option><option value="5">内部跳转页面</option></select><br/>';            		
-            	html_ += '<div id = "node-type" style="margin-bottom: 10px;">';
-            		html_ += '<div style="margin-bottom: 10px;"><input type="radio" name="eleType" value="elementId" style="margin-left:10px" checked> 元素ID | <input type="radio" name="eleType" value="elementClass" style="margin-left:10px"> 元素Class</div>' 
-            		html_ += 'id|class：<input type="text" class="smallinput " placeholder="html的id 或 class值" style="width: 190px; margin-bottom: 10px;" name="eleValue" value="" ><br/>';
-            	html_ += '</div>';
+            	html_ += '按钮位置：<select id="btnArea" name="btnArea" class="radius3"  style="margin-left:0px; width:204px;  margin-bottom: 10px;">';
+				html_ += '<option value="10001">功能区域</option><option value="10002">查询区域</option><option value="10003">数据区域</option></select><br/>';
+				
+            	html_ += '节点类型：<select id="navType" name="navType" class="radius3" onchange="tfunc.changeNodeType()" style="margin-left:0px; width:204px;  margin-bottom: 10px;">';        
+            	html_ += '<option value="4">页面按钮</option><option value="5">内部跳转页面</option></select><br/>';
+				html_ += '<div id = "node-type" style="margin-bottom: 10px;"></div>';
+
             	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;"></textarea><br/>';
             	html_ += '<input type="hidden" name="parentId" value="' + treeNode.parentId +'" >';
             	var preNode = treeNode.getPreNode();   // seqnum  需要计算同层所有节点，然后得出顺序码
@@ -437,33 +439,34 @@
             	} 
             	html_ += '<input type="hidden" name="seqnum" value="' + seqnum_ +'" >';
             	html_ += '<input type="hidden" name="styleClass" value="" >';
-            	html_ += '<input type="hidden" name="styleKey" value="" >';   
+            	html_ += '<input type="hidden" name="styleKey" value="" >';
             	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
             }else{
             	url_ = 'edit_tree_node.do';
-            	var html_ = '节点名称：<input type="text" name="name" class="smallinput " style="width: 190px; margin-bottom: 10px;" value="' + treeNode.name + '" ><br/>';
+            	var html_ = '节点名称：<input type="text" name="name" class="smallinput " style="width: 190px; margin-bottom: 10px;" value="' + treeNode.name + '" ><br/>'; 
+            	
+            	// 按钮位置勾选判定
+            	html_ += '按钮位置：<select id="btnArea" name="btnArea" class="radius3"  style="margin-left:0px; width:204px;  margin-bottom: 10px;">';
+            	if(treeNode.btnArea == '10001'){
+            		html_ += '<option value="10001" selected>功能区域</option><option value="10002">查询区域</option><option value="10003">数据区域</option>';
+            	}else if(treeNode.btnArea == '10002'){
+            		html_ += '<option value="10001">功能区域</option><option value="10002" selected>查询区域</option><option value="10003">数据区域</option>';
+            	}else{
+            		html_ += '<option value="10001">功能区域</option><option value="10002">查询区域</option><option value="10003" selected>数据区域</option>';
+            	}
+            	html_ += '</select><br/>';
+            	
             	html_ += '节点类型：<select id="navType" name="navType" class="radius3" onchange="tfunc.changeNodeType()" style="margin-left:0px; width:204px;  margin-bottom: 10px;">'; 
             	if(treeNode.navType == 4){
             		html_ += '<option value="4" selected>页面按钮</option><option value="5">内部跳转页面</option></select><br/>';
-            		html_ += '<div id = "node-type" style="margin-bottom: 10px;">';
-            		if(treeNode.eleType == "elementId"){
-            			html_ += '<div style="margin-bottom: 10px;"><input type="radio" name="eleType" value="elementId" style="margin-left:10px" checked> 元素ID | <input type="radio" name="eleType" value="elementClass" style="margin-left:10px"> 元素Class</div>' 
-            		}else{
-            			html_ += '<div style="margin-bottom: 10px;"><input type="radio" name="eleType" value="elementId" style="margin-left:10px"> 元素ID | <input type="radio" name="eleType" value="elementClass" style="margin-left:10px" checked> 元素Class</div>' 
-            		}
-            		html_ += 'id|class：<input type="text" class="smallinput " placeholder="html的id 或 class值" style="width: 190px; margin-bottom: 10px;" name="eleValue" value="' + treeNode.eleValue + '" ><br/>';
-	            	html_ += '</div>';
+					html_ += '<div id = "node-type" style="margin-bottom: 10px;"></div>';
 	            	html_ += '<input type="hidden" name="funcUrl" value="" >';  // 更新时，此处置空
             	}else{
             		html_ += '<option value="4">页面按钮</option><option value="5"  selected>内部跳转页面</option></select><br/>';
             		html_ += '<div id = "node-type" style="margin-bottom: 10px;">';
             		html_ += '跳转地址：<input type="text" class="smallinput " placeholder="funcUrl" style="width: 190px; margin-bottom: 10px;" name="funcUrl" value="' + treeNode.funcUrl + '" ><br/>'; 
             		html_ += '</div>';
-            		
-            		html_ += '<input type="hidden" name="eleType" value="" >';  // 更新时，此处置空
-            		html_ += '<input type="hidden" name="eleValue" value="" >';  // 更新时，此处置空 
             	}
-            	
             	
             	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;">' + treeNode.remark + '</textarea><br/>';
             	html_ += '<input type="hidden" name="id" value="' + treeNode.id +'" >'; 
@@ -471,6 +474,21 @@
             }
             $("#tree-node-edit").append(html_);
         },
+
+        changeNodeType:function(){
+        	$("#node-type").empty(); 
+        	var val_ = $("#navType").val();
+        	$("input[name='funcUrl']").remove();
+        	var html_ = '';
+        	if(val_ == 4){      // 页面按钮
+        		html_ += '<input type="hidden" name="funcUrl" value="" >';   // 更新时，此处置空
+        		$("#node-type").append(html_); 
+        	}else{  // 内部跳转页面 
+        		html_ += '跳转地址：<input type="text" class="smallinput " placeholder="exa/example.do" style="width: 190px; margin-bottom: 10px;" name="funcUrl" value="" ><br/>';
+        		$("#node-type").append(html_); 
+        	}
+        },
+        
         
         /**
          * 添加一个节点到数据库  
@@ -489,25 +507,6 @@
         	}
         },
         
-        changeNodeType:function(){ 
-        	$("#node-type").empty(); 
-        	var val_ = $("#navType").val();
-        	$("input[name='funcUrl']").remove();
-        	$("input[name='eleType']").remove();
-        	$("input[name='eleValue']").remove();
-        	var html_ = '';
-        	if(val_ == 4){      // 页面按钮
-        		html_ = '<div style="margin-bottom: 10px;"><input type="radio" name="eleType" value="elementId" style="margin-left:10px" checked> 元素ID | <input type="radio" name="eleType" value="elementClass" style="margin-left:10px"> 元素Class</div>' 
-        		html_ += 'id|class：<input type="text" class="smallinput " placeholder="html的id 或 class值" style="width: 190px; margin-bottom: 10px;" name="eleValue" value="" ><br/>';
-        		html_ += '<input type="hidden" name="funcUrl" value="" >';
-        		$("#node-type").append(html_); 
-        	}else{  // 内部跳转页面 
-        		html_ += '<input type="hidden" name="eleType" value="" >';  // 更新时，此处置空
-        		html_ += '<input type="hidden" name="eleValue" value="" >';  // 更新时，此处置空 
-        		html_ += '跳转地址：<input type="text" class="smallinput " placeholder="exa/example.do" style="width: 190px; margin-bottom: 10px;" name="funcUrl" value="" ><br/>';
-        		$("#node-type").append(html_); 
-        	}
-        },
         
         // 导航与菜单树
         sysTreeOperation: function(){

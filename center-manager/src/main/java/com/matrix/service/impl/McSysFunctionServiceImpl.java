@@ -75,9 +75,10 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 			entity.setUpdateUserId(userInfo.getId());
 			if(entity.getNavType() == 2){
 				entity.setStyleKey(UuidUtil.uid());
-			}else{
-				entity.setStyleKey(""); 
+			}else if(entity.getNavType() == 4 || entity.getNavType() == 5){  // 4: 页面按钮 5: 内部跳转页面 
+				entity.setEleValue("btn-" + UuidUtil.uid()); 
 			}
+			
 			int count = dao.insertSelective(entity);
 			if(count == 1){
 				result.put("status", "success");
