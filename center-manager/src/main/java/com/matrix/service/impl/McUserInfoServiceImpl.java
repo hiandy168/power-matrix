@@ -52,11 +52,10 @@ public class McUserInfoServiceImpl extends BaseServiceImpl<McUserInfo, Integer> 
 		McUserInfo info = mcUserInfoDao.login(userInfo);  
 		if (null != info) {
 			session.setAttribute("userInfo", info);   // 写入session
+			String userId = info.getId().toString(); 
+		    String pageJson = launch.loadDictCache(DCacheEnum.McUserRole).getCache(userId);
 			
-//			String key = "xd-" + DCacheEnum.UserInfo.toString() + "-" + info.getUserName();
-//			String json = launch.loadDictCache(DCacheEnum.UserInfo).getCache(key);  
-			
-			result.put("data", info);
+			result.put("data" , pageJson);  
 			result.put("status", "success");
 			result.put("msg", "调用成功");
 			return result;

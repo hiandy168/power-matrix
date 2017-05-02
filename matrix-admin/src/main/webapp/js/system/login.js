@@ -11,6 +11,7 @@ var login = {
         var data_ = $('#' + formId).serializeArray();
         var object = JSON.parse(ajaxs.sendAjax('post' , url_ , data_));
         if(object.status == 'success'){
+        	sessionStorage.pageJson = object.data;
             window.location.href='manager/index.do';
         }else{
             alert(object.msg);
@@ -21,7 +22,7 @@ var login = {
      * 退出相关类
      */
     logout:function(){
-
+    	sessionStorage.pageJson = "";
     },
 
     /**
