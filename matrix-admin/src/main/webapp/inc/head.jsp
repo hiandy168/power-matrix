@@ -36,3 +36,57 @@
     	这个页面引入到所html的head标签中 这里控制了浏览器自适应以及整个系统页面的全局样式。
     	注：此页面禁止改动。- Yangcl 
     -->
+    
+    
+    <%@ page 
+	    	import="com.matrix.pojo.entity.McUserInfo,
+	    					 com.matrix.cache.CacheLaunch,
+	    					 com.matrix.cache.enums.DCacheEnum" 
+	%> 
+	
+    <%
+    if(pageContext.getAttribute("pageJson") == null){
+    	System.out.println(pageContext.getAttribute("pageJson"));
+		McUserInfo userInfo = (McUserInfo) session.getAttribute("userInfo");
+	    String userId = userInfo.getId().toString();
+	    String pageJson = CacheLaunch.getInstance().Launch().loadDictCache(DCacheEnum.McUserRole).getCache(userId);
+        pageContext.setAttribute("pageJson", pageJson);
+	}
+    
+    %>
+    <!-- 准备实例化权限 -->
+    <script type="text/javascript">
+       pageJson = ${pageJson};
+
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
