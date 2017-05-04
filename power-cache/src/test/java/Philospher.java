@@ -37,7 +37,7 @@ public class Philospher extends Thread {
 	}
 
 	public void run(){
-		for(int i = 1 ; i < 100; i ++){
+		for(int i = 1 ; i < 1000; i ++){
 			try {
 				this.think(i);
 				this.eat(i);
@@ -83,9 +83,9 @@ public class Philospher extends Thread {
 		ReentrantLock table = new ReentrantLock();
 		Philospher p1 = new Philospher(table , "东邪");
 		Philospher p2 = new Philospher(table , "西毒"); 
-		Philospher p3 = new Philospher(table , "南帝");
-		Philospher p4 = new Philospher(table , "北丐");
-		Philospher p5 = new Philospher(table , "中神");
+		Philospher p3 = new Philospher(table , "中神");
+		Philospher p4 = new Philospher(table , "南帝");
+		Philospher p5 = new Philospher(table , "北丐");
 		p1.setLeft(p5);
 		p1.setRight(p2);
 		
