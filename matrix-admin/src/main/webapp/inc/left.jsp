@@ -38,7 +38,7 @@
               setCookie(name, "", -1);
             }
         </script>
-
+	<div id="left-menu">
 		<%-- nav 类代表导航栏 无任何样式应用|每个导航栏对应的菜单显示与否由id来决定--%>
         <div id="nav-bar-1" class="vernav2 iconmenu nav">
             <ul class="nav-bar-ul"> 
@@ -116,8 +116,7 @@
         <div id="nav-bar-4" class="vernav2 iconmenu nav" style="display: none">
 
         </div>
-
-
+	</div>
 
 
 
