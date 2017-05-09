@@ -90,7 +90,33 @@ var pageInit = {
 	 * 初始化菜单栏，在left.jsp中
 	 */
 	drawMenuList:function(){
-
+		var arr = this.page;
+		var html_ = '';
+		if(arr.length == 0){
+			return;
+		}
+		var url = "${basePath}"; 
+		for(var i = 0 ; i < arr.length ; i ++){
+			html_ += '<div id="" class="vernav2 iconmenu nav">';  
+			html_ += '';
+			html_ += '';
+			html_ += '';
+			html_ += '';
+			html_ += '';
+			html_ += '';
+			html_ += '';
+			html_ += '';
+			
+			html_ += '';
+			html_ += '';html_ += '';
+			
+			html_ += '';
+			html_ += '';
+			html_ += '';
+			html_ += '';
+			
+		}
+		$("#left-menu").append(html_);
 	},
 
 	/**

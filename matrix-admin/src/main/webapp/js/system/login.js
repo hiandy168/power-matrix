@@ -11,6 +11,9 @@ var login = {
         var data_ = $('#' + formId).serializeArray();
         var object = JSON.parse(ajaxs.sendAjax('post' , url_ , data_));
         if(object.status == 'success'){
+        	if(object.data == undefined || object.data == ""){
+        		return;
+        	}
         	sessionStorage.pageJson = object.data;
             window.location.href='manager/index.do';
         }else{
