@@ -15,6 +15,7 @@ var pageInit = {
 
 		if(sessionStorage.nav_id != undefined){
 			$("#" + sessionStorage.nav_id).addClass("current");
+			pageInit.leftCheck();
 		}else{
 			$($("#nav-list li")[0]).addClass("current");  // 登陆进入则默认加载第一个导航
 		}
@@ -95,26 +96,37 @@ var pageInit = {
 		if(arr.length == 0){
 			return;
 		}
-		var url = "${basePath}"; 
+		var path_ = "${basePath}";    // TODO  这里的路径有问题
 		for(var i = 0 ; i < arr.length ; i ++){
-			html_ += '<div id="" class="vernav2 iconmenu nav">';  
-			html_ += '';
-			html_ += '';
-			html_ += '';
-			html_ += '';
-			html_ += '';
-			html_ += '';
-			html_ += '';
-			html_ += '';
-			
-			html_ += '';
-			html_ += '';html_ += '';
-			
-			html_ += '';
-			html_ += '';
-			html_ += '';
-			html_ += '';
-			
+			html_ += '<div id="f-menu-' + arr[i].data.id + '" class="vernav2 iconmenu nav menu-left" style="display: none">';
+				html_ += '<ul class="nav-bar-ul">';
+					if(arr[i].fmenus.length == 0){
+						continue;
+					}
+					var farr = arr[i].fmenus;
+					for(var f = 0 ; f < farr.length ; f ++){
+						html_ += '<li class="current">';
+							html_ += '<a href="#' + farr[f].data.styleKey + '" class="' + farr[f].data.styleClass + '">' + farr[f].data.name + '</a>';
+							html_ += '<span class="arrow"></span>';
+							html_ += '<ul id="' + farr[f].data.styleKey + '">';
+								var sarr = farr[f].smenus;
+								if(sarr.length == 0){
+									continue;
+								}
+								for(var s = 0 ; s < sarr.length ; s ++){
+									var url_ = path_ + sarr[s].data.funcUrl;
+									html_ += '<li id="' + farr[f].data.styleKey + '-' + sarr[s].data.id + '">';
+										html_ += '<a href="' + url_ + '" onclick="pageInit.menuOnclick(this)">' + sarr[s].data.name + '</a>';
+									html_ += '</li>';
+								}
+							html_ += '</ul>';
+						html_ += '</li>';
+					}
+				html_ += '</ul>';
+				html_ += '<a class="togglemenu"></a>';
+				html_ += '<br />';
+				html_ += '<br />';
+			html_ += '</div>';
 		}
 		$("#left-menu").append(html_);
 	},
@@ -127,11 +139,25 @@ var pageInit = {
 		$("#nav-list li").removeClass("current");
 		$(obj).addClass("current");
 		sessionStorage.nav_id = $(obj)[0].id;
+		pageInit.leftCheck();
+	},
 
-		// TODO 显示和隐藏左侧菜单栏
+	/**
+	 * 显示和隐藏左侧菜单栏
+	 */
+	leftCheck:function(){
+		$(".menu-left").hide();
+		var mid = 'f-menu-' + sessionStorage.nav_id.split("-")[1];
+		$("#" + mid).show();
+	},
+
+	/**
+	 * 二级菜单 单击事件
+	 * @param obj
+	 */
+	menuOnclick:function(obj){
+
 	}
-	
-		
 
 }
 
