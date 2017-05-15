@@ -271,7 +271,7 @@
             var url_ = ''; 
             if(treeNode.name == "新建结点"){
             	url_ = 'add_tree_node.do';
-            	var html_ = '<input type="text" name="name" class="smallinput " placeholder="商户名称" style="width: 190px; margin-bottom: 10px;">';
+            	var html_ = '<input type="text" name="name" class="smallinput " placeholder="商户名称" style="width: 250px; margin-bottom: 10px;">';
             	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;"></textarea><br/>';
             	html_ += '<input type="hidden" name="parentId" value="' + treeNode.parentId +'" >';
             	
@@ -288,7 +288,7 @@
             	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
             }else{
             	url_ = 'edit_tree_node.do';
-            	var html_ = '<input type="text" name="name" class="smallinput " style="width: 190px; margin-bottom: 10px;" value="' + treeNode.name + '" >';
+            	var html_ = '<input type="text" name="name" class="smallinput " style="width: 250px; margin-bottom: 10px;" value="' + treeNode.name + '" >';
             	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;">' + treeNode.remark + '</textarea><br/>';
             	html_ += '<input type="hidden" name="id" value="' + treeNode.id +'" >'; 
             	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
@@ -307,7 +307,7 @@
             var url_ = ''; 
             if(treeNode.name == "新建结点"){
             	url_ = 'add_tree_node.do';
-            	var html_ = '<input type="text" name="name" class="smallinput " placeholder="导航栏名称" style="width: 190px; margin-bottom: 10px;">';
+            	var html_ = '<input type="text" name="name" class="smallinput " placeholder="导航栏名称" style="width: 250px; margin-bottom: 10px;">';
             	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;"></textarea><br/>';
             	html_ += '<input type="hidden" name="parentId" value="' + treeNode.parentId +'" >';
             	
@@ -324,7 +324,7 @@
             	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
             }else{
             	url_ = 'edit_tree_node.do';
-            	var html_ = '<input type="text" name="name" class="smallinput " style="width: 190px; margin-bottom: 10px;" value="' + treeNode.name + '" >';
+            	var html_ = '<input type="text" name="name" class="smallinput " style="width: 250px; margin-bottom: 10px;" value="' + treeNode.name + '" >';
             	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;">' + treeNode.remark + '</textarea><br/>';
             	html_ += '<input type="hidden" name="id" value="' + treeNode.id +'" >'; 
             	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
@@ -343,8 +343,8 @@
             var url_ = ''; 
             if(treeNode.name == "新建结点"){
             	url_ = 'add_tree_node.do';
-            	var html_ = '<input type="text" name="name" class="smallinput " placeholder="一级菜单栏名称" style="width: 190px; margin-bottom: 10px;"><br/>';
-            	//html_ += '<input type="text" class="smallinput " placeholder="styleKey" style="width: 190px; margin-bottom: 10px;" name="styleKey" value="" ><br/>';
+            	var html_ = '<input type="text" name="name" class="smallinput " placeholder="一级菜单栏名称" style="width: 250px; margin-bottom: 10px;"><br/>';
+            	//html_ += '<input type="text" class="smallinput " placeholder="styleKey" style="width: 250px; margin-bottom: 10px;" name="styleKey" value="" ><br/>';
             	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;"></textarea><br/>';
             	html_ += '<input type="hidden" name="parentId" value="' + treeNode.parentId +'" >';
             	
@@ -361,9 +361,9 @@
             	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
             }else{
             	url_ = 'edit_tree_node.do';
-            	var html_ = '<input type="text" name="name" class="smallinput " style="width: 190px; margin-bottom: 10px;" value="' + treeNode.name + '" ><br/>';
-            	// html_ += '<input type="text" class="smallinput " placeholder="styleClass" style="width: 190px; margin-bottom: 10px;" name="styleClass" value="' + treeNode.styleClass + '" ><br/>';
-            	// html_ += '<input type="text" class="smallinput " placeholder="styleKey" style="width: 190px; margin-bottom: 10px;" name="styleKey" value="' + treeNode.styleKey + '" ><br/>';
+            	var html_ = '<input type="text" name="name" class="smallinput " style="width: 250px; margin-bottom: 10px;" value="' + treeNode.name + '" ><br/>';
+            	// html_ += '<input type="text" class="smallinput " placeholder="styleClass" style="width: 250px; margin-bottom: 10px;" name="styleClass" value="' + treeNode.styleClass + '" ><br/>';
+            	// html_ += '<input type="text" class="smallinput " placeholder="styleKey" style="width: 250px; margin-bottom: 10px;" name="styleKey" value="' + treeNode.styleKey + '" ><br/>';
             	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;">' + treeNode.remark + '</textarea><br/>';
             	html_ += '<input type="hidden" name="id" value="' + treeNode.id +'" >'; 
             	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
@@ -382,9 +382,9 @@
             var url_ = ''; 
             if(treeNode.name == "新建结点"){
             	url_ = 'add_tree_node.do';
-            	var html_ = '<input type="text" name="name" class="smallinput " placeholder="二级菜单栏名称" style="width: 190px; margin-bottom: 10px;"><br/>';
-            	// html_ += '<input type="text" class="smallinput " placeholder="styleKey" style="width: 190px; margin-bottom: 10px;" name="styleKey" value="" ><br/>';
-            	html_ += '<input type="text" class="smallinput " placeholder="跳转地址：exa/example.do" style="width: 190px; margin-bottom: 10px;" name="funcUrl" value="" ><br/>';
+            	var html_ = '<input type="text" name="name" class="smallinput " placeholder="二级菜单栏名称" style="width: 250px; margin-bottom: 10px;"><br/>';
+            	// html_ += '<input type="text" class="smallinput " placeholder="styleKey" style="width: 250px; margin-bottom: 10px;" name="styleKey" value="" ><br/>';
+            	html_ += '<input type="text" class="smallinput " placeholder="跳转地址：exa/example.do" style="width: 250px; margin-bottom: 10px;" name="funcUrl" value="" ><br/>';
             	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;"></textarea><br/>';
             	html_ += '<input type="hidden" name="parentId" value="' + treeNode.parentId +'" >';
             	
@@ -400,9 +400,9 @@
             	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
             }else{
             	url_ = 'edit_tree_node.do';
-            	var html_ = '<input type="text" name="name" class="smallinput " style="width: 190px; margin-bottom: 10px;" value="' + treeNode.name + '" ><br/>';
-            	// html_ += '<input type="text" class="smallinput " placeholder="styleKey" style="width: 190px; margin-bottom: 10px;" name="styleKey" value="' + treeNode.styleKey + '" ><br/>';
-            	html_ += '<input type="text" class="smallinput " placeholder="funcUrl" style="width: 190px; margin-bottom: 10px;" name="funcUrl" value="' + treeNode.funcUrl + '" ><br/>'; 
+            	var html_ = '<input type="text" name="name" class="smallinput " style="width: 250px; margin-bottom: 10px;" value="' + treeNode.name + '" ><br/>';
+            	// html_ += '<input type="text" class="smallinput " placeholder="styleKey" style="width: 250px; margin-bottom: 10px;" name="styleKey" value="' + treeNode.styleKey + '" ><br/>';
+            	html_ += '<input type="text" class="smallinput " placeholder="funcUrl" style="width: 250px; margin-bottom: 10px;" name="funcUrl" value="' + treeNode.funcUrl + '" ><br/>'; 
             	
             	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;">' + treeNode.remark + '</textarea><br/>';
             	html_ += '<input type="hidden" name="id" value="' + treeNode.id +'" >'; 
@@ -422,7 +422,7 @@
             var url_ = ''; 
             if(treeNode.name == "新建结点"){
             	url_ = 'add_tree_node.do';
-            	var html_ = '节点名称：<input type="text" name="name" class="smallinput " placeholder="按钮节点|跳转页" style="width: 190px; margin-bottom: 10px;"><br/>';
+            	var html_ = '节点名称：<input type="text" name="name" class="smallinput " placeholder="按钮节点|跳转页" style="width: 250px; margin-bottom: 10px;"><br/>';
             	html_ += '按钮位置：<select id="btnArea" name="btnArea" class="radius3"  style="margin-left:0px; width:204px;  margin-bottom: 10px;">';
 				html_ += '<option value="10001">功能区域</option><option value="10002">查询区域</option><option value="10003">数据区域</option></select><br/>';
 				
@@ -443,7 +443,7 @@
             	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
             }else{
             	url_ = 'edit_tree_node.do';
-            	var html_ = '节点名称：<input type="text" name="name" class="smallinput " style="width: 190px; margin-bottom: 10px;" value="' + treeNode.name + '" ><br/>'; 
+            	var html_ = '节点名称：<input type="text" name="name" class="smallinput " style="width: 250px; margin-bottom: 10px;" value="' + treeNode.name + '" ><br/>'; 
             	
             	// 按钮位置勾选判定
             	html_ += '按钮位置：<select id="btnArea" name="btnArea" class="radius3"  style="margin-left:0px; width:204px;  margin-bottom: 10px;">';
@@ -464,11 +464,12 @@
             	}else{
             		html_ += '<option value="4">页面按钮</option><option value="5"  selected>内部跳转页面</option></select><br/>';
             		html_ += '<div id = "node-type" style="margin-bottom: 10px;">';
-            		html_ += '跳转地址：<input type="text" class="smallinput " placeholder="funcUrl" style="width: 190px; margin-bottom: 10px;" name="funcUrl" value="' + treeNode.funcUrl + '" ><br/>'; 
+            		html_ += '跳转地址：<input type="text" class="smallinput " placeholder="funcUrl" style="width: 250px; margin-bottom: 10px;" name="funcUrl" value="' + treeNode.funcUrl + '" ><br/>'; 
             		html_ += '</div>';
             	}
             	
-            	html_ += '<textarea cols="80" rows="5" maxlength="250"  name="remark"  class="longinput "  placeholder="备注信息描述" style="margin-bottom: 10px;">' + treeNode.remark + '</textarea><br/>';
+            	// html_ += '标识：<input name="remark"  class="smallinput "  placeholder="备注信息描述" style="width: 250px; margin-bottom: 10px;" value="' + treeNode.eleValue + '"><br/>';
+            	html_ += '按钮标识：<input type="text" class="smallinput " placeholder=""  style="width: 250px; margin-bottom: 10px;" value="' + treeNode.eleValue + '" ><br/>' 
             	html_ += '<input type="hidden" name="id" value="' + treeNode.id +'" >'; 
             	html_ += '<button class="stdbtn btn_orange " onclick="tfunc.addData(\'' + url_ +'\')"> 提 交 </button>'
             }
@@ -484,7 +485,7 @@
         		html_ += '<input type="hidden" name="funcUrl" value="" >';   // 更新时，此处置空
         		$("#node-type").append(html_); 
         	}else{  // 内部跳转页面 
-        		html_ += '跳转地址：<input type="text" class="smallinput " placeholder="exa/example.do" style="width: 190px; margin-bottom: 10px;" name="funcUrl" value="" ><br/>';
+        		html_ += '跳转地址：<input type="text" class="smallinput " placeholder="exa/example.do" style="width: 250px; margin-bottom: 10px;" name="funcUrl" value="" ><br/>';
         		$("#node-type").append(html_); 
         	}
         },

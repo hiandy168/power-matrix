@@ -40,7 +40,7 @@
         </script>
 	<div id="left-menu">
 		<%-- nav 类代表导航栏 无任何样式应用|每个导航栏对应的菜单显示与否由id来决定--%>
-        <div id="nav-bar-1" class="vernav2 iconmenu nav" style="display: none">
+        <div id="f-menu-1" class="vernav2 iconmenu nav" style="display: none">
             <ul class="nav-bar-ul"> 
                 <!-- 此处应放入到系统维护导航栏中-->
                  <li class="current">
@@ -92,7 +92,7 @@
 
 
         <%-- 切换导航栏的时候 这里的菜单来应该默认打开 从而配合【Plus】按钮进行菜单的全部打开或者全部收起--%>
-        <div id="nav-bar-2" class="vernav2 iconmenu nav" style="display: none">
+        <div id="f-menu-2" class="vernav2 iconmenu nav" style="display: none">
 	        <ul class="nav-bar-ul"> 
 		 		<li class="current">
 	                 <a href="#platform-user" class="inbox">平台用户指南</a>
