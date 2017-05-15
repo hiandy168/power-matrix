@@ -40,7 +40,7 @@
         </script>
 	<div id="left-menu">
 		<%-- nav 类代表导航栏 无任何样式应用|每个导航栏对应的菜单显示与否由id来决定--%>
-        <div id="nav-bar-1" class="vernav2 iconmenu nav">
+        <div id="nav-bar-1" class="vernav2 iconmenu nav" style="display: none">
             <ul class="nav-bar-ul"> 
                 <!-- 此处应放入到系统维护导航栏中-->
                  <li class="current">

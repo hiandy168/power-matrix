@@ -17,10 +17,17 @@ var pageInit = {
 
 		if(sessionStorage.nav_id != undefined){
 			$("#" + sessionStorage.nav_id).addClass("current");
-			pageInit.leftCheck();
+			pageInit.leftCheck(); 
+			pageInit.securityBtnsShow();
 		}else{
 			$($("#nav-list li")[0]).addClass("current");  // 登陆进入则默认加载第一个导航
 		}
+	},
+	
+	// 显示被隐藏的按钮
+	securityBtnsShow:function(){
+		var btns = sessionStorage.btns; 
+		// TODO 
 	},
 
 	pageInit:function(obj){
@@ -117,8 +124,16 @@ var pageInit = {
 								}
 								for(var s = 0 ; s < sarr.length ; s ++){
 									var url_ = path_ + sarr[s].data.funcUrl;
+									var str = "";
+									var btns = sarr[s].btns;
+									if(btns.length != 0){
+										for(var b = 0 ; b < btns.length; b ++){
+											str += btns[b].data.btnArea + "@" + btns[b].data.eleValue + "," ; 
+										}
+										str = str.substring(0 , str.length - 1);
+									}
 									html_ += '<li id="' + farr[f].data.styleKey + '-' + sarr[s].data.id + '">';
-										html_ += '<a href="' + url_ + '" onclick="pageInit.menuOnclick(this)">' + sarr[s].data.name + '</a>';
+										html_ += '<a href="javascript:void(0)" onclick="pageInit.menuOnclick(this)" btns="' + str + '" target_="' + url_ + '" >' + sarr[s].data.name + '</a>';
 									html_ += '</li>';
 								}
 							html_ += '</ul>';
@@ -157,8 +172,10 @@ var pageInit = {
 	 * 二级菜单 单击事件
 	 * @param obj
 	 */
-	menuOnclick:function(obj){
-
+	menuOnclick:function(obj){ 
+		var href_ = $(obj).attr("target_"); 
+		sessionStorage.btns = $(obj).attr("btns");  
+		window.location.href = href_;
 	}
 
 }
