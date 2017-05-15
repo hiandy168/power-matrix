@@ -6,8 +6,10 @@
 var pageInit = {
 
 	page:null,
+	path:null,
 
-	init:function(obj){
+	init:function(obj , path_){
+		this.path = path_;
 		pageInit.pageInit(obj);
 		// TODO 判断一下是不是已经加载完成了，如果是则没有必要全部重绘，改变显隐状态就可以。
 		pageInit.drawNavList();
@@ -96,7 +98,7 @@ var pageInit = {
 		if(arr.length == 0){
 			return;
 		}
-		var path_ = "${basePath}";    // TODO  这里的路径有问题
+		var path_ = this.path ;    // 这里的路径有问题
 		for(var i = 0 ; i < arr.length ; i ++){
 			html_ += '<div id="f-menu-' + arr[i].data.id + '" class="vernav2 iconmenu nav menu-left" style="display: none">';
 				html_ += '<ul class="nav-bar-ul">';

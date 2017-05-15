@@ -43,7 +43,7 @@
 		$(function(){
 			if(sessionStorage.pageJson != ""){
 				var page = JSON.parse(sessionStorage.pageJson); 
-				pageInit.init(page);
+				pageInit.init(page , "${basePath}");
 			}
 		});  
 
