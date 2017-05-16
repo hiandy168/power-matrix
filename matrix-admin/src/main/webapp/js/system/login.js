@@ -14,7 +14,7 @@ var login = {
         	if(object.data == undefined || object.data == ""){
         		return;
         	}
-        	sessionStorage.pageJson = object.data;
+        	localStorage.pageJson = object.data;
             window.location.href='manager/index.do';
         }else{
             alert(object.msg);
@@ -25,7 +25,7 @@ var login = {
      * 退出相关类
      */
     logout:function(){
-    	sessionStorage.pageJson = "";
+    	localStorage.pageJson = "";
     },
 
     /**

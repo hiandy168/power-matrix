@@ -41,8 +41,8 @@
     <!-- 准备实例化权限 -->
     <script type="text/javascript">
 		$(function(){
-			if(sessionStorage.pageJson != ""){
-				var page = JSON.parse(sessionStorage.pageJson); 
+			if(localStorage.pageJson != undefined && localStorage.pageJson != ""){
+				var page = JSON.parse(localStorage.pageJson); 
 				pageInit.init(page , "${basePath}");
 			}
 		});  

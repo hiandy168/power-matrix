@@ -1,7 +1,7 @@
 
 /**
  * pageInit对象用于整个页面绘制和初始化的过程
- * 使用sessionStorage，当用户关闭浏览器或点击退出按钮则失效。
+ * 使用localStorage，当用户关闭浏览器或点击退出按钮则失效。
  */
 var pageInit = {
 
@@ -15,18 +15,20 @@ var pageInit = {
 		pageInit.drawNavList();
 		pageInit.drawMenuList();
 
-		if(sessionStorage.nav_id != undefined){
-			$("#" + sessionStorage.nav_id).addClass("current");
+		if(localStorage.nav_id != undefined){
+			$("#" + localStorage.nav_id).addClass("current");
 			pageInit.leftCheck(); 
 			pageInit.securityBtnsShow();
 		}else{
 			$($("#nav-list li")[0]).addClass("current");  // 登陆进入则默认加载第一个导航
+			// TODO 显示左侧菜单
+			$($("#left-menu>div")[0]).show();
 		}
 	},
 	
 	// 显示被隐藏的按钮
 	securityBtnsShow:function(){
-		var btns = sessionStorage.btns; 
+		var btns = localStorage.btns; 
 		// TODO 
 	},
 
@@ -155,7 +157,7 @@ var pageInit = {
 	navChange:function(obj){
 		$("#nav-list li").removeClass("current");
 		$(obj).addClass("current");
-		sessionStorage.nav_id = $(obj)[0].id;
+		localStorage.nav_id = $(obj)[0].id;
 		pageInit.leftCheck();
 	},
 
@@ -164,7 +166,7 @@ var pageInit = {
 	 */
 	leftCheck:function(){
 		$(".menu-left").hide();
-		var mid = 'f-menu-' + sessionStorage.nav_id.split("-")[1];
+		var mid = 'f-menu-' + localStorage.nav_id.split("-")[1];
 		$("#" + mid).show();
 	},
 
@@ -174,7 +176,7 @@ var pageInit = {
 	 */
 	menuOnclick:function(obj){ 
 		var href_ = $(obj).attr("target_"); 
-		sessionStorage.btns = $(obj).attr("btns");  
+		localStorage.btns = $(obj).attr("btns");  
 		window.location.href = href_;
 	}
 

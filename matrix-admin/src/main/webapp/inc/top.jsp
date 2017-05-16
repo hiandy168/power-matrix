@@ -60,12 +60,12 @@
 
         <div class="header">
             <ul id="nav-list" class="headermenu">
-                <li id="nav-1" onclick="pageInit.navChange(this)" style="display:block; width:200px"> 
+                <li id="nav-1" onclick="pageInit.navChange(this)" style="display:none; width:200px"> 
                     <a href="javascript:void(0)">
                         默认导航栏1
                     </a>
                 </li>
-                <li id="nav-2"  onclick="pageInit.navChange(this)" style="display:block; width:200px">
+                <li id="nav-2"  onclick="pageInit.navChange(this)" style="display:none; width:200px">
                     <a href="javascript:void(0)">
                        默认导航栏2
                     </a>
