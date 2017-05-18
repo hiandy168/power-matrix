@@ -43,7 +43,7 @@
 							<span class="field"> 
 								<input id="mobile" type="text" name="mobile" class="form-search" />
 							</span> 
-							<a onclick="toUserAddPage()" class="btn btn_orange btn_home radius50" style="float: right; cursor: pointer; margin-left: 10px"> 
+							<a onclick="openAddDialog()" class="btn btn_orange btn_home radius50" style="float: right; cursor: pointer; margin-left: 10px"> 
 								<span> 添 加 </span>
 							</a> 
 							<a onclick="searchReset()" class="btn btn_orange btn_search radius50" style="float: right; cursor: pointer; margin-left: 10px"> 
@@ -145,12 +145,27 @@
 		$('#ajax-tbody-user-list').append(html_);
 	}
 	
-	// 前往添加用户界面 
-	function toUserAddPage(){
-		window.location.href = "${basePath}manager/show_user_add_page.do";
+	function openAddDialog(){
+		var dialogId = 'add-dialog-div';   // 弹窗ID
+		$.blockUI({
+            showOverlay:true ,
+            css:  {
+                cursor:'auto',
+                left:($(window).width() - $("#" + dialogId).width())/2 + 'px',
+                width:$("#" + dialogId).width()+'px',
+                top:($(window).height()-$("#" + dialogId).height())/2 + 'px',
+                position:'fixed', //居中
+                border: '3px solid #FB9337'  // 边界
+            },
+            message: $('#' + dialogId),
+            fadeIn: 500,//淡入时间
+            fadeOut: 1000  //淡出时间
+        });
 	}
 	
-	
+	function addUser(){
+		
+	}
 
 	function deleteOne(id_) {
 		jConfirm('您确定要删除这条记录吗？', 'confirm', function(flag) {
@@ -183,9 +198,62 @@
 		aForm.formPaging(0);
 	}
 	
+	function closeDialog(){
+        $.unblockUI();
+    }
 </script>
 
+<div id="add-dialog-div" class="dialog-page-div" style="display: none;width: 400px;height: 300px">
+    <p class="dialog-title">
+        <a href="#" onclick="closeDialog()" class="dialog-close"></a>
+        添加用户
+    </p>
 
+    <div id="dialog-content-wrapper" class="contentwrapper">
+        <div id="dialog-table-form" class="dataTables_wrapper" >
+            <form id="dialog-table" >
+	            <table class="dialog-table">
+	                <tbody>
+	                	<tr >
+	                		<td style="text-align: right">
+	                			用户姓名：
+	                		</td>
+	                		<td style="text-align: left">
+	                			<input type="text" name="" class="dialog-form-input" style="width:200px;"/>
+	                		</td>
+	                	</tr>
+	                	
+	                	<tr class="add-dialog">
+	                		<td style="text-align: right">
+	                			手 机 号：
+	                		</td>
+	                		<td style="text-align: left">
+	                			<input type="text" name="" class="dialog-form-input" style="width:200px;"/>
+	                		</td>
+	                	</tr>
+	                	
+	                	<tr>
+	                		<td style="text-align: right">
+	                			电子邮件：
+	                		</td>
+	                		<td style="text-align: left">
+	                			<input type="text" name="" class="dialog-form-input" style="width:200px;"/>
+	                		</td>
+	                	</tr>
+	                </tbody>
+	                <tfoot>
+		                <tr>
+					      <td colspan="2" style="text-align: right">
+					      	<button class="stdbtn btn_orange" style="opacity:1">提 &nbsp&nbsp&nbsp&nbsp&nbsp 交</button>
+					      </td> 
+					    </tr>
+	                </tfoot>
+	            </table>
+            </form>
+        </div>
+    </div>
+
+</div>
 
 
 

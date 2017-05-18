@@ -70,7 +70,6 @@ public class ManagerCenterController extends BaseClass{
 	 */
 	@RequestMapping("sys_user_list_page")
 	public String systemUserCreate(){
-		
 		return "jsp/syssetting/sysUserList";
 	}
 	
@@ -79,6 +78,19 @@ public class ManagerCenterController extends BaseClass{
 	public JSONObject sysUserList(McUserInfo info , HttpServletRequest request) {
 		info.setFlag(2); 
 		return mcUserInfoService.ajaxPageData(info, request);
+	}
+	
+	/**
+	 * @descriptions 前往添加用户界面  
+	 *
+	 * @return
+	 * @date 2017年5月18日 下午9:59:25
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping("show_user_add_page")
+	public String showUserAddPage(){
+		return "jsp/syssetting/sysUserAdd";
 	}
 }
 
