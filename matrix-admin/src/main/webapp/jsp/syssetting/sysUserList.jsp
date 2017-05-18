@@ -7,11 +7,6 @@
 	<script type="text/javascript" src="${js}/system/ajax-form.js"></script>
 	<script src="${js}/blockUI/jquery.blockUI.js" type="text/javascript"></script>
 	<style type="text/css">
-		.dialog-table{
-			width:100%; 
-			border-collapse:separate; 
-			border-spacing:10px;  
-		}
 	</style>
 </head>
 
