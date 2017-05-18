@@ -105,17 +105,18 @@
             var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
             dForm.launch(url_ , 'dialog-table-form' , obj).init().drawForm(loadDialogTable);
 
-            $.blockUI({
+            var dialogId = 'dialog-page-div';  // 弹窗ID
+    		$.blockUI({
                 showOverlay:true ,
                 css:  {
                     cursor:'auto',
-                    left:($(window).width() - $("#dialog-page-div").width())/2 + 'px',
-                    width:$("#dialog-page-div").width()+'px',
-                    top:($(window).height()-$("#dialog-page-div").height())/2 + 'px',
+                    left:($(window).width() - $("#" + dialogId).width())/2 + 'px',
+                    width:$("#" + dialogId).width()+'px',
+                    top:($(window).height()-$("#" + dialogId).height())/2 + 'px',
                     position:'fixed', //居中
                     border: '3px solid #FB9337'  // 边界
                 },
-                message: $('#dialog-page-div'),
+                message: $('#' + dialogId),
                 fadeIn: 500,//淡入时间
                 fadeOut: 1000  //淡出时间
             });

@@ -9,6 +9,7 @@
 
         /**
          * Ajax 页面分页示例
+         * $ { basePath } 这个是必填的，单纯使用“example/ajaxPageData.do” 会404 
          *
          * var data_ = null; 这里暂设置为null，这两处为空的地方可以根据实际情况处理。注意loadTable()也有。
          */

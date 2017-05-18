@@ -1,5 +1,6 @@
 package com.matrix.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -41,7 +42,7 @@ public class ManagerCenterController extends BaseClass{
 	@RequestMapping(value = "login", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject login(McUserInfo info, HttpSession session) {
-		getLogger().logInfo(info.getUserName() + " 正在尝试登录");
+		logger.info(info.getUserName() + " 正在尝试登录");
 		return mcUserInfoService.login(info, session);
 	}
 
@@ -56,6 +57,28 @@ public class ManagerCenterController extends BaseClass{
 	public String loginPageIndex() {
 		getLogger().logInfo(" to index.jsp  ... ");
 		return "redirect:/index.jsp";
+	}
+	
+	
+	/**
+	 * @description: 前往用户列表页面 
+	 * 
+	 * @return
+	 * @author Yangcl 
+	 * @date 2017年5月18日 上午10:12:05 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping("sys_user_list_page")
+	public String systemUserCreate(){
+		
+		return "jsp/syssetting/sysUserList";
+	}
+	
+	@RequestMapping(value = "sys_user_list", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject sysUserList(McUserInfo info , HttpServletRequest request) {
+		info.setFlag(2); 
+		return mcUserInfoService.ajaxPageData(info, request);
 	}
 }
 
