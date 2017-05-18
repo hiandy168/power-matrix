@@ -1,5 +1,7 @@
 package com.matrix.service.impl;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -15,6 +17,7 @@ import com.matrix.cache.inf.ICacheFactory;
 import com.matrix.dao.IMcUserInfoDao;
 import com.matrix.pojo.entity.McUserInfo;
 import com.matrix.service.IMcUserInfoService;
+import com.matrix.util.SignUtil;
 
 
 /**
@@ -49,6 +52,7 @@ public class McUserInfoServiceImpl extends BaseServiceImpl<McUserInfo, Integer> 
 			result.put("msg", "用户名或密码不得为空");
 			return result;
 		}
+		userInfo.setPassword(SignUtil.md5Sign(userInfo.getPassword()));  
 		McUserInfo info = mcUserInfoDao.login(userInfo);  
 		if (null != info) {
 			session.setAttribute("userInfo", info);   // 写入session
@@ -64,6 +68,120 @@ public class McUserInfoServiceImpl extends BaseServiceImpl<McUserInfo, Integer> 
 			result.put("msg", "用户名或密码错误");
 			return result;
 		}
+	}
+
+	
+	public JSONObject addSysUser(McUserInfo info) {
+		JSONObject result = new JSONObject();
+		if (StringUtils.isBlank(info.getUserName()) || StringUtils.isBlank(info.getPassword())) {
+			result.put("status", "error");
+			result.put("msg", "用户名或密码不得为空");
+			return result;
+		}
+		if (StringUtils.isBlank(info.getMobile())) {
+			result.put("status", "error");
+			result.put("msg", "用户手机号码不得为空");
+			return result;
+		}
+		if (StringUtils.isBlank(info.getEmail())) {
+			result.put("status", "error");
+			result.put("msg", "用户电子邮箱不得为空");
+			return result;
+		}
+		info.setPassword(SignUtil.md5Sign(info.getPassword()));   
+		info.setIdcard("");
+		info.setCreateTime(new Date());
+		info.setRemark("admin create this user"); 
+		
+		try {
+			int count = mcUserInfoDao.insertSelective(info);
+			if(count == 1){
+				result.put("status", "success");
+				result.put("msg", "添加成功");
+			}else{
+				result.put("status", "error");
+				result.put("msg", "添加失败");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("status", "error");
+			result.put("msg", "服务器异常");
+		}
+		
+		
+		return result;
+	}
+
+
+	public JSONObject editSysUser(McUserInfo info) {
+		JSONObject result = new JSONObject();
+		if (StringUtils.isBlank(info.getUserName()) || StringUtils.isBlank(info.getPassword())) {
+			result.put("status", "error");
+			result.put("msg", "用户名或密码不得为空");
+			return result;
+		}
+		if (StringUtils.isBlank(info.getMobile())) {
+			result.put("status", "error");
+			result.put("msg", "用户手机号码不得为空");
+			return result;
+		}
+		if (StringUtils.isBlank(info.getEmail())) {
+			result.put("status", "error");
+			result.put("msg", "用户电子邮箱不得为空");
+			return result;
+		}
+		info.setPassword(SignUtil.md5Sign(info.getPassword()));    
+		info.setRemark("admin edit this user"); 
+		
+		try {
+			int count = mcUserInfoDao.updateSelective(info);
+			if(count == 1){
+				result.put("status", "success");
+				result.put("msg", "修改成功");
+			}else{
+				result.put("status", "error");
+				result.put("msg", "修改失败");  
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("status", "error");
+			result.put("msg", "服务器异常");
+		}
+		return result;
+	}
+
+	/**
+	 * @descriptions 删除一个用户|不保留数据库中的记录
+	 *
+	 * @param id
+	 * @return
+	 * @date 2017年5月19日 上午12:04:28
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject deleteUser(Integer id) {
+		JSONObject result = new JSONObject();
+		if(StringUtils.isBlank(id.toString())){
+			result.put("status", "error");
+			result.put("msg", "页面数据错误,用户id为空");
+			return result;
+		}
+		try {
+			int count = mcUserInfoDao.deleteById(id);  
+			if(count == 1){
+				result.put("status", "success");
+				result.put("msg", "删除成功");
+			}else{
+				result.put("status", "error");
+				result.put("msg", "删除失败");  
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("status", "error");
+			result.put("msg", "服务器异常");
+		}
+		
+		return result;
 	}
 }
 

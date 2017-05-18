@@ -17,6 +17,11 @@
     <script src="${js}/plugins/css3-mediaqueries.js"></script>
     <![endif]-->
 
+	<style type="text/css">
+		tr:hover{
+		  background:#B8DABD;
+		}
+	</style>
 	
 	
     <script type="text/javascript" src="${js}/jquery-1.10.2.js"></script> 

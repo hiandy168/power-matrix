@@ -14,6 +14,7 @@
          * var data_ = null; 这里暂设置为null，这两处为空的地方可以根据实际情况处理。注意loadTable()也有。
          */
         $(function(){
+        	 // aForm.formPaging('$ { num }'); 如果从修改页面返回到列表页面，则可以进入这段代码 直接定位。
             var type_ = 'post';
             var url_ = '${basePath}example/ajaxPageData.do';
             var data_ = null;

@@ -183,6 +183,11 @@ public class ExampleController{
 		session.setAttribute("kjt-key", null); // 删除session
 		return "redirect:/jsp/example/reality/validate.jsp";    
 	}
+	
+	@RequestMapping("block_ui_page")
+	public String blockUiPage(HttpSession session){ 
+		return "jsp/example/blockUiPageExample"; 
+	}
 }
 
 

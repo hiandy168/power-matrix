@@ -70,8 +70,8 @@
 						<thead>
 							<tr>
 								<th class="head1">用户姓名</th>
-								<th class="head0">手机号码</th>
-								<th class="head0">E-mail</th>
+								<th class="head1">手机号码</th>
+								<th class="head1">E-mail</th>
 								<th class="head1">创建时间</th>
 								<th class="head1 " width="100px">操作</th>
 							</tr>
@@ -130,12 +130,10 @@
 						+ '<td class="center">' + list[i].mobile + '</td>'
 						+ '<td class="center">' + list[i].email + '</td>'
 						+ '<td class="center">' + list[i].createTime + '</td>'
-						+ '<td width="150px" align="center">'
-						+ '<a onclick="deleteOne(\'' + list[i].id
-						+ '\')" title="删除"  style="cursor: pointer;">删除</a> | '
-						+ '<a href="${basePath}example/editInfoPage.do?id='
-						+ list[i].id
-						+ '" title="修改"  style="cursor: pointer;">修改</a> '
+						+ '<td width="200px" align="center">'
+						+ '<a onclick="deleteOne(\'' + list[i].id + '\')" title="删除"  style="cursor: pointer;">删除</a> | '
+						+ '<a href="${basePath}manager/show_user_edit_page.do?id=' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a> |'
+						+ '<a href="${basePath}manager/show_user_edit_page.do?id=' + list[i].id + '" title="用户权限"  style="cursor: pointer;">用户角色</a> '
 						+ '</td></tr>'
 			}
 		}else{
@@ -153,10 +151,10 @@
 	
 
 	function deleteOne(id_) {
-		jConfirm('您确定要删除这条记录吗？', 'confirm', function(flag) {
+		jConfirm('您确定要删除这条记录吗？', '系统提示', function(flag) {
 			if (flag) {
 				var type_ = 'post';
-				var url_ = '${basePath}example/deleteOne.do';
+				var url_ = '${basePath}manager/delete_user.do';
 				var data_ = {
 					id : id_
 				};
@@ -166,7 +164,7 @@
 					aForm.formPaging(currentPageNumber);
 				} else {
 				}
-				jAlert(obj.msg, 'title');
+				jAlert(obj.msg, '系统提示');
 			}
 		});
 	}

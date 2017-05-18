@@ -12,11 +12,9 @@ public class McUserInfo {
     private Integer sex;
     private Date birthday;
     private String mobile;
-    private Integer email;
+    private String email;
     private Date createTime;
     private String remark;
-    
-    
     
 	public Integer getId() {
 		return id;
@@ -72,10 +70,10 @@ public class McUserInfo {
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
-	public Integer getEmail() {
+	public String getEmail() {
 		return email;
 	}
-	public void setEmail(Integer email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 	public Date getCreateTime() {

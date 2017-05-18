@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -91,6 +92,41 @@ public class ManagerCenterController extends BaseClass{
 	@RequestMapping("show_user_add_page")
 	public String showUserAddPage(){
 		return "jsp/syssetting/sysUserAdd";
+	}
+	
+	@RequestMapping(value = "add_sys_user", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject addSysUser(McUserInfo info) {
+		return mcUserInfoService.addSysUser(info);
+	}
+	
+	/**
+	 * @descriptions 前往修改用户信息界面  
+	 *
+	 * @return
+	 * @date 2017年5月18日 下午10:48:39
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping("show_user_edit_page")
+	public String showUserEditPage(Integer id , ModelMap model){
+		McUserInfo entity = mcUserInfoService.find(id);
+		if(entity != null){
+			model.addAttribute("entity", entity);
+		}
+		return "jsp/syssetting/sysUserEdit";
+	}
+	
+	@RequestMapping(value = "edit_sys_user", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject editSysUser(McUserInfo info) {
+		return mcUserInfoService.editSysUser(info);
+	}
+	
+	@RequestMapping(value = "delete_user", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject deleteUser(Integer id) {
+		return mcUserInfoService.deleteUser(id);
 	}
 }
 
