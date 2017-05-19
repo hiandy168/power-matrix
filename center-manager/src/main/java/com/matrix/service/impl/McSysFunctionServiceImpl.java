@@ -383,32 +383,32 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	public JSONObject mcUserList(McUserInfo entity , HttpServletRequest request){
-		JSONObject result = new JSONObject();
-		String pageNum = request.getParameter("pageNum"); // 当前第几页
-		String pageSize = request.getParameter("pageSize"); // 当前页所显示记录条数
-		int num = 1;
-		int size = 10;
-		if (StringUtils.isNotBlank(pageNum)) {
-			num = Integer.parseInt(pageNum);
-		}
-		if (StringUtils.isNotBlank(pageSize)) {
-			size = Integer.parseInt(pageSize);
-		}
-		
-		PageHelper.startPage(num, size);
-		List<McUserInfo> list = mcUserInfoDao.mcUserList(entity);
-		if (list != null && list.size() > 0) {
-			result.put("status", "success");
-		} else {
-			result.put("status", "error");
-			result.put("msg", this.getInfo(100090002));  // 没有查询到可以显示的数据 
-		}
-		PageInfo<McUserInfo> pageList = new PageInfo<McUserInfo>(list);
-		result.put("data", pageList);
-		result.put("entity", entity);
-		return result;
-	}
+//	public JSONObject mcUserList(McUserInfo entity , HttpServletRequest request){
+//		JSONObject result = new JSONObject();
+//		String pageNum = request.getParameter("pageNum"); // 当前第几页
+//		String pageSize = request.getParameter("pageSize"); // 当前页所显示记录条数
+//		int num = 1;
+//		int size = 10;
+//		if (StringUtils.isNotBlank(pageNum)) {
+//			num = Integer.parseInt(pageNum);
+//		}
+//		if (StringUtils.isNotBlank(pageSize)) {
+//			size = Integer.parseInt(pageSize);
+//		}
+//		
+//		PageHelper.startPage(num, size);
+//		List<McUserInfo> list = mcUserInfoDao.mcUserList(entity);
+//		if (list != null && list.size() > 0) {
+//			result.put("status", "success");
+//		} else {
+//			result.put("status", "error");
+//			result.put("msg", this.getInfo(100090002));  // 没有查询到可以显示的数据 
+//		}
+//		PageInfo<McUserInfo> pageList = new PageInfo<McUserInfo>(list);
+//		result.put("data", pageList);
+//		result.put("entity", entity);
+//		return result;
+//	}
 
 	
 	/**

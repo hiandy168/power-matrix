@@ -71,7 +71,7 @@ public class ManagerCenterController extends BaseClass{
 	 */
 	@RequestMapping("sys_user_list_page")
 	public String systemUserCreate(){
-		return "jsp/syssetting/sysUserList";
+		return "jsp/syssetting/user/sysUserList";
 	}
 	
 	@RequestMapping(value = "sys_user_list", produces = { "application/json;charset=utf-8" })
@@ -91,7 +91,7 @@ public class ManagerCenterController extends BaseClass{
 	 */
 	@RequestMapping("show_user_add_page")
 	public String showUserAddPage(){
-		return "jsp/syssetting/sysUserAdd";
+		return "jsp/syssetting/user/sysUserAdd";
 	}
 	
 	@RequestMapping(value = "add_sys_user", produces = { "application/json;charset=utf-8" })
@@ -114,7 +114,7 @@ public class ManagerCenterController extends BaseClass{
 		if(entity != null){
 			model.addAttribute("entity", entity);
 		}
-		return "jsp/syssetting/sysUserEdit";
+		return "jsp/syssetting/user/sysUserEdit";
 	}
 	
 	@RequestMapping(value = "edit_sys_user", produces = { "application/json;charset=utf-8" })

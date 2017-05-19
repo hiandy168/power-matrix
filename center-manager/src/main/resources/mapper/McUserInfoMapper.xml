@@ -49,13 +49,14 @@
 		</where>
 	</select>
 	
-	
+	<!-- 显示没有关联任何角色的用户列表 巧妙的左查询-->
 	<select id="mcUserList" resultMap="BaseResultMap" parameterType="com.matrix.pojo.entity.McUserInfo">
 		select 
 		  * 
 		from
 		  managercenter.`mc_user_info` info left join managercenter.`mc_user_role` ur on info.id = ur.mc_user_id 
-		where ur.id is null 
+		where 
+			ur.id is null 
 	</select>
 	
 	

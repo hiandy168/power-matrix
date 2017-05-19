@@ -19,9 +19,9 @@
 		<div class="centercontent tables">
 			<!--这个跳转页面的功能及跳转路径等等-->
 			<div class="pageheader notab">
-				<h1 class="pagetitle">常用分页表单示例</h1>
-				<span class="pagedesc"> 本页面用于系统管理员来创建系统中的用户。 </span> <span
-					style="display: none">jsp/syssetting/sysUserList.jsp</span>
+				<h1 class="pagetitle">系统角色列表页面</h1>
+				<span class="pagedesc"> 本页面用于系统管理员来创建系统中的角色。 </span> <span
+					style="display: none">jsp/syssetting/role/sysMcRoleList.jsp</span>
 			</div>
 
 			<div id="contentwrapper" class="contentwrapper">
@@ -30,14 +30,10 @@
 				<div id="table-form" class="dataTables_wrapper">
 					<div class="contenttitle2">
 						<p style="margin: 0px">
-							<label>姓名：</label> 
+							<label>权限名称：</label> 
 							<span class="field"> 
-								<input id="user-name" type="text" name="userName" class="form-search" />
-							</span> 
-							<label>手机号：</label> 
-							<span class="field"> 
-								<input id="mobile" type="text" name="mobile" class="form-search" />
-							</span> 
+								<input id="role-name" type="text" name="roleName" class="form-search" />
+							</span>  
 							<a onclick="toUserAddPage()" class="btn btn_orange btn_home radius50" style="float: right; cursor: pointer; margin-left: 10px"> 
 								<span> 添 加 </span>
 							</a> 
@@ -51,7 +47,7 @@
 					</div>
 
 					<div id="dyntable2_length" class="dataTables_length dialog-show-count">
-						<label> 当前显示 <%-- TODO 注意：select-page-size 这个ID是写定的，如果没有这个显示条数，则默认显示10条 - Yangcl --%>
+						<label> 当前显示 
 							<select id="select-page-size" size="1" name="dyntable2_length" onchange="aForm.formPaging('1')">
 								<option value="10">10</option>
 								<option value="25">25</option>
@@ -64,9 +60,7 @@
 					<table id="dyntable2" cellpadding="0" cellspacing="0" border="0" class="stdtable">
 						<thead>
 							<tr>
-								<th class="head1">用户姓名</th>
-								<th class="head1">手机号码</th>
-								<th class="head1">E-mail</th>
+								<th class="head1">权限名称</th> 
 								<th class="head1">创建时间</th>
 								<th class="head1 " width="100px">操作</th>
 							</tr>
@@ -91,7 +85,7 @@
 <script type="text/javascript">
 	$(function() {
 		var type_ = 'post';
-		var url_ = '${basePath}manager/sys_user_list.do';
+		var url_ = '${basePath}sysrole/sys_role_list.do';
 		var data_ = null; // 可以为null，后台会进行默认处理
 		var obj = JSON.parse(ajaxs.sendAjax(type_, url_, data_));
 		aForm.launch(url_, 'table-form', obj).init().drawForm(loadTable);
@@ -106,8 +100,7 @@
 		// 这种情况是响应上一页或下一页的触发事件
 		var type_ = 'post';
 		var data_ = {
-			userName : $("#user-name").val(),
-			mobile : $("#mobile").val(),
+			userName : $("#role-name").val() 
 		}
 		var obj = JSON.parse(ajaxs.sendAjax(type_, url_, data_));
 		aForm.launch(url_, 'table-form', obj).init();
@@ -121,14 +114,11 @@
 		var list = obj.data.list;
 		if (list.length > 0) {
 			for (var i = 0; i < list.length; i++) {
-				html_ += '<tr>' + '<td>' + list[i].userName + '</td>'
-						+ '<td class="center">' + list[i].mobile + '</td>'
-						+ '<td class="center">' + list[i].email + '</td>'
+				html_ += '<tr>' + '<td>' + list[i].roleName + '</td>'
 						+ '<td class="center">' + list[i].createTime + '</td>'
 						+ '<td width="200px" align="center">'
 						+ '<a onclick="deleteOne(\'' + list[i].id + '\')" title="删除"  style="cursor: pointer;">删除</a> | '
-						+ '<a href="${basePath}manager/show_user_edit_page.do?id=' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a> |'
-						+ '<a href="${basePath}manager/show_user_edit_page.do?id=' + list[i].id + '" title="用户权限"  style="cursor: pointer;">用户角色</a> '
+						+ '<a href="${basePath}manager/show_user_edit_page.do?id=' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a> '
 						+ '</td></tr>'
 			}
 		}else{
@@ -140,7 +130,7 @@
 	
 	// 前往添加用户界面 
 	function toUserAddPage(){
-		window.location.href = "${basePath}manager/show_user_add_page.do";
+		window.location.href = "${basePath}sysrole/show_role_add_page.do";
 	}
 	
 	
@@ -149,7 +139,7 @@
 		jConfirm('您确定要删除这条记录吗？', '系统提示', function(flag) {
 			if (flag) {
 				var type_ = 'post';
-				var url_ = '${basePath}manager/delete_user.do';
+				var url_ = '${basePath}sysrole/delete_role.do';
 				var data_ = {
 					id : id_
 				};
@@ -171,8 +161,7 @@
 
 	// 重置查询条件
 	function searchReset() {
-		$("#user-name").val("");
-		$("#mobile").val("");
+		$("#role-name").val(""); 
 		aForm.formPaging(0);
 	}
 	

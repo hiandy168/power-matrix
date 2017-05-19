@@ -18,7 +18,7 @@
                     <span class="pagedesc">
                         添加一条记录系统用户表
                     </span>
-	            <span style="display:none">jsp/syssetting/sysUserAdd.jsp</span>
+	            <span style="display:none">jsp/syssetting/user/sysUserAdd.jsp</span>
 	        </div>
 	        
 			<div id="validation" class="subcontent" style="display: block">

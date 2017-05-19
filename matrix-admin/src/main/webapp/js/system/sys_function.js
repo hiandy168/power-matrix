@@ -563,8 +563,8 @@
         		html += '<a href="javascript:void(0)" title="修改" style="cursor: pointer;" roleId="' + roles[i].mcRoleId + '"  onclick="tfunc.openEditDialog(this)">修改</a>';
         		html += '&nbsp&nbsp|&nbsp&nbsp'; 
         		html += '<a href="javascript:void(0)" title="删除这个角色" style="cursor: pointer;" roleId="' + roles[i].mcRoleId + '"  onclick="tfunc.deleteMcRole(this)">删除</a>';
-        		html += '|&nbsp&nbsp'; 
-        		html += '<a href="javascript:void(0)" title="为用户分配这个角色" style="cursor: pointer;" roleId="' + roles[i].mcRoleId + '"  onclick="tfunc.openUserListDialogPage(this)">勾选用户</a>';
+//        		html += '|&nbsp&nbsp'; 
+//        		html += '<a href="javascript:void(0)" title="为用户分配这个角色" style="cursor: pointer;" roleId="' + roles[i].mcRoleId + '"  onclick="tfunc.openUserListDialogPage(this)">勾选用户</a>';
         		html +=  '</td></tr>';
         	}
         	$("#ajax-tbody-role").append(html);
@@ -748,29 +748,29 @@
          * @作者: Yangcl
          * @时间: 2016-08-19 : 15-20-56
          */
-        openUserListDialogPage:function(ele){ 
-            var type_ = 'post';
-            var url_ = 'mc_user_list.do';  
-            var data_ = null;
-            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
-            dForm.launch(url_ , 'dialog-table-form' , obj).init().drawForm(tfunc.loadUserListDialogTable);
-            tfunc.roleElement = ele;
-            
-            $.blockUI({
-                showOverlay:true ,
-                css:  {
-                    cursor:'auto',
-                    left:($(window).width() - $("#user-dialog-page-div").width())/2 + 'px',
-                    width:$("#user-dialog-page-div").width()+'px',
-                    top:($(window).height()-$("#user-dialog-page-div").height())/2 + 'px',
-                    position:'fixed', //居中
-                    border: '3px solid #FB9337'  // 边界
-                },
-                message: $('#user-dialog-page-div'),  
-                fadeIn: 500,//淡入时间
-                fadeOut: 1000  //淡出时间
-            });
-        },
+//        openUserListDialogPage:function(ele){ 
+//            var type_ = 'post';
+//            var url_ = 'mc_user_list.do';  
+//            var data_ = null;
+//            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+//            dForm.launch(url_ , 'dialog-table-form' , obj).init().drawForm(tfunc.loadUserListDialogTable);
+//            tfunc.roleElement = ele;
+//            
+//            $.blockUI({
+//                showOverlay:true ,
+//                css:  {
+//                    cursor:'auto',
+//                    left:($(window).width() - $("#user-dialog-page-div").width())/2 + 'px',
+//                    width:$("#user-dialog-page-div").width()+'px',
+//                    top:($(window).height()-$("#user-dialog-page-div").height())/2 + 'px',
+//                    position:'fixed', //居中
+//                    border: '3px solid #FB9337'  // 边界
+//                },
+//                message: $('#user-dialog-page-div'),  
+//                fadeIn: 500,//淡入时间
+//                fadeOut: 1000  //淡出时间
+//            });
+//        },
         
         // 回调函数
         loadUserListDialogTable:function(url_){

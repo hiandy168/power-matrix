@@ -8,5 +8,14 @@ import com.matrix.pojo.entity.McUserInfo;
 public interface IMcUserInfoDao extends IBaseDao<McUserInfo, Integer>{ 
 	public McUserInfo login(McUserInfo entity);
 
+	/**
+	 * @description: 显示没有关联任何角色的用户列表 |巧妙的左查询
+	 * 
+	 * @param entity
+	 * @return
+	 * @author Yangcl 
+	 * @date 2017年5月19日 下午5:30:43 
+	 * @version 1.0.0.1
+	 */
 	public List<McUserInfo> mcUserList(McUserInfo entity);  
 }

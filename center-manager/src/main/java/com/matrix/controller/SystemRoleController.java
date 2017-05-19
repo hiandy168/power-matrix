@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.pojo.cache.McRoleCache;
 import com.matrix.pojo.dto.McUserRoleDto;
+import com.matrix.pojo.entity.McRole;
 import com.matrix.pojo.entity.McSysFunction;
 import com.matrix.pojo.entity.McUserInfo;
 import com.matrix.pojo.entity.McUserRole;
 import com.matrix.service.IManagerCenterService;
+import com.matrix.service.IMcRoleService;
 import com.matrix.service.IMcSysFunctionService;
 import com.matrix.service.IMcUserInfoService;
 
@@ -38,6 +40,9 @@ public class SystemRoleController {
 	
 	@Autowired
 	private IMcSysFunctionService mcSysFunctionService;   
+	
+	@Autowired
+	private IMcRoleService mcRoleService;
 	 
 	
 	/**
@@ -60,6 +65,30 @@ public class SystemRoleController {
 	@ResponseBody
 	public JSONObject treeList(HttpServletRequest request){
 		return mcSysFunctionService.treeList(request);
+	}
+	
+	
+
+	/**
+	 * @description: 前往权限列表页 
+	 * 
+	 * @param model
+	 * @return
+	 * @author Yangcl 
+	 * @date 2017年5月19日 下午2:05:03 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping("sys_mc_role_page") 
+	public String sysMcRolePage(ModelMap model){ 
+		return "jsp/syssetting/role/sysMcRoleList";   
+	}
+	
+	
+	@RequestMapping(value = "sys_role_list", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject sysRoleList(McRole role , HttpServletRequest request) {
+		role.setFlag(1); 
+		return mcRoleService.ajaxPageData(role, request);
 	}
 	
 	
@@ -176,17 +205,17 @@ public class SystemRoleController {
 	/**
 	 * @description: 【系统角色创建】->【勾选用户】->【后台人员列表】
 	 * 
-	 * @param entity						TODO 需要过滤已经有角色的用户
+	 * @param entity			 
 	 * @param request
 	 * @author Yangcl 
 	 * @date 2017年4月20日 下午7:25:12 
 	 * @version 1.0.0.1
 	 */
-	@RequestMapping(value = "mc_user_list", produces = { "application/json;charset=utf-8" })
-	@ResponseBody
-	public JSONObject mcUserList(McUserInfo entity , HttpServletRequest request){
-		return mcSysFunctionService.mcUserList(entity, request);
-	}
+//	@RequestMapping(value = "mc_user_list", produces = { "application/json;charset=utf-8" })
+//	@ResponseBody
+//	public JSONObject mcUserList(McUserInfo entity , HttpServletRequest request){
+//		return mcSysFunctionService.mcUserList(entity, request);
+//	}
 	
 	
 	/**

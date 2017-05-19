@@ -34,7 +34,7 @@
 	            <h1 class="pagetitle">修改用户</h1>
                     <span class="pagedesc">
                     </span>
-	            <span style="display:none">jsp/syssetting/sysUserEdit.jsp</span>
+	            <span style="display:none">jsp/syssetting/user/sysUserEdit.jsp</span>
 	        </div>
 	        
 			<div id="validation" class="subcontent" style="display: block">
