@@ -14,13 +14,13 @@
 		<result column="remark" property="remark" jdbcType="VARCHAR" />
 	</resultMap>
 	
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+	<select id="find" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
 			*
 		from 
 			managercenter.mc_role
 		where 
-			id = #{id,jdbcType=INTEGER}
+			id = #{id , jdbcType=INTEGER}
 	</select>
 	
 	<select id="findList" resultMap="BaseResultMap" parameterType="com.matrix.pojo.entity.McRole">

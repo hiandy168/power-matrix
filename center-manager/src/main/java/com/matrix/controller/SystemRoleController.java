@@ -91,6 +91,48 @@ public class SystemRoleController {
 		return mcRoleService.ajaxPageData(role, request);
 	}
 	
+	/**
+	 * @description: 前往添加权限页面 
+	 * 
+	 * @author Yangcl 
+	 * @date 2017年5月19日 下午8:41:07 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping("show_role_add_page") 
+	public String sysMcRoleAddPage(ModelMap model){ 
+		return "jsp/syssetting/role/sysMcRoleAdd";   
+	}
+	
+	/**
+	 * @description: 添加一个角色，不勾选系统功能|如果同时需要勾选系统功能请使用 @ public JSONObject addMcRole(McRoleCache d , HttpSession session)
+	 * 
+	 * @author Yangcl 
+	 * @date 2017年5月19日 下午9:10:56 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "add_mc_role_only", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject addMcRoleOnly(McRole info , HttpSession session) {
+		return mcRoleService.addMcRole(info , session);
+	}
+	
+	/**
+	 * @description: 前往修改权限页面 
+	 * 
+	 * @author Yangcl 
+	 * @date 2017年5月19日 下午10:00:02 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping("show_role_edit_page") 
+	public String sysMcRoleEditPage(Integer id , ModelMap model){ 
+		McRole entity = mcRoleService.find(id);
+		if(entity != null){
+			model.addAttribute("entity", entity);  
+		}
+		return "jsp/syssetting/role/sysMcRoleEdit";   
+	}
+	
+	
 	
 	/**
 	 * @description: 获取有效商户列表 

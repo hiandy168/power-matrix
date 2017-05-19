@@ -226,7 +226,7 @@
                             <col class="con1"/>
                             <col class="con0"/>
                         </colgroup>
-                        <thead>
+                        <thead > 
                             <tr>
                                 <th class="head0 nosort">
                                     <input type="checkbox"/>
@@ -240,7 +240,7 @@
                             </tr>
                         </thead>
 
-                        <tbody id="ajax-tbody-1">
+                        <tbody id="ajax-tbody-1" class="page-list"><!--  class="page-list" 标识是页面数据列表 行变色使用 -->
                             <%-- 等待填充 --%>
                         </tbody>
                     </table>
@@ -289,20 +289,20 @@
                     <col class="con0"/>
                 </colgroup>
                 <thead>
-                <tr>
-                    <th class="head0 nosort">
-                        <input type="checkbox"/>
-                    </th>                                                                           <%-- sorting 代表可排序--%>
-                    <th class="head0 sorting_asc">ID(升序排序)</th>  <%-- sorting_asc 代表升序排列--%>
-                    <th class="head1 sorting_desc"> 姓名(降序排序)</th>   <%-- sorting_desc 代表降序排列--%>
-                    <th class="head0 sorting">手机(s)</th>
-                    <th class="head1 sorting">身份证号</th>
-                    <th class="head0 sorting">E-mail</th>
-                    <th class="head1 " width="100px">操作</th>
-                </tr>
+	                <tr>
+	                    <th class="head0 nosort">
+	                        <input type="checkbox"/>
+	                    </th>                                                                           <%-- sorting 代表可排序--%>
+	                    <th class="head0 sorting_asc">ID(升序排序)</th>  <%-- sorting_asc 代表升序排列--%>
+	                    <th class="head1 sorting_desc"> 姓名(降序排序)</th>   <%-- sorting_desc 代表降序排列--%>
+	                    <th class="head0 sorting">手机(s)</th>
+	                    <th class="head1 sorting">身份证号</th>
+	                    <th class="head0 sorting">E-mail</th>
+	                    <th class="head1 " width="100px">操作</th>
+	                </tr>
                 </thead>
 
-                <tbody id="dialog-ajax-tbody">
+                <tbody id="dialog-ajax-tbody" class="page-list"><!--  class="page-list" 标识是页面数据列表 行变色使用 -->
                 <%-- 等待填充 --%>
                 </tbody>
             </table>

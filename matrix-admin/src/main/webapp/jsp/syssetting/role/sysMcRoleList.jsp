@@ -6,6 +6,7 @@
 	<%@ include file="/inc/head.jsp"%>
 	<script type="text/javascript" src="${js}/system/ajax-form.js"></script>
 	<script src="${js}/blockUI/jquery.blockUI.js" type="text/javascript"></script>
+	<script type="text/javascript" src="${js}/system/sysUserRoleFunction.js"></script>
 	<style type="text/css">
 	</style>
 </head>
@@ -61,12 +62,13 @@
 						<thead>
 							<tr>
 								<th class="head1">权限名称</th> 
+								<th class="head1">权限描述</th> 
 								<th class="head1">创建时间</th>
 								<th class="head1 " width="100px">操作</th>
 							</tr>
 						</thead>
 
-						<tbody id="ajax-tbody-user-list">
+						<tbody id="ajax-tbody-user-list" class="page-list">
 							<%-- 等待填充 --%>
 						</tbody>
 					</table>
@@ -100,7 +102,7 @@
 		// 这种情况是响应上一页或下一页的触发事件
 		var type_ = 'post';
 		var data_ = {
-			userName : $("#role-name").val() 
+			roleName : $("#role-name").val() 
 		}
 		var obj = JSON.parse(ajaxs.sendAjax(type_, url_, data_));
 		aForm.launch(url_, 'table-form', obj).init();
@@ -114,11 +116,13 @@
 		var list = obj.data.list;
 		if (list.length > 0) {
 			for (var i = 0; i < list.length; i++) {
-				html_ += '<tr>' + '<td>' + list[i].roleName + '</td>'
-						+ '<td class="center">' + list[i].createTime + '</td>'
+				html_ += '<tr>' + '<td align="center" width="200px">' + list[i].roleName + '</td>'
+						+ '<td>' + list[i].roleDesc + '</td>'
+						+ '<td align="center" width="200px">' + list[i].createTime + '</td>'
 						+ '<td width="200px" align="center">'
-						+ '<a onclick="deleteOne(\'' + list[i].id + '\')" title="删除"  style="cursor: pointer;">删除</a> | '
-						+ '<a href="${basePath}manager/show_user_edit_page.do?id=' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a> '
+						+ '<a href="javascript:void(0)" roleId="' + list[i].id + '" onclick="showTreeInDialog(this)" title="分配系统功能到这个角色中"  style="cursor: pointer;">分配功能</a>| ' 
+						+ '<a href="${basePath}sysrole/show_role_edit_page.do?id=' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a>| '
+						+ '<a onclick="deleteOne(\'' + list[i].id + '\')" title="删除"  style="cursor: pointer;">删除</a>'
 						+ '</td></tr>'
 			}
 		}else{
@@ -133,7 +137,11 @@
 		window.location.href = "${basePath}sysrole/show_role_add_page.do";
 	}
 	
-	
+	// 在弹框中展示树形组件 
+	function showTreeInDialog(obj){
+		var roleId = $(obj).attr("roleId");  
+		// TODO 展示弹框代码  
+	}
 
 	function deleteOne(id_) {
 		jConfirm('您确定要删除这条记录吗？', '系统提示', function(flag) {

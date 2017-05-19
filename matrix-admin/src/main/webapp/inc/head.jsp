@@ -18,7 +18,7 @@
     <![endif]-->
 
 	<style type="text/css">
-		tr:hover{
+		.page-list tr:hover{
 		  background:#B8DABD;
 		}
 	</style>

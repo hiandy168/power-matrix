@@ -72,7 +72,7 @@
 							</tr>
 						</thead>
 
-						<tbody id="ajax-tbody-user-list">
+						<tbody id="ajax-tbody-user-list" class="page-list">
 							<%-- 等待填充 --%>
 						</tbody>
 					</table>

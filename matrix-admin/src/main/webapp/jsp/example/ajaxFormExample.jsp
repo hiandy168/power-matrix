@@ -173,7 +173,7 @@
                             <col class="con1"/>
                             <col class="con0"/>
                         </colgroup>
-                        <thead>
+                        <thead > 
                             <tr>
                                 <th class="head0 nosort">
                                     <input type="checkbox"/>
@@ -203,7 +203,7 @@
                             </tr>
                         </tfoot>
 
-                        <tbody id="ajax-tbody-1">
+                        <tbody id="ajax-tbody-1" class="page-list"><!--  class="page-list" 标识是页面数据列表 行变色使用 -->
                             <%-- 等待填充 --%>
                         </tbody>
                     </table>

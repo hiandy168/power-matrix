@@ -179,7 +179,7 @@
 				                            </tr>
 				                        </thead> 
 				
-				                        <tbody id="ajax-tbody-role">
+				                        <tbody id="ajax-tbody-role" class="page-list"> 
 				                            <%-- 等待填充 --%>
 				                        </tbody>
 				                    </table>
@@ -227,7 +227,7 @@
                                                     <th class="head0 " width="100px">操作</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="ajax-tbody-user-role-func-list">
+                                            <tbody id="ajax-tbody-user-role-func-list" class="page-list">
                                                 <%-- 等待填充 --%>
                                             </tbody>
                                         </table>
@@ -322,7 +322,7 @@
 	                </tr>
                 </thead>
 
-                <tbody id="user-dialog-ajax-tbody">
+                <tbody id="user-dialog-ajax-tbody"  class="page-list">
                 	<%-- 等待填充 --%>  
                 </tbody>
             </table>
