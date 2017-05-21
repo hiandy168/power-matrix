@@ -8,6 +8,8 @@ import com.matrix.pojo.entity.McRole;
 
 public interface IMcRoleService extends IBaseService<McRole, Integer> {
 
-	JSONObject addMcRole(McRole info , HttpSession session);  
+	JSONObject addMcRole(McRole info , HttpSession session);
+
+	JSONObject editSysRole(McRole info, HttpSession session);   
 
 }

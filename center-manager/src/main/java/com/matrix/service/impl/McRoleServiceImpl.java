@@ -89,7 +89,54 @@ public class McRoleServiceImpl extends BaseServiceImpl<McRole, Integer> implemen
 				launch.loadDictCache(DCacheEnum.McRole).setCache(role.getId().toString() , JSONObject.toJSONString(c));   
 			}else{
 				result.put("status", "error");
-				result.put("msg", "添加失败");
+				result.put("msg", this.getInfo(500090004));	// 系统角色创建失败
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("status", "error");
+			result.put("msg", "服务器异常");
+		}
+		return result;
+	}
+
+
+	/**
+	 * @descriptions 修改角色名称和描述
+	 *
+	 * @date 2017年5月21日 下午1:37:10
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject editSysRole(McRole role, HttpSession session) {
+		JSONObject result = new JSONObject();
+		if(StringUtils.isBlank(role.getRoleName())){
+			result.put("status", "error");
+			result.put("msg", "角色名称不得为空");
+			return result;
+		}
+		if(role.getId() == null){
+			result.put("status", "error");
+			result.put("msg", "页面数据错误，更新失败");
+			return result;
+		}
+		Date currentTime = new Date();
+		McUserInfo userInfo = (McUserInfo) session.getAttribute("userInfo");
+		role.setUpdateTime(currentTime);
+		role.setUpdateUserId(userInfo.getId());
+		try {
+			int count = dao.updateSelective(role);
+			if(count == 1){
+				result.put("status", "success");
+				result.put("msg", "添加成功");
+				McRoleCache c = new McRoleCache();
+				c.setMcRoleId(role.getId());
+				c.setRoleName(role.getRoleName());
+				c.setRoleDesc(role.getRoleDesc());               
+				launch.loadDictCache(DCacheEnum.McRole).deleteCache(role.getId().toString());  
+				launch.loadDictCache(DCacheEnum.McRole).setCache(role.getId().toString() , JSONObject.toJSONString(c)); 
+			}else{
+				result.put("status", "error");
+				result.put("msg", this.getInfo(500090004));	// 系统角色创建失败
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

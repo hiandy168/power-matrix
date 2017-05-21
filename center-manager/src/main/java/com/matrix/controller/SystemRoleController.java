@@ -132,6 +132,31 @@ public class SystemRoleController {
 		return "jsp/syssetting/role/sysMcRoleEdit";   
 	}
 	
+	/**
+	 * @descriptions 修改角色名称和描述，不勾选系统功能|如果同时需要勾选系统功能请使用 @ public JSONObject editMcRole(McRoleCache d , HttpSession session)
+	 *
+	 * @date 2017年5月21日 下午1:37:10
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "edit_mc_role_only", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject editMcRoleOnly(McRole info , HttpSession session) {
+		return mcRoleService.editSysRole(info , session);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	/**
