@@ -177,6 +177,9 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 				List<McRoleCache> roles = new ArrayList<McRoleCache>(); 
 				McRole role = new McRole();
 				role.setFlag(1); 
+				if(StringUtils.isNotBlank(request.getParameter("id"))){
+					role.setId(Integer.valueOf(request.getParameter("id")));  
+				}
 				List<McRole> roleList = roleDao.findList(role);
 				if(roleList.size() != 0){
 					for(McRole m : roleList){
@@ -311,8 +314,12 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 				roleDao.updateSelective(role);
 				
 				roleFunctionDao.deleteByMcRoleId(d.getMcRoleId()); 
+				if(StringUtils.isBlank(d.getRoleName()) && StringUtils.isBlank(d.getRoleDesc())){
+					McRoleCache o = JSONObject.parseObject(launch.loadDictCache(DCacheEnum.McRole).getCache(d.getMcRoleId().toString()), McRoleCache.class);
+					d.setRoleName(o.getRoleName());
+					d.setRoleDesc(o.getRoleDesc()); 
+				}
 				launch.loadDictCache(DCacheEnum.McRole).deleteCache(d.getMcRoleId().toString());  
-				
 				String[] arr = d.getIds().split(",");
 				for(int i = 0 ; i < arr.length ; i ++){
 					McRoleFunction rf = new McRoleFunction();

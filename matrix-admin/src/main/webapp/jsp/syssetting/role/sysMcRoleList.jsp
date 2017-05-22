@@ -14,6 +14,13 @@
 	<!-- 系统角色权限 -->
 	<script type="text/javascript" src="${js}/system/sysUserRoleFunction.js"></script>
 	<style type="text/css">
+		.a-btn{
+        	cursor: pointer;
+        	color:#FB9337; 
+        }
+        .a-btn:hover {
+        	color: red;
+       	} 
 	</style>
 </head>
 
@@ -90,51 +97,6 @@
 </body>
 </html>
 
-<script type="text/javascript">
-	/**
-	 * 接口管理 弹窗层
-	 * @param seller_code 商户编号
-	 * @param flag true:编辑，false:查看
-	 */
-	function openTreeDialog(obj , flag){
-		var roleId = $(obj).attr("roleId");  
-		var dialogId = "#tree-dialog-div";
-		$("#submit-btn").remove();
-		if(flag){
-			$("#dialog-title").children("span").html("为角色【】赋予系统功能");
-			var html = '<button id="submit-btn" onclick="" type="button" style="width: 100px;margin-left: 400px;" class="submit radius2">添加功能</button>';
-			$("#dialog-operate").append(html);
-		}else{
-			$("#dialog-title").children("span").html("查看角色【】所有功能");
-		}
-		// drawDialog(seller_code); // 填充弹窗中的数据
-		surfunc.distributeUserRole();
-		// 自定义滚动条 | 执行此代码自定义滚动条则生效
-		$('#func-list').slimscroll({
-			color: '#666',
-			size: '10px',
-			width: 'auto',
-			height: '630px' // '208px'
-		});
-		
-		$.blockUI({
-			showOverlay:true ,
-			css:{
-				cursor:'auto',
-				left:($(window).width() - $(dialogId).width())/2 + 'px',
-				width:$(dialogId).width()+'px',
-				// height:580,
-				top:($(window).height()-$(dialogId).height())/2 + 'px',
-				position:'fixed', //居中
-				textAlign:'left',
-				border: '3px solid #FB9337'   // 边界,
-			},
-			message: $(dialogId),
-			fadeIn: 500,//淡入时间
-			fadeOut: 1000  //淡出时间
-		});
-	}
-</script>
 <!-- 树形组件弹出框 -> 带自定义滚动条 -->
 <div id="tree-dialog-div" class="dialog-page-div" style="display: none;width: 600px;height: 800px">
 	<p id="dialog-title" class="dialog-title">
@@ -148,7 +110,9 @@
 			<div class="widgetbox" style="height: inherit">
 				<div  class="title">
 					<h3 id="platform-title">
-						<%-- 等待填充--%>塔萨达
+						<%-- 等待填充--%>
+						<a herf="javascript:void(0)" onclick="surfunc.closeNavi('user-role-tree')" class="a-btn" title="收起导航栏从而方便您的操作">收起导航</a>|
+                        <a herf="javascript:void(0)" onclick="surfunc.closeMenu('user-role-tree')" class="a-btn" title="收起一级菜单栏从而方便您的操作">收起菜单</a>
 					</h3>
 				</div>
 				<div class="widgetcontent">
@@ -160,6 +124,7 @@
 			</div>
 		</div>
 		<form class="stdform">
+			<input id="func-ids"  type="hidden" value="" >
 			<p>
 				<span id="dialog-operate" style="position: relative;">
 					<%-- 等待填充 弹窗操作按钮 如添加和修改等等--%>
@@ -208,9 +173,9 @@
 						+ '<td>' + list[i].roleDesc + '</td>'
 						+ '<td align="center" width="200px">' + list[i].createTime + '</td>'
 						+ '<td width="200px" align="center">'
-						+ '<a href="javascript:void(0)" roleId="' + list[i].id + '" onclick="openTreeDialog(this , true)" title="分配系统功能到这个角色中"  style="cursor: pointer;">分配功能</a>| ' 
+						+ '<a href="javascript:void(0)" roleId="' + list[i].id + '" onclick="openTreeDialog(this , true)" title="分配系统功能到这个角色中"  style="cursor: pointer;">角色功能</a>| ' 
 						+ '<a href="${basePath}sysrole/show_role_edit_page.do?id=' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a>| '
-						+ '<a onclick="deleteOne(\'' + list[i].id + '\')" title="删除"  style="cursor: pointer;">删除</a>'
+						+ '<a roleId="' + list[i].id + '" onclick="surfunc.deleteMcRole(this)" title="删除"  style="cursor: pointer;">删除</a>'
 						+ '</td></tr>'
 			}
 		}else{
@@ -256,6 +221,84 @@
 		aForm.formPaging(0);
 	}
 	
+	/**
+	 * 接口管理 弹窗层
+	 * @param obj 
+	 * @param flag true:编辑，false:查看
+	 */
+	function openTreeDialog(obj , flag){
+		var roleId = $(obj).attr("roleId");  
+		var roleName = $(obj).parent().parent().children()[0].innerText;
+		var dialogId = "#tree-dialog-div";
+		$("#submit-btn").remove();
+		if(flag){
+			$("#dialog-title").children("span").html("为角色【" + roleName + "】赋予系统功能");
+			var html = '<button id="submit-btn" roleId="' + roleId + '"  onclick="submitRoleFunc(this)" type="button" style="width: 100px;margin-left: 400px;" class="submit radius2">提交</button>';
+			$("#dialog-operate").append(html);
+		}else{
+			$("#dialog-title").children("span").html("查看角色【" + roleName + "】所有功能");  // 此功能暂时不用
+		}
+		surfunc.distributeUserRole(roleId);  // 填充弹窗中的数据 
+		// 自定义滚动条 | 执行此代码自定义滚动条则生效
+		$('#func-list').slimscroll({
+			color: '#666',
+			size: '10px',
+			width: 'auto',
+			height: '630px' // '208px'
+		});
+		
+		$.blockUI({
+			showOverlay:true ,
+			css:{
+				cursor:'auto',
+				left:($(window).width() - $(dialogId).width())/2 + 'px',
+				width:$(dialogId).width()+'px',
+				// height:580,
+				top:($(window).height()-$(dialogId).height())/2 + 'px',
+				position:'fixed', //居中
+				textAlign:'left',
+				border: '3px solid #FB9337'   // 边界,
+			},
+			message: $(dialogId),
+			fadeIn: 500,//淡入时间
+			fadeOut: 1000  //淡出时间
+		});
+	}
+	
+	/**
+	 * 提交与角色关联好的功能 
+	 * @param obj 
+	 * @param flag true:编辑，false:查看
+	 */
+	function submitRoleFunc(obj){ 
+		var roleId = $(obj).attr("roleId");  
+    	var tree = $.fn.zTree.getZTreeObj("user-role-tree");
+    	var checkArray = tree.getChangeCheckedNodes(); // 获取所有被选节点 
+    	var ids = ''; 
+    	for(var i = 0 ; i < checkArray.length ; i ++){
+    		var t = checkArray[i];
+    		if(t.navType != -1){
+    			ids += t.id + ",";
+    		}
+    	}
+    	ids = ids.substring(0 , ids.length -1); 
+    	var type_ = 'post';
+        var url_ = 'edit_mc_role.do';
+    	var data_ = {
+    			mcRoleId:roleId,
+    			ids:ids
+    	};  
+    	
+    	var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+        if(obj.status == 'success'){
+        	var cache = obj.cache; // 扩展 暂时不用
+        	jAlert("角色修改成功!" , '系统提示' , function(){
+	        	surfunc.closeDialog();
+        	});
+        }else{
+        	jAlert(obj.msg , '系统提示');
+        }
+    }
 </script>
 
 

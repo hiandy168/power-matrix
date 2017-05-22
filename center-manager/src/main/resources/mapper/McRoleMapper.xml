@@ -29,6 +29,9 @@
 		from 
 			managercenter.mc_role
 		where 1=1 
+			<if test="id != null">
+				and  id = #{id , jdbcType=INTEGER} 
+			</if>
 			<if test="roleName != null">
 				and role_name = #{roleName,jdbcType=VARCHAR}
 			</if> 

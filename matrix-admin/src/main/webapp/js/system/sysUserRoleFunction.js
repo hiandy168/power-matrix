@@ -536,17 +536,22 @@
         /**
          * 初始化【权限分配】菜单树
          */
-        distributeUserRole: function(){
+        distributeUserRole: function(roleId){
         	$("#user-role-tree li").remove();
         	var type_ = 'post';
-            var url_ = 'tree_list.do?type=role';
+            var url_ = 'tree_list.do?type=role&id=' + roleId;
             var data_ = null;  // 可以为null，后台会进行默认处理
             var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
             if(obj.status == 'success'){
                 var zNodes = obj.list;  
                 $.fn.zTree.init($("#user-role-tree") , setting_distribution , zNodes);  
                 $("#callbackTrigger").bind("change", {}, setting_distribution.setTrigger); 
-                $("#user-role-tree_1_check").remove(); // 隐藏root节点的复选框  
+                $("#user-role-tree_1_check").remove(); // 隐藏root节点的复选框
+                if(obj.roles.length == 1){
+                	// hidden input value= ids |<input id="func-ids"  type="hidden" value="" >
+                	$("#func-ids").val(obj.roles[0].ids);
+                	surfunc.showFuncInTree($("#func-ids")[0]);  // 复用showFuncInTree方法    
+                }
             }
         },
         
@@ -554,7 +559,7 @@
         /**
          * 系统权限分配 - 选择右侧已创建的角色列表时，展示已选权限到左侧的树上    
          */
-        showRoleInTree:function(obj){
+        showFuncInTree:function(obj){
         	if(obj.value.length == 0){
         		return;
         	}
@@ -654,6 +659,8 @@
             	alert(obj.msg); 
             }
         },
+        
+        
         
         deleteMcRole:function(ele){
         	var roleId = $(ele).attr("roleId");
