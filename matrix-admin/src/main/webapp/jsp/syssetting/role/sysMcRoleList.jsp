@@ -4,8 +4,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<%@ include file="/inc/head.jsp"%>
+    <link rel="stylesheet" href="${css}/ztree/zTreeStyle.css" type="text/css" />
+    
+	<script type="text/javascript" src="${js}/ztree/jquery.ztree.all.js"></script>
 	<script type="text/javascript" src="${js}/system/ajax-form.js"></script>
 	<script src="${js}/blockUI/jquery.blockUI.js" type="text/javascript"></script>
+	<!-- 自定义滚动条 -->
+	<script type="text/javascript" src="${js}/plugins/jquery.slimscroll.js"></script>
+	<!-- 系统角色权限 -->
 	<script type="text/javascript" src="${js}/system/sysUserRoleFunction.js"></script>
 	<style type="text/css">
 	</style>
@@ -85,6 +91,88 @@
 </html>
 
 <script type="text/javascript">
+	/**
+	 * 接口管理 弹窗层
+	 * @param seller_code 商户编号
+	 * @param flag true:编辑，false:查看
+	 */
+	function openTreeDialog(obj , flag){
+		var roleId = $(obj).attr("roleId");  
+		var dialogId = "#tree-dialog-div";
+		$("#submit-btn").remove();
+		if(flag){
+			$("#dialog-title").children("span").html("为角色【】赋予系统功能");
+			var html = '<button id="submit-btn" onclick="" type="button" style="width: 100px;margin-left: 400px;" class="submit radius2">添加功能</button>';
+			$("#dialog-operate").append(html);
+		}else{
+			$("#dialog-title").children("span").html("查看角色【】所有功能");
+		}
+		// drawDialog(seller_code); // 填充弹窗中的数据
+		surfunc.distributeUserRole();
+		// 自定义滚动条 | 执行此代码自定义滚动条则生效
+		$('#func-list').slimscroll({
+			color: '#666',
+			size: '10px',
+			width: 'auto',
+			height: '630px' // '208px'
+		});
+		
+		$.blockUI({
+			showOverlay:true ,
+			css:{
+				cursor:'auto',
+				left:($(window).width() - $(dialogId).width())/2 + 'px',
+				width:$(dialogId).width()+'px',
+				// height:580,
+				top:($(window).height()-$(dialogId).height())/2 + 'px',
+				position:'fixed', //居中
+				textAlign:'left',
+				border: '3px solid #FB9337'   // 边界,
+			},
+			message: $(dialogId),
+			fadeIn: 500,//淡入时间
+			fadeOut: 1000  //淡出时间
+		});
+	}
+</script>
+<!-- 树形组件弹出框 -> 带自定义滚动条 -->
+<div id="tree-dialog-div" class="dialog-page-div" style="display: none;width: 600px;height: 800px">
+	<p id="dialog-title" class="dialog-title">
+		<a href="javascript:void(0)" onclick="surfunc.closeDialog()" class="dialog-close"></a>
+		<span>
+			<%-- 等待填充 弹层标题 --%>
+		</span>
+	</p>
+	<div id="dialog-content-wrapper" class="contentwrapper">
+		<div class="last">
+			<div class="widgetbox" style="height: inherit">
+				<div  class="title">
+					<h3 id="platform-title">
+						<%-- 等待填充--%>塔萨达
+					</h3>
+				</div>
+				<div class="widgetcontent">
+					<div id="func-list" class="mousescroll">
+						<!-- 等待填充要展示的内容，如果超出div的高度则会展示出自定义的滚动条 -->
+						<ul id="user-role-tree" class="ztree"></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<form class="stdform">
+			<p>
+				<span id="dialog-operate" style="position: relative;">
+					<%-- 等待填充 弹窗操作按钮 如添加和修改等等--%>
+				</span>
+			</p>
+		</form>
+	</div>
+</div>
+
+
+
+
+<script type="text/javascript">
 	$(function() {
 		var type_ = 'post';
 		var url_ = '${basePath}sysrole/sys_role_list.do';
@@ -120,7 +208,7 @@
 						+ '<td>' + list[i].roleDesc + '</td>'
 						+ '<td align="center" width="200px">' + list[i].createTime + '</td>'
 						+ '<td width="200px" align="center">'
-						+ '<a href="javascript:void(0)" roleId="' + list[i].id + '" onclick="showTreeInDialog(this)" title="分配系统功能到这个角色中"  style="cursor: pointer;">分配功能</a>| ' 
+						+ '<a href="javascript:void(0)" roleId="' + list[i].id + '" onclick="openTreeDialog(this , true)" title="分配系统功能到这个角色中"  style="cursor: pointer;">分配功能</a>| ' 
 						+ '<a href="${basePath}sysrole/show_role_edit_page.do?id=' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a>| '
 						+ '<a onclick="deleteOne(\'' + list[i].id + '\')" title="删除"  style="cursor: pointer;">删除</a>'
 						+ '</td></tr>'
@@ -137,11 +225,6 @@
 		window.location.href = "${basePath}sysrole/show_role_add_page.do";
 	}
 	
-	// 在弹框中展示树形组件 
-	function showTreeInDialog(obj){
-		var roleId = $(obj).attr("roleId");  
-		// TODO 展示弹框代码  
-	}
 
 	function deleteOne(id_) {
 		jConfirm('您确定要删除这条记录吗？', '系统提示', function(flag) {
@@ -181,7 +264,74 @@
 
 
 
+<!-- 树形组件弹出框 -> 带自定义滚动条 -->
+<%-- <div id="tree-dialog-div" class="dialog-page-div" style="display: none;width: 800px;height: 500px">
+	<p id="dialog-title">
+		<a href="javascript:void(0)" onclick="closeDialog()" class="dialog-close"></a>
+		<span>
+			等待填充 弹层标题
+		</span>
+	</p>
+	<div id="dialog-content-wrapper" class="contentwrapper">
+		<div class="last">
+			<div class="widgetbox" style="height: inherit">
+				<div  class="title">
+					<h3 id="platform-title">
+						等待填充
+					</h3>
+				</div>
+				<div class="widgetcontent">
+					<div id="interface-list" class="mousescroll">
+						<!-- 等待填充要展示的内容，如果超出div的高度则会展示出自定义的滚动条 -->
+						<ul id="api-list" class="entrylist">
+							<li>
+								<div class="entry_wrap">
+									<div class="">
+										<h4>
+											<span>Product.pushProducts</span>
+										</h4>
+										<span><span>接口名称：根据日期推送商品到第三方</span> | <a>接口状态：已开通</a></span><br>
+										<span>根据日期推送商品到第三方……</span><br>
+										<span style="margin-top: 10px">
+											&lt;%&ndash;<button class="stdbtn btn_orange">授权使用</button>
+											<button class="stdbtn btn_lime">取消使用</button>&ndash;%&gt;
+											<input type="radio"  name="" value=""/>授权使用 |
+											<input type="radio"  name="" value=""/>取消使用
+										</span>
+									</div>
+								</div>
+							</li>
 
+							<li>
+								<div class="entry_wrap">
+									<div class="">
+										<h4>
+											<span>Product.Insert</span>
+										</h4>
+										<span><span>接口名称：添加商品信息</span> | <a>接口状态：已开通</a></span><br>
+										<span>添加一条商品信息到数据库中……</span><br>
+										<span style="margin-top: 10px">
+											<button class="stdbtn btn_lime">授权使用</button>
+											<button class="stdbtn ">取消使用</button>
+										</span>
+									</div>
+								</div>
+							</li>
+
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<form class="stdform">
+			<p>
+				<span id="dialog-operate" style="position: relative;">
+					等待填充 弹窗操作按钮 如添加和修改等等
+				</span>
+			</p>
+		</form>
+	</div>
+</div> --%>
 
 
 

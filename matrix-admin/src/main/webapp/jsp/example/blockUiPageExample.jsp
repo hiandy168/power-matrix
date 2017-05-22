@@ -80,7 +80,7 @@
 </script>
 
 <div id="add-dialog-div" class="dialog-page-div" style="display: none;width: 400px;height: 300px">
-    <p class="dialog-title">
+    <p class="dialog-title">	<!-- dialog-title是必填的一个类，修饰弹窗的头部 -->
         <a href="#" onclick="closeDialog()" class="dialog-close"></a>
         添加用户
     </p>
