@@ -29,7 +29,16 @@
 		from 
 			managercenter.mc_user_role
 		where 
-			mc_role_id = #{mcRoleId ,jdbcType=INTEGER}
+			mc_role_id = #{mcRoleId , jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByMcUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+			* 
+		from 
+			managercenter.mc_user_role
+		where 
+			mc_user_id = #{mcUserId , jdbcType=INTEGER}
 	</select>
 	
 	<select id="findList" resultMap="BaseResultMap" parameterType="com.matrix.pojo.entity.McUserRole">

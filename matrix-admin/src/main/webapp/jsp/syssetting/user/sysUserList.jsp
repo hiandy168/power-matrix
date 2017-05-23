@@ -182,8 +182,10 @@
 	function userRoleListDialog(obj){
 		$("#userId").val($(obj).attr("userId"));
 		var type_ = 'post';
-        var url_ = '${basePath}sysrole/sys_role_list.do';
-        var data_ = null;
+        var url_ = '${basePath}sysrole/user_role_list.do'; 
+        var data_ = {
+        		userId:$(obj).attr("userId")
+        };
         var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
         dForm.launch(url_ , 'dialog-table-form' , obj).init().drawForm(loadDialogTable);
 
@@ -229,9 +231,13 @@
 				html_ += '<tr>' + '<td align="center" width="200px">' + list[i].roleName + '</td>'
 						+ '<td>' + list[i].roleDesc + '</td>'
 						+ '<td align="center" width="150px">' + list[i].createTime + '</td>'
-						+ '<td width="50px" align="center">'
-						+ '<a href="javascript:void(0)" roleId="' + list[i].id + '" onclick="addMcUserRole(this)" title="为用户分配这个角色"  style="cursor: pointer;">分配</a> '  
-						+ '</td></tr>'
+						+ '<td width="50px" align="center">';
+						if(list[i].userId == -1){
+							html_ += '<a href="javascript:void(0)" roleId="' + list[i].id + '" onclick="addMcUserRole(this)" title="为用户分配这个角色"  style="cursor: pointer;">分配</a> '  
+						}else{
+							html_ += '<a href="javascript:void(0)" roleId="' + list[i].id + '" onclick="deleteMcUserRole(this)" title="为用户删除这个角色"  style="cursor: pointer;">取消</a> '  
+						}
+						html_ += '</td></tr>'
 			}
 		}else{
 			html_ = '<tr><td colspan="11" style="text-align: center;">' + obj.msg + '</td></tr>';

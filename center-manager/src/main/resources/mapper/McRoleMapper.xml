@@ -60,7 +60,31 @@
 		from 
 			managercenter.mc_role 
 		<where>
-			1 = 1 
+			flag = 1 
+			<if test="roleName != null and roleName != ''  ">
+				and role_name = #{roleName , jdbcType=VARCHAR}
+			</if> 
+		</where>
+	</select>
+	
+	<resultMap id="queryPageViewMap" type="com.matrix.pojo.view.McRoleView">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="role_name" property="roleName" jdbcType="VARCHAR" />
+		<result column="role_desc" property="roleDesc" jdbcType="VARCHAR" />
+		<result column="flag" property="flag" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+		<result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+		<result column="update_user_id" property="updateUserId" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="queryPageView" parameterType="com.matrix.pojo.entity.McRole" resultMap="queryPageViewMap">
+		select 
+			* 
+		from 
+			managercenter.mc_role 
+		<where>
+			flag = 1 
 			<if test="roleName != null and roleName != ''  ">
 				and role_name = #{roleName , jdbcType=VARCHAR}
 			</if> 

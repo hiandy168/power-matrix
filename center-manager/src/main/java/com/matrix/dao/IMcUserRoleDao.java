@@ -12,4 +12,6 @@ public interface IMcUserRoleDao extends IBaseDao<McUserRole, Integer>{
 	public List<McUserRoleView> userRoleFuncList(McUserRoleDto dto);  
 	
 	public List<McUserRole> selectByMcRoleId(Integer mcRoleId);
+	
+	public List<McUserRole> selectByMcUserId(Integer mcUserId);
 }

@@ -1,7 +1,9 @@
 package com.matrix.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -12,15 +14,21 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.matrix.base.BaseServiceImpl;
 import com.matrix.cache.CacheLaunch;
 import com.matrix.cache.enums.DCacheEnum;
 import com.matrix.cache.inf.IBaseLaunch;
 import com.matrix.cache.inf.ICacheFactory;
 import com.matrix.dao.IMcRoleDao;
+import com.matrix.dao.IMcUserRoleDao;
 import com.matrix.pojo.cache.McRoleCache;
+import com.matrix.pojo.dto.McRoleDto;
 import com.matrix.pojo.entity.McRole;
 import com.matrix.pojo.entity.McUserInfo;
+import com.matrix.pojo.entity.McUserRole;
+import com.matrix.pojo.view.McRoleView;
 import com.matrix.service.IMcRoleService;
 
 @Service("mcRoleService") 
@@ -30,6 +38,9 @@ public class McRoleServiceImpl extends BaseServiceImpl<McRole, Integer> implemen
 	
 	@Resource
 	private IMcRoleDao dao;
+	
+	@Resource
+	private IMcUserRoleDao mcUserRoleDao;
 	
 	/**
 	 * @description:返回列表数据，格式化时间 
@@ -143,6 +154,52 @@ public class McRoleServiceImpl extends BaseServiceImpl<McRole, Integer> implemen
 			result.put("status", "error");
 			result.put("msg", "服务器异常");
 		}
+		return result;
+	}
+
+
+	/**
+	 * @descriptions 展示权限列表|如果用户已经有权限了则标识出来
+	 * 
+	 * @date 2017年5月24日 上午12:05:56
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject userRoleList(McRoleDto dto , HttpServletRequest request) {
+		JSONObject result = new JSONObject();
+		String pageNum = request.getParameter("pageNum"); // 当前第几页
+		String pageSize = request.getParameter("pageSize"); // 当前页所显示记录条数
+		int num = 1;
+		int size = 10;
+		if (StringUtils.isNotBlank(pageNum)) {
+			num = Integer.parseInt(pageNum);
+		}
+		if (StringUtils.isNotBlank(pageSize)) {
+			size = Integer.parseInt(pageSize);
+		}
+		McRole role = new McRole();
+		role.setFlag(1); 
+		PageHelper.startPage(num, size);
+		List<McRoleView> list = dao.queryPageView(role);
+		if (list != null && list.size() > 0) {
+			List<McUserRole> urList = mcUserRoleDao.selectByMcUserId(dto.getUserId());  
+			if(urList != null && urList.size() != 0){
+				for(int i = 0 ; i < list.size() ; i ++){
+					for(McUserRole ur : urList){
+						if(list.get(i).getId() == ur.getMcRoleId()){
+							list.get(i).setUserId(ur.getMcUserId()); 
+						}
+					}
+				}
+			}
+			result.put("status", "success");
+		} else {
+			result.put("status", "error");
+			result.put("msg", this.getInfo(100090002));  // 没有查询到可以显示的数据 
+		}
+		PageInfo<McRoleView> pageList = new PageInfo<McRoleView>(list);
+		result.put("data", pageList);
+		result.put("entity", role);
 		return result;
 	}
 	

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.pojo.cache.McRoleCache;
+import com.matrix.pojo.dto.McRoleDto;
 import com.matrix.pojo.dto.McUserRoleDto;
 import com.matrix.pojo.entity.McRole;
 import com.matrix.pojo.entity.McSysFunction;
@@ -90,6 +91,21 @@ public class SystemRoleController {
 		role.setFlag(1); 
 		return mcRoleService.ajaxPageData(role, request);
 	}
+	
+	/**
+	 * @descriptions 展示权限列表|如果用户已经有权限了则标识出来
+	 *
+	 * @date 2017年5月24日 上午12:02:01
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "user_role_list", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject userRoleList(McRoleDto role , HttpServletRequest request) {
+		return mcRoleService.userRoleList(role, request);
+	}
+	
+	
 	
 	/**
 	 * @description: 前往添加权限页面 
