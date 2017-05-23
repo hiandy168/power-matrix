@@ -18,13 +18,13 @@
  	<script type="text/javascript" src="${js}/system/ajax-form.js"></script> 
     <style type="text/css">
         .tree-left{
-            border: solid #FB9337 2px;
+            /* border: solid #FB9337 2px; */
             height: 100%;
             width: 30%; 
             float: left;
         }
         .tree-right{
-            border: solid #78CE07 2px;
+            /* border: solid #78CE07 2px; */
             height: 100%;
             width: 30%;
             margin-right: 400px;
@@ -60,7 +60,6 @@
 </head>
 
 <body class="withvernav">
-
     <div class="bodywrapper">
 		<%@ include file="/inc/top.jsp" %> 
 		<%@ include file="/inc/left.jsp" %>
@@ -73,7 +72,6 @@
                     【导航月菜单树】同层节点之间可以进行拖动来调整其先后顺序 
                 </span>
             </div>
-
             <div class="contentwrapper" style="padding-top:0px;">
                 <div id="nav-menu" class="subcontent">
                     <div class="contenttitle2" style="margin-top:5px; margin-bottom: 5px;">
@@ -84,26 +82,20 @@
                     </div>
                     <div class="stdform" >
                         <div class="tree-left">
-							<div>
+							<div  id="func-list" class="mousescroll">
 								<ul id="sys-tree" class="ztree"></ul>
 							</div>
                         </div>
-
                         <div class="tree-right"  style="padding:5px">
-                            <form id="tree-node-edit"  action="#">
+                            <form id="tree-node-edit"  action="javascript:void(0)">
 
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
-
-
     </div>
-
 </body>
 </html>
 
@@ -112,6 +104,13 @@
 
 	$(document).ready(function(){
 		surfunc.sysTreeOperation(); 
+		// 自定义滚动条 | 执行此代码自定义滚动条则生效
+		$('#func-list').slimscroll({
+			color: '#666',
+			size: '10px',
+			width: 'auto',
+			height: '630px' // '208px'
+		});
 	});  
    
   

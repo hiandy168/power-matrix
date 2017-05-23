@@ -128,7 +128,7 @@
 						+ '<td width="200px" align="center">'
 						+ '<a onclick="deleteOne(\'' + list[i].id + '\')" title="删除"  style="cursor: pointer;">删除</a> | '
 						+ '<a href="${basePath}manager/show_user_edit_page.do?id=' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a> |'
-						+ '<a href="${basePath}manager/show_user_edit_page.do?id=' + list[i].id + '" title="用户权限"  style="cursor: pointer;">用户角色</a> '
+						+ '<a userId="' + list[i].id + '" onclick="userRoleListDialog(this)" title="用户权限"  style="cursor: pointer;">用户角色</a> '
 						+ '</td></tr>'
 			}
 		}else{
@@ -142,8 +142,6 @@
 	function toUserAddPage(){
 		window.location.href = "${basePath}manager/show_user_add_page.do";
 	}
-	
-	
 
 	function deleteOne(id_) {
 		jConfirm('您确定要删除这条记录吗？', '系统提示', function(flag) {
@@ -176,9 +174,150 @@
 		aForm.formPaging(0);
 	}
 	
+	function closeDialog(){
+        $.unblockUI();
+    }
+	
+	// 展示用户权限列表 
+	function userRoleListDialog(obj){
+		$("#userId").val($(obj).attr("userId"));
+		var type_ = 'post';
+        var url_ = '${basePath}sysrole/sys_role_list.do';
+        var data_ = null;
+        var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+        dForm.launch(url_ , 'dialog-table-form' , obj).init().drawForm(loadDialogTable);
+
+        var dialogId = 'dialog-page-div';  // 弹窗ID
+		$.blockUI({
+            showOverlay:true ,
+            css:  {
+                cursor:'auto',
+                left:($(window).width() - $("#" + dialogId).width())/2 + 'px',
+                width:$("#" + dialogId).width()+'px',
+                top:($(window).height()-$("#" + dialogId).height())/2 + 'px',
+                position:'fixed', //居中
+                border: '3px solid #FB9337'  // 边界
+            },
+            message: $('#' + dialogId),
+            fadeIn: 500,//淡入时间
+            fadeOut: 1000  //淡出时间
+        });
+	}
+	
+	// 回调函数
+    function loadDialogTable(url_){
+        if(url_ == undefined){ // 首次加载表单
+            drawDialog(dForm.jsonObj);
+            return;
+        }
+        // 这种情况是响应上一页或下一页的触发事件
+        var type_ = 'post';
+        var data_ = {
+			roleName : $("#role-name").val() 
+		};
+        var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+        dForm.launch(url_ , 'dialog-table-form' , obj).init();
+        drawDialog(obj);
+    }
+
+    function drawDialog(obj){
+        $('#dialog-ajax-tbody tr').remove();
+        var html_ = '';
+        var list = obj.data.list;
+        if (list.length > 0) {
+			for (var i = 0; i < list.length; i++) {
+				html_ += '<tr>' + '<td align="center" width="200px">' + list[i].roleName + '</td>'
+						+ '<td>' + list[i].roleDesc + '</td>'
+						+ '<td align="center" width="150px">' + list[i].createTime + '</td>'
+						+ '<td width="50px" align="center">'
+						+ '<a href="javascript:void(0)" roleId="' + list[i].id + '" onclick="addMcUserRole(this)" title="为用户分配这个角色"  style="cursor: pointer;">分配</a> '  
+						+ '</td></tr>'
+			}
+		}else{
+			html_ = '<tr><td colspan="11" style="text-align: center;">' + obj.msg + '</td></tr>';
+		}
+        $('#dialog-ajax-tbody').append(html_);
+    }
+    
+    function dialogSearch(){
+    	dForm.formPaging(0);
+    }
+    
+    // 为用户分配这个角色
+    function addMcUserRole(ele){
+    	var userInfoId = $("#userId").val(); 
+    	var roleId = $(ele).attr("roleId");
+    	var type_ = 'post';
+        var url_ = '../sysrole/add_user_role.do';
+    	var data_ = {
+    			mcRoleId : roleId,
+    			mcUserId : userInfoId
+			};
+    	var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+        if(obj.status == 'success'){
+        	ele.onclick = null;
+        	ele.innerText="完成";
+        }else{
+        	jAlert(obj.msg , '系统提示 ');
+        }
+    }
 </script>
 
+<%-- Ajax分页 且弹窗同时分页 --%>
+<div id="dialog-page-div" class="dialog-page-div" style="display: none;width: 1200px;height: 600px">
+    <p class="dialog-title">
+        <a href="#" onclick="closeDialog()" class="dialog-close"></a>
+        系统权限列表
+    </p>
+    <div id="dialog-content-wrapper" class="contentwrapper">
+        <div id="dialog-table-form" class="dataTables_wrapper" style="text-align:left;">
+        	
+        	<div class="contenttitle2">
+				<p style="margin: 0px">
+					<label>权限名称：</label> 
+					<span class="field"> 
+						<input id="role-name" type="text" name="roleName" class="form-search" />
+					</span>  
+					<a onclick="searchReset()" class="btn btn_orange btn_search radius50" style="float: right; cursor: pointer; margin-left: 10px"> 
+						<span> 重 置 </span>
+					</a> 
+					<a onclick="dialogSearch()" class="btn btn_orange btn_search radius50" style="float: right; cursor: pointer; margin-left: 20px"> 
+						<span> 查 询 </span>
+					</a>
+				</p>
+			</div>
+        	
+            <div id="dialog-dyntable" class=" dialog-show-count" >
+                <label>
+                    当前显示 
+                    <select id="dialog-select-page-size" size="1" name="dyntable2_length" onchange="dForm.formPaging('1')">
+                        <option value="10">10</option>
+                    </select>
+                    条记录
+                </label>
+            </div> 
+            <input type="hidden" id="userId" value=""/>	<!-- 保存数据 -->
+            <table id="dialog-table" cellpadding="0" cellspacing="0" border="0" class="stdtable" style="text-align:center;"> 
+                <thead>
+	                <tr>
+	                    <!-- <th class="head0 nosort">
+	                        <input type="checkbox"/>
+	                    </th> -->                                                                            
+	                    <th class="head1" width="200px">权限名称</th>   
+	                    <th class="head1"> 权限描述</th>    
+	                    <th class="head1">创建时间</th>  
+	                    <th class="head1 " width="50px">操作</th>
+	                </tr>
+                </thead>
+                <tbody id="dialog-ajax-tbody" class="page-list">
+                	<%-- 等待填充 --%>
+                </tbody>
+            </table>
 
+        </div>
+    </div>
+
+</div>
 
 
 

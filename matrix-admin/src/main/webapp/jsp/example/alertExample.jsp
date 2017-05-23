@@ -9,6 +9,11 @@
 	</style>
 	<script type="text/javascript">
 
+		/**           使用说明！！！！
+		 * 如果包含在 form表单内，需要将action="javascript:void(0)"，否则自定义的alert会跳转  
+		 * <form id="tree-node-edit"  action="javascript:void(0)"> </form>
+		 *
+		 */
 		$(function(){
 			$('#alertboxbutton').click(function(){
 				jAlert('自定义 alert 展示', 'alert-title');
