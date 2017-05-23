@@ -179,6 +179,7 @@ public class McRoleServiceImpl extends BaseServiceImpl<McRole, Integer> implemen
 		}
 		McRole role = new McRole();
 		role.setFlag(1); 
+		role.setRoleName(dto.getRoleName()); 
 		PageHelper.startPage(num, size);
 		List<McRoleView> list = dao.queryPageView(role);
 		if (list != null && list.size() > 0) {

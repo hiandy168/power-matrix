@@ -249,6 +249,11 @@
     	dForm.formPaging(0);
     }
     
+    function dialogSearchReset(){
+    	$("#role-name").val(""); 
+		dForm.formPaging(0);
+    }
+    
     // 为用户分配这个角色
     function addMcUserRole(ele){
     	var userInfoId = $("#userId").val(); 
@@ -284,7 +289,7 @@
 					<span class="field"> 
 						<input id="role-name" type="text" name="roleName" class="form-search" />
 					</span>  
-					<a onclick="searchReset()" class="btn btn_orange btn_search radius50" style="float: right; cursor: pointer; margin-left: 10px"> 
+					<a onclick="dialogSearchReset()" class="btn btn_orange btn_search radius50" style="float: right; cursor: pointer; margin-left: 10px"> 
 						<span> 重 置 </span>
 					</a> 
 					<a onclick="dialogSearch()" class="btn btn_orange btn_search radius50" style="float: right; cursor: pointer; margin-left: 20px"> 

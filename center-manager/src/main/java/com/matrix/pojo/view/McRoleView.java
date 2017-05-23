@@ -1,19 +1,21 @@
 package com.matrix.pojo.view;
 
-public class McRoleView {
-	private Integer id;
-    private String roleName;
-    private String roleDesc;
-    private Integer flag;
-    private String createTime;
-    private String updateTime;
-    private Integer createUserId;
-    private Integer updateUserId;
-    private String remark;
+import com.matrix.pojo.entity.McRole;
+
+public class McRoleView extends McRole{
+//	private Integer id;
+//    private String roleName;
+//    private String roleDesc;
+//    private Integer flag;
+//    private String createTime;
+//    private String updateTime;
+//    private Integer createUserId;
+//    private Integer updateUserId;
+//    private String remark;
 	private Integer userId = -1;  // 一个标识，默认为-1
 	
 	
-	public Integer getId() {
+	/*public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
@@ -66,7 +68,7 @@ public class McRoleView {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
-	}
+	}*/
 	public Integer getUserId() {
 		return userId;
 	}
