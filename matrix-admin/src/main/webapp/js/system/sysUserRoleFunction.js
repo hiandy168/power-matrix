@@ -516,7 +516,7 @@
         	$($("#tree-node-edit")[0].childNodes).remove();
         	var type_ = 'post';
             var url_ = 'tree_list.do?type=list';
-            var data_ = null;  // 可以为null，后台会进行默认处理
+            var data_ = null;   
             var jsonObj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));  
             if(jsonObj.status == 'success'){
                 var zNodes = jsonObj.list;

@@ -146,8 +146,18 @@ public class SystemRoleController {
 	}
 	
 	
-	
-	
+	/**
+	 * @description: 前往系统功能页面  
+	 * 
+	 * @return
+	 * @author Yangcl 
+	 * @date 2017年5月23日 下午2:27:57 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping("mc_sys_function") 
+	public String mcSysFunctionPage(){  
+		return "jsp/syssetting/func/mcSysFunction";   
+	}
 	
 	
 	
