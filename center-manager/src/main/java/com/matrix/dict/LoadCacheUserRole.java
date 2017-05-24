@@ -1,6 +1,13 @@
 package com.matrix.dict;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -12,10 +19,12 @@ import com.matrix.cache.CacheLaunch;
 import com.matrix.cache.enums.DCacheEnum;
 import com.matrix.cache.inf.IBaseLaunch;
 import com.matrix.cache.inf.ICacheFactory;
+import com.matrix.dao.IMcUserInfoDao;
 import com.matrix.dao.IMcUserRoleDao;
 import com.matrix.pojo.cache.McRoleCache;
 import com.matrix.pojo.cache.McUserRoleCache;
 import com.matrix.pojo.entity.McSysFunction;
+import com.matrix.pojo.entity.McUserInfo;
 import com.matrix.pojo.entity.McUserRole;
 
 /**
@@ -25,10 +34,7 @@ import com.matrix.pojo.entity.McUserRole;
  * key: xd-McUserRole-1
  	value: 
 				{
-				    "mcRoleId": 14,
 				    "mcUserId": 1,
-				    "roleName": "惠家有全功能",
-				    "roleDesc": "rzxlszy123YKPBGQC",
 				    "msfList": [
 				        {
 				            "createTime": 1491383651000,
@@ -136,61 +142,74 @@ public class LoadCacheUserRole extends BaseClass implements IBaseCache {
 
 	private IBaseLaunch<ICacheFactory> launch = CacheLaunch.getInstance().Launch();
 	
-	private List<McUserRole> list;
 	 
+	@Inject
+	private IMcUserInfoDao userInfoDao;
 	@Inject
 	private IMcUserRoleDao userRoleDao;
 	
 	public void refresh() {
-		McUserRole entity = new McUserRole();
-		entity.setFlag(1); 
-		list = userRoleDao.findList(entity);  
+		List<McUserInfo> list = userInfoDao.queryPage(null);
 		if(list != null && list.size() != 0){
-			for(McUserRole e : list){
-				String roleJson = launch.loadDictCache(DCacheEnum.McRole).getCache(e.getMcRoleId().toString());
-				if(StringUtils.isNotBlank(roleJson)){
-					McRoleCache role = JSONObject.parseObject(roleJson, McRoleCache.class);
-					if(role == null){
-						continue;  
-					}
-					McUserRoleCache cache = new McUserRoleCache();
-					cache.setMcUserId(e.getMcUserId());
-					cache.setMcRoleId(e.getMcRoleId());
-					cache.setRoleName(role.getRoleName());
-					cache.setRoleDesc(role.getRoleDesc());
-					if(StringUtils.isNotBlank(role.getIds())){
-						String [] arr = role.getIds().split(",");
-						for(String s : arr){
-							String rfJson = launch.loadDictCache(DCacheEnum.McSysFunc).getCache(s);
-							if(StringUtils.isNotBlank(rfJson)){
-								McSysFunction rf = JSONObject.parseObject(rfJson, McSysFunction.class);
-								if(rf == null){
-									continue;
-								}
-								cache.getMsfList().add(rf);
-							}
-						}
-					}
-					
-					launch.loadDictCache(DCacheEnum.McUserRole).setCache(e.getMcUserId().toString(), JSONObject.toJSONString(cache)); 
-				}
+			for(McUserInfo u : list){
+				this.reloadUserFunction(u.getId()); 
 			}
 		}
 		System.out.println(this.getClass().getName() + "********* 初始化完成!"); 
 	}
+	
+	/**
+	 * @description: 实例化用户功能缓存   
+	 * 
+	 * @param userId
+	 * @author Yangcl 
+	 * @date 2017年5月24日 下午3:05:35 
+	 * @version 1.0.0.1
+	 */
+	private void reloadUserFunction(Integer userId){
+		McUserRoleCache cache = new McUserRoleCache();
+		cache.setMcUserId(userId);
+		List<McUserRole> list = userRoleDao.selectByMcUserId(userId);
+		if(list != null && list.size() != 0){
+			Set<Integer> set = new TreeSet<Integer>();  
+			for(McUserRole r : list){
+				String roleJson = launch.loadDictCache(DCacheEnum.McRole).getCache(r.getMcRoleId().toString());
+				if(StringUtils.isNotBlank(roleJson)){
+					McRoleCache role = JSONObject.parseObject(roleJson, McRoleCache.class);
+					if(role == null){
+						continue;
+					}
+					if(StringUtils.isNotBlank(role.getIds())){
+						String [] arr = role.getIds().split(",");
+						for(String s : arr){
+							set.add(Integer.valueOf(s)); 
+						}
+					}
+				}
+			}
+			if(set != null && set.size() != 0){
+				for(Integer id : set){
+					String rfJson = launch.loadDictCache(DCacheEnum.McSysFunc).getCache(id.toString());
+					if(StringUtils.isNotBlank(rfJson)){
+						McSysFunction rf = JSONObject.parseObject(rfJson, McSysFunction.class);
+						if(rf == null){
+							continue;
+						}
+						cache.getMsfList().add(rf); 
+					}
+				}
+			}
+			launch.loadDictCache(DCacheEnum.McUserRole).setCache(userId.toString(), JSONObject.toJSONString(cache)); 
+		}
+	}
 
 	public void removeAll() {
-		if(list == null){
-			McUserRole entity = new McUserRole();
-			entity.setFlag(1); 
-			list = userRoleDao.findList(entity);  
-		}
+		List<McUserInfo> list = userInfoDao.queryPage(null);
 		if(list != null && list.size() != 0){
-			for(McUserRole e : list){
-				launch.loadDictCache(DCacheEnum.McUserRole).deleteCache(e.getMcUserId().toString());  
+			for(McUserInfo u : list){
+				launch.loadDictCache(DCacheEnum.McUserRole).deleteCache(u.getId().toString());  
 			}
-		}
-		
+		} 
 		System.out.println(this.getClass().getName() + "********* 缓存删除完成!");
 	}
 

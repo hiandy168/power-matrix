@@ -138,11 +138,13 @@ public class McRoleServiceImpl extends BaseServiceImpl<McRole, Integer> implemen
 			int count = dao.updateSelective(role);
 			if(count == 1){
 				result.put("status", "success");
-				result.put("msg", "添加成功");
+				result.put("msg", "修改成功");
 				McRoleCache c = new McRoleCache();
 				c.setMcRoleId(role.getId());
 				c.setRoleName(role.getRoleName());
-				c.setRoleDesc(role.getRoleDesc());               
+				c.setRoleDesc(role.getRoleDesc());        
+				String ids = JSONObject.parseObject( launch.loadDictCache(DCacheEnum.McRole).getCache(role.getId().toString()) ).getString("ids");  
+				c.setIds(ids); 
 				launch.loadDictCache(DCacheEnum.McRole).deleteCache(role.getId().toString());  
 				launch.loadDictCache(DCacheEnum.McRole).setCache(role.getId().toString() , JSONObject.toJSONString(c)); 
 			}else{

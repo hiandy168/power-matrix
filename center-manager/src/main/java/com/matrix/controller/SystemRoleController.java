@@ -326,8 +326,24 @@ public class SystemRoleController {
 		return mcSysFunctionService.addUserRole(entity , session);
 	}
 	
+	/**
+	 * @description: 解除角色绑定，同时删除缓存
+	 * 
+	 * @param d
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年4月24日 下午3:27:22 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "remove_user_role", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject deleteUserRole(McUserRoleDto d , HttpSession session){
+		return mcSysFunctionService.deleteUserRole(d, session);	
+	}
+	
 	
 	/**
+	 *  @deprecated 不再使用
 	 * @description: 已赋权限用户列表
 	 * 
 	 * @param dto
@@ -342,21 +358,6 @@ public class SystemRoleController {
 		return mcSysFunctionService.userRoleFuncList(dto , request);
 	}
 	
-	
-	/**
-	 * @description: 解除角色绑定，同时删除缓存
-	 * 
-	 * @param d
-	 * @param session
-	 * @author Yangcl 
-	 * @date 2017年4月24日 下午3:27:22 
-	 * @version 1.0.0.1
-	 */
-	@RequestMapping(value = "delete_user_role", produces = { "application/json;charset=utf-8" })
-	@ResponseBody
-	public JSONObject deleteUserRole(McUserRoleDto d , HttpSession session){
-		return mcSysFunctionService.deleteUserRole(d, session);	
-	}
 }
 
 

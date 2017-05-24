@@ -2,7 +2,10 @@ package com.matrix.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -442,33 +445,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 			if(count != 0){
 				result.put("status", "success");
 				// 实例化缓存   
-				String roleJson = launch.loadDictCache(DCacheEnum.McRole).getCache(e.getMcRoleId().toString());
-				if(StringUtils.isNotBlank(roleJson)){
-					McRoleCache role = JSONObject.parseObject(roleJson, McRoleCache.class);
-					if(role == null){
-						return result;
-					}
-					McUserRoleCache cache = new McUserRoleCache();
-					cache.setMcUserId(e.getMcUserId());
-					cache.setMcRoleId(e.getMcRoleId());
-					cache.setRoleName(role.getRoleName());
-					cache.setRoleDesc(role.getRoleDesc());
-					if(StringUtils.isNotBlank(role.getIds())){
-						String [] arr = role.getIds().split(",");
-						for(String s : arr){
-							String rfJson = launch.loadDictCache(DCacheEnum.McSysFunc).getCache(s);
-							if(StringUtils.isNotBlank(rfJson)){
-								McSysFunction rf = JSONObject.parseObject(rfJson, McSysFunction.class);
-								if(rf == null){
-									continue;
-								}
-								cache.getMsfList().add(rf); 
-							}
-						}
-					}
-					
-					launch.loadDictCache(DCacheEnum.McUserRole).setCache(e.getMcUserId().toString(), JSONObject.toJSONString(cache)); 
-				}
+				this.reloadUserFunction(e.getMcUserId());  
 			}else{
 				result.put("status", "error");
 				result.put("msg", this.getInfo(500090007)); // 用户与角色关联失败
@@ -479,8 +456,91 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 		}
 		return result;
 	}
-
+	
 	/**
+	 * @description: 解除一个用户与某个角色的绑定关系，同时更新缓存信息
+	 * 
+	 * @author Yangcl 
+	 * @date 2017年4月24日 下午3:27:22 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject deleteUserRole(McUserRoleDto d, HttpSession session) {
+		JSONObject result = new JSONObject();
+		try {
+			if(d.getUserId() == null ||d.getMcRoleId() == null){
+				result.put("status", "error");
+				result.put("msg", "页面数据信息不全"); // 页面数据信息不全  
+				return result;
+			}
+			
+			userRoleDao.deleteByCondition(d); 
+			this.reloadUserFunction(d.getUserId()); 
+			
+			result.put("status", "success");
+			result.put("msg", this.getInfo(500090010)); // 角色绑定解除成功! 
+		} catch (Exception e) {
+			e.printStackTrace(); 
+			result.put("status", "error");
+			result.put("msg", this.getInfo(500090008)); // 系统异常
+		}
+		return result;
+	}
+	
+	/**
+	 * @description: 实例化用户功能缓存   
+	 * 
+	 * @param userId
+	 * @author Yangcl 
+	 * @date 2017年5月24日 下午3:05:35 
+	 * @version 1.0.0.1
+	 */
+	private void reloadUserFunction(Integer userId){
+		McUserRoleCache cache = new McUserRoleCache();
+		cache.setMcUserId(userId);
+		List<McUserRole> list = userRoleDao.selectByMcUserId(userId);
+		if(list != null && list.size() != 0){
+			Set<Integer> set = new TreeSet<Integer>();  
+			for(McUserRole r : list){
+				String roleJson = launch.loadDictCache(DCacheEnum.McRole).getCache(r.getMcRoleId().toString());
+				if(StringUtils.isNotBlank(roleJson)){
+					McRoleCache role = JSONObject.parseObject(roleJson, McRoleCache.class);
+					if(role == null){
+						continue;
+					}
+					if(StringUtils.isNotBlank(role.getIds())){
+						String [] arr = role.getIds().split(",");
+						for(String s : arr){
+							set.add(Integer.valueOf(s)); 
+						}
+					}
+				}
+			}
+			if(set != null && set.size() != 0){
+				for(Integer id : set){
+					String rfJson = launch.loadDictCache(DCacheEnum.McSysFunc).getCache(id.toString());
+					if(StringUtils.isNotBlank(rfJson)){
+						McSysFunction rf = JSONObject.parseObject(rfJson, McSysFunction.class);
+						if(rf == null){
+							continue;
+						}
+						cache.getMsfList().add(rf); 
+					}
+				}
+			}
+			launch.loadDictCache(DCacheEnum.McUserRole).setCache(userId.toString(), JSONObject.toJSONString(cache)); 
+		}
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * @deprecated 不再使用
 	 * @description: 已赋权限用户列表
 	 * 
 	 * @param dto
@@ -514,33 +574,6 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 		result.put("data", pageList); 
 		return result;
 	}
-
-	
-	/**
-	 * @description: 解除角色绑定，同时删除缓存
-	 * 
-	 * @param d
-	 * @param session
-	 * @author Yangcl 
-	 * @date 2017年4月24日 下午3:27:22 
-	 * @version 1.0.0.1
-	 */
-	public JSONObject deleteUserRole(McUserRoleDto d, HttpSession session) {
-		JSONObject result = new JSONObject();
-		try {
-			userRoleDao.deleteById(d.getId());
-			launch.loadDictCache(DCacheEnum.McUserRole).deleteCache(d.getUserId().toString()); 
-			
-			result.put("status", "success");
-			result.put("msg", this.getInfo(500090010)); // 角色绑定解除成功! 
-		} catch (Exception e) {
-			e.printStackTrace(); 
-			result.put("status", "error");
-			result.put("msg", this.getInfo(500090008)); // 系统异常
-		}
-		return result;
-	}
-
 }
 
 

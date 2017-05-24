@@ -24,14 +24,14 @@
 				<form id="form-edit-role" class="stdform">
 					<input type="hidden" name="id" value="${entity.id}"/>
 					<p>
-						<label>用户名称</label>
+						<label>角色名称</label>
 						<span class="field">
 							<input type="text" name="roleName" id="roleName" class="ae-form-input" maxlength="20" placeholder="20个字以内"  value="${entity.roleName}"/>
 						</span>
 					</p>
 					
 					<p>
-						<label>手机号码</label>
+						<label>角色描述</label>
 						<span class="field">
 							<input type="text" name="roleDesc" id="roleDesc" class="ae-form-input" maxlength="200"  placeholder="200个字以内" value="${entity.roleDesc}"/>
 						</span>

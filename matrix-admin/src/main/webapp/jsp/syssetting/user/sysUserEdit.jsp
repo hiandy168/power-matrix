@@ -82,20 +82,23 @@
 </html>
 
 <script type="text/javascript">
-	function editUserInfo(id_){
-		if(confirm('您确定要修改这条记录吗？')){
-			var type_ = 'post';
-			var url_ = '${basePath}manager/edit_sys_user.do';
-			var data_ = $("#form-edit-user").serializeArray();
-			var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
-			if(obj.status == 'success'){
-				jAlert(obj.msg, '系统提示' , function(){
-					window.location.href = '${basePath}/manager/sys_user_list_page.do'  
-				});
-			}else{
-				jAlert(obj.msg, '系统提示'); 
+	function editUserInfo(){ 
+		jConfirm('您确定要修改这条记录吗？', '系统提示', function(flag) {
+			if(flag){
+				var type_ = 'post';
+				var url_ = '${basePath}manager/edit_sys_user.do';
+				var data_ = $("#form-edit-user").serializeArray();
+				var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+				if(obj.status == 'success'){
+					jAlert(obj.msg, '系统提示' , function(){
+						window.location.href = '${basePath}/manager/sys_user_list_page.do'  
+					});
+				}else{
+					jAlert(obj.msg, '系统提示'); 
+				}
 			}
-		}
+		});
+		
 	}
 </script>
 

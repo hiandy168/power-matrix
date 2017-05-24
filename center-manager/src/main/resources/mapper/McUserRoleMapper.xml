@@ -39,6 +39,8 @@
 			managercenter.mc_user_role
 		where 
 			mc_user_id = #{mcUserId , jdbcType=INTEGER}
+		and
+			flag = 1
 	</select>
 	
 	<select id="findList" resultMap="BaseResultMap" parameterType="com.matrix.pojo.entity.McUserRole">
@@ -75,6 +77,21 @@
 	
 	<delete id="deleteById" parameterType="java.lang.Integer">
 		delete from managercenter.mc_user_role where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteByCondition" parameterType="com.matrix.pojo.dto.McUserRoleDto">
+		delete from 
+			managercenter.mc_user_role 
+		where 1 = 1
+			<if test="id != null">
+				and id = #{id , jdbcType=INTEGER} 
+			</if>
+			<if test="userId != null and mcRoleId != null">
+				and 
+					mc_user_id = #{userId , jdbcType=INTEGER} 
+				and 
+					mc_role_id = #{mcRoleId , jdbcType=INTEGER} 
+			</if> 
 	</delete>
 	
 	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.McUserRole">

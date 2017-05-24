@@ -7,10 +7,7 @@ import com.matrix.pojo.entity.McRoleFunction;
 import com.matrix.pojo.entity.McSysFunction;
 
 public class McUserRoleCache {
-	private Integer mcUserId;
-	private Integer mcRoleId;
-	private String roleName;
-	private String roleDesc;
+	private Integer mcUserId; 
 	private List<McSysFunction> msfList = new ArrayList<McSysFunction>();
 	
 	public Integer getMcUserId() {
@@ -18,24 +15,6 @@ public class McUserRoleCache {
 	}
 	public void setMcUserId(Integer mcUserId) {
 		this.mcUserId = mcUserId;
-	}
-	public Integer getMcRoleId() {
-		return mcRoleId;
-	}
-	public void setMcRoleId(Integer mcRoleId) {
-		this.mcRoleId = mcRoleId;
-	}
-	public String getRoleName() {
-		return roleName;
-	}
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-	public String getRoleDesc() {
-		return roleDesc;
-	}
-	public void setRoleDesc(String roleDesc) {
-		this.roleDesc = roleDesc;
 	}
 	public List<McSysFunction> getMsfList() {
 		return msfList;

@@ -215,7 +215,8 @@
         // 这种情况是响应上一页或下一页的触发事件
         var type_ = 'post';
         var data_ = {
-			roleName : $("#role-name").val() 
+			roleName : $("#role-name").val(),
+			userId : $("#userId").val()
 		};
         var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
         dForm.launch(url_ , 'dialog-table-form' , obj).init();
@@ -266,8 +267,27 @@
 			};
     	var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
         if(obj.status == 'success'){
-        	ele.onclick = null;
-        	ele.innerText="完成";
+        	var html_ = '<a href="javascript:void(0)" roleId="' + roleId + '" onclick="deleteMcUserRole(this)" title="为用户删除这个角色"  style="cursor: pointer;">取消</a> ';  
+        	$(ele)[0].parentElement.innerHTML = html_;
+        }else{
+        	jAlert(obj.msg , '系统提示 ');
+        }
+    }
+    
+    // 针对一个用户 删除一个角色
+    function deleteMcUserRole(ele){
+    	var userId = $("#userId").val(); 
+    	var roleId = $(ele).attr("roleId");
+    	var type_ = 'post';
+        var url_ = '../sysrole/remove_user_role.do';
+    	var data_ = {
+    			mcRoleId : roleId,
+    			userId : userId
+			};
+    	var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+        if(obj.status == 'success'){ 
+        	var html_ = '<a href="javascript:void(0)" roleId="' + roleId + '" onclick="addMcUserRole(this)" title="为用户分配这个角色"  style="cursor: pointer;">分配</a>';  
+        	$(ele)[0].parentElement.innerHTML = html_;
         }else{
         	jAlert(obj.msg , '系统提示 ');
         }
@@ -289,6 +309,7 @@
 					<span class="field"> 
 						<input id="role-name" type="text" name="roleName" class="form-search" />
 					</span>  
+		            <input type="hidden" id="userId" value=""/>	<!-- 保存数据 -->
 					<a onclick="dialogSearchReset()" class="btn btn_orange btn_search radius50" style="float: right; cursor: pointer; margin-left: 10px"> 
 						<span> 重 置 </span>
 					</a> 
@@ -307,7 +328,6 @@
                     条记录
                 </label>
             </div> 
-            <input type="hidden" id="userId" value=""/>	<!-- 保存数据 -->
             <table id="dialog-table" cellpadding="0" cellspacing="0" border="0" class="stdtable" style="text-align:center;"> 
                 <thead>
 	                <tr>
