@@ -36,14 +36,15 @@
 			 xsi:schemaLocation="
 			 	http://www.springframework.org/schema/mvc
 				http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd"	
+				
 				<mvc:mapping path="/**"/>  /**的意思是所有文件夹及里面的子文件夹|/*是所有文件夹，不含子文件夹|/是web项目的根目录
 	 -->
-<!-- 	<mvc:interceptors>
+ 	<mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <bean id="loginInterceptor" class="com.hjy.matrix.utils.LoginInterceptor"/>
+            <bean id="urlInterceptor" class="com.matrix.system.UrlInterceptor"/>
         </mvc:interceptor>
-    </mvc:interceptors> -->
+    </mvc:interceptors>
     
     
     <!-- Spring mvc 返回json格式 -->
