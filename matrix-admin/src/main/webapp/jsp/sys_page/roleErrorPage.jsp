@@ -16,16 +16,17 @@
 		    <div class="contentwrapper padding10">
 		        <div class="errorwrapper error403">
 		            <div class="errorcontent">
-		                <h1>Update in Progress</h1>
+		                <h1>服务访问拒绝</h1>
 		
-		                <h3>Please come back again soon as we're working on the issue now.</h3>
+		                <h3>服务器拒绝了您的访问功能，原因如下：</h3>
 		
-		                <p>Sorry this site is temporarily unavailable while an essential software update is being performed.
-		                    <br/>Please try again in an hour or less when the update should be complete.</p>
-		                <br/>
-		                <button class="stdbtn btn_black" onclick="history.back()">Go Back to Previous Page</button>
+		                <p>
+		                	您可能没有这个权限来访问您在浏览器地址栏中直接输入的路径。 如果您想获得这个功能的使用权请联系系统管理员，他会为您分<br/>
+		                    配这个权限。权限分配完成后请清除浏览器缓存并重启浏览器！
+	                    </p><br/>
+		                <button class="stdbtn btn_black" onclick="history.back()">返回上一页</button>
 		                &nbsp;
-		                <button onclick="location.href='dashboard.html'" class="stdbtn btn_orange">Go Back to Dashboard</button>
+		                <button onclick="location.href='/matrix-admin/index.jsp'" class="stdbtn btn_orange">回到首页</button>
 		            </div>
 		            <!--errorcontent-->
 		        </div>

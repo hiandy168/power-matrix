@@ -24,8 +24,14 @@ var login = {
     /**
      * 退出相关类
      */
-    logout:function(){
-    	localStorage.pageJson = "";
+    logout:function(base){
+    	localStorage.clear();
+    	var url_ = base + 'manager/logout.do';
+        var data_ = null;
+        var object = JSON.parse(ajaxs.sendAjax('post' , url_ , data_));
+        if(object.status == 'success'){
+        	window.location.href=base + "login.jsp";
+        }
     },
 
     /**
@@ -37,5 +43,30 @@ var login = {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

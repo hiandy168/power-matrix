@@ -36,7 +36,7 @@ public class UrlInterceptor extends HandlerInterceptorAdapter{
 	 * 构建一个数组，数组中的请求将被排除不会被拦截。这些请求路径标识都是无需用户进行登录就可使用的
 	 * 发送验证码|注册相关*.do|验证邮箱 等等应在这里进行过滤
 	 */
-    private static final String[] ExcludeUri = {"login.do" , "verify_code.do"};  
+    private static final String[] ExcludeUri = {"login.do" , "logout.do" , "verify_code.do"};  
  
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String url_ [] = request.getRequestURL().toString().split("/");  // 分割路径地址，取出最后一个
@@ -78,7 +78,7 @@ public class UrlInterceptor extends HandlerInterceptorAdapter{
         /**
          * 如果请求被排除则跳转到默认提示页面
          */
-        String loginUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/sys_page/roleErrorPage.jsp" ;
+        String loginUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/jsp/sys_page/roleErrorPage.jsp" ;
         response.sendRedirect(loginUrl);
         return false;
     }

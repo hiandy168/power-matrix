@@ -42,14 +42,14 @@
                                 <a href="">修改资料</a>
                             </li>
                             <li>
-                                <%-- TODO 非开发权限人员此处需要隐藏！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！--%>
-                                <a href="${basePath}sysrole/tree_page_index.do">功能树维护</a>
+                                <%-- TODO 非开发权限人员此处需要隐藏！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！${basePath}sysrole/tree_page_index.do--%>
+                                <a href="">功能维护</a>
                             </li>
                             <li>
                                 <a href="">帮助</a>
                             </li>
                             <li>
-                                <a href="">退出</a>
+                                <a href="javascript:void(0)" onclick="login.logout('${basePath}')">退出</a> 
                             </li>
                         </ul>
                     </div>

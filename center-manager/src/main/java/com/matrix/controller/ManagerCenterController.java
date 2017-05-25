@@ -46,6 +46,13 @@ public class ManagerCenterController extends BaseController{
 		super.userBehavior(session, logger, "login", "正在尝试登录");
 		return mcUserInfoService.login(info, session);
 	}
+	
+	@RequestMapping(value = "logout", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject logout(HttpSession session) {
+		super.userBehavior(session, logger, "logout", "执行退出登录");
+		return mcUserInfoService.logout(session);
+	}
 
 	/**
 	 * @description: 登录验证完成后跳转到指定页面

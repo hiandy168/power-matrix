@@ -13,6 +13,8 @@ public interface IMcUserInfoService extends IBaseService<McUserInfo, Integer> {
 
 	public JSONObject editSysUser(McUserInfo info);
 
-	public JSONObject deleteUser(Integer id);      
+	public JSONObject deleteUser(Integer id);
+
+	public JSONObject logout(HttpSession session);       
 	
 }

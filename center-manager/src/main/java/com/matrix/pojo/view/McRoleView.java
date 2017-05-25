@@ -1,7 +1,5 @@
 package com.matrix.pojo.view;
 
-import com.matrix.pojo.entity.McRole;
-
 public class McRoleView  {
 	private Integer id;
     private String roleName;

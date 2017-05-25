@@ -73,6 +73,21 @@ public class McUserInfoServiceImpl extends BaseServiceImpl<McUserInfo, Integer> 
 			return result;
 		}
 	}
+	
+	/**
+	 * @descriptions 退出登录
+	 *
+	 * @date 2017年5月25日 下午10:48:50
+	 * @author Yangcl 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject logout(HttpSession session) {
+		JSONObject result = new JSONObject();
+		session.removeAttribute("userInfo"); 
+		result.put("status", "success");
+		result.put("msg", "调用成功");
+		return result;
+	}
 
 	/**
 	 * @description: 格式化创建时间  
