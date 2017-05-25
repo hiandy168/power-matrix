@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
-import com.matrix.base.BaseClass;
+import com.matrix.base.BaseController;
 import com.matrix.pojo.entity.McUserInfo;
 import com.matrix.service.IMcUserInfoService;
 
@@ -26,7 +26,7 @@ import com.matrix.service.IMcUserInfoService;
 
 @Controller
 @RequestMapping("manager")
-public class ManagerCenterController extends BaseClass{
+public class ManagerCenterController extends BaseController{
 	private static Logger logger = Logger.getLogger(ManagerCenterController.class);
 	
 	@Autowired
@@ -43,7 +43,7 @@ public class ManagerCenterController extends BaseClass{
 	@RequestMapping(value = "login", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject login(McUserInfo info, HttpSession session) {
-		logger.info(info.getUserName() + " 正在尝试登录");
+		super.userBehavior(session, logger, "login", "正在尝试登录");
 		return mcUserInfoService.login(info, session);
 	}
 
@@ -54,9 +54,9 @@ public class ManagerCenterController extends BaseClass{
 	 * @date 2016年11月25日 下午4:18:10 
 	 * @version 1.0.0.1
 	 */
-	@RequestMapping("index")
-	public String loginPageIndex() {
-		getLogger().logInfo(" to index.jsp  ... ");
+	@RequestMapping("page_manager_index")
+	public String loginPageIndex(HttpSession session) {
+		super.userBehavior(session, logger, "index", "登录验证完成后跳转到指定页面 index.jsp");
 		return "redirect:/index.jsp";
 	}
 	
@@ -64,20 +64,21 @@ public class ManagerCenterController extends BaseClass{
 	/**
 	 * @description: 前往用户列表页面 
 	 * 
-	 * @return
 	 * @author Yangcl 
 	 * @date 2017年5月18日 上午10:12:05 
 	 * @version 1.0.0.1
 	 */
-	@RequestMapping("sys_user_list_page")
-	public String systemUserCreate(){
+	@RequestMapping("page_manager_user_list")
+	public String systemUserList(HttpSession session){
+		super.userBehavior(session, logger, "page_manager_user_list", "前往用户列表页面 sysUserList.jsp");
 		return "jsp/syssetting/user/sysUserList";
 	}
 	
 	@RequestMapping(value = "sys_user_list", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject sysUserList(McUserInfo info , HttpServletRequest request) {
+	public JSONObject sysUserList(McUserInfo info , HttpSession session , HttpServletRequest request) {
 		info.setFlag(2); 
+		super.userBehavior(session, logger, "sys_user_list", "获取用户列表");
 		return mcUserInfoService.ajaxPageData(info, request);
 	}
 	
@@ -90,13 +91,15 @@ public class ManagerCenterController extends BaseClass{
 	 * @version 1.0.0.1
 	 */
 	@RequestMapping("show_user_add_page")
-	public String showUserAddPage(){
+	public String showUserAddPage(HttpSession session){
+		super.userBehavior(session, logger, "show_user_add_page", "页面内部跳转，前往添加用户界面sysUserAdd.jsp");
 		return "jsp/syssetting/user/sysUserAdd";
 	}
 	
 	@RequestMapping(value = "add_sys_user", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject addSysUser(McUserInfo info) {
+	public JSONObject addSysUser(McUserInfo info , HttpSession session) {
+		super.userBehavior(session, logger, "add_sys_user", "添加用户");
 		return mcUserInfoService.addSysUser(info);
 	}
 	
@@ -109,7 +112,8 @@ public class ManagerCenterController extends BaseClass{
 	 * @version 1.0.0.1
 	 */
 	@RequestMapping("show_user_edit_page")
-	public String showUserEditPage(Integer id , ModelMap model){
+	public String showUserEditPage(Integer id , ModelMap model , HttpSession session){
+		super.userBehavior(session, logger, "show_user_edit_page", "页面内部跳转，前往修改用户界面sysUserEdit.jsp");
 		McUserInfo entity = mcUserInfoService.find(id);
 		if(entity != null){
 			model.addAttribute("entity", entity);
@@ -119,13 +123,15 @@ public class ManagerCenterController extends BaseClass{
 	
 	@RequestMapping(value = "edit_sys_user", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject editSysUser(McUserInfo info) {
+	public JSONObject editSysUser(McUserInfo info , HttpSession session) {
+		super.userBehavior(session, logger, "edit_sys_user", "修改用户");
 		return mcUserInfoService.editSysUser(info);
 	}
 	
 	@RequestMapping(value = "delete_user", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject deleteUser(Integer id) {
+	public JSONObject deleteUser(Integer id , HttpSession session) {
+		super.userBehavior(session, logger, "delete_user", "删除用户");
 		return mcUserInfoService.deleteUser(id);
 	}
 }

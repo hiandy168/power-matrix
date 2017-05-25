@@ -10,7 +10,7 @@
 		function updateInfo(id_){
 			if(confirm('您确定要修改这条记录吗？')){
 				var type_ = 'post';
-				var url_ = '${basePath}example/editInfo.do';
+				var url_ = '${basePath}example/ajax_edit_info.do';
 				var data_ = $("#edit-form-example").serializeArray();
 				var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
 				if(obj.status == 'success'){

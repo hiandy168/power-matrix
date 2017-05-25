@@ -181,6 +181,8 @@ public class McUserInfoServiceImpl extends BaseServiceImpl<McUserInfo, Integer> 
 
 	/**
 	 * @descriptions 删除一个用户|不保留数据库中的记录
+	 * 				
+	 * 																	TODO 还需要删除这个用户的缓存，以及关联的角色信息等等内容
 	 *
 	 * @param id
 	 * @return

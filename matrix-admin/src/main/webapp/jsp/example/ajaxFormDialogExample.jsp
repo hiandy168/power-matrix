@@ -16,7 +16,7 @@
         $(function(){
         	 // aForm.formPaging('$ { num }'); 如果从修改页面返回到列表页面，则可以进入这段代码 直接定位。
             var type_ = 'post';
-            var url_ = '${basePath}example/ajaxPageData.do';
+            var url_ = '${basePath}example/ajax_page_data.do';
             var data_ = null;
             var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
             aForm.launch(url_ , 'table-form' , obj).init().drawForm(loadTable);
@@ -53,7 +53,7 @@
 	                +'<td class="center">' + list[i].email + '</td>'
 	                +'<td width="150px" align="center">'
 	                +'<a onclick="deleteOne(\'' + list[i].id + '\')" title="删除"  style="cursor: pointer;">删除</a> | '
-	                +'<a href="${basePath}example/editInfoPage.do?id=' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a> | '
+	                +'<a href="${basePath}example/edit_info_page.do?id=' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a> | '
 	                +'<a onclick="openDialogPage(\'' + list[i].id + '\')" style="cursor: pointer;">弹窗分页</a>'
 	                +'</td></tr>'
 	            }
@@ -71,7 +71,7 @@
         	jConfirm('您确定要删除这条记录吗？', 'confirm', function(flag) {
 	            if(flag){
 	                var type_ = 'post';
-	                var url_ = '${basePath}example/deleteOne.do';
+	                var url_ = '${basePath}example/ajax_delete_one.do';
 	                var data_ = {id:id_};
 	                var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
 	                if(obj.status == 'success'){
@@ -101,7 +101,7 @@
         function openDialogPage(id){
 //            dialogFormClear(dialogFormId)        // TODO 可选：清空上一次遗留的内容
             var type_ = 'post';
-            var url_ = '${basePath}example/ajaxPageData.do';
+            var url_ = '${basePath}example/ajax_page_data.do';
             var data_ = null;
             var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
             dForm.launch(url_ , 'dialog-table-form' , obj).init().drawForm(loadDialogTable);
@@ -152,7 +152,7 @@
 	                +'<td class="center">' + list[i].email + '</td>'
 	                +'<td width="150px" align="center">'
 	                +'<a onclick="deleteOne(\'' + list[i].id + '\')" title="删除"  style="cursor: pointer;">删除</a> | '
-	                +'<a href="${basePath}example/editInfoPage.do?id=' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a> '
+	                +'<a href="${basePath}example/edit_info_page.do?id=' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a> '
 	                +'</td></tr>'
 	            }
             }else{

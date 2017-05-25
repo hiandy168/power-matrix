@@ -229,6 +229,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	}
 	
 	/**
+	 * @deprecated 方法废弃 
 	 * @description: 创建系统角色
 	 * 
 	 * @param d
@@ -290,6 +291,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 
 
 	/**
+	 * @deprecated 方法废弃 
 	 * @description: 修改系统角色
 	 * 
 	 * @param d

@@ -190,26 +190,6 @@
 		window.location.href = "${basePath}sysrole/show_role_add_page.do";
 	}
 	
-
-	function deleteOne(id_) {
-		jConfirm('您确定要删除这条记录吗？', '系统提示', function(flag) {
-			if (flag) {
-				var type_ = 'post';
-				var url_ = '${basePath}sysrole/delete_role.do';
-				var data_ = {
-					id : id_
-				};
-				var obj = JSON.parse(ajaxs.sendAjax(type_, url_, data_));
-				if (obj.status == 'success') {
-					var currentPageNumber = $(".paginate_active").html(); // 定位到当前分页的页码，然后重新加载数据
-					aForm.formPaging(currentPageNumber);
-				} else {
-				}
-				jAlert(obj.msg, '系统提示');
-			}
-		});
-	}
-
 	//搜索
 	function searchUser() {
 		aForm.formPaging(0);

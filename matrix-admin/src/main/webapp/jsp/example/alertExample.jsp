@@ -46,7 +46,7 @@
 			});
 
 			$('#alerthtmlbutton').click(function(){
-				var html_ = '<a href="${basePath}example/ajaxFormDialogExample.do" target="_blank" class="anchorbutton">Ajax 分页+弹出窗体分页 示例</a>';
+				var html_ = '<a href="${basePath}example/page_example_ajax_form_dialog.do" target="_blank" class="anchorbutton">Ajax 分页+弹出窗体分页 示例</a>';
 				var title = 'alert 支持html标签';
 				jAlert(html_ , title);
 				return false;

@@ -15,7 +15,7 @@ var login = {
         		return;
         	}
         	localStorage.pageJson = object.data;
-            window.location.href='manager/index.do';
+            window.location.href='manager/page_manager_index.do';
         }else{
             alert(object.msg);
         }

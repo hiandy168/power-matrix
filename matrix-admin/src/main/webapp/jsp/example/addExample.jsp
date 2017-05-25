@@ -7,7 +7,7 @@
 	<script type="text/javascript">
 		function addInfo(){
 			var type_ = 'post';
-			var url_ = '${basePath}example/addInfo.do';
+			var url_ = '${basePath}example/ajax_add_info.do';
 			var data_ = $("#form-example").serializeArray();
 			var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
 			if(obj.status){
@@ -36,7 +36,7 @@
 	        </div>
 	        
 			<div id="validation" class="subcontent" style="display: block">
-				<form id="form-example" class="stdform" method="post" action="${basePath}example/addInfo.do">
+				<form id="form-example" class="stdform" method="post" >
 					<p>
 						<label>用户名称</label>
 						<span class="field">

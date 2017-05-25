@@ -1,12 +1,8 @@
 package com.matrix.controller;
 
-import java.util.Date;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.matrix.base.BaseController;
 import com.matrix.pojo.entity.UserDemo;
 import com.matrix.service.IExampleService;
 
@@ -27,7 +24,7 @@ import com.matrix.service.IExampleService;
  */
 @Controller
 @RequestMapping("example")
-public class ExampleController{
+public class ExampleController extends BaseController{
 	private static Logger logger=Logger.getLogger(ExampleController.class);
 	
 	@Autowired
@@ -41,8 +38,9 @@ public class ExampleController{
 	 * @date 2016年6月13日-下午10:53:55
 	 * @version 1.0.0.1
 	 */
-	@RequestMapping("addInfoPage")
+	@RequestMapping("page_example_add_info")  
 	public String toAddPage(HttpSession session){ 
+		super.userBehavior(session, logger, "page_example_add_info", "前往添加页面");
 		return "jsp/example/addExample"; 
 	}
 	
@@ -58,9 +56,10 @@ public class ExampleController{
 	 * @date 2016年6月13日-下午11:04:45
 	 * @version 1.0.0.1
 	 */
-	@RequestMapping(value = "addInfo", produces = { "application/json;charset=utf-8" })
+	@RequestMapping(value = "ajax_add_info", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject addInfo(UserDemo entity , HttpSession session){ 
+		super.userBehavior(session, logger, "ajax_add_info", "添加一条信息到数据库");
 		return exampleService.addInfo(entity, session);  
 	}
 	
@@ -72,15 +71,16 @@ public class ExampleController{
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	@RequestMapping("ajaxFormExample")
+	@RequestMapping("page_example_ajax_form")
 	public String toAjaxFormExample(HttpSession session){ 
+		super.userBehavior(session, logger, "page_example_ajax_form", "简单分页示例 Ajax分页 不涉及弹窗分页问题");
 		return "jsp/example/ajaxFormExample"; 
 	}
 	
-	@RequestMapping(value = "ajaxPageData", produces = { "application/json;charset=utf-8" })
+	@RequestMapping(value = "ajax_page_data", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject ajaxPageData(UserDemo entity , HttpServletRequest request, HttpSession session){
-		logger.info(" to ajaxFormExample.jsp  ... "); 
+		super.userBehavior(session, logger, "ajax_page_data", "获取数据列表");
 		return exampleService.ajaxPageData(entity, request);  
 	}
 	
@@ -92,8 +92,9 @@ public class ExampleController{
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	@RequestMapping("ajaxFormDialogExample")
-	public String toAjaxFormDialogExample(HttpSession session){ 
+	@RequestMapping("page_example_ajax_form_dialog")
+	public String ajaxFormDialogExample(HttpSession session){ 
+		super.userBehavior(session, logger, "page_example_ajax_form_dialog", "Ajax分页 且弹窗同时分页");
 		return "jsp/example/ajaxFormDialogExample"; 
 	}
 	
@@ -107,37 +108,38 @@ public class ExampleController{
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */ 
-	@RequestMapping("alertExample")
-	public String toAlertExample(HttpSession session){ 
-		// TODO 按钮权限控制等等
+	@RequestMapping("page_example_alert")
+	public String alertExample(HttpSession session){ 
+		super.userBehavior(session, logger, "page_example_alert", "自定义 alert confirm note");
 		return "jsp/example/alertExample"; 
 	}
 
 	
-	@RequestMapping(value = "deleteOne", produces = { "application/json;charset=utf-8" })
+	@RequestMapping(value = "ajax_delete_one", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject deleteOne(UserDemo info){
+	public JSONObject deleteOne(UserDemo info , HttpSession session){
+		super.userBehavior(session, logger, "ajax_delete_one", "删除一条记录");
 		return exampleService.deleteOne(info); 
 	}
 	
 	
-	
-	@RequestMapping("editInfoPage")   
+	/**
+	 * @description: 内部跳转页 编辑页
+	 * 
+	 * @author Yangcl 
+	 * @date 2017年5月25日 下午4:28:02 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping("edit_info_page")   
 	public String editInfoPage(UserDemo info , ModelMap model , HttpServletRequest request, HttpSession session){
-//		if(StringUtils.isNotBlank(info.getId().toString())){
-//			UserInfo entity = userInfoService.find(info.getId());
-//			if(entity != null){
-//				model.addAttribute("entity", entity);
-//			}
-//		}
-		
+		super.userBehavior(session, logger, "edit_info_page", "列表页内部跳转，修改一条记录");
 		return "jsp/example/editExample"; 
 	}
 	
-	@RequestMapping(value = "editInfo", produces = { "application/json;charset=utf-8" })
+	
+	@RequestMapping(value = "ajax_edit_info", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject editInfo(UserDemo info){
-//		return userInfoService.editInfo(info);
 		return null;
 	}
 	
@@ -150,8 +152,9 @@ public class ExampleController{
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	@RequestMapping(value = "example_a")
-	public String example_a() { 
+	@RequestMapping(value = "page_example_a")
+	public String example_a(HttpSession session) { 
+		super.userBehavior(session, logger, "page_example_a", "实际样本-A"); 
 		return "jsp/example/reality/questionQuery";
 	}
 
@@ -163,13 +166,16 @@ public class ExampleController{
 	 * @date 2016年11月28日 上午10:32:24 
 	 * @version 1.0.0.1
 	 */
-	@RequestMapping(value = "example_b")
-	public String example_b() { 
+	@RequestMapping(value = "page_example_b")
+	public String example_b(HttpSession session) { 
+		super.userBehavior(session, logger, "page_example_b", "实际样本-B"); 
 		return "jsp/example/reality/validate";
 	}
+	
 	// 实际样本-B 
 	@RequestMapping(value = "example_b1")
-	public String example_c(String key, HttpSession session) { 
+	public String example_b1(String key, HttpSession session) { 
+		super.userBehavior(session, logger, "example_b1", "实际样本-B1"); 
 		if(key.equals("whosyourdaddy")){ 
 			session.setAttribute("kjt-key", "kjt-key"); // 写入session
 			return "redirect:/jsp/example/reality/index.jsp";    
@@ -177,6 +183,7 @@ public class ExampleController{
 			return "redirect:/jsp/example/reality/validate.jsp";
 		} 
 	}
+	
 	// 离开此页面
 	@RequestMapping(value = "leave")
 	public String leave(HttpSession session ) { 
@@ -184,8 +191,9 @@ public class ExampleController{
 		return "redirect:/jsp/example/reality/validate.jsp";    
 	}
 	
-	@RequestMapping("block_ui_page")
+	@RequestMapping("page_example_block_ui")
 	public String blockUiPage(HttpSession session){ 
+		super.userBehavior(session, logger, "page_example_b", "blockUi Page Example"); 
 		return "jsp/example/blockUiPageExample"; 
 	}
 }

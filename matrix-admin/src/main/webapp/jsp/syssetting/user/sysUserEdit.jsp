@@ -91,7 +91,7 @@
 				var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
 				if(obj.status == 'success'){
 					jAlert(obj.msg, '系统提示' , function(){
-						window.location.href = '${basePath}/manager/sys_user_list_page.do'  
+						window.location.href = '${basePath}/manager/page_manager_user_list.do'  
 					});
 				}else{
 					jAlert(obj.msg, '系统提示'); 

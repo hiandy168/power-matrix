@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.matrix.base.BaseController;
 import com.matrix.pojo.cache.McRoleCache;
 import com.matrix.pojo.dto.McRoleDto;
 import com.matrix.pojo.dto.McUserRoleDto;
@@ -33,7 +34,7 @@ import com.matrix.service.IMcUserInfoService;
  */
 @Controller
 @RequestMapping("sysrole")
-public class SystemRoleController {
+public class SystemRoleController  extends BaseController{
 	private static Logger logger = Logger.getLogger(SystemRoleController.class);
 	
 	@Autowired
@@ -55,16 +56,18 @@ public class SystemRoleController {
 	 * @version 1.0.0.1
 	 */
 	@RequestMapping("tree_page_index") 
-	public String treePageIndex(ModelMap model){
+	public String treePageIndex(ModelMap model , HttpSession session){
 //		McSysFunction e = new McSysFunction();	
 //		e.setFlag(1);
 //		model.put("jsonTree", mcSysFunctionService.jsonList(e)); 
+		super.userBehavior(session, logger, "tree_page_index", "前往树形维护页面sysFunction.jsp");
 		return "jsp/syssetting/sysFunction"; 
 	}
 	
 	@RequestMapping(value = "tree_list", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject treeList(HttpServletRequest request){
+	public JSONObject treeList(HttpServletRequest request , HttpSession session){
+		super.userBehavior(session, logger, "tree_list", "获取树列表");
 		return mcSysFunctionService.treeList(request);
 	}
 	
@@ -79,18 +82,20 @@ public class SystemRoleController {
 	 * @date 2017年5月19日 下午2:05:03 
 	 * @version 1.0.0.1
 	 */
-	@RequestMapping("sys_mc_role_page") 
-	public String sysMcRolePage(ModelMap model){ 
+	@RequestMapping("page_sysrole_mc_role_list") 
+	public String sysMcRolePage(ModelMap model , HttpSession session){ 
+		super.userBehavior(session, logger, "page_sysrole_mc_role_list", "前往权限列表页面sysMcRoleList.jsp");
 		return "jsp/syssetting/role/sysMcRoleList";   
 	}
 	
-	
 	@RequestMapping(value = "sys_role_list", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject sysRoleList(McRole role , HttpServletRequest request) {
+	public JSONObject sysRoleList(McRole role , HttpSession session , HttpServletRequest request) {
 		role.setFlag(1); 
+		super.userBehavior(session, logger, "sys_role_list", "获取权限列表页面数据");
 		return mcRoleService.ajaxPageData(role, request);
 	}
+	
 	
 	/**
 	 * @descriptions 展示权限列表|如果用户已经有权限了则标识出来
@@ -101,7 +106,8 @@ public class SystemRoleController {
 	 */
 	@RequestMapping(value = "user_role_list", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject userRoleList(McRoleDto role , HttpServletRequest request) {
+	public JSONObject userRoleList(McRoleDto role , HttpSession session , HttpServletRequest request) {
+		super.userBehavior(session, logger, "user_role_list", "展示权限列表|如果用户已经有权限了则标识出来");  
 		return mcRoleService.userRoleList(role, request);
 	}
 	
@@ -115,7 +121,8 @@ public class SystemRoleController {
 	 * @version 1.0.0.1
 	 */
 	@RequestMapping("show_role_add_page") 
-	public String sysMcRoleAddPage(ModelMap model){ 
+	public String sysMcRoleAddPage(ModelMap model , HttpSession session){ 
+		super.userBehavior(session, logger, "show_role_add_page", "前往添加权限页面sysMcRoleAdd.jsp");
 		return "jsp/syssetting/role/sysMcRoleAdd";   
 	}
 	
@@ -129,6 +136,7 @@ public class SystemRoleController {
 	@RequestMapping(value = "add_mc_role_only", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject addMcRoleOnly(McRole info , HttpSession session) {
+		super.userBehavior(session, logger, "add_mc_role_only", "添加一个角色，不勾选系统功能|如果同时需要勾选系统功能请使用 @ public JSONObject addMcRole(McRoleCache d , HttpSession session)");
 		return mcRoleService.addMcRole(info , session);
 	}
 	
@@ -140,7 +148,8 @@ public class SystemRoleController {
 	 * @version 1.0.0.1
 	 */
 	@RequestMapping("show_role_edit_page") 
-	public String sysMcRoleEditPage(Integer id , ModelMap model){ 
+	public String sysMcRoleEditPage(Integer id , ModelMap model , HttpSession session){ 
+		super.userBehavior(session, logger, "show_role_edit_page", "前往修改权限页面sysMcRoleEdit.jsp");
 		McRole entity = mcRoleService.find(id);
 		if(entity != null){
 			model.addAttribute("entity", entity);  
@@ -158,6 +167,7 @@ public class SystemRoleController {
 	@RequestMapping(value = "edit_mc_role_only", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject editMcRoleOnly(McRole info , HttpSession session) {
+		super.userBehavior(session, logger, "edit_mc_role_only", "修改角色名称和描述，不勾选系统功能|如果同时需要勾选系统功能请使用 @ public JSONObject editMcRole(McRoleCache d , HttpSession session)");
 		return mcRoleService.editSysRole(info , session);
 	}
 	
@@ -170,18 +180,11 @@ public class SystemRoleController {
 	 * @date 2017年5月23日 下午2:27:57 
 	 * @version 1.0.0.1
 	 */
-	@RequestMapping("mc_sys_function") 
-	public String mcSysFunctionPage(){  
+	@RequestMapping("page_sysrole_function") 
+	public String mcSysFunctionPage(HttpSession session){  
+		super.userBehavior(session, logger, "page_sysrole_function", "前往系统功能页面mcSysFunction.jsp");
 		return "jsp/syssetting/func/mcSysFunction";   
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -210,6 +213,7 @@ public class SystemRoleController {
 	@RequestMapping(value = "add_tree_node", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject addTreeNode(McSysFunction e , HttpSession session){
+		super.userBehavior(session, logger, "add_tree_node", "添加一个节点到数据库");
 		return mcSysFunctionService.addInfo(e, session);	
 	}
 	
@@ -225,6 +229,7 @@ public class SystemRoleController {
 	@RequestMapping(value = "edit_tree_node", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject editTreeNode(McSysFunction e , HttpSession session){
+		super.userBehavior(session, logger, "edit_tree_node", "更新一个节点到数据库");
 		return mcSysFunctionService.editInfo(e, session);	
 	}
 	
@@ -240,6 +245,7 @@ public class SystemRoleController {
 	@RequestMapping(value = "update_tree_nodes", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject updateTreeNodes(String ustring , HttpSession session){
+		super.userBehavior(session, logger, "update_tree_nodes", "更新拖拽后的同层节点");
 		return mcSysFunctionService.updateTreeNodes(ustring, session);	
 	}
 	
@@ -247,10 +253,12 @@ public class SystemRoleController {
 	@RequestMapping(value = "delete_node", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject deleteNode(Integer id , HttpSession session){
+		super.userBehavior(session, logger, "delete_node", "删除一个节点");
 		return mcSysFunctionService.deleteNode(id, session);	
 	}
 	
 	/**
+	 * @deprecated 方法废弃
 	 * @description: 创建系统角色
 	 * 
 	 * @param d
@@ -262,10 +270,12 @@ public class SystemRoleController {
 	@RequestMapping(value = "add_mc_role", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject addMcRole(McRoleCache d , HttpSession session){
+		super.userBehavior(session, logger, "add_mc_role", "创建系统角色");
 		return mcSysFunctionService.addMcRole(d, session);	
 	}
 	
 	/**
+	 * @deprecated 方法废弃 
 	 * @description: 修改系统角色
 	 * 
 	 * @param d
@@ -277,6 +287,7 @@ public class SystemRoleController {
 	@RequestMapping(value = "edit_mc_role", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject editMcRole(McRoleCache d , HttpSession session){
+		super.userBehavior(session, logger, "edit_mc_role", "修改系统角色");
 		return mcSysFunctionService.editMcRole(d, session);	
 	}
 	
@@ -292,8 +303,10 @@ public class SystemRoleController {
 	@RequestMapping(value = "delete_mc_role", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject deleteMcRole(McRoleCache d , HttpSession session){
+		super.userBehavior(session, logger, "delete_mc_role", "删除系统角色");
 		return mcSysFunctionService.deleteMcRole(d, session);	
 	}
+	
 	
 	/**
 	 * @description: 【系统角色创建】->【勾选用户】->【后台人员列表】
@@ -323,6 +336,7 @@ public class SystemRoleController {
 	@RequestMapping(value = "add_user_role", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject addUserRole(McUserRole entity , HttpSession session){
+		super.userBehavior(session, logger, "add_user_role", "关联用户与某一个角色");
 		return mcSysFunctionService.addUserRole(entity , session);
 	}
 	
@@ -338,6 +352,7 @@ public class SystemRoleController {
 	@RequestMapping(value = "remove_user_role", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject deleteUserRole(McUserRoleDto d , HttpSession session){
+		super.userBehavior(session, logger, "remove_user_role", "解除角色绑定，同时删除缓存");
 		return mcSysFunctionService.deleteUserRole(d, session);	
 	}
 	

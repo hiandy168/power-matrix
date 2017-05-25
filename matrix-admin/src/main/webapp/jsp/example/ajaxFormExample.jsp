@@ -9,14 +9,14 @@
 
         /**
          * Ajax 页面分页示例
-         * $ { basePath } 这个是必填的，单纯使用“example/ajaxPageData.do” 会404 
+         * $ { basePath } 这个是必填的，单纯使用“example/ajax_page_data.do” 会404 
          *
          * var data_ = null; 这里暂设置为null，这两处为空的地方可以根据实际情况处理。注意loadTable()也有。
          */
          $(function(){
         	 // aForm.formPaging('$ { num }'); 如果从修改页面返回到列表页面，则可以进入这段代码 直接定位。
              var type_ = 'post';
-             var url_ = '${basePath}example/ajaxPageData.do';
+             var url_ = '${basePath}example/ajax_page_data.do';
              var data_ = null;  // 可以为null，后台会进行默认处理
              var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
              aForm.launch(url_ , 'table-form' , obj).init().drawForm(loadTable);
@@ -56,7 +56,7 @@
  	                +'<td class="center">' + list[i].email + '</td>'
  	                +'<td width="150px" align="center">'
  	                +'<a onclick="deleteOne(\'' + list[i].id + '\')" title="删除"  style="cursor: pointer;">删除</a> | '
- 	                +'<a href="${basePath}example/editInfoPage.do?id=' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a> ' 
+ 	                +'<a href="${basePath}example/edit_info_page.do?id=' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a> ' 
  	                +'</td></tr>'
  	            }
              }else{
@@ -70,7 +70,7 @@
         	jConfirm('您确定要删除这条记录吗？', 'confirm', function(flag) {
 	            if(flag){
 	            	var type_ = 'post';
-	                var url_ = '${basePath}example/deleteOne.do';
+	                var url_ = '${basePath}example/ajax_delete_one.do';
 	                var data_ = {id:id_};
 	                var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
 	                if(obj.status == 'success'){

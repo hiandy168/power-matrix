@@ -36,49 +36,51 @@ public class UrlInterceptor extends HandlerInterceptorAdapter{
 	 * 构建一个数组，数组中的请求将被排除不会被拦截。这些请求路径标识都是无需用户进行登录就可使用的
 	 * 发送验证码|注册相关*.do|验证邮箱 等等应在这里进行过滤
 	 */
-    private static final String[] ExcludeUri = {"login.do", "index.do", "verifyCode.do"};  
+    private static final String[] ExcludeUri = {"login.do" , "verify_code.do"};  
  
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        boolean flag = false;
         String url_ [] = request.getRequestURL().toString().split("/");  // 分割路径地址，取出最后一个
         String url = url_[url_.length-1];    // *.do后跟随参数也不会造成影响：request.getRequestURL().toString()不会取得*.do后面的参数
         for (String s : ExcludeUri) {
             if (url.equals(s)) {
-                flag = true;
-                break;
+            	return true;	
             }
         }
-        if (!flag) {  // 如果这个".do"请求不在 ExcludeUri 数组中则验证Session是否有值，如果Session未超时则不拦截这个请求。
-        	HttpSession session=request.getSession();
-        	McUserInfo info = (McUserInfo) session.getAttribute("userInfo");  
-            if (info != null){
-            	if(StringUtils.startsWith(url, "a_")){
-            		flag = true;      // 如果用户已经登录，且是ajax类型的请求，则允许访问。
-            	}else{
-            		// 此时开始判断这个url 是否为该用户权限内的，如果不是，则返回false
-            		McUserRoleCache cache = JSONObject.parseObject(launch.loadDictCache(DCacheEnum.McUserRole).get(info.getId().toString()), McUserRoleCache.class);
-            		List<McSysFunction> list = cache.getMsfList();
-            		for(McSysFunction sf : list){
-            			if(sf.getNavType() == 3){ 
-            				String [] arr = sf.getFuncUrl().split("/");
-            				if(arr[arr.length -1].equals(url)){
-            					flag = true;
-            					break;
-            				}
-            			}
-            		}
-            	}
-            }
-        }
-        /**
-         * 如果请求被排除则跳转到登录页。如果不加这段代码，则请求仅仅被拦截，页面是空白的。
-         * TODO 跳转到一个默认提示页面 ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
-         */
-        if(!flag){
-        	String loginUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/sys_page/roleErrorPage.jsp" ;
+        
+        // 如果这个".do"请求不在 ExcludeUri 数组中则验证Session是否有值，如果Session未超时则不拦截这个请求。
+        HttpSession session = request.getSession();
+        McUserInfo info = (McUserInfo) session.getAttribute("userInfo");  
+        if (info != null){
+        	if(url.equals("page_manager_index.do")){
+        		return true;	// 如果用户已经登录则可以访问首页
+        	}
+        	if(StringUtils.startsWith(url, "page_")){
+        		// 此时开始判断这个url 是否为该用户权限内的，如果不是，则返回false
+        		McUserRoleCache cache = JSONObject.parseObject(launch.loadDictCache(DCacheEnum.McUserRole).get(info.getId().toString()), McUserRoleCache.class);
+        		List<McSysFunction> list = cache.getMsfList();
+        		for(McSysFunction sf : list){
+        			if(sf.getNavType() == 3){ 
+        				String [] arr = sf.getFuncUrl().split("/");
+        				if(arr[arr.length -1].equals(url)){
+        					return true;
+        				}
+        			}
+        		}
+        	}else{
+        		return true;     // 如果用户已经登录，且是非权限类型的跳转请求，则允许访问。
+        	}
+        }else{  // 如果用户没有登录则返回到登录页
+        	String loginUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/login.jsp" ;
         	response.sendRedirect(loginUrl);
+        	return false;
         }
-        return flag;
+        
+        /**
+         * 如果请求被排除则跳转到默认提示页面
+         */
+        String loginUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/sys_page/roleErrorPage.jsp" ;
+        response.sendRedirect(loginUrl);
+        return false;
     }
  
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {

@@ -57,7 +57,7 @@
 				var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
 				if(obj.status == 'success'){
 					jAlert(obj.msg, '系统提示' , function(){
-						window.location.href = '${basePath}/sysrole/sys_mc_role_page.do'  
+						window.location.href = '${basePath}sysrole/page_sysrole_mc_role_list.do'  
 					});
 				}else{
 					jAlert(obj.msg, '系统提示'); 
