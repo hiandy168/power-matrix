@@ -173,7 +173,7 @@ public class LoadCacheUserRole extends BaseClass implements IBaseCache {
 		if(list != null && list.size() != 0){
 			Set<Integer> set = new TreeSet<Integer>();  
 			for(McUserRole r : list){
-				String roleJson = launch.loadDictCache(DCacheEnum.McRole).getCache(r.getMcRoleId().toString());
+				String roleJson = launch.loadDictCache(DCacheEnum.McRole).get(r.getMcRoleId().toString());
 				if(StringUtils.isNotBlank(roleJson)){
 					McRoleCache role = JSONObject.parseObject(roleJson, McRoleCache.class);
 					if(role == null){
@@ -189,7 +189,7 @@ public class LoadCacheUserRole extends BaseClass implements IBaseCache {
 			}
 			if(set != null && set.size() != 0){
 				for(Integer id : set){
-					String rfJson = launch.loadDictCache(DCacheEnum.McSysFunc).getCache(id.toString());
+					String rfJson = launch.loadDictCache(DCacheEnum.McSysFunc).get(id.toString());
 					if(StringUtils.isNotBlank(rfJson)){
 						McSysFunction rf = JSONObject.parseObject(rfJson, McSysFunction.class);
 						if(rf == null){
@@ -199,7 +199,7 @@ public class LoadCacheUserRole extends BaseClass implements IBaseCache {
 					}
 				}
 			}
-			launch.loadDictCache(DCacheEnum.McUserRole).setCache(userId.toString(), JSONObject.toJSONString(cache)); 
+			launch.loadDictCache(DCacheEnum.McUserRole).set(userId.toString(), JSONObject.toJSONString(cache)); 
 		}
 	}
 
@@ -207,7 +207,7 @@ public class LoadCacheUserRole extends BaseClass implements IBaseCache {
 		List<McUserInfo> list = userInfoDao.queryPage(null);
 		if(list != null && list.size() != 0){
 			for(McUserInfo u : list){
-				launch.loadDictCache(DCacheEnum.McUserRole).deleteCache(u.getId().toString());  
+				launch.loadDictCache(DCacheEnum.McUserRole).del(u.getId().toString());  
 			}
 		} 
 		System.out.println(this.getClass().getName() + "********* 缓存删除完成!");

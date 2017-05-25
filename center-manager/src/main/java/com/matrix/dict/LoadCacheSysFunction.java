@@ -58,7 +58,7 @@ public class LoadCacheSysFunction extends BaseClass implements IBaseCache {
 			list = sysFunctionDao.getSysFuncList(e); 
 			if(list != null && list.size() != 0){
 				for(McSysFunction f : list){
-					launch.loadDictCache(DCacheEnum.McSysFunc).setCache(f.getId().toString(), JSONObject.toJSONString(f));
+					launch.loadDictCache(DCacheEnum.McSysFunc).set(f.getId().toString(), JSONObject.toJSONString(f));
 				}
 			}
 		} catch (Exception e) {
@@ -74,7 +74,7 @@ public class LoadCacheSysFunction extends BaseClass implements IBaseCache {
 			list = sysFunctionDao.getSysFuncList(e); 
 			if(list != null && list.size() != 0){
 				for(McSysFunction f : list){
-					launch.loadDictCache(DCacheEnum.McSysFunc).deleteCache(f.getId().toString());  
+					launch.loadDictCache(DCacheEnum.McSysFunc).del(f.getId().toString());  
 				}
 			}
 		} catch (Exception e) {

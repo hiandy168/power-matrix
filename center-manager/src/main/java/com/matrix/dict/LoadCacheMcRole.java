@@ -46,7 +46,7 @@ public class LoadCacheMcRole extends BaseClass implements IBaseCache{
 			list = roleDao.findMcRoleDtoList();
 			if(list != null && list.size() != 0){
 				for(McRoleCache d : list){
-					launch.loadDictCache(DCacheEnum.McRole).setCache(d.getMcRoleId().toString() , JSONObject.toJSONString(d));
+					launch.loadDictCache(DCacheEnum.McRole).set(d.getMcRoleId().toString() , JSONObject.toJSONString(d));
 				}
 			}
 		} catch (Exception e) { 
@@ -61,7 +61,7 @@ public class LoadCacheMcRole extends BaseClass implements IBaseCache{
 			list = roleDao.findMcRoleDtoList();
 			if(list != null && list.size() != 0){
 				for(McRoleCache d : list){
-					launch.loadDictCache(DCacheEnum.McRole).deleteCache(d.getMcRoleId().toString()); 
+					launch.loadDictCache(DCacheEnum.McRole).del(d.getMcRoleId().toString()); 
 				}
 			}
 		} catch (Exception e) { 

@@ -61,7 +61,7 @@ public class McUserInfoServiceImpl extends BaseServiceImpl<McUserInfo, Integer> 
 		if (null != info) {
 			session.setAttribute("userInfo", info);   // 写入session
 			String userId = info.getId().toString(); 
-		    String pageJson = launch.loadDictCache(DCacheEnum.McUserRole).getCache(userId);
+		    String pageJson = launch.loadDictCache(DCacheEnum.McUserRole).get(userId);
 			
 			result.put("data" , pageJson);  
 			result.put("status", "success");

@@ -8,7 +8,7 @@ import com.matrix.cache.servletContext.core.ContextFactory;
 
 /**
  * @description: ServletContext 核心工具类，供外部调用。
- * @test String value = ContextLaunch.initServiceCache(SCacheEnum.Test).getCache("xs-Test-001");
+ * @test String value = ContextLaunch.initServiceCache(SCacheEnum.Test).get("xs-Test-001");
  * @warning 
  * 					1. 使用该类型的缓存需要设置Java虚拟机的内存大小，避免内存溢出
  * 					2. 该类型缓存只允许设置String类型的值：Key(String) - value(String) 
