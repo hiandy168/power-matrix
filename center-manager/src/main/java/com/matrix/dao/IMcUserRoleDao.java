@@ -14,4 +14,6 @@ public interface IMcUserRoleDao extends IBaseDao<McUserRole, Integer>{
 	public List<McUserRole> selectByMcRoleId(Integer mcRoleId);
 	
 	public List<McUserRole> selectByMcUserId(Integer mcUserId);
+	
+	public Integer deleteByUserId(Integer userId);
 }

@@ -43,7 +43,7 @@ public class ManagerCenterController extends BaseController{
 	@RequestMapping(value = "login", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject login(McUserInfo info, HttpSession session) {
-		super.userBehavior(session, logger, "login", "正在尝试登录");
+		logger.info( info.getUserName() + " - 尝试请求 - " + "login() - 方法 - " +  "正在尝试登录"); 
 		return mcUserInfoService.login(info, session);
 	}
 	

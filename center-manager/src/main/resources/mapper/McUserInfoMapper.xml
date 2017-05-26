@@ -46,6 +46,7 @@
 			<if test="sex != null and sex != ''  ">
 				and sex = #{sex , jdbcType=INTEGER}
 			</if>
+			order by id desc
 		</where>
 	</select>
 	

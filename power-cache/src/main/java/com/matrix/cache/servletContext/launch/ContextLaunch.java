@@ -53,6 +53,16 @@ public class ContextLaunch  implements IBaseLaunch<ICacheFactory>{
 	public ContextFactory loadDictCache(DCacheEnum enum_) {
 		return new ContextFactory("xd-" + enum_.toString() + "-");
 	}
+
+	@Override
+	public ContextFactory loadServiceCache(String baseKey) {
+		return new ContextFactory("xs-" + baseKey + "-");
+	}
+
+	@Override
+	public ContextFactory loadDictCache(String baseKey) {
+		return new ContextFactory("xd-" + baseKey + "-");
+	}
 }
 
 

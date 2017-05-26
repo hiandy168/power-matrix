@@ -9,4 +9,8 @@ public interface IBaseLaunch<T> {
 	public T loadServiceCache(SCacheEnum enum_);
 	
 	public T loadDictCache(DCacheEnum enum_); 
+	
+	public T loadServiceCache(String baseKey);
+	
+	public T loadDictCache(String baseKey); 
 }

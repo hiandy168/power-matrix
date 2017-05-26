@@ -18,7 +18,8 @@ import com.matrix.cache.enums.DCacheEnum;
 import com.matrix.cache.inf.IBaseLaunch;
 import com.matrix.cache.inf.ICacheFactory;
 import com.matrix.dao.IMcUserInfoDao;
-import com.matrix.pojo.entity.McRole;
+import com.matrix.dao.IMcUserRoleDao;
+import com.matrix.pojo.dto.McUserRoleDto;
 import com.matrix.pojo.entity.McUserInfo;
 import com.matrix.service.IMcUserInfoService;
 import com.matrix.util.SignUtil;
@@ -39,6 +40,9 @@ public class McUserInfoServiceImpl extends BaseServiceImpl<McUserInfo, Integer> 
 	
 	@Resource
 	private IMcUserInfoDao mcUserInfoDao;
+	
+	@Resource
+	private IMcUserRoleDao mcUserRoleDao;
 	
 	/**
 	 * @description: 用户登录操作
@@ -213,8 +217,10 @@ public class McUserInfoServiceImpl extends BaseServiceImpl<McUserInfo, Integer> 
 			return result;
 		}
 		try {
-			int count = mcUserInfoDao.deleteById(id);  
-			if(count == 1){
+			int count = mcUserInfoDao.deleteById(id);   
+			int count_ = mcUserRoleDao.deleteByUserId(id);
+			launch.loadDictCache(DCacheEnum.McUserRole).del(id.toString());
+			if(count == 1 && count_ == 1){
 				result.put("status", "success");
 				result.put("msg", "删除成功");
 			}else{

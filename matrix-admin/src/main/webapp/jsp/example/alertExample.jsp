@@ -16,7 +16,7 @@
 		 */
 		$(function(){
 			$('#alertboxbutton').click(function(){
-				jAlert('自定义 alert 展示', 'alert-title');
+				jAlert('自定义 alert 展示', '系统提示');
 				return false;
 			});
 			/*
@@ -30,7 +30,7 @@
 			$('#confirmbutton').click(function(){
 				// 注意：flag = ture or false - Yangcl
 				jConfirm('Can you confirm this?', 'confirm-title', function(flag) {
-					jAlert('您选择了: ' + flag, 'alert-title');
+					jAlert('您选择了: ' + flag, '系统提示');
 				});
 				return false;
 			});
