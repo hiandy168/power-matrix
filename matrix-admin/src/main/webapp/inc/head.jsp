@@ -50,6 +50,26 @@
 				var page = JSON.parse(localStorage.pageJson); 
 				pageInit.init(page , "${basePath}");
 			}
+			
+			 // 修改主题 
+		    $('.changetheme a').click(function () {
+		    	var ref = '${css}';
+		        var c = $(this).attr('class');
+		        if ($('#addonstyle').length == 0) {
+		            if (c != 'default') {
+		                $('head').append('<link id="addonstyle" rel="stylesheet" href="' + ref + '/custom/style.' + c + '.css" type="text/css" />');
+		               // $.cookie("addonstyle", c, {path: '/'});
+		            }
+		        } else {
+		            if (c != 'default') {
+		                $('#addonstyle').attr('href', ref + '/custom/style.' + c + '.css');
+		              //  $.cookie("addonstyle", c, {path: '/'});
+		            } else {
+		                $('#addonstyle').remove();
+		               // $.cookie("addonstyle", null);
+		            }
+		        }
+		    });
 		});  
 
     </script>
