@@ -29,6 +29,7 @@ import com.matrix.pojo.entity.McRole;
 import com.matrix.pojo.entity.McUserInfo;
 import com.matrix.pojo.entity.McUserRole;
 import com.matrix.pojo.view.McRoleView;
+import com.matrix.pojo.view.McUserInfoView;
 import com.matrix.service.IMcRoleService;
 
 @Service("mcRoleService") 
@@ -81,7 +82,7 @@ public class McRoleServiceImpl extends BaseServiceImpl<McRole, Integer> implemen
 			return result;
 		}
 		Date createTime = new Date();
-		McUserInfo userInfo = (McUserInfo) session.getAttribute("userInfo");
+		McUserInfoView userInfo = (McUserInfoView) session.getAttribute("userInfo");
 		role.setFlag(1);
 		role.setCreateTime(createTime);
 		role.setUpdateTime(createTime);
@@ -131,7 +132,7 @@ public class McRoleServiceImpl extends BaseServiceImpl<McRole, Integer> implemen
 			return result;
 		}
 		Date currentTime = new Date();
-		McUserInfo userInfo = (McUserInfo) session.getAttribute("userInfo");
+		McUserInfoView userInfo = (McUserInfoView) session.getAttribute("userInfo");
 		role.setUpdateTime(currentTime);
 		role.setUpdateUserId(userInfo.getId());
 		try {

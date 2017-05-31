@@ -35,6 +35,7 @@ import com.matrix.pojo.entity.McRoleFunction;
 import com.matrix.pojo.entity.McSysFunction;
 import com.matrix.pojo.entity.McUserInfo;
 import com.matrix.pojo.entity.McUserRole;
+import com.matrix.pojo.view.McUserInfoView;
 import com.matrix.pojo.view.McUserRoleView;
 import com.matrix.service.IMcSysFunctionService;
 import com.matrix.util.UuidUtil;
@@ -71,7 +72,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	public JSONObject addInfo(McSysFunction entity, HttpSession session) {
 		JSONObject result = new JSONObject();
 		if(StringUtils.isNotBlank(entity.getName()) && StringUtils.isNotBlank(entity.getParentId()) ){
-			McUserInfo userInfo = (McUserInfo) session.getAttribute("userInfo");
+			McUserInfoView userInfo = (McUserInfoView) session.getAttribute("userInfo");
 			entity.setCreateTime(new Date());
 			entity.setUpdateTime(new Date());
 			entity.setCreateUserId(userInfo.getId());
@@ -112,7 +113,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	public JSONObject editInfo(McSysFunction entity, HttpSession session) {
 		JSONObject result = new JSONObject();
 		if(StringUtils.isNotBlank(entity.getName())){
-			McUserInfo userInfo = (McUserInfo) session.getAttribute("userInfo");
+			McUserInfoView userInfo = (McUserInfoView) session.getAttribute("userInfo");
 			entity.setUpdateTime(new Date());
 			entity.setUpdateUserId(userInfo.getId());
 			int count = dao.updateSelective(entity);
@@ -144,7 +145,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	 * @version 1.0.0.1
 	 */
 	public JSONObject updateTreeNodes(String ustring, HttpSession session) {
-		McUserInfo userInfo = (McUserInfo) session.getAttribute("userInfo");
+		McUserInfoView userInfo = (McUserInfoView) session.getAttribute("userInfo");
 		String [] arr = ustring.split(",");
 		for(int i = 0 ; i < arr.length ; i ++){
 			McSysFunction e = new McSysFunction();
@@ -246,7 +247,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 			result.put("msg", this.getInfo(500090003)); // 请勾选系统功能
 		}else{
 			Date createTime = new Date();
-			McUserInfo userInfo = (McUserInfo) session.getAttribute("userInfo");
+			McUserInfoView userInfo = (McUserInfoView) session.getAttribute("userInfo");
 			
 			McRole role = new McRole();
 			role.setRoleName(d.getRoleName());
@@ -307,7 +308,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 			result.put("msg", this.getInfo(500090003)); // 请勾选系统功能
 		}else{
 			Date currentTime = new Date();
-			McUserInfo userInfo = (McUserInfo) session.getAttribute("userInfo");
+			McUserInfoView userInfo = (McUserInfoView) session.getAttribute("userInfo");
 			
 			McRole role = new McRole();
 			role.setId(d.getMcRoleId()); 
@@ -435,7 +436,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	public JSONObject addUserRole(McUserRole e , HttpSession session) {
 		JSONObject result = new JSONObject();
 		Date createTime = new Date();
-		McUserInfo userInfo = (McUserInfo) session.getAttribute("userInfo");
+		McUserInfoView userInfo = (McUserInfoView) session.getAttribute("userInfo");
 		e.setFlag(1);
 		e.setRemark("");
 		e.setCreateTime(createTime);
@@ -497,6 +498,7 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	 * @version 1.0.0.1
 	 */
 	private void reloadUserFunction(Integer userId){
+		launch.loadDictCache(DCacheEnum.McUserRole).del(userId.toString()); 
 		McUserRoleCache cache = new McUserRoleCache();
 		cache.setMcUserId(userId);
 		List<McUserRole> list = userRoleDao.selectByMcUserId(userId);

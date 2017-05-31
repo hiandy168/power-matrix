@@ -18,7 +18,7 @@
 	    <script src="js/plugins/css3-mediaqueries.js"></script>
     <![endif]-->
     <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
-
+	<script type="text/javascript" src="js/plugins/jquery.alerts.js" ></script>
     <!--页面JavaScript脚本-->
     <script type="text/javascript" src="js/system/login.js"></script>
     <script type="text/javascript" src="js/utils/ajaxs.js"></script>
@@ -51,7 +51,7 @@
                 </div>
             </div>
             
-            <form id="form-login">
+            <form id="form-login" action="javascript:void(0)">
                 <div class="username">
                 	<div class="usernameinner">
                     	<input type="text" name="userName" id="username" maxlength="20" value="admin"/>

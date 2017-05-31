@@ -12,13 +12,16 @@ var login = {
         var object = JSON.parse(ajaxs.sendAjax('post' , url_ , data_));
         if(object.status == 'success'){
         	if(object.data == undefined || object.data == ""){
-        		return;
+        		jAlert("未检查到您有任何权限，请联系系统管理员！" , "系统提示" , function(){
+        			return;
+        		});
+        	}else{
+        		localStorage.pageJson = object.data;
+        		localStorage.userInfo = object.info
+        		window.location.href='manager/page_manager_index.do';
         	}
-        	localStorage.pageJson = object.data;
-        	localStorage.userInfo = object.info
-            window.location.href='manager/page_manager_index.do';
         }else{
-            alert(object.msg);
+        	jAlert(object.msg);
         }
     },
 
