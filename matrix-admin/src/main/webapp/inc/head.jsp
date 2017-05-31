@@ -49,6 +49,12 @@
 			if(localStorage.pageJson != undefined && localStorage.pageJson != ""){
 				var page = JSON.parse(localStorage.pageJson); 
 				pageInit.init(page , "${basePath}");
+				var userInfo = JSON.parse(localStorage.userInfo);
+				var pageCss = userInfo.pageCss;
+				if(pageCss != ''){
+					$("#addonstyle").remove();
+					$('head').append('<link id="addonstyle" rel="stylesheet" href="${css}/custom/style.' + pageCss + '.css" type="text/css" />');
+				}
 			}
 			
 			 // 修改主题 
@@ -56,19 +62,30 @@
 		    	var ref = '${css}';
 		        var c = $(this).attr('class');
 		        if ($('#addonstyle').length == 0) {
-		            if (c != 'default') {
-		                $('head').append('<link id="addonstyle" rel="stylesheet" href="' + ref + '/custom/style.' + c + '.css" type="text/css" />');
-		               // $.cookie("addonstyle", c, {path: '/'});
+		            if(c != 'default'){
+		                $('head').append('<link id="addonstyle" rel="stylesheet" href="' + ref + '/custom/style.' + c + '.css" type="text/css" />'); 
 		            }
-		        } else {
+		        }else{
 		            if (c != 'default') {
-		                $('#addonstyle').attr('href', ref + '/custom/style.' + c + '.css');
-		              //  $.cookie("addonstyle", c, {path: '/'});
+		                $('#addonstyle').attr('href', ref + '/custom/style.' + c + '.css'); 
 		            } else {
-		                $('#addonstyle').remove();
-		               // $.cookie("addonstyle", null);
+		                $('#addonstyle').remove(); 
 		            }
 		        }
+		        var userInfo = JSON.parse(localStorage.userInfo);
+		        var userId = userInfo.id;
+		        userInfo.pageCss = c;
+		        localStorage.userInfo = JSON.stringify(userInfo); 
+		        
+		        var url_ = '${basePath}manager/update_page_style.do';
+		        var data_ = {
+		        	id:userId, 
+		        	pageCss:c
+		        };
+		        var obj = JSON.parse(ajaxs.sendAjax('post' , url_ , data_));
+		        /* if(obj.status == 'success'){
+		        } */
+		        
 		    });
 		});  
 

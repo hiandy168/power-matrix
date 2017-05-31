@@ -15,6 +15,7 @@ var login = {
         		return;
         	}
         	localStorage.pageJson = object.data;
+        	localStorage.userInfo = object.info
             window.location.href='manager/page_manager_index.do';
         }else{
             alert(object.msg);

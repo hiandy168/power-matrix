@@ -2,7 +2,7 @@ package com.matrix.base;
 
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
-import com.matrix.pojo.entity.McUserInfo;
+import com.matrix.pojo.view.McUserInfoView;
 
 public class BaseController {
 
@@ -20,7 +20,7 @@ public class BaseController {
 	 */
 	public boolean userBehavior(HttpSession session , Logger logger , String action , String remark){
 		String name = "未授权用户";
-		McUserInfo e = (McUserInfo) session.getAttribute("userInfo");
+		McUserInfoView e = (McUserInfoView) session.getAttribute("userInfo");
 		if(e != null){
 			name = "用户:  " + e.getUserName();
 		}

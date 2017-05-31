@@ -18,6 +18,7 @@ import com.matrix.cache.inf.ICacheFactory;
 import com.matrix.pojo.cache.McUserRoleCache;
 import com.matrix.pojo.entity.McSysFunction;
 import com.matrix.pojo.entity.McUserInfo;
+import com.matrix.pojo.view.McUserInfoView;
 
 /**
  * @description: 页面权限拦截器|主要针对二级菜单栏
@@ -48,7 +49,7 @@ public class UrlInterceptor extends HandlerInterceptorAdapter{
         
         // 如果这个".do"请求不在 ExcludeUri 数组中则验证Session是否有值，如果Session未超时则不拦截这个请求。
         HttpSession session = request.getSession();
-        McUserInfo info = (McUserInfo) session.getAttribute("userInfo");  
+        McUserInfoView info = (McUserInfoView) session.getAttribute("userInfo");  
         if (info != null){
         	if(url.equals("page_manager_index.do")){
         		return true;	// 如果用户已经登录则可以访问首页

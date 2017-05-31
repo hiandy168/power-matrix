@@ -14,7 +14,7 @@ public enum DCacheEnum {
 	
 	McRole,        // 角色信息
 	
-	McUserRole      // 用户与角色关联
+	McUserRole,      // 用户与角色关联
 	
-//	UserInfo         // 用户登陆信息  暂时没有使用
+	UserInfoNp         // 用户登陆信息  暂时没有使用 name + password 为key
 }

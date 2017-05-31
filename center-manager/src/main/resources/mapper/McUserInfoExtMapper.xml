@@ -48,6 +48,10 @@
 		delete from managercenter.mc_user_info_ext where id = #{id,jdbcType=INTEGER}
 	</delete>
 	
+	<delete id="deleteByUserId" parameterType="java.lang.Integer">
+		delete from managercenter.mc_user_info_ext where user_info_id = #{id , jdbcType=INTEGER}
+	</delete>
+	
 	
 	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.McUserInfoExt">
 		insert into managercenter.mc_user_info_ext
@@ -286,4 +290,48 @@
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 	
+	
+	<update id="updateSelectiveByUserId" parameterType="com.matrix.pojo.entity.McUserInfoExt">
+		update managercenter.mc_user_info_ext
+		<set>
+			<if test="picUrl != null">
+				pic_url = #{picUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="pageCss != null">
+				page_css = #{pageCss,jdbcType=VARCHAR},
+			</if>
+			<if test="platform != null">
+				platform = #{platform,jdbcType=VARCHAR},
+			</if>
+			
+			<if test="parama != null">
+				parama = #{parama,jdbcType=VARCHAR},
+			</if>
+			<if test="paramb != null">
+				paramb = #{paramb,jdbcType=VARCHAR},
+			</if>
+			<if test="paramc != null">
+				paramc = #{paramc,jdbcType=VARCHAR},
+			</if>
+			<if test="paramd != null">
+				paramd = #{paramd,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where 
+			user_info_id =  #{userInfoId , jdbcType=INTEGER}
+	</update>
+	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+

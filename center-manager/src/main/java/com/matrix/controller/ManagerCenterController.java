@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.base.BaseController;
 import com.matrix.pojo.entity.McUserInfo;
+import com.matrix.pojo.view.McUserInfoView;
 import com.matrix.service.IMcUserInfoService;
 
 /**
@@ -141,6 +142,24 @@ public class ManagerCenterController extends BaseController{
 		super.userBehavior(session, logger, "delete_user", "删除用户");
 		return mcUserInfoService.deleteUser(id);
 	}
+	
+	
+	/**
+	 * @description: 用户自己选择后台页面样式风格
+	 * 
+	 * @param view
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年5月31日 下午3:02:18 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "update_page_style", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject updatePageStyle(McUserInfoView dto , HttpSession session) {
+		super.userBehavior(session, logger, "update_page_style", "用户设置后台页面样式风格");
+		return mcUserInfoService.updatePageStyle(dto);
+	}
+	
 }
 
 

@@ -17,8 +17,79 @@
 		<result column="remark" property="remark" jdbcType="LONGVARCHAR" />
 	</resultMap>
 	
-	<select id="login" parameterType="com.matrix.pojo.entity.McUserInfo" resultMap="BaseResultMap">
-		select * from managercenter.mc_user_info where user_name=#{userName} and password=#{password}
+	
+	
+	<resultMap id="McUserInfoViewMap" type="com.matrix.pojo.view.McUserInfoView"></resultMap>
+	<select id="login" parameterType="com.matrix.pojo.entity.McUserInfo" resultMap="McUserInfoViewMap">
+		select 
+			i.id as id,
+			i.user_name as userName,
+			i.password as password,
+			i.flag as flag,
+			i.idcard as idcard,
+			i.sex as sex,
+			i.birthday as birthday,
+			i.mobile as mobile,
+			i.email as email,
+			i.create_time as createTime,
+			i.remark as remark,
+			e.pic_url as picUrl,
+			e.page_css as pageCss,
+			e.platform as platform
+		from 
+			managercenter.mc_user_info i left join managercenter.mc_user_info_ext e on i.id = e.user_info_id
+		where 
+			i.user_name=#{userName} 
+		and 
+			i.password=#{password} 
+		and
+			i.flag = 2
+	</select>
+	
+	<select id="loadUserInfo" parameterType="java.lang.Integer" resultMap="McUserInfoViewMap">
+		select 
+			i.id as id,
+			i.user_name as userName,
+			i.password as password,
+			i.flag as flag,
+			i.idcard as idcard,
+			i.sex as sex,
+			i.birthday as birthday,
+			i.mobile as mobile,
+			i.email as email,
+			i.create_time as createTime,
+			i.remark as remark,
+			e.pic_url as picUrl,
+			e.page_css as pageCss,
+			e.platform as platform
+		from 
+			managercenter.mc_user_info i left join managercenter.mc_user_info_ext e on i.id = e.user_info_id
+		where 
+			i.flag = 2 
+		and
+			i.id = #{id , jdbcType=INTEGER}  
+	</select>
+	
+	<select id="loadUserInfoList"  resultMap="McUserInfoViewMap">
+		select 
+			i.id as id,
+			i.user_name as userName,
+			i.password as password,
+			i.flag as flag,
+			i.idcard as idcard,
+			i.sex as sex,
+			i.birthday as birthday,
+			i.mobile as mobile,
+			i.email as email,
+			i.create_time as createTime,
+			i.remark as remark,
+			e.pic_url as picUrl,
+			e.page_css as pageCss,
+			e.platform as platform
+		from 
+			managercenter.mc_user_info i left join managercenter.mc_user_info_ext e on i.id = e.user_info_id
+		where 
+			i.flag = 2  
 	</select>
 	
 	<select id="find" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -66,6 +137,86 @@
 	</delete>
 	
 	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.McUserInfo">
+		insert into managercenter.mc_user_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="mcSellerCompanyId != null">
+				mc_seller_company_id,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="flag != null">
+				flag,
+			</if>
+			<if test="idcard != null">
+				idcard,
+			</if>
+			<if test="sex != null">
+				sex,
+			</if>
+			<if test="birthday != null">
+				birthday,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="mcSellerCompanyId != null">
+				#{mcSellerCompanyId,jdbcType=INTEGER},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="flag != null">
+				#{flag,jdbcType=INTEGER},
+			</if>
+			<if test="idcard != null">
+				#{idcard,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=INTEGER},
+			</if>
+			<if test="birthday != null">
+				#{birthday,jdbcType=DATE},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelectiveGetZid" parameterType="com.matrix.pojo.entity.McUserInfo" useGeneratedKeys="true" keyProperty="id">
 		insert into managercenter.mc_user_info
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
