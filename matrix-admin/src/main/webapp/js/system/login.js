@@ -18,7 +18,7 @@ var login = {
         	}else{
         		localStorage.pageJson = object.data;
         		localStorage.userInfo = object.info
-        		window.location.href='manager/page_manager_index.do';
+        		window.location.href='manager/page_manager_home.do';
         	}
         }else{
         	jAlert(object.msg);

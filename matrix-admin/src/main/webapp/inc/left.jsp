@@ -37,6 +37,11 @@
             function clearCookie(name) {
               setCookie(name, "", -1);
             }
+            
+            function iframeTest(obj){
+            	var url = $(obj);  
+            	$("#sub-page").attr("src" , "http://localhost:8080/matrix-admin/manager/page_manager_index1.do"); 
+            }
         </script>
 	<div id="left-menu">
 		<%-- nav 类代表导航栏 无任何样式应用|每个导航栏对应的菜单显示与否由id来决定--%>

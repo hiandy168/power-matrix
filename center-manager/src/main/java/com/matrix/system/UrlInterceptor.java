@@ -51,8 +51,8 @@ public class UrlInterceptor extends HandlerInterceptorAdapter{
         HttpSession session = request.getSession();
         McUserInfoView info = (McUserInfoView) session.getAttribute("userInfo");  
         if (info != null){
-        	if(url.equals("page_manager_index.do")){
-        		return true;	// 如果用户已经登录则可以访问首页
+        	if( url.equals("page_manager_home.do") || url.equals("page_manager_index.do") || url.equals("page_manager_index1.do") || url.equals("page_manager_index2.do")){
+        		return true;	// 如果用户已经登录则可以访问首页        
         	}
         	if(StringUtils.startsWith(url, "page_")){
         		// 此时开始判断这个url 是否为该用户权限内的，如果不是，则返回false

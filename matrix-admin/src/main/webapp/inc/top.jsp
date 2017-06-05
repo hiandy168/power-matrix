@@ -46,7 +46,7 @@
                                 <a href="">功能维护</a>
                             </li>
                             <li>
-                                <a href="">帮助</a>
+                                <a href="http://localhost:8080/matrix-admin/manager/page_manager_index.do">帮助</a>
                             </li>
                             <li>
                                 <a href="javascript:void(0)" onclick="login.logout('${basePath}')">退出</a> 
