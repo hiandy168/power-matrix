@@ -1,23 +1,23 @@
 <%@ include file="/inc/resource.inc" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<%@ include file="/inc/head.jsp" %>
-</head>
+<head> -->
+	<%@ include file="/inc/iframe-head.jsp" %>
+<%-- </head>
 
 <body class="withvernav">
 
     <div class="bodywrapper">
 		<%@ include file="/inc/top.jsp" %>
-		<%@ include file="/inc/left.jsp" %>
+		<%@ include file="/inc/left.jsp" %> --%>
 
         <div class="centercontent">
 			<div class="pageheader notab">
 	            <h1 class="pagetitle">创建用户</h1>
-                    <span class="pagedesc">
+                   <!--  <span class="pagedesc">
                         添加一条记录系统用户表
-                    </span>
+                    </span> -->
 	            <span style="display:none">jsp/syssetting/user/sysUserAdd.jsp</span>
 	        </div>
 	        
@@ -70,9 +70,9 @@
 				<span> 添&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp加 </span>
 			</a>
         </div>
-    </div>
+<!--     </div>
 </body>
-</html>
+</html> -->
 
 <script type="text/javascript">
 	function addInfo(){
@@ -85,8 +85,6 @@
 		}
 		jAlert(obj.msg, '系统提示');  
 	}
-
-
 </script>
 
 

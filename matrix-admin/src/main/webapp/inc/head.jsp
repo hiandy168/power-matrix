@@ -51,7 +51,7 @@
 				pageInit.init(page , "${basePath}");
 				var userInfo = JSON.parse(localStorage.userInfo);
 				var pageCss = userInfo.pageCss;
-				if(pageCss != ''){
+				if(pageCss != '' && pageCss != 'default'){
 					$("#addonstyle").remove();
 					$('head').append('<link id="addonstyle" rel="stylesheet" href="${css}/custom/style.' + pageCss + '.css" type="text/css" />');
 				}

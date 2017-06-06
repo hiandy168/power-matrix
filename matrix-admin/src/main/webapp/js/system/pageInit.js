@@ -177,7 +177,7 @@ var pageInit = {
 	menuOnclick:function(obj){ 
 		var href_ = $(obj).attr("target_"); 
 		localStorage.btns = $(obj).attr("btns");  
-		window.location.href = href_;
+    	$("#sub-page").attr("src" , href_); 
 	}
 
 }

@@ -62,10 +62,17 @@ public class ManagerCenterController extends BaseController{
 	 * @date 2016年11月25日 下午4:18:10 
 	 * @version 1.0.0.1
 	 */
+	@RequestMapping("page_manager_home")
+	public String loginPageHome(HttpSession session) {
+		super.userBehavior(session, logger, "page_manager_home", "登录验证完成后跳转到指定页面 home.jsp");
+		return "redirect:/jsp/home.jsp";
+	}
+	
+	
 	@RequestMapping("page_manager_index")
 	public String loginPageIndex(HttpSession session) {
-		super.userBehavior(session, logger, "index", "登录验证完成后跳转到指定页面 index.jsp");
-		return "redirect:/index.jsp";
+		super.userBehavior(session, logger, "page_manager_index", "登录验证完成后跳转到指定页面 index.jsp");
+		return "/index";
 	}
 	
 	

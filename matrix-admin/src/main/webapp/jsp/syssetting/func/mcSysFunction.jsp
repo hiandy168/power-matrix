@@ -1,21 +1,15 @@
 <%@ include file="/inc/resource.inc" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<%@ include file="/inc/head.jsp" %>
+<head> -->
+	<%@ include file="/inc/iframe-head.jsp" %>
 	
 	<link rel="stylesheet" href="${css}/ztree/zTreeStyle.css" type="text/css" />
 	
-	<%-- <script type="text/javascript" src="${js}/jquery-1.10.2.js"></script> --%>
-    <script type="text/javascript" src="${js}/utils/ajaxs.js"></script>
-    
 	<script type="text/javascript" src="${js}/ztree/jquery.ztree.all.js"></script>
 	<!-- 系统角色权限 -->
 	<script type="text/javascript" src="${js}/system/sysUserRoleFunction.js"></script>
- 	<!-- 自定义滚动条 -->
-	<script type="text/javascript" src="${js}/plugins/jquery.slimscroll.js"></script>
- 	<script type="text/javascript" src="${js}/system/ajax-form.js"></script> 
     <style type="text/css">
         .tree-left{
             /* border: solid #FB9337 2px; */
@@ -57,20 +51,18 @@
        	
     </style>
 
-</head>
+<%-- </head>
 
 <body class="withvernav">
     <div class="bodywrapper">
 		<%@ include file="/inc/top.jsp" %> 
-		<%@ include file="/inc/left.jsp" %>
+		<%@ include file="/inc/left.jsp" %> --%>
 
         <div class="centercontent">
 
             <div class="pageheader notab">
-                <h1 class="pagetitle">简要说明</h1>
-                <span class="pagedesc">
-                    【导航月菜单树】同层节点之间可以进行拖动来调整其先后顺序 
-                </span>
+                <h1 class="pagetitle">系统功能树</h1>
+                <span class="pagedesc">【导航与菜单树】同层节点之间可以进行拖动来调整其先后顺序 </span>
             </div>
             <div class="contentwrapper" style="padding-top:0px;">
                 <div id="nav-menu" class="subcontent">
@@ -95,13 +87,12 @@
                 </div>
             </div>
         </div>
-    </div>
+<!--     </div>
 </body>
-</html>
+</html> -->
 
 
 <script type="text/javascript">
-
 	$(document).ready(function(){
 		surfunc.sysTreeOperation(); 
 		// 自定义滚动条 | 执行此代码自定义滚动条则生效
@@ -112,9 +103,6 @@
 			height: '630px' // '208px'
 		});
 	});  
-   
-  
-
 </script>
 
 
