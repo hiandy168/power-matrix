@@ -137,17 +137,6 @@ var pageInit = {
 									html_ += '<li id="' + farr[f].data.styleKey + '-' + sarr[s].data.id + '">';
 										html_ += '<a href="javascript:void(0)" onclick="pageInit.menuOnclick(this)" btns="' + str + '" target_="' + url_ + '" >' + sarr[s].data.name + '</a>';
 									html_ += '</li>';
-									
-									if(f == 0 && s == 0){
-										html_ += '<li id="37c694131c304c2588c4b906567631b1-214">';
-											html_ += '<a href="javascript:void(0)" onclick="iframeTest(this)"  target_="http://localhost:8080/matrix-admin/example/page_example_iframe.do">';
-												html_ += 'iframe示例';
-											html_ += '</a>';
-										html_ += '</li>';  
-									}
-									
-									
-									
 								}
 							html_ += '</ul>';
 						html_ += '</li>';
@@ -188,7 +177,7 @@ var pageInit = {
 	menuOnclick:function(obj){ 
 		var href_ = $(obj).attr("target_"); 
 		localStorage.btns = $(obj).attr("btns");  
-		window.location.href = href_;
+    	$("#sub-page").attr("src" , href_); 
 	}
 
 }

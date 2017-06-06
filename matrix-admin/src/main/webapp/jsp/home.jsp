@@ -6,7 +6,7 @@
 	<%@ include file="/inc/head.jsp" %>
 	<script type="text/javascript">
 		function iframeChange(){
-			var lw = $("#left-menu div")[0]; // 取左侧菜单的宽度
+			var lw = $("#left-menu div:visible")[0]; // 取左侧菜单的宽度
 			var toph = $(".header")[0].offsetHeight + $(".topheader")[0].offsetHeight;  // 取顶部高 
 			var ifm= document.getElementById("sub-page"); 
 		    ifm.height = document.documentElement.clientHeight - toph - 30;
@@ -23,8 +23,8 @@
     <div class="bodywrapper">
 		<%@ include file="/inc/top.jsp" %>
 		<%@ include file="/inc/left.jsp" %>
-		<iframe style="margin-left:230px" id="sub-page" scrolling="no" frameborder="0" onload="iframeChange()" 
-			src="http://localhost:8080/matrix-admin/manager/page_manager_index2.do" >
+		<iframe style="margin-left:230px" id="sub-page"  frameborder="0" onload="iframeChange()" 
+			src="${basePath}manager/page_manager_index.do" >
 		</iframe>
     </div>
 

@@ -75,18 +75,6 @@ public class ManagerCenterController extends BaseController{
 		return "/index";
 	}
 	
-	@RequestMapping("page_manager_index1")
-	public String loginPageIndex1(HttpSession session) {
-		super.userBehavior(session, logger, "page_manager_index", "登录验证完成后跳转到指定页面 index.jsp");
-		return "redirect:/index1.jsp";
-	}
-	
-	@RequestMapping("page_manager_index2")
-	public String loginPageIndex2(HttpSession session) {
-		super.userBehavior(session, logger, "page_manager_index", "登录验证完成后跳转到指定页面 index.jsp");
-		return "redirect:/index2.jsp";
-	}
-	
 	
 	/**
 	 * @description: 前往用户列表页面 

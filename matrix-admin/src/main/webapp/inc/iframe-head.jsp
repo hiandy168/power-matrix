@@ -32,15 +32,11 @@
     <script type="text/javascript">
 		$(function(){
 			$('body').addClass("withmenucoll2"); 
-			// var lw = $("#left-menu div")[0]; // 取左侧菜单的宽度
-			// 自定义滚动条 | 执行此代码自定义滚动条则生效
-			/* $('.stdtable').slimscroll({
-				color: '#666',
-				size: '10px',
-				width: document.documentElement.clientWidth - lw.clientWidth ,  
-				height:  '508px'  
-			}); */
+			
+			var pd = $(window.parent.document);
+			var lw = pd[0].body.clientWidth - pd.find("#left-menu div")[0].clientWidth - 40;
 		});  
+
 
     </script>
     

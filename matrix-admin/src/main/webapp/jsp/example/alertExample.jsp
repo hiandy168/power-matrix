@@ -1,9 +1,9 @@
 <%@ include file="/inc/resource.inc" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<%@ include file="/inc/head.jsp" %>
+<head> -->
+	<%@ include file="/inc/iframe-head.jsp" %>
 	<style type="text/css">
 
 	</style>
@@ -56,20 +56,21 @@
 
 
 	</script>
-</head>
+<%-- </head>
 
 <body class="withvernav">
 
     <div class="bodywrapper">
 		<%@ include file="/inc/top.jsp" %>
-		<%@ include file="/inc/left.jsp" %>
+		<%@ include file="/inc/left.jsp" %> --%>
+		
 		<div class="centercontent tables">
 			<!--这个跳转页面的功能及跳转路径等等-->
 			<div class="pageheader notab">
 				<h1 class="pagetitle">自定义封装 alert confirm prompt 示例</h1>
-                    <span class="pagedesc">
+                    <!-- <span class="pagedesc">
                         这个页面描述了系统中最常用的功能：自定义提示框。
-                    </span>
+                    </span> -->
 				<span style="display:none">jsp/example/pageFormExample</span>
 			</div>
 

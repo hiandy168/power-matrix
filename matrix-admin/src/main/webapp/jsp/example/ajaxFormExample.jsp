@@ -1,10 +1,9 @@
 <%@ include file="/inc/resource.inc" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <%@ include file="/inc/head.jsp" %>
-    <script type="text/javascript" src="${js}/system/ajax-form.js"></script>
+<head> -->
+    <%@ include file="/inc/iframe-head.jsp" %>
     <script type="text/javascript">
 
         /**
@@ -98,22 +97,22 @@
 
 
     </script>
-</head>
+<%-- </head>
 
 <body class="withvernav">
 
     <div class="bodywrapper">
         <%@ include file="/inc/top.jsp" %>
-        <%@ include file="/inc/left.jsp" %>
+        <%@ include file="/inc/left.jsp" %> --%>
 
         <div class="centercontent tables">
             <!--这个跳转页面的功能及跳转路径等等-->
             <div class="pageheader notab">
                 <h1 class="pagetitle">常用分页表单示例</h1>
-                    <span class="pagedesc">
+                   <!--  <span class="pagedesc">
                         这个页面描述了系统中最常用的功能：Ajax表单分页。该页面所在的路径已经隐藏在下面
                         【鼠标右键】 -> 【审查元素】可以看到如下路径【jsp/example/ajaxFormExample】
-                    </span>
+                    </span> -->
                 <span style="display:none">jsp/example/ajaxFormExample</span>
             </div>
 
@@ -214,10 +213,10 @@
         </div>
 
 
-    </div>
+<!--     </div>
 
 </body>
-</html>
+</html> -->
 
 
 
