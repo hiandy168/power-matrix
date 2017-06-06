@@ -34,12 +34,6 @@
 		
 		<dependency>
 			<groupId>com.power-matrix</groupId>
-			<artifactId>power-cache</artifactId>
-			<version>${project.version}</version>
-		</dependency> 
-		
-		<dependency>
-			<groupId>com.power-matrix</groupId>
 			<artifactId>matrix-quartz</artifactId>
 			<version>${project.version}</version>
 		</dependency> -->
