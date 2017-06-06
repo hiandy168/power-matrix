@@ -15,9 +15,9 @@
         <div class="centercontent">
 			<div class="pageheader notab">
 	            <h1 class="pagetitle">创建用户</h1>
-                    <span class="pagedesc">
+                    <!-- <span class="pagedesc">
                         添加一条记录系统用户表
-                    </span>
+                    </span> -->
 	            <span style="display:none">jsp/syssetting/role/sysMcRoleAdd.jsp</span>
 	        </div>
 	        

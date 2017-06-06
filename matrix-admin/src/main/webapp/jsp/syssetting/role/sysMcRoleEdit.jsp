@@ -15,8 +15,7 @@
         <div class="centercontent">
 			<div class="pageheader notab">
 	            <h1 class="pagetitle">修改用户</h1>
-                    <span class="pagedesc">
-                    </span>
+                <span class="pagedesc"></span>
 	            <span style="display:none">jsp/syssetting/role/sysMcRoleEdit.jsp</span>
 	        </div>
 	        

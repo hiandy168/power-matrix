@@ -20,8 +20,8 @@
 			<!--这个跳转页面的功能及跳转路径等等-->
 			<div class="pageheader notab">
 				<h1 class="pagetitle">系统用户列表页面</h1>
-				<span class="pagedesc"> 本页面用于系统管理员来创建系统中的用户。 </span> <span
-					style="display: none">jsp/syssetting/user/sysUserList.jsp</span>
+				<!-- <span class="pagedesc"> 本页面用于系统管理员来创建系统中的用户。 </span>  -->
+				<span style="display: none">jsp/syssetting/user/sysUserList.jsp</span>
 			</div>
 
 			<div id="contentwrapper" class="contentwrapper">

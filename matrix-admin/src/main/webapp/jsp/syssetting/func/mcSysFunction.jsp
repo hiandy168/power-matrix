@@ -67,10 +67,8 @@
         <div class="centercontent">
 
             <div class="pageheader notab">
-                <h1 class="pagetitle">简要说明</h1>
-                <span class="pagedesc">
-                    【导航月菜单树】同层节点之间可以进行拖动来调整其先后顺序 
-                </span>
+                <h1 class="pagetitle">系统功能树</h1>
+                <span class="pagedesc">【导航与菜单树】同层节点之间可以进行拖动来调整其先后顺序 </span>
             </div>
             <div class="contentwrapper" style="padding-top:0px;">
                 <div id="nav-menu" class="subcontent">
