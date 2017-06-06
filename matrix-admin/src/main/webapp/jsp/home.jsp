@@ -9,7 +9,7 @@
 			var lw = $("#left-menu div:visible")[0]; // 取左侧菜单的宽度
 			var toph = $(".header")[0].offsetHeight + $(".topheader")[0].offsetHeight;  // 取顶部高 
 			var ifm= document.getElementById("sub-page"); 
-		    ifm.height = document.documentElement.clientHeight - toph - 30;
+		    ifm.height = document.documentElement.clientHeight - toph;
 		    ifm.width = document.documentElement.clientWidth - lw.clientWidth;
 		}
 		window.onresize=function(){  
@@ -18,12 +18,12 @@
 	</script>
 </head>
 
-<body class="withvernav">
+<body class="withvernav" style="overflow-x:hidden">
 
     <div class="bodywrapper">
 		<%@ include file="/inc/top.jsp" %>
 		<%@ include file="/inc/left.jsp" %>
-		<iframe style="margin-left:230px" id="sub-page"  frameborder="0" onload="iframeChange()" 
+		<iframe style="margin-left:231px;overflow-x:hidden" id="sub-page"  frameborder="0" onload="iframeChange()" 
 			src="${basePath}manager/page_manager_index.do" >
 		</iframe>
     </div>
