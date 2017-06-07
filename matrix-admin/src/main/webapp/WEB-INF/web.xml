@@ -69,4 +69,9 @@
 		<listener-class>org.springframework.web.util.Log4jConfigListener
 		</listener-class>
 	</listener>
+	
+	<!-- session设置为1天 -->
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
 </web-app>

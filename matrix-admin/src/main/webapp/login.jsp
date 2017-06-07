@@ -7,21 +7,20 @@
 
     <title>power-matrix</title>
 
-    <link rel="stylesheet" href="css/style.default.css" type="text/css" />
-    <!--[if IE 9]>
-        <link rel="stylesheet" media="screen" href="css/style.ie9.css"/>
-    <![endif]-->
-    <!--[if IE 8]>
-        <link rel="stylesheet" media="screen" href="css/style.ie8.css"/>
-    <![endif]-->
-    <!--[if lt IE 9]>
-	    <script src="js/plugins/css3-mediaqueries.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" href="css/style.default.css" type="text/css" /> 
     <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
 	<script type="text/javascript" src="js/plugins/jquery.alerts.js" ></script>
     <!--页面JavaScript脚本-->
     <script type="text/javascript" src="js/system/login.js"></script>
     <script type="text/javascript" src="js/utils/ajaxs.js"></script>
+    
+    <script type="text/javascript">
+    	$(function(){
+    		if(window !=top){
+    			top.location.href=location.href;
+    		}
+    	})
+    </script>
 
 </head>
 
