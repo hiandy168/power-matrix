@@ -82,7 +82,7 @@
 		        	id:userId, 
 		        	pageCss:c
 		        };
-		        var obj = JSON.parse(ajaxs.sendAjax('post' , url_ , data_));
+		        ajaxs.sendAjax('post' , url_ , data_);
 		        /* if(obj.status == 'success'){
 		        } */
 		        
