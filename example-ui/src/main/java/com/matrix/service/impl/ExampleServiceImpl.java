@@ -1,8 +1,14 @@
 package com.matrix.service.impl;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 
 import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -53,6 +59,74 @@ public class ExampleServiceImpl  extends BaseServiceImpl<UserDemo, Integer> impl
 		}
 		return result;
 	}
+
 	
+	/**
+	 * @description: 针对UE，采用自定义的上传图片方式|
+	 * 	此种方式使用cfile接口将图片上传到图片服务器
+	 * 
+	 * @param type uploadimage:上传图片|uploadfile:上传文件
+	 * @param request
+	 * @param response
+	 * @return
+	 * @author Yangcl 
+	 * @date 2017年6月8日 下午3:21:48 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject ajaxUploadFileCfile(String type , HttpServletRequest request, HttpServletResponse response) {
+		JSONObject result = new JSONObject();
+		result.put("state", "文件上传失败!");  
+		result.put("title", "");  
+		result.put("original", "");   
+    	result.put("url", "");  
+    	
+    	
+		String cfileUrl = "http://hjy-manage.huijiayou.cn/cfamily/upload/";
+		if(type.equals("uploadimage")){
+			cfileUrl += "realsave";
+		}else{
+			cfileUrl += "upload"; 
+		}
+		
+		RequestDispatcher  dispatcher = request.getRequestDispatcher(cfileUrl);  
+		try {
+			dispatcher.forward(request, response); 
+			if (response != null) {  
+//				PrintWriter msg =  response.getWriter();
+				
+				result.put("state", "SUCCESS");  
+				result.put("title", "1496889480565005232.png");  
+				result.put("original", "QQ图片20161222141428.png");  
+				result.put("type", ".png");  
+				result.put("url", "/cfiles/staticfiles/upload/ueditor/1496889480565005232.png");  
+				result.put("size", "127769");  
+		    }
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

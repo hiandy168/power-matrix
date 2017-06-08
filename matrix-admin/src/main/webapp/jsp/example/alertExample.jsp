@@ -71,7 +71,7 @@
                     <!-- <span class="pagedesc">
                         这个页面描述了系统中最常用的功能：自定义提示框。
                     </span> -->
-				<span style="display:none">jsp/example/pageFormExample</span>
+				<span style="display:none">jsp/example/alertExample.jsp</span>
 			</div>
 
 			<div id="contentwrapper" class="contentwrapper">
@@ -95,10 +95,10 @@
 
 
 
-    </div>
+<!--     </div>
 
 </body>
-</html>
+</html> -->
 
 
 

@@ -1,6 +1,7 @@
 package com.matrix.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -195,6 +196,41 @@ public class ExampleController extends BaseController{
 	public String blockUiPage(HttpSession session){ 
 		super.userBehavior(session, logger, "page_example_b", "blockUi Page Example"); 
 		return "jsp/example/blockUiPageExample"; 
+	}
+	
+	/**
+	 * @description: ueditor编辑器测试页面
+	 * 
+	 * @param session
+	 * @return
+	 * @author Yangcl 
+	 * @date 2017年6月8日 上午11:19:07 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping("page_example_ueditor")   
+	public String ueditorPage(HttpSession session){
+		super.userBehavior(session, logger, "page_example_ueditor", "ueditor编辑器测试页面");
+		return "jsp/example/ueditorExample"; 
+	}
+	
+	
+	/**
+	 * @description: 针对UE，采用自定义的上传图片方式|
+	 * 	此种方式使用cfile接口将图片上传到图片服务器
+	 * 
+	 * @param type uploadimage:上传图片|uploadfile:上传文件
+	 * @param request
+	 * @param resonse
+	 * @return
+	 * @author Yangcl 
+	 * @date 2017年6月8日 下午3:21:48 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "ajax_upload_file_cfile", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject ajaxUploadFileCfile(String type , HttpServletRequest request, HttpServletResponse resonse , HttpSession session){
+		super.userBehavior(session, logger, "ajax_upload_file_cfile", "删除一条记录");
+		return exampleService.ajaxUploadFileCfile(type , request , resonse); 
 	}
 }
 
