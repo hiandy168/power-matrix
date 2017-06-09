@@ -55,6 +55,13 @@
 					$("#addonstyle").remove();
 					$('head').append('<link id="addonstyle" rel="stylesheet" href="${css}/custom/style.' + pageCss + '.css" type="text/css" />');
 				}
+				
+				$("#" + localStorage.left_select ).addClass("current");
+				$('.vernav2 > ul > li > ul > li').click("onclick" , function(){
+                	$('.vernav2 > ul > li > ul > li').removeClass("current");
+                    localStorage.left_select = this.id
+                    $("#" + this.id ).addClass("current");
+                });
 			}
 			
 			 // 修改主题 

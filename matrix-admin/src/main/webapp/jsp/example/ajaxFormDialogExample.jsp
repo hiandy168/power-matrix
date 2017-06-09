@@ -29,7 +29,11 @@
             }
             // 这种情况是响应上一页或下一页的触发事件
             var type_ = 'post';
-            var data_ = null;
+            var data_ = {
+                 userName: $("#user-name").val(),
+                 mobile: $("#mobile").val(),
+                 sex: $("#sex").val()
+             };
             var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
             aForm.launch(url_ , 'table-form' , obj).init();
             draw(obj);
@@ -159,7 +163,18 @@
             $('#dialog-ajax-tbody').append(html_);
         }
 
+        //搜索
+        function searchUser(){
+            aForm.formPaging(0);
+        }
 
+        // 重置查询条件
+        function searchReset(){
+            $("#user-name").val("");
+            $("#mobile").val("");
+            $("#sex").val("");
+            aForm.formPaging(0);
+        }
 
 
     </script>
@@ -188,17 +203,31 @@
                 <div id="table-form" class="dataTables_wrapper" >
                     <div class="contenttitle2">
                         <p style="margin: 0px">
-                            <label>First Name</label>
-                            <span class="field"><input id="name" type="text" name="name"  class="form-search"></span>
+                            <label>姓名：</label>
+							<span class="field">
+								<input id="user-name" type="text" name="userName"  class="form-search"/>
+							</span>
 
-                            <label>First Name2</label>
-                            <span class="field"><input id="name2" type="text" name="name"  class="form-search"></span>
+                            <label>手机号：</label>
+							<span class="field">
+								<input id="mobile" type="text" name="mobile"  class="form-search"/>
+							</span>
 
-                            <label>First Name3</label>
-                            <span class="field"><input id="name3" type="text" name="name"  class="form-search"></span>
+                            <label>性别：</label>
+							<span class="field">
+								<select id="sex" name="sex" class="form-search">
+                                    <option value="">请选择---</option>
+                                    <option value="1">男</option>
+                                    <option value="2">女</option>
+                                </select>
+							</span>
 
-                            <label>First Name4</label>
-                            <span class="field"><input id="name4" type="text" name="name"  class="form-search"></span>
+                            <a onclick="searchReset()" class="btn btn_orange btn_search radius50" style="float:right; cursor: pointer; margin-left: 10px">
+                                <span> 重 置 </span>
+                            </a>
+                            <a onclick="searchUser()" class="btn btn_orange btn_search radius50" style="float:right; cursor: pointer;margin-left: 20px">
+                                <span> 查 询 </span>
+                            </a>
                         </p>
                     </div>
 

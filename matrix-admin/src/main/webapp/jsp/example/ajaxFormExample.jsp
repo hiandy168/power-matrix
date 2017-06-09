@@ -33,7 +33,7 @@
                  userName: $("#user-name").val(),
                  mobile: $("#mobile").val(),
                  sex: $("#sex").val()
-             }
+             };
              var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
              aForm.launch(url_ , 'table-form' , obj).init();
              draw(obj);
