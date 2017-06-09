@@ -85,35 +85,15 @@ public class ExampleServiceImpl  extends BaseServiceImpl<UserDemo, Integer> impl
 		result.put("original", "");   
     	result.put("url", "");  
     	
-    	
-		String cfileUrl = "http://hjy-manage.huijiayou.cn/cfamily/upload/";
-		if(type.equals("uploadimage")){
-			cfileUrl += "realsave";
-		}else{
-			cfileUrl += "upload"; 
-		}
-		
-		RequestDispatcher  dispatcher = request.getRequestDispatcher(cfileUrl);  
-		try {
-			dispatcher.forward(request, response); 
-			if (response != null) {  
-				ServletOutputStream  os  =response.getOutputStream();
-				
-				String msg = os.toString();
-				
-				result.put("state", "SUCCESS");  
-				result.put("title", "1496889480565005232.png");  
-				result.put("original", "QQ图片20161222141428.png");  
-				result.put("type", ".png");  
-				result.put("url", "/cfiles/staticfiles/upload/ueditor/1496889480565005232.png");  
-				result.put("size", "127769");  
-		    }
-		} catch (ServletException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+    	// TODO upload image ... 
+		if (type != null) {  
+			result.put("state", "SUCCESS");  
+			result.put("title", "1496889480565005232.png");  
+			result.put("original", "QQ图片20161222141428.png");  
+			result.put("type", ".png");  
+			result.put("url", "/cfiles/staticfiles/upload/ueditor/1496889480565005232.png");  
+			result.put("size", "127769");  
+	    }
 		return result;
 	}
 	

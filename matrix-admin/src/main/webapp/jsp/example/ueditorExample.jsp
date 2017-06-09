@@ -47,10 +47,12 @@
 		// 开始自定义ueditor的上传文件方法
 		UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
 	    UE.Editor.prototype.getActionUrl = function(action) {  
-	        if (action == 'uploadimage' || action == 'uploadfile') {  
-	            var id = $('#carInfoId').val();  
-	            return '${basePath}example/ajax_upload_file_cfile.do?type=' + action;  
-	        } else {  
+	        if (action == 'uploadimage' ) {  
+	        	// return '${basePath}example/ajax_upload_file_cfile.do?type=' + action;   // 上传使用自定义的方法
+	            return 'http://172.21.1.159:8081/cfamily/upload1/realsave';        
+	        } else if(action == 'uploadfile'){
+	        	return 'http://172.21.1.159:8081/cfamily/upload/upload';        
+	        }else {  
 	            return this._bkGetActionUrl.call(this, action);  
 	        }  
 	    }; 
