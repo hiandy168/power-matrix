@@ -30,7 +30,7 @@
                             <a class="blueline"></a>
                             <a class="greenline"></a>
                             <a class="contrast"></a>
-                            <a class="custombg"></a>
+                            <!-- <a class="custombg"></a> -->
                         </div>
                     </div><!--avatar-->
                     <!--登录用户信息-->
@@ -42,11 +42,10 @@
                                 <a href="">修改资料</a>
                             </li>
                             <li>
-                                <%-- TODO 非开发权限人员此处需要隐藏！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！${basePath}sysrole/tree_page_index.do--%>
                                 <a href="">功能维护</a>
                             </li>
                             <li>
-                                <a href="http://localhost:8080/matrix-admin/manager/page_manager_index.do">帮助</a>
+                                <a href="">帮助</a>
                             </li>
                             <li>
                                 <a href="javascript:void(0)" onclick="login.logout('${basePath}')">退出</a> 

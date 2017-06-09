@@ -33,8 +33,10 @@
 		$(function(){
 			$('body').addClass("withmenucoll2"); 
 			
+			/* 
 			var pd = $(window.parent.document);
-			var lw = pd[0].body.clientWidth - pd.find("#left-menu div")[0].clientWidth - 40;
+			var lw = pd[0].body.clientWidth - pd.find("#left-menu div:visible")[0].clientWidth - 40; 
+			*/
 		});  
 
 
