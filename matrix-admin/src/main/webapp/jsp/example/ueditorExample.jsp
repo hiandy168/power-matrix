@@ -39,7 +39,7 @@
 	
 	$(function(){
 		var pd = $(window.parent.document);
-		var w = pd[0].body.clientWidth - pd.find("#left-menu div")[0].clientWidth - 140;
+		var w = pd[0].body.clientWidth - pd.find("#left-menu div:visible")[0].clientWidth - 140;
 		var h = pd[0].body.clientHeight -350 ;
 		$("#editor").width(w);
 		$("#editor").height(h);
