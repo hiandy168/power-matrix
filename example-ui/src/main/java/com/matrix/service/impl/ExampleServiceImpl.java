@@ -1,12 +1,17 @@
 package com.matrix.service.impl;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -92,7 +97,9 @@ public class ExampleServiceImpl  extends BaseServiceImpl<UserDemo, Integer> impl
 		try {
 			dispatcher.forward(request, response); 
 			if (response != null) {  
-//				PrintWriter msg =  response.getWriter();
+				ServletOutputStream  os  =response.getOutputStream();
+				
+				String msg = os.toString();
 				
 				result.put("state", "SUCCESS");  
 				result.put("title", "1496889480565005232.png");  
@@ -110,6 +117,12 @@ public class ExampleServiceImpl  extends BaseServiceImpl<UserDemo, Integer> impl
 		return result;
 	}
 	
+	private String parseString(OutputStream out){
+        ByteArrayOutputStream baos = new   ByteArrayOutputStream();
+        baos = (ByteArrayOutputStream) out;
+        ByteArrayInputStream swapStream = new ByteArrayInputStream(baos.toByteArray());
+        return swapStream.toString();
+    }
 }
 
 

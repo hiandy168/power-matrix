@@ -229,7 +229,7 @@ public class ExampleController extends BaseController{
 	@RequestMapping(value = "ajax_upload_file_cfile", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
 	public JSONObject ajaxUploadFileCfile(String type , HttpServletRequest request, HttpServletResponse resonse , HttpSession session){
-		super.userBehavior(session, logger, "ajax_upload_file_cfile", "删除一条记录");
+		super.userBehavior(session, logger, "ajax_upload_file_cfile", "针对UE，采用自定义的上传图片方式 此种方式使用cfile接口将图片上传到图片服务器");
 		return exampleService.ajaxUploadFileCfile(type , request , resonse); 
 	}
 }
