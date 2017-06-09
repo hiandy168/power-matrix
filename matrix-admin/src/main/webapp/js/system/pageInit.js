@@ -159,6 +159,7 @@ var pageInit = {
 		$(obj).addClass("current");
 		localStorage.nav_id = $(obj)[0].id;
 		pageInit.leftCheck();
+		$('.vernav2 > ul > li > ul > li').removeClass("current");  // 移除二级菜单已选颜色
 	},
 
 	/**
