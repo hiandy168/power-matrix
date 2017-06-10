@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
@@ -16,6 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -79,6 +84,28 @@ public class ExampleServiceImpl  extends BaseServiceImpl<UserDemo, Integer> impl
 	 * @version 1.0.0.1
 	 */
 	public JSONObject ajaxUploadFileCfile(String type , HttpServletRequest request, HttpServletResponse response) {
+		
+		
+		List<FileItem> upfile = upfile(request);
+		if(null !=upfile && upfile.size() > 0) {
+			FileItem fileItem = upfile.get(0);
+			fileItem.getFieldName();
+			;
+			fileItem.getName();
+			System.out.println(fileItem.getName());
+			
+			
+			
+		/*	resultMap.put("state", "SUCCESS");
+			resultMap.put("title", fileItem.getName().lastIndexOf("/")+1);
+			resultMap.put("original", title);
+			resultMap.put("type", imgUrl.substring(imgUrl.lastIndexOf(".")));
+			resultMap.put("url", imgUrl);
+			resultMap.put("size", fileItem.getSize());
+*/
+			
+		}
+		
 		JSONObject result = new JSONObject();
 		result.put("state", "文件上传失败!");  
 		result.put("title", "");  
@@ -95,6 +122,26 @@ public class ExampleServiceImpl  extends BaseServiceImpl<UserDemo, Integer> impl
 			result.put("size", "127769");  
 	    }
 		return result;
+	}
+	
+	public List<FileItem> upfile(HttpServletRequest request) {
+		List<FileItem> items = null;
+		String sContentType = request.getContentType();
+		if (StringUtils.contains(sContentType, "multipart/form-data")) {
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			ServletFileUpload upload = new ServletFileUpload(factory);
+
+			try {
+				items = upload.parseRequest(request);
+			} catch (FileUploadException e) {
+				e.printStackTrace();
+			} // 得到所有的文件
+			/*
+			 * for (FileItem fUploadFileItem : items) { if
+			 * (!fUploadFileItem.isFormField()) { fi = fUploadFileItem; } }
+			 */
+		}
+		return items;
 	}
 	
 	private String parseString(OutputStream out){

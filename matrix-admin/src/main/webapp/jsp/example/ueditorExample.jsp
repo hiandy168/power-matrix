@@ -32,7 +32,7 @@
 
 
 <script type="text/javascript" charset="utf-8" src="${js}/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="${js}/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="${js}/ueditor/ueditor.all.js"> </script>
 <script type="text/javascript" charset="utf-8" src="${js}/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
 	var ue = UE.getEditor('editor');
@@ -49,7 +49,7 @@
 	    UE.Editor.prototype.getActionUrl = function(action) {  
 	        if (action == 'uploadimage' ) {  
 	        	// return '${basePath}example/ajax_upload_file_cfile.do?type=' + action;   // 上传使用自定义的方法
-	            return 'http://172.21.1.159:8081/cfamily/upload1/realsave';        
+	            return 'http://172.21.1.159:8081/cfamily/upload1/upload';        
 	        } else if(action == 'uploadfile'){
 	        	return 'http://172.21.1.159:8081/cfamily/upload/upload';        
 	        }else {  
