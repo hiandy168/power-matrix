@@ -8,7 +8,9 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
@@ -39,6 +41,7 @@ import com.matrix.base.BaseServiceImpl;
 import com.matrix.dao.IUserDemoDao;
 import com.matrix.pojo.entity.UserDemo;
 import com.matrix.service.IExampleService;
+import com.matrix.uploadSupport.WebUpload;
 import com.matrix.util.SignUtil;
 
 @Service("exampleService")
@@ -94,6 +97,44 @@ public class ExampleServiceImpl  extends BaseServiceImpl<UserDemo, Integer> impl
 	 * @version 1.0.0.1
 	 */
 	public JSONObject ajaxUploadFileCfile(String type , HttpServletRequest request, HttpServletResponse response) {
+		
+		JSONObject result = new JSONObject();
+		//上传图片
+		
+		
+		List<FileItem> items = WebUpload.create().upFileFromRequest(request);
+		
+		if (items != null && items.size() > 0) {
+			
+			for (FileItem fi : items) {
+				
+				String remoteUpload = WebUpload.create().remoteUpload("upload",fi.getName(),fi.get());
+				System.out.println(remoteUpload);
+				JSONObject t = JSONObject.parseObject(remoteUpload, result.getClass());
+				String imgs = t.getString("resultObject");
+				if(t.getInteger("resultCode") == 1 && StringUtils.isNotBlank(imgs) && imgs.length() > 0) {
+					//编辑器编辑上传图片，暂时只支持上传一张图片
+					result.put("state", "SUCCESS");
+					result.put("title", imgs.substring(imgs.lastIndexOf("/")+1));
+					result.put("original", fi.getName());
+					result.put("type", imgs.substring(imgs.lastIndexOf(".")));
+					result.put("url", imgs);
+					result.put("size", fi.getSize());
+					
+				} else {
+					result.put("state", "上传失败");
+					result.put("title", "");
+					result.put("original", "");
+					result.put("type", "");
+					result.put("url", "");
+					result.put("size", "");
+				}
+			}
+			
+			
+		}
+		
+		/*
 		JSONObject result = new JSONObject();
 		result.put("state", "文件上传失败!");  
 		result.put("title", "");  
@@ -112,7 +153,7 @@ public class ExampleServiceImpl  extends BaseServiceImpl<UserDemo, Integer> impl
 			result.put("type", ".png");  
 			result.put("url", "/cfiles/staticfiles/upload/ueditor/1496889480565005232.png");  
 			result.put("size", "127769");  
-	    }
+	    }*/
 		return result;
 	}
 	

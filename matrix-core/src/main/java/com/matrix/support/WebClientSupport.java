@@ -9,19 +9,26 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.net.ssl.SSLContext;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
+import org.apache.http.conn.ssl.SSLContexts;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -265,13 +272,28 @@ public class WebClientSupport extends BaseClass {
 			throws Exception {
 		String sReturnString = null;
 		HttpClientBuilder hClientBuilder = HttpClientBuilder.create();
+		@SuppressWarnings("deprecation")
+		SSLContext sslContext = SSLContexts.custom().useTLS().loadTrustMaterial(null, new TrustStrategy() {
+			@Override
+			public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+				return true;
+			}
+		}).build();
+		hClientBuilder.setSSLSocketFactory(new SSLConnectionSocketFactory(sslContext,SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER));
 
+		// 设定超时时间，避免阻塞太久
+		RequestConfig requestConfig = RequestConfig.custom()  
+                .setConnectionRequestTimeout(60000)  
+                .setConnectTimeout(60000)  
+                .setSocketTimeout(60000)
+                .build(); 
+		
+		hClientBuilder.setDefaultRequestConfig(requestConfig);
 		CloseableHttpClient httpclient = hClientBuilder.build();
-
+		
 		HttpPost httppost = new HttpPost(sUrl);
 		// 设置成短链接模式 关闭keep-alve
 		httppost.setHeader("Connection", "close");
-//		httppost.setHeader("Content-type", "application/x-www-form-urlencoded");  
 		CloseableHttpResponse response = null;
 
 		try {
@@ -294,15 +316,14 @@ public class WebClientSupport extends BaseClass {
 			}
 
 		} catch (Exception e) {
-			httppost.reset();
-			httpclient = null;
 			e.printStackTrace();
 			throw e;
 
 		} finally {
-			response.close();
+			if(response != null){
+				response.close();
+			}
 
-			httppost.reset();
 			httpclient.close();
 			httpclient = null;
 
