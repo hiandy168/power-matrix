@@ -1,4 +1,4 @@
-package com.matrix.uploadSupport;
+package com.matrix.support;
 
 import java.util.List;
 
@@ -13,7 +13,6 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 
 import com.matrix.base.BaseClass;
-import com.matrix.support.WebClientSupport;
 
 /**
  * @description: 文件上传组件|将图片内容等上传到cfile服务器中
@@ -25,10 +24,10 @@ import com.matrix.support.WebClientSupport;
  * @date 2017年6月12日 下午2:24:03 
  * @version 1.0.0
  */
-public class FileUpload extends BaseClass{
+public class FileUploadSupport extends BaseClass{
 	
 	private String url = "";
-	private FileUpload(){
+	private FileUploadSupport(){
 		String model = this.getConfig("matrix-core.model"); // dev or master 
 		if(!model.equals("master")){
 			model = "beta";
@@ -36,9 +35,9 @@ public class FileUpload extends BaseClass{
 		url = this.getConfig("matrix-core.upload_pic_url_" + model); 
 	}
 	private static class LazyHolder{
-		private static final FileUpload INSTANCE = new FileUpload();
+		private static final FileUploadSupport INSTANCE = new FileUploadSupport();
 	}
-	public static final FileUpload getInstance() {
+	public static final FileUploadSupport getInstance() {
 		return LazyHolder.INSTANCE; 
 	}
 	

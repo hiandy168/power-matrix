@@ -327,6 +327,7 @@
 			<version>5.9.0</version>
 		</dependency>
 		
+		<!-- 为ueditor 上传图片添加 -->
 		<dependency>
 		    <groupId>commons-codec</groupId>
 		    <artifactId>commons-codec</artifactId>
@@ -347,6 +348,17 @@
 		    <artifactId>json</artifactId>
 		    <version>20170516</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
+			<version>4.5.1</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

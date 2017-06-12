@@ -41,7 +41,7 @@ import com.matrix.base.BaseServiceImpl;
 import com.matrix.dao.IUserDemoDao;
 import com.matrix.pojo.entity.UserDemo;
 import com.matrix.service.IExampleService;
-import com.matrix.uploadSupport.FileUpload;
+import com.matrix.support.FileUploadSupport;
 import com.matrix.util.SignUtil;
 
 @Service("exampleService")
@@ -98,11 +98,11 @@ public class ExampleServiceImpl  extends BaseServiceImpl<UserDemo, Integer> impl
 	 */
 	public JSONObject ajaxUploadFileCfile(String type , HttpServletRequest request, HttpServletResponse response) {
 		JSONObject result = new JSONObject();
-		List<FileItem> items = FileUpload.getInstance().upFileFromRequest(request);
+		List<FileItem> items = FileUploadSupport.getInstance().upFileFromRequest(request);
 		if (items != null && items.size() > 0) {
 			for (FileItem fi : items) {
-				String remoteUpload = FileUpload.getInstance().remoteUpload("upload" , fi.getName() , fi.get());
-				System.out.println(remoteUpload);
+				String remoteUpload = FileUploadSupport.getInstance().remoteUpload("upload" , fi.getName() , fi.get());
+//				System.out.println(remoteUpload);
 				JSONObject t = JSONObject.parseObject(remoteUpload, result.getClass());
 				String imgs = t.getString("resultObject");
 				if(t.getInteger("resultCode") == 1 && StringUtils.isNotBlank(imgs) && imgs.length() > 0) {
