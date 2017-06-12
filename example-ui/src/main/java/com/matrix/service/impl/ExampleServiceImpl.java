@@ -41,7 +41,7 @@ import com.matrix.base.BaseServiceImpl;
 import com.matrix.dao.IUserDemoDao;
 import com.matrix.pojo.entity.UserDemo;
 import com.matrix.service.IExampleService;
-import com.matrix.uploadSupport.WebUpload;
+import com.matrix.uploadSupport.FileUpload;
 import com.matrix.util.SignUtil;
 
 @Service("exampleService")
@@ -92,23 +92,16 @@ public class ExampleServiceImpl  extends BaseServiceImpl<UserDemo, Integer> impl
 	 * @param request
 	 * @param response
 	 * @return
-	 * @author Yangcl 
+	 * @author 付强 
 	 * @date 2017年6月8日 下午3:21:48 
 	 * @version 1.0.0.1
 	 */
 	public JSONObject ajaxUploadFileCfile(String type , HttpServletRequest request, HttpServletResponse response) {
-		
 		JSONObject result = new JSONObject();
-		//上传图片
-		
-		
-		List<FileItem> items = WebUpload.create().upFileFromRequest(request);
-		
+		List<FileItem> items = FileUpload.getInstance().upFileFromRequest(request);
 		if (items != null && items.size() > 0) {
-			
 			for (FileItem fi : items) {
-				
-				String remoteUpload = WebUpload.create().remoteUpload("upload",fi.getName(),fi.get());
+				String remoteUpload = FileUpload.getInstance().remoteUpload("upload" , fi.getName() , fi.get());
 				System.out.println(remoteUpload);
 				JSONObject t = JSONObject.parseObject(remoteUpload, result.getClass());
 				String imgs = t.getString("resultObject");
@@ -120,7 +113,6 @@ public class ExampleServiceImpl  extends BaseServiceImpl<UserDemo, Integer> impl
 					result.put("type", imgs.substring(imgs.lastIndexOf(".")));
 					result.put("url", imgs);
 					result.put("size", fi.getSize());
-					
 				} else {
 					result.put("state", "上传失败");
 					result.put("title", "");
@@ -130,36 +122,12 @@ public class ExampleServiceImpl  extends BaseServiceImpl<UserDemo, Integer> impl
 					result.put("size", "");
 				}
 			}
-			
-			
 		}
-		
-		/*
-		JSONObject result = new JSONObject();
-		result.put("state", "文件上传失败!");  
-		result.put("title", "");  
-		result.put("original", "");   
-    	result.put("url", "");  
-    	// TODO upload image ... 
-    	
-    	
-    	
-    	
-    	
-		if (type != null) {  
-			result.put("state", "SUCCESS");  
-			result.put("title", "1496889480565005232.png");  
-			result.put("original", "QQ图片20161222141428.png");  
-			result.put("type", ".png");  
-			result.put("url", "/cfiles/staticfiles/upload/ueditor/1496889480565005232.png");  
-			result.put("size", "127769");  
-	    }*/
 		return result;
 	}
 	
 	
 	public void getFile(String url) throws ClientProtocolException, IOException {
-		
 	    CloseableHttpClient httpclient = HttpClients.createDefault();// 生成一个httpclient对象
 	    HttpPost post = new HttpPost(url);
 	    HttpResponse response = httpclient.execute(post);
@@ -168,14 +136,7 @@ public class ExampleServiceImpl  extends BaseServiceImpl<UserDemo, Integer> impl
 	    
 	    httpclient.close();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	public JSONObject ajaxUploadFileCfileTest(String type , HttpServletRequest request, HttpServletResponse response) {
