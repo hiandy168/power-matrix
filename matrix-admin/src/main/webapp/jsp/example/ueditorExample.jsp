@@ -49,7 +49,7 @@
 	    UE.Editor.prototype.getActionUrl = function(action) {  
 	        if (action == 'uploadimage' ) {  
 	        	// return '${basePath}example/ajax_upload_file_cfile.do?type=' + action;   // 上传使用自定义的方法
-	            return 'http://172.21.1.159:8081/cfamily/upload1/upload';        
+	        	return 'http://fq.test.com:8081/cfamily/upload1/upload';        
 	        } else if(action == 'uploadfile'){
 	        	return 'http://172.21.1.159:8081/cfamily/upload/upload';        
 	        }else {  
