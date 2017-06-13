@@ -1,21 +1,9 @@
 package com.matrix.service.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Resource;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,13 +15,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
@@ -98,7 +82,7 @@ public class ExampleServiceImpl  extends BaseServiceImpl<UserDemo, Integer> impl
 	 */
 	public JSONObject ajaxUploadFileCfile(String type , HttpServletRequest request, HttpServletResponse response) {
 		JSONObject result = new JSONObject();
-		List<FileItem> items = FileUploadSupport.getInstance().upFileFromRequest(request);
+		List<FileItem> items = FileUploadSupport.getInstance().getFileFromRequest(request);
 		if (items != null && items.size() > 0) {
 			for (FileItem fi : items) {
 				String remoteUpload = FileUploadSupport.getInstance().remoteUpload("upload" , fi.getName() , fi.get());
@@ -125,53 +109,6 @@ public class ExampleServiceImpl  extends BaseServiceImpl<UserDemo, Integer> impl
 		}
 		return result;
 	}
-	
-	
-	public void getFile(String url) throws ClientProtocolException, IOException {
-	    CloseableHttpClient httpclient = HttpClients.createDefault();// 生成一个httpclient对象
-	    HttpPost post = new HttpPost(url);
-	    HttpResponse response = httpclient.execute(post);
-//	    HttpEntity entity = response.getEntity();
-	    
-	    
-	    httpclient.close();
-	}
-
-	
-	
-	public JSONObject ajaxUploadFileCfileTest(String type , HttpServletRequest request, HttpServletResponse response) {
-		List<FileItem> upfile = analysisRequest(request);
-		if(null !=upfile && upfile.size() > 0) {
-			FileItem fileItem = upfile.get(0);
-			fileItem.getFieldName();
-			fileItem.getName();
-			System.out.println(fileItem.getName());
-		}
-		
-		JSONObject result = new JSONObject();
-		return result;
-	}
-
-	public List<FileItem> analysisRequest(HttpServletRequest request) {
-		List<FileItem> items = null;
-		String sContentType = request.getContentType();
-		if (StringUtils.contains(sContentType, "multipart/form-data")) {  // 如果是上传二进制数据
-			DiskFileItemFactory factory = new DiskFileItemFactory();
-			ServletFileUpload upload = new ServletFileUpload(factory);
-
-			try {
-				items = upload.parseRequest(request);
-			} catch (FileUploadException e) {
-				e.printStackTrace();
-			} // 得到所有的文件
-			/*
-			 * for (FileItem fUploadFileItem : items) { if
-			 * (!fUploadFileItem.isFormField()) { fi = fUploadFileItem; } }
-			 */
-		}
-		return items;
-	}
-	
 }
 
 

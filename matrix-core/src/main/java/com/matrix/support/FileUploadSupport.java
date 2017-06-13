@@ -51,7 +51,7 @@ public class FileUploadSupport extends BaseClass{
 	 * @date 2017年6月12日 下午2:01:26 
 	 * @version 1.0.0.1
 	 */
-	public List<FileItem> upFileFromRequest(HttpServletRequest request) {
+	public List<FileItem> getFileFromRequest(HttpServletRequest request) {
 		List<FileItem> items = null;   // 得到所有的文件
 		String sContentType = request.getContentType();
 		if (StringUtils.contains(sContentType, "multipart/form-data")) {
