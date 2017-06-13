@@ -323,7 +323,7 @@
 			else {
 				s = '<div class="blockUI ' + opts.blockMsgClass + ' blockElement" style="z-index:'+(z+10)+';display:none;position:absolute"></div>';
 			}
-			lyr3 = $(s);
+			lyr3 = $(s).draggable();
 
 			// if we have a message, style it
 			if (msg) {
