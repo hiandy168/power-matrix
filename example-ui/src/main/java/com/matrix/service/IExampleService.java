@@ -14,5 +14,5 @@ public interface IExampleService  extends IBaseService<UserDemo, Integer> {
 	
 	public JSONObject deleteOne(UserDemo entity);
 
-	public JSONObject ajaxUploadFileCfile(String type , HttpServletRequest request, HttpServletResponse resonse);  
+	public JSONObject ajaxUploadFileCfile(String type , HttpServletRequest request);  
 }

@@ -69,8 +69,7 @@ public class ExampleServiceImpl  extends BaseServiceImpl<UserDemo, Integer> impl
 
 	
 	/**
-	 * @description: 针对UE，采用自定义的上传图片方式|
-	 * 	此种方式使用cfile接口将图片上传到图片服务器
+	 * @description: 针对UE，采用自定义的上传图片方式|此种方式使用cfile接口将图片上传到图片服务器
 	 * 
 	 * @param type uploadimage:上传图片|uploadfile:上传文件
 	 * @param request
@@ -80,34 +79,12 @@ public class ExampleServiceImpl  extends BaseServiceImpl<UserDemo, Integer> impl
 	 * @date 2017年6月8日 下午3:21:48 
 	 * @version 1.0.0.1
 	 */
-	public JSONObject ajaxUploadFileCfile(String type , HttpServletRequest request, HttpServletResponse response) {
-		JSONObject result = new JSONObject();
-		List<FileItem> items = FileUploadSupport.getInstance().getFileFromRequest(request);
-		if (items != null && items.size() > 0) {
-			for (FileItem fi : items) {
-				String remoteUpload = FileUploadSupport.getInstance().remoteUpload("upload" , fi.getName() , fi.get());
-//				System.out.println(remoteUpload);
-				JSONObject t = JSONObject.parseObject(remoteUpload, result.getClass());
-				String imgs = t.getString("resultObject");
-				if(t.getInteger("resultCode") == 1 && StringUtils.isNotBlank(imgs) && imgs.length() > 0) {
-					//编辑器编辑上传图片，暂时只支持上传一张图片
-					result.put("state", "SUCCESS");
-					result.put("title", imgs.substring(imgs.lastIndexOf("/")+1));
-					result.put("original", fi.getName());
-					result.put("type", imgs.substring(imgs.lastIndexOf(".")));
-					result.put("url", imgs);
-					result.put("size", fi.getSize());
-				} else {
-					result.put("state", "上传失败");
-					result.put("title", "");
-					result.put("original", "");
-					result.put("type", "");
-					result.put("url", "");
-					result.put("size", "");
-				}
-			}
+	public JSONObject ajaxUploadFileCfile(String type , HttpServletRequest request) {
+		if(type.equals("uploadimage")){
+			return FileUploadSupport.getInstance().uploadOnePicture(request);   
+		}else{
+			return null;  
 		}
-		return result;
 	}
 }
 
