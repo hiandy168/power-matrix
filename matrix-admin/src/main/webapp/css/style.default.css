@@ -402,8 +402,8 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 /***** 10. VERTICAL NAVIGATION STYLES *****/
 /******************************************/
 
-
-.vernav { width: 230px; position: absolute; left: 0; top: 160px; }
+/*************** vernav 这个样式不使用-Yangcl***************************/
+/* .vernav { width: 230px; position: absolute; left: 0; }
 .vernav ul { list-style: none; margin: 10px; }
 .vernav ul li { display: block; margin-bottom: 1px; position: relative; }
 .vernav ul li a { 
@@ -418,13 +418,13 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 .vernav ul li.current ul { display: block; }
 .vernav ul li.current ul li a { background-color: #fff; color: #999; }
 .vernav ul li.current ul li a:hover { color: #666; }
-.vernav ul li.current ul li.current a { color: #fb9337; background-color: #fff; }
+.vernav ul li.current ul li.current a { color: #fb9337; background-color: #fff; } */
 
+/*************** vernav2 这个样式为目前系统使用的左侧百叶窗样式-Yangcl ***************************/
 .vernav2 {
 	width: 230px;
 	position: absolute;
 	left: 0;
-	/*top: 159px; */
 }
 .vernav2 ul { list-style: none; margin: 0; }
 .vernav2 ul li { display: block; border-bottom: 1px solid #eee; position: relative; }
@@ -493,7 +493,9 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 .iconmenu ul li.current a.sent { background-position: 8px -889px; }
 .iconmenu ul li.current a.trash { background-position: 8px -959px; }
 
-.menucoll { width: 55px; }
+
+/*************** menucoll 这个样式不使用-Yangcl ***************************/
+/* .menucoll { width: 55px; }
 .menucoll ul li { height: 36px; position: relative; margin-bottom: 0; }
 .menucoll ul li span.arrow { display: none; }
 .menucoll > ul > li { margin-bottom: 1px; }
@@ -511,7 +513,7 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 	text-transform: uppercase;
 }
 .menucoll ul li.current ul { display: none; }
-.menucoll ul li.current ul span { background-color: #32415A; color: #FB9337; }
+.menucoll ul li.current ul span { background-color: #32415A; color: #FB9337; } */
 
 
 .menucoll2 { width: 35px; }

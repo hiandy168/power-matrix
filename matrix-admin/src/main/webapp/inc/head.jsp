@@ -90,10 +90,70 @@
 		        	pageCss:c
 		        };
 		        ajaxs.sendAjax('post' , url_ , data_);
-		        /* if(obj.status == 'success'){
-		        } */
-		        
 		    });
+			 
+		    // 显示和隐藏左侧百叶窗菜单 
+		    $('.vernav2 > ul li a').each(function () {
+		        var url = $(this).attr('href');
+		        if(url.indexOf('#') != 0){  // 修正 - Yangcl
+		        	return;
+		        }
+		        $(this).click(function () {
+		            if ($(url).length > 0) {
+		                if ($(url).is(':visible')) {      // 左侧菜单最小化会有 .menucoll2 样式类
+		                    if (!$(this).parents('div').hasClass('menucoll2'))
+		                        $(url).slideUp();
+		                } else {
+		                    $('.vernav2 ul ul').each(function () {
+		                        $(this).slideUp();
+		                    });      
+		                    if (!$(this).parents('div').hasClass('menucoll2'))
+		                        $(url).slideDown();
+		                }
+		                return false;
+		            }
+		        });
+		    });
+		    
+		    // 隐藏和显示左侧菜单   此功能暂时不使用
+		    /* $('.togglemenu').click(function () {
+		        if (!$(this).hasClass('togglemenu_collapsed')) {
+		            if ($('.vernav').length > 0) {
+		                if ($('.vernav').hasClass('iconmenu')) {
+		                    $('body').addClass('withmenucoll');
+		                    $('.iconmenu').addClass('menucoll');
+		                } else {
+		                    $('body').addClass('withmenucoll');
+		                    $('.vernav').addClass('menucoll').find('ul').hide();
+		                }
+		            } else if ($('.vernav2').length > 0) {
+		                $('body').addClass('withmenucoll2');
+		                $('.iconmenu').addClass('menucoll2');
+		            }
+		            $(this).addClass('togglemenu_collapsed');
+		            $('.iconmenu > ul > li > a').each(function () {
+		                var label = $(this).text();
+		                $('<li><span>' + label + '</span></li>').insertBefore($(this).parent().find('ul li:first-child'));
+		            });
+		        } else {
+		            if ($('.vernav').length > 0) {
+		                if ($('.vernav').hasClass('iconmenu')) {
+		                    $('body').removeClass('withmenucoll');
+		                    $('.iconmenu').removeClass('menucoll');
+		                } else {
+		                    $('body').removeClass('withmenucoll');
+		                    $('.vernav').removeClass('menucoll').find('ul').show();
+		                }
+		            } else if ($('.vernav2').length > 0) {
+		                $('body').removeClass('withmenucoll2');
+		                $('.iconmenu').removeClass('menucoll2');
+		            }
+		            $(this).removeClass('togglemenu_collapsed');
+		            $('.iconmenu ul ul li:first-child').remove();
+		        }
+		    }); */
+		    
+		    
 		});  
 
     </script>

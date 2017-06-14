@@ -76,29 +76,6 @@ $(function () {
     });
 
 
-    ///// SHOW/HIDE VERTICAL SUB MENU /////
-
-    $('.vernav > ul li a, .vernav2 > ul li a').each(function () {
-        var url = $(this).attr('href');
-        if(url.indexOf('#') != 0){  // 修正 - Yangcl
-        	return;
-        }
-        $(this).click(function () {
-            if ($(url).length > 0) {
-                if ($(url).is(':visible')) {
-                    if (!$(this).parents('div').hasClass('menucoll') && !$(this).parents('div').hasClass('menucoll2'))
-                        $(url).slideUp();
-                } else {
-                    $('.vernav ul ul, .vernav2 ul ul').each(function () {
-                        $(this).slideUp();
-                    });
-                    if (!$(this).parents('div').hasClass('menucoll') && !$(this).parents('div').hasClass('menucoll2'))
-                        $(url).slideDown();
-                }
-                return false;
-            }
-        });
-    });
 
     // 切换导航栏的时候 这里的菜单来应该默认打开 从而配合【Plus】按钮进行菜单的全部打开或者全部收起
     $("#menu-open-close").click(function () {
@@ -134,103 +111,7 @@ $(function () {
     });
 
 
-    ///// HORIZONTAL NAVIGATION (AJAX/INLINE DATA) /////
 
-    $('.hornav a').click(function () {
-
-        //this is only applicable when window size below 450px
-        if ($(this).parents('.more').length == 0)
-            $('.hornav li.more ul').hide();
-
-        //remove current menu
-        $('.hornav li').each(function () {
-            $(this).removeClass('current');
-        });
-
-        $(this).parent().addClass('current');	// set as current menu
-
-        var url = $(this).attr('href');
-        if ($(url).length > 0) {
-            $('.contentwrapper .subcontent').hide();
-            $(url).show();
-        } else {
-            $.post(url, function (data) {
-                $('#contentwrapper').html(data);
-                $('.stdtable input:checkbox').uniform();	//restyling checkbox
-            });
-        }
-        return false;
-    });
-
-
-    ///// SEARCH BOX ON FOCUS /////
-
-    $('#keyword').bind('focusin focusout', function (e) {
-        var t = $(this);
-        if (e.type == 'focusin' && t.val() == 'Enter keyword(s)') {
-            t.val('');
-        } else if (e.type == 'focusout' && t.val() == '') {
-            t.val('Enter keyword(s)');
-        }
-    });
-
-
-    ///// NOTIFICATION CLOSE BUTTON /////
-
-    $('.notibar .close').click(function () {
-        $(this).parent().fadeOut(function () {
-            $(this).remove();
-        });
-    });
-
-
-    ///// COLLAPSED/EXPAND LEFT MENU /////
-    $('.togglemenu').click(function () {
-        if (!$(this).hasClass('togglemenu_collapsed')) {
-
-            //if($('.iconmenu').hasClass('vernav')) {
-            if ($('.vernav').length > 0) {
-                if ($('.vernav').hasClass('iconmenu')) {
-                    $('body').addClass('withmenucoll');
-                    $('.iconmenu').addClass('menucoll');
-                } else {
-                    $('body').addClass('withmenucoll');
-                    $('.vernav').addClass('menucoll').find('ul').hide();
-                }
-            } else if ($('.vernav2').length > 0) {
-                //} else {
-                $('body').addClass('withmenucoll2');
-                $('.iconmenu').addClass('menucoll2');
-            }
-
-            $(this).addClass('togglemenu_collapsed');
-
-            $('.iconmenu > ul > li > a').each(function () {
-                var label = $(this).text();
-                $('<li><span>' + label + '</span></li>')
-                    .insertBefore($(this).parent().find('ul li:first-child'));
-            });
-        } else {
-
-            //if($('.iconmenu').hasClass('vernav')) {
-            if ($('.vernav').length > 0) {
-                if ($('.vernav').hasClass('iconmenu')) {
-                    $('body').removeClass('withmenucoll');
-                    $('.iconmenu').removeClass('menucoll');
-                } else {
-                    $('body').removeClass('withmenucoll');
-                    $('.vernav').removeClass('menucoll').find('ul').show();
-                }
-            } else if ($('.vernav2').length > 0) {
-                //} else {
-                $('body').removeClass('withmenucoll2');
-                $('.iconmenu').removeClass('menucoll2');
-            }
-            $(this).removeClass('togglemenu_collapsed');
-
-            $('.iconmenu ul ul li:first-child').remove();
-        }
-    });
 
 
     ///// RESPONSIVE /////
