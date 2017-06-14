@@ -55,6 +55,10 @@
 					$("#addonstyle").remove();
 					$('head').append('<link id="addonstyle" rel="stylesheet" href="${css}/custom/style.' + pageCss + '.css" type="text/css" />');
 				}
+				// 右上角系统用户简单信息 
+				$("#simple-user-name").text('后台用户: ' + userInfo.userName);
+				$("#user-name").text(userInfo.userName);
+				$("#user-email").text(userInfo.email);
 				
 				$("#" + localStorage.left_select ).addClass("current");
 				$('.vernav2 > ul > li > ul > li').click("onclick" , function(){
@@ -153,7 +157,13 @@
 		        }
 		    }); */
 		    
-		    
+		    // 刷新系统字典缓存 - 开发者和系统管理员的权限 不要分配给用户
+		    $('#reload-cache').click(function () {
+		        var url_ = '${basePath}sysrole/system_sysrole_dict_cache_reload.do';
+		        var data_ = null;
+		        var obj = JSON.parse(ajaxs.sendAjax('post' , url_ , data_));
+	        	jAlert(obj.msg, '系统提示');  
+		    });
 		});  
 
     </script>

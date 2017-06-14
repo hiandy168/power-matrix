@@ -23,6 +23,8 @@ import com.matrix.pojo.view.McUserInfoView;
 /**
  * @description: 页面权限拦截器|主要针对二级菜单栏
  * 
+ * 拦截关键词：page_：二级菜单栏对应请求|system_：系统关键功能对应请求，通常这些请求不对系统用户开放，只对管理员开放，比如刷新字典缓存
+ * 
  * @author Yangcl
  * @home https://github.com/PowerYangcl
  * @date 2017年5月25日 上午11:46:25 
@@ -65,6 +67,27 @@ public class UrlInterceptor extends HandlerInterceptorAdapter{
         					return true;
         				}
         			}
+        		}
+        	}else if(StringUtils.startsWith(url, "system_")){
+        		// 此时开始判断这个url 是否为该用户权限内的，如果不是，则返回false
+        		boolean system = false;
+        		McUserRoleCache cache = JSONObject.parseObject(launch.loadDictCache(DCacheEnum.McUserRole).get(info.getId().toString()), McUserRoleCache.class);
+        		List<McSysFunction> list = cache.getMsfList();
+        		for(McSysFunction sf : list){
+        			if(sf.getNavType() == 3){ 
+        				String [] arr = sf.getFuncUrl().split("/");
+        				if(arr[arr.length -1].equals(url)){
+        					system =  true;
+        					break;
+        				}
+        			}
+        		}
+        		if(system){
+        			return true;
+        		}else{
+        			response.setHeader("Content-type", "text/html;charset=UTF-8"); 
+        			response.getWriter().write("{\"status\":\"error\",\"msg\":\"对不起您没有这个权限\"}");  
+                	return false;
         		}
         	}else{
         		return true;     // 如果用户已经登录，且是非权限类型的跳转请求，则允许访问。

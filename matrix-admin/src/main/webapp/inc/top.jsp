@@ -2,7 +2,7 @@
 		<div class="topheader">
             <div class="left">
             	<h1 class="logo"><a id="menu-open-close" style="cursor:pointer;" >能量矩阵后台管理系统</a></h1>
-                <h1 class="logo" style="display:none"><a id="menu-open-close" style="cursor:pointer;" >Power.</a><span>Matrix</span></h1>
+                <!-- <h1 class="logo" style="display:none"><a id="menu-open-close" style="cursor:pointer;" >Power.</a><span>Matrix</span></h1> -->
                 <span class="slogan"  style="display:none">能量矩阵后台管理系统</span>
                 <br clear="all" />
 
@@ -13,10 +13,11 @@
                 <!--<div class="notification">-->
                     <!--<a class="count" href="ajax/notifications.html"><span>9</span></a>-->
                 <!--</div>-->
+                
                 <!--用户摘要信息-->
                 <div class="userinfo">
                     <img src="${img}/thumbs/avatar.png" alt="" />
-                    <span>Juan Dela Cruz</span>
+                    <span id="simple-user-name"><!-- Juan Dela Cruz --></span>
                 </div>
                 <!--用户详细信息弹窗-->
                 <div class="userinfodrop">
@@ -25,7 +26,7 @@
                             <img src="${img}/thumbs/avatarbig.png" alt="用户头像" />  <!--用户头像-->
                         </a>
                         <div class="changetheme">
-                            Change theme: <br />
+                            更换主题: <br />
                             <a class="default"></a>
                             <a class="blueline"></a>
                             <a class="greenline"></a>
@@ -35,17 +36,17 @@
                     </div><!--avatar-->
                     <!--登录用户信息-->
                     <div class="userdata">
-                        <h4>Juan Dela Cruz</h4>
-                        <span class="email">youremail@yourdomain.com</span>
+                        <h4 id="user-name"><!-- Juan Dela Cruz --></h4></br>
+                        <span id="user-email" class="email"><!-- youremail@yourdomain.com --></span>
                         <ul>
                             <li>
-                                <a href="">修改资料</a>
+                                <a href="javascript:void(0)">修改资料</a>
+                            </li>
+                            <li id="li-reload-cache">
+                                <a href="javascript:void(0)" id="reload-cache">刷新缓存</a>
                             </li>
                             <li>
-                                <a href="">功能维护</a>
-                            </li>
-                            <li>
-                                <a href="">帮助</a>
+                                <a href="javascript:void(0)">帮助</a> 
                             </li>
                             <li>
                                 <a href="javascript:void(0)" onclick="login.logout('${basePath}')">退出</a> 

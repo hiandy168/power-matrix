@@ -38,6 +38,7 @@ import com.matrix.pojo.entity.McUserRole;
 import com.matrix.pojo.view.McUserInfoView;
 import com.matrix.pojo.view.McUserRoleView;
 import com.matrix.service.IMcSysFunctionService;
+import com.matrix.system.init.DictionaryTableCacheInit;
 import com.matrix.util.UuidUtil;
 
 @Service("mcSysFunctionService") 
@@ -535,47 +536,26 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 		}
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/**
-	 * @deprecated 不再使用
-	 * @description: 已赋权限用户列表
+	 * @description: 重新加载系统字典缓存
 	 * 
-	 * @param dto
 	 * @param session
 	 * @author Yangcl 
 	 * @date 2017年4月24日 下午2:43:35 
 	 * @version 1.0.0.1
 	 */
-	public JSONObject userRoleFuncList(McUserRoleDto dto, HttpServletRequest request) {
+	public JSONObject sysDictCacheReload() {
 		JSONObject result = new JSONObject();
-		String pageNum = request.getParameter("pageNum"); // 当前第几页
-		String pageSize = request.getParameter("pageSize"); // 当前页所显示记录条数
-		int num = 1;
-		int size = 10;
-		if (StringUtils.isNotBlank(pageNum)) {
-			num = Integer.parseInt(pageNum);
-		}
-		if (StringUtils.isNotBlank(pageSize)) {
-			size = Integer.parseInt(pageSize);
-		}
-		
-		PageHelper.startPage(num, size);
-		List<McUserRoleView> list = userRoleDao.userRoleFuncList(dto);
-		if (list != null && list.size() > 0) {
+		new DictionaryTableCacheInit().onDestory();
+		boolean flag = new DictionaryTableCacheInit().onInit();
+		if(flag){
 			result.put("status", "success");
-		} else {
+			result.put("msg", this.getInfo(500090011)); // 系统字典缓存刷新完成!
+		}else{
 			result.put("status", "error");
-			result.put("msg", this.getInfo(100090002));  // 没有查询到可以显示的数据 
+			result.put("msg", this.getInfo(500090008)); // 系统异常
 		}
-		PageInfo<McUserRoleView> pageList = new PageInfo<McUserRoleView>(list);
-		result.put("data", pageList); 
 		return result;
 	}
 }

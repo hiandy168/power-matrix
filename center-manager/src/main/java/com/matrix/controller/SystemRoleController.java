@@ -358,19 +358,18 @@ public class SystemRoleController  extends BaseController{
 	
 	
 	/**
-	 *  @deprecated 不再使用
-	 * @description: 已赋权限用户列表
+	 * @description: 重新加载系统字典缓存
 	 * 
-	 * @param dto
 	 * @param session
 	 * @author Yangcl 
 	 * @date 2017年4月24日 下午2:43:35 
 	 * @version 1.0.0.1
 	 */
-	@RequestMapping(value = "user_role_func_list", produces = { "application/json;charset=utf-8" })
+	@RequestMapping(value = "system_sysrole_dict_cache_reload", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject userRoleFuncList(McUserRoleDto dto , HttpServletRequest request){
-		return mcSysFunctionService.userRoleFuncList(dto , request);
+	public JSONObject sysDictCacheReload(HttpSession session , HttpServletRequest request){
+		super.userBehavior(session, logger, "sys_dict_cache_reload", "重新加载系统字典缓存");
+		return mcSysFunctionService.sysDictCacheReload();
 	}
 	
 }

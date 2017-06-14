@@ -77,7 +77,7 @@
 	                    aForm.formPaging(currentPageNumber);
 	                }else{
 	                }
-	                jAlert(obj.msg, 'title');
+	                jAlert(obj.msg, '系统提示');
 	            }
 			});
         }
