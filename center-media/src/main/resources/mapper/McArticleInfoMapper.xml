@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.matrix.dao.McArticleInfoMapper">
+<mapper namespace="com.matrix.dao.IMcArticleInfoDao">
+
 	<resultMap id="BaseResultMap" type="com.matrix.pojo.entity.McArticleInfo">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="title" property="title" jdbcType="VARCHAR" />
@@ -20,53 +21,27 @@
 		<result column="source_link" property="sourceLink" jdbcType="VARCHAR" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-	</resultMap>
-	<resultMap id="ResultMapWithBLOBs" type="com.matrix.pojo.entity.McArticleInfo" extends="BaseResultMap">
 		<result column="html_content" property="htmlContent" jdbcType="LONGVARCHAR" />
 	</resultMap>
-	<sql id="Base_Column_List">
-		id, title, title_pic, source, author, author_id, editor, editor_id,
-		release_type,
-		release_time, article_type_id, reader_count, thumbs_up_count, shar_count, top_type,
-		source_link, create_time, update_time
-	</sql>
-	<sql id="Blob_Column_List">
-		html_content
-	</sql>
-	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
-		parameterType="java.lang.Integer">
+	
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
-		<include refid="Base_Column_List" />
-		,
-		<include refid="Blob_Column_List" />
-		from mc_article_info
-		where id = #{id,jdbcType=INTEGER}
+			*
+		from 
+			mediacenter.mc_article_info
+		where 
+			id = #{id,jdbcType=INTEGER}
 	</select>
+	
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from mc_article_info
-		where id = #{id,jdbcType=INTEGER}
+		delete from mediacenter.mc_article_info where id = #{id,jdbcType=INTEGER}
 	</delete>
-	<insert id="insert" parameterType="com.matrix.pojo.entity.McArticleInfo">
-		insert into mc_article_info (id, title, title_pic,
-		source, author, author_id,
-		editor, editor_id, release_type,
-		release_time, article_type_id, reader_count,
-		thumbs_up_count, shar_count, top_type,
-		source_link, create_time, update_time,
-		html_content)
-		values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
-		#{titlePic,jdbcType=VARCHAR},
-		#{source,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{authorId,jdbcType=VARCHAR},
-		#{editor,jdbcType=VARCHAR}, #{editorId,jdbcType=VARCHAR},
-		#{releaseType,jdbcType=CHAR},
-		#{releaseTime,jdbcType=TIMESTAMP}, #{articleTypeId,jdbcType=INTEGER}, #{readerCount,jdbcType=INTEGER},
-		#{thumbsUpCount,jdbcType=INTEGER}, #{sharCount,jdbcType=INTEGER},
-		#{topType,jdbcType=CHAR},
-		#{sourceLink,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
-		#{htmlContent,jdbcType=LONGVARCHAR})
-	</insert>
+	
+	
 	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.McArticleInfo">
-		insert into mc_article_info
+		insert into mediacenter.mc_article_info
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
 				id,
@@ -186,8 +161,9 @@
 			</if>
 		</trim>
 	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="com.matrix.pojo.entity.McArticleInfo">
-		update mc_article_info
+	
+	<update id="updateSelective" parameterType="com.matrix.pojo.entity.McArticleInfo">
+		update mediacenter.mc_article_info
 		<set>
 			<if test="title != null">
 				title = #{title,jdbcType=VARCHAR},
@@ -246,47 +222,12 @@
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
-	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.matrix.pojo.entity.McArticleInfo">
-		update mc_article_info
-		set title = #{title,jdbcType=VARCHAR},
-		title_pic = #{titlePic,jdbcType=VARCHAR},
-		source = #{source,jdbcType=VARCHAR},
-		author = #{author,jdbcType=VARCHAR},
-		author_id = #{authorId,jdbcType=VARCHAR},
-		editor = #{editor,jdbcType=VARCHAR},
-		editor_id = #{editorId,jdbcType=VARCHAR},
-		release_type = #{releaseType,jdbcType=CHAR},
-		release_time = #{releaseTime,jdbcType=TIMESTAMP},
-		article_type_id = #{articleTypeId,jdbcType=INTEGER},
-		reader_count = #{readerCount,jdbcType=INTEGER},
-		thumbs_up_count = #{thumbsUpCount,jdbcType=INTEGER},
-		shar_count = #{sharCount,jdbcType=INTEGER},
-		top_type = #{topType,jdbcType=CHAR},
-		source_link = #{sourceLink,jdbcType=VARCHAR},
-		create_time = #{createTime,jdbcType=TIMESTAMP},
-		update_time = #{updateTime,jdbcType=TIMESTAMP},
-		html_content = #{htmlContent,jdbcType=LONGVARCHAR}
-		where id = #{id,jdbcType=INTEGER}
-	</update>
-	<update id="updateByPrimaryKey" parameterType="com.matrix.pojo.entity.McArticleInfo">
-		update mc_article_info
-		set title = #{title,jdbcType=VARCHAR},
-		title_pic = #{titlePic,jdbcType=VARCHAR},
-		source = #{source,jdbcType=VARCHAR},
-		author = #{author,jdbcType=VARCHAR},
-		author_id = #{authorId,jdbcType=VARCHAR},
-		editor = #{editor,jdbcType=VARCHAR},
-		editor_id = #{editorId,jdbcType=VARCHAR},
-		release_type = #{releaseType,jdbcType=CHAR},
-		release_time = #{releaseTime,jdbcType=TIMESTAMP},
-		article_type_id = #{articleTypeId,jdbcType=INTEGER},
-		reader_count = #{readerCount,jdbcType=INTEGER},
-		thumbs_up_count = #{thumbsUpCount,jdbcType=INTEGER},
-		shar_count = #{sharCount,jdbcType=INTEGER},
-		top_type = #{topType,jdbcType=CHAR},
-		source_link = #{sourceLink,jdbcType=VARCHAR},
-		create_time = #{createTime,jdbcType=TIMESTAMP},
-		update_time = #{updateTime,jdbcType=TIMESTAMP}
-		where id = #{id,jdbcType=INTEGER}
-	</update>
 </mapper>
+
+
+
+
+
+
+
+
