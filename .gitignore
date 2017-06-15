@@ -54,7 +54,10 @@
 
 
 
-
+/center-media/target/
+/center-media/.settings/
+/center-media/.project 
+/center-media/.classpath 
 
 
 

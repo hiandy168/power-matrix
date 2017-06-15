@@ -29,7 +29,7 @@
 		info.power-cache.4000.properties
 		info.center-manager.5000.properties
 		info.center-educational.6000.properties
-		
+		info.center-manager.7000.properties
 		
 		
 		info.example-ui.99999.properties

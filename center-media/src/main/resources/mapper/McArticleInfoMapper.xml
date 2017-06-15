@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.matrix.dao.McArticleInfoMapper">
+	<resultMap id="BaseResultMap" type="com.matrix.pojo.entity.McArticleInfo">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="title_pic" property="titlePic" jdbcType="VARCHAR" />
+		<result column="source" property="source" jdbcType="VARCHAR" />
+		<result column="author" property="author" jdbcType="VARCHAR" />
+		<result column="author_id" property="authorId" jdbcType="VARCHAR" />
+		<result column="editor" property="editor" jdbcType="VARCHAR" />
+		<result column="editor_id" property="editorId" jdbcType="VARCHAR" />
+		<result column="release_type" property="releaseType" jdbcType="CHAR" />
+		<result column="release_time" property="releaseTime" jdbcType="TIMESTAMP" />
+		<result column="article_type_id" property="articleTypeId" jdbcType="INTEGER" />
+		<result column="reader_count" property="readerCount" jdbcType="INTEGER" />
+		<result column="thumbs_up_count" property="thumbsUpCount" jdbcType="INTEGER" />
+		<result column="shar_count" property="sharCount" jdbcType="INTEGER" />
+		<result column="top_type" property="topType" jdbcType="CHAR" />
+		<result column="source_link" property="sourceLink" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.matrix.pojo.entity.McArticleInfo" extends="BaseResultMap">
+		<result column="html_content" property="htmlContent" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, title, title_pic, source, author, author_id, editor, editor_id,
+		release_type,
+		release_time, article_type_id, reader_count, thumbs_up_count, shar_count, top_type,
+		source_link, create_time, update_time
+	</sql>
+	<sql id="Blob_Column_List">
+		html_content
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from mc_article_info
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from mc_article_info
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.matrix.pojo.entity.McArticleInfo">
+		insert into mc_article_info (id, title, title_pic,
+		source, author, author_id,
+		editor, editor_id, release_type,
+		release_time, article_type_id, reader_count,
+		thumbs_up_count, shar_count, top_type,
+		source_link, create_time, update_time,
+		html_content)
+		values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
+		#{titlePic,jdbcType=VARCHAR},
+		#{source,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{authorId,jdbcType=VARCHAR},
+		#{editor,jdbcType=VARCHAR}, #{editorId,jdbcType=VARCHAR},
+		#{releaseType,jdbcType=CHAR},
+		#{releaseTime,jdbcType=TIMESTAMP}, #{articleTypeId,jdbcType=INTEGER}, #{readerCount,jdbcType=INTEGER},
+		#{thumbsUpCount,jdbcType=INTEGER}, #{sharCount,jdbcType=INTEGER},
+		#{topType,jdbcType=CHAR},
+		#{sourceLink,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+		#{htmlContent,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.McArticleInfo">
+		insert into mc_article_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="titlePic != null">
+				title_pic,
+			</if>
+			<if test="source != null">
+				source,
+			</if>
+			<if test="author != null">
+				author,
+			</if>
+			<if test="authorId != null">
+				author_id,
+			</if>
+			<if test="editor != null">
+				editor,
+			</if>
+			<if test="editorId != null">
+				editor_id,
+			</if>
+			<if test="releaseType != null">
+				release_type,
+			</if>
+			<if test="releaseTime != null">
+				release_time,
+			</if>
+			<if test="articleTypeId != null">
+				article_type_id,
+			</if>
+			<if test="readerCount != null">
+				reader_count,
+			</if>
+			<if test="thumbsUpCount != null">
+				thumbs_up_count,
+			</if>
+			<if test="sharCount != null">
+				shar_count,
+			</if>
+			<if test="topType != null">
+				top_type,
+			</if>
+			<if test="sourceLink != null">
+				source_link,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="htmlContent != null">
+				html_content,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="titlePic != null">
+				#{titlePic,jdbcType=VARCHAR},
+			</if>
+			<if test="source != null">
+				#{source,jdbcType=VARCHAR},
+			</if>
+			<if test="author != null">
+				#{author,jdbcType=VARCHAR},
+			</if>
+			<if test="authorId != null">
+				#{authorId,jdbcType=VARCHAR},
+			</if>
+			<if test="editor != null">
+				#{editor,jdbcType=VARCHAR},
+			</if>
+			<if test="editorId != null">
+				#{editorId,jdbcType=VARCHAR},
+			</if>
+			<if test="releaseType != null">
+				#{releaseType,jdbcType=CHAR},
+			</if>
+			<if test="releaseTime != null">
+				#{releaseTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="articleTypeId != null">
+				#{articleTypeId,jdbcType=INTEGER},
+			</if>
+			<if test="readerCount != null">
+				#{readerCount,jdbcType=INTEGER},
+			</if>
+			<if test="thumbsUpCount != null">
+				#{thumbsUpCount,jdbcType=INTEGER},
+			</if>
+			<if test="sharCount != null">
+				#{sharCount,jdbcType=INTEGER},
+			</if>
+			<if test="topType != null">
+				#{topType,jdbcType=CHAR},
+			</if>
+			<if test="sourceLink != null">
+				#{sourceLink,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="htmlContent != null">
+				#{htmlContent,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.matrix.pojo.entity.McArticleInfo">
+		update mc_article_info
+		<set>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="titlePic != null">
+				title_pic = #{titlePic,jdbcType=VARCHAR},
+			</if>
+			<if test="source != null">
+				source = #{source,jdbcType=VARCHAR},
+			</if>
+			<if test="author != null">
+				author = #{author,jdbcType=VARCHAR},
+			</if>
+			<if test="authorId != null">
+				author_id = #{authorId,jdbcType=VARCHAR},
+			</if>
+			<if test="editor != null">
+				editor = #{editor,jdbcType=VARCHAR},
+			</if>
+			<if test="editorId != null">
+				editor_id = #{editorId,jdbcType=VARCHAR},
+			</if>
+			<if test="releaseType != null">
+				release_type = #{releaseType,jdbcType=CHAR},
+			</if>
+			<if test="releaseTime != null">
+				release_time = #{releaseTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="articleTypeId != null">
+				article_type_id = #{articleTypeId,jdbcType=INTEGER},
+			</if>
+			<if test="readerCount != null">
+				reader_count = #{readerCount,jdbcType=INTEGER},
+			</if>
+			<if test="thumbsUpCount != null">
+				thumbs_up_count = #{thumbsUpCount,jdbcType=INTEGER},
+			</if>
+			<if test="sharCount != null">
+				shar_count = #{sharCount,jdbcType=INTEGER},
+			</if>
+			<if test="topType != null">
+				top_type = #{topType,jdbcType=CHAR},
+			</if>
+			<if test="sourceLink != null">
+				source_link = #{sourceLink,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="htmlContent != null">
+				html_content = #{htmlContent,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.matrix.pojo.entity.McArticleInfo">
+		update mc_article_info
+		set title = #{title,jdbcType=VARCHAR},
+		title_pic = #{titlePic,jdbcType=VARCHAR},
+		source = #{source,jdbcType=VARCHAR},
+		author = #{author,jdbcType=VARCHAR},
+		author_id = #{authorId,jdbcType=VARCHAR},
+		editor = #{editor,jdbcType=VARCHAR},
+		editor_id = #{editorId,jdbcType=VARCHAR},
+		release_type = #{releaseType,jdbcType=CHAR},
+		release_time = #{releaseTime,jdbcType=TIMESTAMP},
+		article_type_id = #{articleTypeId,jdbcType=INTEGER},
+		reader_count = #{readerCount,jdbcType=INTEGER},
+		thumbs_up_count = #{thumbsUpCount,jdbcType=INTEGER},
+		shar_count = #{sharCount,jdbcType=INTEGER},
+		top_type = #{topType,jdbcType=CHAR},
+		source_link = #{sourceLink,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		update_time = #{updateTime,jdbcType=TIMESTAMP},
+		html_content = #{htmlContent,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.matrix.pojo.entity.McArticleInfo">
+		update mc_article_info
+		set title = #{title,jdbcType=VARCHAR},
+		title_pic = #{titlePic,jdbcType=VARCHAR},
+		source = #{source,jdbcType=VARCHAR},
+		author = #{author,jdbcType=VARCHAR},
+		author_id = #{authorId,jdbcType=VARCHAR},
+		editor = #{editor,jdbcType=VARCHAR},
+		editor_id = #{editorId,jdbcType=VARCHAR},
+		release_type = #{releaseType,jdbcType=CHAR},
+		release_time = #{releaseTime,jdbcType=TIMESTAMP},
+		article_type_id = #{articleTypeId,jdbcType=INTEGER},
+		reader_count = #{readerCount,jdbcType=INTEGER},
+		thumbs_up_count = #{thumbsUpCount,jdbcType=INTEGER},
+		shar_count = #{sharCount,jdbcType=INTEGER},
+		top_type = #{topType,jdbcType=CHAR},
+		source_link = #{sourceLink,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		update_time = #{updateTime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>
