@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import com.matrix.base.BaseServiceImpl;
 import com.matrix.dao.IMcArticleInfoDao;
 import com.matrix.dao.IMcArticleTypeDao;
-import com.matrix.pojo.entity.McArticleInfo;
-import com.matrix.service.IMediaCenterService;
+import com.matrix.pojo.entity.McArticleType;
+import com.matrix.service.IMcArticleTypeService;
 
-@Service("mediaCenterService")
-public class MediaCenterServiceImpl extends BaseServiceImpl<McArticleInfo, Integer> implements IMediaCenterService {
+@Service("mcArticleTypeService")
+public class McArticleTypeServiceImpl extends BaseServiceImpl<McArticleType, Integer> implements IMcArticleTypeService {
 	@Resource
 	private IMcArticleInfoDao mcArticleInfoDao;
 	
@@ -20,3 +20,22 @@ public class MediaCenterServiceImpl extends BaseServiceImpl<McArticleInfo, Integ
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

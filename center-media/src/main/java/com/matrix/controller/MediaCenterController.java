@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.matrix.base.BaseController;
-import com.matrix.service.IMediaCenterService;
+import com.matrix.service.impl.McArticleTypeServiceImpl;
 
 /**
  * @description: 媒体库相关服务
@@ -25,7 +25,7 @@ public class MediaCenterController extends BaseController {
 	private static Logger logger = Logger.getLogger(MediaCenterController.class);
 
 	@Autowired
-	private IMediaCenterService service;
+	private McArticleTypeServiceImpl mcArticleTypeService;
 
 	/**
 	 * @description: 已发布文章列表|已发布文章，所有人都可以见
