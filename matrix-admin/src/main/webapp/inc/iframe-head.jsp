@@ -8,7 +8,7 @@
 
 	<style type="text/css">
 		.page-list tr:hover{
-		  background:#B8DABD;
+		  background:#F2DEDE;
 		}
 	</style>
 	

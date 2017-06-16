@@ -100,7 +100,7 @@
 	<!--这个跳转页面的功能及跳转路径等等-->
 	<div class="pageheader notab">
 		<h1 class="pagetitle">文章分类管理</h1>
-		<span style="display: none">jsp/example/ajaxFormExample.jsp</span>
+		<span style="display: none">jsp/center-manager/assort/mediaArticleAssortList.jsp</span>
 	</div>
 
 	<div id="contentwrapper" class="contentwrapper">

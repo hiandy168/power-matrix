@@ -29,7 +29,7 @@
     	<div class="loginboxinner">
         	
             <div class="logo">
-            	<h1 class="logo"><span>能量矩阵</span></h1>
+            	<h1 class="logo"><span>惠家有</span></h1>
 				<span class="slogan">后台管理系统</span>
             </div>
             
