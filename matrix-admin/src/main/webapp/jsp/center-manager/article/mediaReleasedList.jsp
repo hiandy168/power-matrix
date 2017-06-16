@@ -96,112 +96,104 @@
 
   </script>
 
-        <div class="centercontent tables">
-            <!--这个跳转页面的功能及跳转路径等等-->
-            <div class="pageheader notab">
-                <h1 class="pagetitle">已发布文章列表</h1>
-                   <!--  <span class="pagedesc">
-                        这个页面描述了系统中最常用的功能：Ajax表单分页。该页面所在的路径已经隐藏在下面
-                        【鼠标右键】 -> 【审查元素】可以看到如下路径【jsp/example/ajaxFormExample】
-                    </span> -->
-                <span style="display:none">jsp/example/ajaxFormExample</span>
-            </div>
+<div class="centercontent tables">
+	<!--这个跳转页面的功能及跳转路径等等-->
+	<div class="pageheader notab">
+		<h1 class="pagetitle">文章分类管理</h1>
+		<span style="display: none">jsp/center-manager/assort/mediaArticleAssortList.jsp</span>
+	</div>
 
-            <div id="contentwrapper" class="contentwrapper">
+	<div id="contentwrapper" class="contentwrapper">
 
-                <%-- table-form 这个id分页使用 --%>
-                <div id="table-form" class="dataTables_wrapper" >
-                    <div class="contenttitle2">
-                        <p style="margin: 0px">
-                            <label>姓名：</label>
-							<span class="field">
-								<input id="user-name" type="text" name="userName"  class="form-search"/>
+		<%-- table-form 这个id分页使用 --%>
+		<div id="table-form" class="dataTables_wrapper">
+			<div class="contenttitle2">
+				<p style="margin: 0px">
+					<label>姓名：</label> 
+					<span class="field"> 
+						<input id="user-name" type="text" name="userName" class="form-search" />
+					</span> 
+					
+					<label>手机号：</label> 
+					<span class="field"> 
+						<input id="mobile" type="text" name="mobile" class="form-search" />
+					</span> 
+					
+					<label>性别：</label> 
+					<span class="field"> 
+						<select id="sex" name="sex" class="form-search">
+							<option value="">请选择---</option>
+							<option value="1">男</option>
+							<option value="2">女</option>
+						</select>
+					</span> 
+					
+					<a onclick="searchReset()" class="btn btn_orange btn_search radius50" style="float: right; cursor: pointer; margin-left: 10px"> 
+						<span> 重 置 </span>
+					</a> 
+					<a onclick="searchUser()" class="btn btn_orange btn_search radius50" style="float: right; cursor: pointer; margin-left: 20px"> 
+						<span> 查 询 </span>
+					</a>
+				</p>
+			</div>
+
+			<div id="dyntable2_length" class="dataTables_length dialog-show-count">
+				<label> 当前显示 <%-- TODO 注意：select-page-size 这个ID是写定的，如果没有这个显示条数，则默认显示10条 - Yangcl --%> 
+					<select id="select-page-size" size="1" name="dyntable2_length" onchange="aForm.formPaging('1')">
+						<option value="10">10</option>
+						<option value="25">25</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+					</select> 条记录
+				</label>
+			</div>
+
+			<table id="dyntable2" cellpadding="0" cellspacing="0" border="0" class="stdtable">
+				<colgroup>
+					<col class="con0" style="width: 4%" />
+					<col class="con1" />
+					<col class="con0" />
+					<col class="con1" />
+					<col class="con0" />
+				</colgroup>
+				<thead>
+					<tr>
+						<th class="head0 nosort"><input type="checkbox" /></th> <%-- sorting 代表可排序--%>
+						<th class="head0 sorting_asc">ID(升序排序)</th> <%-- sorting_asc 代表升序排列--%>
+						<th class="head1 sorting_desc">姓名(降序排序)</th> <%-- sorting_desc 代表降序排列--%>
+						<th class="head0 sorting">手机(s)</th>
+						<th class="head1 sorting">身份证号</th>
+						<th class="head0 sorting">E-mail</th>
+						<th class="head1 " width="100px">操作</th>
+					</tr>
+				</thead>
+
+				<tfoot>
+					<tr>
+						<th class="head0">
+							<span class="center"> 
+								<input type="checkbox" />
 							</span>
+						</th>
+						<th class="head0">tfoot</th>
+						<th class="head1">tfoot</th>
+						<th class="head0">tfoot</th>
+						<th class="head1">tfoot</th>
+						<th class="head0">tfoot</th>
+						<th class="head1">tfoot</th>
+					</tr>
+				</tfoot>
 
-                            <label>手机号：</label>
-							<span class="field">
-								<input id="mobile" type="text" name="mobile"  class="form-search"/>
-							</span>
+				<tbody id="ajax-tbody-1" class="page-list">
+					<!--  class="page-list" 标识是页面数据列表 行变色使用 -->
+					<%-- 等待填充 --%>
+				</tbody>
+			</table>
 
-                            <label>性别：</label>
-							<span class="field">
-								<select id="sex" name="sex" class="form-search">
-                                    <option value="">请选择---</option>
-                                    <option value="1">男</option>
-                                    <option value="2">女</option>
-                                </select>
-							</span>
+		</div>
+	</div>
 
-                            <a onclick="searchReset()" class="btn btn_orange btn_search radius50" style="float:right; cursor: pointer; margin-left: 10px">
-                                <span> 重 置 </span>
-                            </a>
-                            <a onclick="searchUser()" class="btn btn_orange btn_search radius50" style="float:right; cursor: pointer;margin-left: 20px">
-                                <span> 查 询 </span>
-                            </a>
-                        </p>
-                    </div>
-
-                    <div id="dyntable2_length" class="dataTables_length dialog-show-count">
-                        <label>
-                            当前显示
-                            <%-- TODO 注意：select-page-size 这个ID是写定的，如果没有这个显示条数，则默认显示10条 - Yangcl --%>
-                            <select id="select-page-size" size="1" name="dyntable2_length" onchange="aForm.formPaging('1')">
-                                <option value="10">10</option>
-                                <option value="25" >25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select>
-                            条记录
-                        </label>
-                    </div> 
-
-                    <table id="dyntable2" cellpadding="0" cellspacing="0" border="0" class="stdtable">
-                        <colgroup>
-                            <col class="con0" style="width: 4%"/>
-                            <col class="con1"/>
-                            <col class="con0"/>
-                            <col class="con1"/>
-                            <col class="con0"/>
-                        </colgroup>
-                        <thead > 
-                            <tr>
-                                <th class="head0 nosort">
-                                    <input type="checkbox"/>
-                                </th>                                                                           <%-- sorting 代表可排序--%>
-                                <th class="head0 sorting_asc">ID(升序排序)</th>  <%-- sorting_asc 代表升序排列--%>
-                                <th class="head1 sorting_desc"> 姓名(降序排序)</th>   <%-- sorting_desc 代表降序排列--%>
-                                <th class="head0 sorting">手机(s)</th>
-                                <th class="head1 sorting">身份证号</th>
-                                <th class="head0 sorting">E-mail</th>
-                                <th class="head1 " width="100px">操作</th>
-                            </tr>
-                        </thead>
-
-                        <tfoot>
-                            <tr>
-                                <th class="head0">
-                                        <span class="center">
-                                            <input type="checkbox"/>
-                                         </span>
-                                </th>
-                                <th class="head0">tfoot</th>
-                                <th class="head1">tfoot</th>
-                                <th class="head0">tfoot</th>
-                                <th class="head1">tfoot</th>
-                                <th class="head0">tfoot</th>
-                                <th class="head1">tfoot</th>
-                            </tr>
-                        </tfoot>
-
-                        <tbody id="ajax-tbody-1" class="page-list"><!--  class="page-list" 标识是页面数据列表 行变色使用 -->
-                            <%-- 等待填充 --%>
-                        </tbody>
-                    </table>
-                    
-                </div>
-            </div>
-
-        </div>
+</div>
 
 
 
