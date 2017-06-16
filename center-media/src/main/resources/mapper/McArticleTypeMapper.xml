@@ -25,6 +25,24 @@
 			id = #{id,jdbcType=INTEGER}
 	</select>
 	
+	
+	<!-- 分页查询 -->
+	<select id="queryPage" parameterType="com.matrix.pojo.entity.McArticleType" resultMap="BaseResultMap">
+		select 
+			* 
+		from 
+			mediacenter.mc_article_type
+		<where>
+			1 = 1
+			<if test="name != null and name != ''  ">
+				and name = #{name , jdbcType=VARCHAR}
+			</if> 
+			order by id desc
+		</where>
+	</select>
+	
+	
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from mediacenter.mc_article_type where id = #{id,jdbcType=INTEGER}
 	</delete>
