@@ -55,14 +55,14 @@ public class SystemRoleController  extends BaseController{
 	 * @date 2017年3月1日 上午11:03:16 
 	 * @version 1.0.0.1
 	 */
-	@RequestMapping("tree_page_index") 
+/*	@RequestMapping("tree_page_index") 
 	public String treePageIndex(ModelMap model , HttpSession session){
 //		McSysFunction e = new McSysFunction();	
 //		e.setFlag(1);
 //		model.put("jsonTree", mcSysFunctionService.jsonList(e)); 
 		super.userBehavior(session, logger, "tree_page_index", "前往树形维护页面sysFunction.jsp");
 		return "jsp/syssetting/sysFunction"; 
-	}
+	}*/
 	
 	@RequestMapping(value = "tree_list", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
