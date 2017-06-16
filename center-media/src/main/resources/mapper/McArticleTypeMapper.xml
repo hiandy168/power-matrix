@@ -27,18 +27,18 @@
 	
 	
 	<!-- 分页查询 -->
-	<select id="queryPage" parameterType="com.matrix.pojo.entity.McArticleType" resultMap="BaseResultMap">
+	<resultMap id="McArticleTypeView" type="com.matrix.pojo.view.McArticleTypeView"></resultMap>
+	<select id="queryPage" parameterType="com.matrix.pojo.entity.McArticleType" resultMap="McArticleTypeView">
 		select 
-			* 
-		from 
-			mediacenter.mc_article_type
-		<where>
-			1 = 1
-			<if test="name != null and name != ''  ">
-				and name = #{name , jdbcType=VARCHAR}
-			</if> 
-			order by id desc
-		</where>
+		  	t.* ,
+		  	count(i.article_type_id) as articleSum
+		from
+		  	mediacenter.mc_article_type t left join mediacenter.`mc_article_info` i on t.id = i.article_type_id
+		 where 1 = 1
+		<if test="name != null and name != ''  ">
+			and name = #{name , jdbcType=VARCHAR}
+		</if>
+		group by t.id 
 	</select>
 	
 	
