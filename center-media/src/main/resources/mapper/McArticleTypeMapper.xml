@@ -27,7 +27,14 @@
 	
 	
 	<!-- 分页查询 -->
-	<resultMap id="McArticleTypeView" type="com.matrix.pojo.view.McArticleTypeView"></resultMap>
+	<resultMap id="McArticleTypeView" type="com.matrix.pojo.view.McArticleTypeView">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="update_user_id" property="updateUserId" jdbcType="INTEGER" />
+	</resultMap>
 	<select id="queryPage" parameterType="com.matrix.pojo.entity.McArticleType" resultMap="McArticleTypeView">
 		select 
 		  	t.* ,
