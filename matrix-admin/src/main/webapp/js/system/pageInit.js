@@ -68,12 +68,21 @@ var pageInit = {
 									}
 								}
 								fmenu.smenus.push(smenu);
+								fmenu.smenus.sort(function(a,b){
+						            return a.seqnum - b.seqnum;
+					            });
 							}
 						}
 						nav.fmenus.push(fmenu);
+						nav.fmenus.sort(function(a,b){
+				            return a.seqnum - b.seqnum;
+			            });
 					}
 				}
 				narr.push(nav);
+				narr.sort(function(a,b){
+		            return a.seqnum - b.seqnum;
+	            });
 			}
 		}
 

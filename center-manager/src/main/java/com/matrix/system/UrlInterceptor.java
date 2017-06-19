@@ -17,7 +17,6 @@ import com.matrix.cache.inf.IBaseLaunch;
 import com.matrix.cache.inf.ICacheFactory;
 import com.matrix.pojo.cache.McUserRoleCache;
 import com.matrix.pojo.entity.McSysFunction;
-import com.matrix.pojo.entity.McUserInfo;
 import com.matrix.pojo.view.McUserInfoView;
 
 /**
@@ -67,27 +66,6 @@ public class UrlInterceptor extends HandlerInterceptorAdapter{
         					return true;
         				}
         			}
-        		}
-        	}else if(StringUtils.startsWith(url, "system_")){
-        		// 此时开始判断这个url 是否为该用户权限内的，如果不是，则返回false
-        		boolean system = false;
-        		McUserRoleCache cache = JSONObject.parseObject(launch.loadDictCache(DCacheEnum.McUserRole).get(info.getId().toString()), McUserRoleCache.class);
-        		List<McSysFunction> list = cache.getMsfList();
-        		for(McSysFunction sf : list){
-        			if(sf.getNavType() == 3){ 
-        				String [] arr = sf.getFuncUrl().split("/");
-        				if(arr[arr.length -1].equals(url)){
-        					system =  true;
-        					break;
-        				}
-        			}
-        		}
-        		if(system){
-        			return true;
-        		}else{
-        			response.setHeader("Content-type", "text/html;charset=UTF-8"); 
-        			response.getWriter().write("{\"status\":\"error\",\"msg\":\"对不起您没有这个权限\"}");  
-                	return false;
         		}
         	}else{
         		return true;     // 如果用户已经登录，且是非权限类型的跳转请求，则允许访问。
