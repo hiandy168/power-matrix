@@ -78,6 +78,13 @@
 		delete from managercenter.mc_sys_function where id = #{id,jdbcType=INTEGER}
 	</delete>
 	
+	<delete id="deleteByIds" parameterType="java.util.List">
+		delete from managercenter.mc_sys_function where id in
+		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">   
+	        #{item}   
+	    </foreach>
+	</delete>
+	
 	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.McSysFunction"  useGeneratedKeys="true" keyProperty="id">
 		insert into managercenter.mc_sys_function
 		<trim prefix="(" suffix=")" suffixOverrides=",">

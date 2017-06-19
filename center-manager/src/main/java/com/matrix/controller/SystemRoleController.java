@@ -252,9 +252,9 @@ public class SystemRoleController  extends BaseController{
 	
 	@RequestMapping(value = "delete_node", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject deleteNode(Integer id , HttpSession session){
+	public JSONObject deleteNode(String ids , HttpSession session){
 		super.userBehavior(session, logger, "delete_node", "删除一个节点");
-		return mcSysFunctionService.deleteNode(id, session);	
+		return mcSysFunctionService.deleteNode(ids, session);	
 	}
 	
 	/**

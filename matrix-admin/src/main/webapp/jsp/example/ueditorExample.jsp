@@ -44,7 +44,9 @@
 		$("#editor").width(w);
 		$("#editor").height(h);
 		
-		// 开始自定义ueditor的上传文件方法
+		// 开始自定义
+		
+		//自定义ueditor的上传文件方法
 		UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
 	    UE.Editor.prototype.getActionUrl = function(action) {  
 	        if (action == 'uploadimage' ) {  
@@ -56,6 +58,26 @@
 	            return this._bkGetActionUrl.call(this, action);  
 	        }  
 	    }; 
+	    /* //自定义按钮  跳转商品详情的按钮
+	     UE.commands['hjy_add_product'] = {
+	    		execCommand : function(){
+    	    	console.log(0);
+    	    	
+    	    	var range = this.selection.getRange(),
+    	        node = range.getClosedNode();
+    	    	node.onclick=function(){window.open('http://test-wx.huijiayou.cn/Product_Detail.html?pid=8016410843&fromshare=1&wxPhone=&goods_num:8016410843')}
+    	    	 
+    	    } ,
+    	    queryCommandState:function(){
+    	    	var range = this.selection.getRange(),
+    	        node = range.getClosedNode();
+    	    	if(undefined != node) {
+    	    		return 1;
+    	    	} else {
+	    	        return -1;
+    	    	}
+    	    }
+    	}; */
 	    
 	});  
 	

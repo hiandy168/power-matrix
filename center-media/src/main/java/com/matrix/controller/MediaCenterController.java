@@ -1,14 +1,19 @@
 package com.matrix.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.matrix.base.BaseController;
-import com.matrix.service.IMediaCenterService;
+import com.matrix.pojo.entity.McArticleType;
+import com.matrix.service.IMcArticleTypeService;
+import com.matrix.service.impl.McArticleTypeServiceImpl;
 
 /**
  * @description: 媒体库相关服务
@@ -25,7 +30,7 @@ public class MediaCenterController extends BaseController {
 	private static Logger logger = Logger.getLogger(MediaCenterController.class);
 
 	@Autowired
-	private IMediaCenterService service;
+	private IMcArticleTypeService mcArticleTypeService;
 
 	/**
 	 * @description: 已发布文章列表|已发布文章，所有人都可以见
@@ -97,6 +102,9 @@ public class MediaCenterController extends BaseController {
 		return "jsp/center-manager/article/mediaTopList";
 	}
 
+	
+	
+	
 	/**
 	 * @description: 文章分类管理|文章分类管理：海外购、生活电器、厨房用品等等。
 	 * 
@@ -110,5 +118,38 @@ public class MediaCenterController extends BaseController {
 		super.userBehavior(session, logger, "page_media_article_assort_manage", "已发布文章列表mediaArticleAssortList.jsp");
 		return "jsp/center-manager/assort/mediaArticleAssortList";
 	}
-
+	
+	/**
+	 * @description: 获取文章分类管理列表数据
+	 * 
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年6月16日 下午3:01:44 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "ajax_article_assort_list", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject ajaxArticleAssortList(McArticleType e , HttpServletRequest request , HttpSession session) {
+		super.userBehavior(session , logger , "ajax_article_assort_list" , "获取文章分类管理列表数据");   
+		return mcArticleTypeService.ajaxArticleAssortList(e , request , session); 
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

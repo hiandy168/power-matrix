@@ -8,7 +8,7 @@ public class McArticleType {
     private Date createTime;
     private Integer createUserId;
     private Date updateTime;
-    private Date updateUserId;
+    private Integer updateUserId;
     private String exta;
     private String extb;
     private String extc;
@@ -44,10 +44,10 @@ public class McArticleType {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-	public Date getUpdateUserId() {
+	public Integer getUpdateUserId() {
 		return updateUserId;
 	}
-	public void setUpdateUserId(Date updateUserId) {
+	public void setUpdateUserId(Integer updateUserId) {
 		this.updateUserId = updateUserId;
 	}
 	public String getExta() {

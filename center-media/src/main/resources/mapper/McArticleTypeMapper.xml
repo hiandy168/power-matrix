@@ -7,7 +7,7 @@
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-		<result column="update_user_id" property="updateUserId" jdbcType="TIMESTAMP" />
+		<result column="update_user_id" property="updateUserId" jdbcType="INTEGER" />
 		<result column="exta" property="exta" jdbcType="VARCHAR" />
 		<result column="extb" property="extb" jdbcType="VARCHAR" />
 		<result column="extc" property="extc" jdbcType="VARCHAR" />
@@ -24,6 +24,31 @@
 		where 
 			id = #{id,jdbcType=INTEGER}
 	</select>
+	
+	
+	<!-- 分页查询 -->
+	<resultMap id="McArticleTypeView" type="com.matrix.pojo.view.McArticleTypeView">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="update_user_id" property="updateUserId" jdbcType="INTEGER" />
+	</resultMap>
+	<select id="queryPage" parameterType="com.matrix.pojo.entity.McArticleType" resultMap="McArticleTypeView">
+		select 
+		  	t.* ,
+		  	count(i.article_type_id) as articleSum
+		from
+		  	mediacenter.mc_article_type t left join mediacenter.`mc_article_info` i on t.id = i.article_type_id
+		 where 1 = 1
+		<if test="name != null and name != ''  ">
+			and name = #{name , jdbcType=VARCHAR}
+		</if>
+		group by t.id 
+	</select>
+	
+	
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from mediacenter.mc_article_type where id = #{id,jdbcType=INTEGER}
@@ -80,7 +105,7 @@
 				#{updateTime,jdbcType=TIMESTAMP},
 			</if>
 			<if test="updateUserId != null">
-				#{updateUserId,jdbcType=TIMESTAMP},
+				#{updateUserId , jdbcType=INTEGER},
 			</if>
 			<if test="exta != null">
 				#{exta,jdbcType=VARCHAR},
@@ -113,7 +138,7 @@
 				update_time = #{updateTime,jdbcType=TIMESTAMP},
 			</if>
 			<if test="updateUserId != null">
-				update_user_id = #{updateUserId,jdbcType=TIMESTAMP},
+				update_user_id = #{updateUserId , jdbcType=INTEGER},
 			</if>
 			<if test="exta != null">
 				exta = #{exta,jdbcType=VARCHAR},

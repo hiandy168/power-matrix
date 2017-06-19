@@ -22,7 +22,7 @@ public interface IMcSysFunctionService  extends IBaseService<McSysFunction, Inte
 
 	public JSONObject treeList(HttpServletRequest request);
 
-	public JSONObject deleteNode(Integer id, HttpSession session);
+	public JSONObject deleteNode(String ids , HttpSession session);
 
 	public JSONObject addMcRole(McRoleCache d, HttpSession session);
 

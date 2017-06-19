@@ -1901,3 +1901,11 @@ div.edui-box {
 .edui-default  .edui-pastecontainer .edui-button  .edui-state-hover .edui-plaintxticon{
     background-position: -72px -34px;
 }
+.edui-for-hjy_add_product .edui-icon{
+	background-position:-500px 0;
+}
+.edui-for-hjy_add_product .edui-dialog-content {
+	width:  420px;
+	height: 100px;
+	overflow:hidden;
+}
