@@ -113,10 +113,13 @@
         },
         
         // 用于捕获删除节点之后的事件回调函数。
-        onRemove: function(event, treeId, treeNode){
+        onRemove: function(event, treeId, tree){
         	var type_ = 'post';
             var url_ = 'delete_node.do';
-            var data_ = {id:treeNode.id};  
+            var ids = "";
+            ids = surfunc.getSubnodeIds(ids , tree);
+            var data_ = {ids : ids.substring(0 , ids.length-1)};   
+        	
             var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
             if(obj.status == 'success'){
             	jAlert(obj.msg , '系统提示 ');   
@@ -126,6 +129,21 @@
             	return false;
             }
         }, 
+        
+        getSubnodeIds : function(ids , tree){
+        	if(tree.isParent){
+            	var arr = tree.children;
+            	var ids_ = "";
+            	for(var i = 0 ; i < arr.length ; i ++){
+            		ids_ += surfunc.getSubnodeIds(ids , arr[i]);
+            	}
+            	ids += ids_;
+            }
+        	
+        	ids += tree.id + ","; 
+        	return ids;
+        },
+
 
         beforeDrag:function(treeId, treeNodes) {
             // TODO
@@ -772,6 +790,9 @@
             removeHoverDom: surfunc.removeHoverDom,
             selectedMulti: false    // 不允许同时选中多个节点
         },
+        check:{
+        	enable:false
+        }, 
         edit: {
             drag: {
                 autoExpandTrigger: true, // 拖拽时父节点自动展开是否触发 callback.onExpand 事件回调函数
@@ -800,8 +821,7 @@
             onExpand: surfunc.onExpand,           // 捕获节点被展开的事件回调函数 |默认值：null
             onClick: surfunc.ztOnClick,
             beforeRemove: surfunc.beforeRemove,       // 捕获删除之前的数据 
-            onRemove:surfunc.onRemove                 // 用于捕获删除节点之后的事件回调函数。   
-
+            onRemove:surfunc.onRemove            // 用于捕获删除节点之后的事件回调函数。   
         },
         setTrigger:function(){
             var zTree = $.fn.zTree.getZTreeObj("sys-tree");

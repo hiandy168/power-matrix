@@ -216,13 +216,26 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 	 * @author Yangcl 
 	 * @version 1.0.0.1
 	 */
-	public JSONObject deleteNode(Integer id, HttpSession session) {
+	public JSONObject deleteNode(String ids , HttpSession session) {
 		JSONObject result = new JSONObject();
-		Integer flag = dao.deleteById(id);
+		if(StringUtils.isBlank(ids)){
+			result.put("status", "error");
+			result.put("msg", this.getInfo(500090012)); // 节点id不得为空!
+			return result; 
+		}
+		String [] arr = ids.split(",");
+		List<Integer> list = new ArrayList<>();
+		for(String s : arr){
+			list.add(Integer.valueOf(s));
+		}
+		
+		Integer flag = dao.deleteByIds(list);
 		if(flag == 1){
 			result.put("status", "success");
 			result.put("msg", this.getInfo(500090001)); // 删除成功
-			launch.loadDictCache(DCacheEnum.McSysFunc).del(id.toString()); 
+			for(String s : arr){
+				launch.loadDictCache(DCacheEnum.McSysFunc).del(s);  
+			}
 		}else{
 			result.put("status", "error");
 			result.put("msg", this.getInfo(500090001)); // 删除失败
