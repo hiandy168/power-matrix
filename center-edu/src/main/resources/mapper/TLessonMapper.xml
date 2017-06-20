@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.matrix.dao.ITLessonDao">
+	
+	<resultMap id="BaseResultMap" type="com.matrix.pojo.entity.TLesson">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="lesson_name" property="lessonName" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="type_code" property="typeCode" jdbcType="VARCHAR" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="intro" property="intro" jdbcType="LONGVARCHAR" />
+		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+			*
+		from 
+			educationalcenter.t_lesson
+		where 
+			id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="findEntityByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+			*
+		from 
+			educationalcenter.t_lesson
+		where 
+			code = #{lcode , jdbcType=VARCHAR}  
+	</select>
+	
+	<resultMap id="LessonViewMap" type="com.matrix.pojo.view.LessonView">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="lesson_name" property="lessonName" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="type_code" property="typeCode" jdbcType="VARCHAR" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="intro" property="intro" jdbcType="LONGVARCHAR" />
+		<result column="classes_code" property="classesCode" jdbcType="VARCHAR" />
+		<result column="schedule_code" property="scheduleCode" jdbcType="VARCHAR" /> 
+		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="findLessonListByTcode" resultMap="LessonViewMap" parameterType="java.lang.String">
+		select
+			*
+		from 
+			educationalcenter.t_lesson l left join educationalcenter.t_study_schedule  s on s.lesson_code = l.code
+		where 
+			s.teacher_code = #{tcode , jdbcType=VARCHAR}  group by l.code
+	</select>
+	
+	<select id="findClassLessonListByTcode" resultMap="LessonViewMap" parameterType="java.lang.String">
+		select
+			*
+		from 
+			educationalcenter.t_lesson l left join educationalcenter.t_study_schedule  s on s.lesson_code = l.code
+		where 
+			s.teacher_code = #{tcode , jdbcType=VARCHAR} 
+	</select>
+	
+	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from educationalcenter.t_lesson
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.TLesson">
+		insert into educationalcenter.t_lesson
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="uuid != null">
+				uuid,
+			</if>
+			<if test="lessonName != null">
+				lesson_name,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="typeCode != null">
+				type_code,
+			</if>
+			<if test="createUser != null">
+				create_user,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateUser != null">
+				update_user,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="intro != null">
+				intro,
+			</if>
+			<if test="imgUrl != null">
+				img_url,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="uuid != null">
+				#{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="lessonName != null">
+				#{lessonName , jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="typeCode != null">
+				#{typeCode,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				#{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="intro != null">
+				#{intro,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="imgUrl != null">
+				#{imgUrl , jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	
+	<update id="updateSelective" parameterType="com.matrix.pojo.entity.TLesson">
+		update educationalcenter.t_lesson
+		<set>
+			<if test="uuid != null">
+				uuid = #{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="lessonName != null">
+				lesson_name = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="typeCode != null">
+				type_code = #{typeCode,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				create_user = #{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				update_user = #{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="intro != null">
+				intro = #{intro,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="imgUrl != null">
+				img_url = #{imgUrl , jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

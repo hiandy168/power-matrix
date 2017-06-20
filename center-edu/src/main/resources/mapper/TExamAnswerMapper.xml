@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.matrix.dao.ITExamAnswerDao">
+	<resultMap id="BaseResultMap" type="com.matrix.pojo.entity.TExamAnswer">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="paper_code" property="paperCode" jdbcType="VARCHAR" />
+		<result column="student_code" property="studentCode" jdbcType="VARCHAR" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="answer" property="answer" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+			*
+		from 
+			educationalcenter.t_exam_answer
+		where 
+			id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="findEntityByTpye" resultMap="BaseResultMap" parameterType="com.matrix.pojo.entity.TExamAnswer">
+		select
+			*
+		from 
+			educationalcenter.t_exam_answer
+		where 
+			1 = 1
+			<if test="paperCode != null">
+				and paper_code = #{paperCode,jdbcType=VARCHAR} 
+			</if>
+			<if test="studentCode != null">
+				and student_code = #{studentCode,jdbcType=VARCHAR} 
+			</if>
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from educationalcenter.t_exam_answer where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	
+	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.TExamAnswer">
+		insert into educationalcenter.t_exam_answer
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="uuid != null">
+				uuid,
+			</if>
+			<if test="paperCode != null">
+				paper_code,
+			</if>
+			<if test="studentCode != null">
+				student_code,
+			</if>
+			<if test="createUser != null">
+				create_user,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateUser != null">
+				update_user,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="answer != null">
+				answer,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="uuid != null">
+				#{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="paperCode != null">
+				#{paperCode,jdbcType=VARCHAR},
+			</if>
+			<if test="studentCode != null">
+				#{studentCode,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				#{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="answer != null">
+				#{answer,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateSelective" parameterType="com.matrix.pojo.entity.TExamAnswer">
+		update educationalcenter.t_exam_answer
+		<set>
+			<if test="uuid != null">
+				uuid = #{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="paperCode != null">
+				paper_code = #{paperCode,jdbcType=VARCHAR},
+			</if>
+			<if test="studentCode != null">
+				student_code = #{studentCode,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				create_user = #{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				update_user = #{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="answer != null">
+				answer = #{answer,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+</mapper>

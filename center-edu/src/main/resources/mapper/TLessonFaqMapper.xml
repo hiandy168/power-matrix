@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.matrix.dao.ITLessonFaqDao">
+	<resultMap id="BaseResultMap" type="com.matrix.pojo.entity.TLessonFaq">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="parent_code" property="parentCode" jdbcType="VARCHAR" />
+		<result column="schedule_code" property="scheduleCode"
+			jdbcType="VARCHAR" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="VARCHAR" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
+		<result column="student_name" property="studentName" jdbcType="VARCHAR" />
+		<result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+		<result column="class_name" property="className" jdbcType="VARCHAR" />
+		<result column="lesson_name" property="lessonName" jdbcType="VARCHAR" />
+		<result column="lesson_start_time" property="lessonStartTime"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, uuid, code, parent_code, schedule_code,content,
+		create_user,
+		DATE_FORMAT(
+		create_time,
+		'%Y-%m-%d
+		%H:%i:%s'
+		) AS
+		create_time, update_user,
+		DATE_FORMAT(
+		update_time,
+		'%Y-%m-%d
+		%H:%i:%s'
+		)
+		AS update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from educationalcenter.t_lesson_faq
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		educationalcenter.t_lesson_faq
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.TLessonFaq">
+		insert into educationalcenter.t_lesson_faq
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			uuid,
+			`code`,
+			<if test="parentCode != null">
+				parent_code,
+			</if>
+			schedule_code,
+			create_user,
+			create_time,
+			update_user,
+			update_time,
+			content,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{uuid,jdbcType=VARCHAR},
+			#{code,jdbcType=VARCHAR},
+			<if test="parentCode != null">
+				#{parentCode,jdbcType=VARCHAR},
+			</if>
+			#{scheduleCode,jdbcType=VARCHAR},
+			#{createUser,jdbcType=VARCHAR},
+			STR_TO_DATE(#{createTime,jdbcType=VARCHAR},'%Y-%m-%d %H:%i:%s'),
+			#{updateUser,jdbcType=VARCHAR},
+			STR_TO_DATE(#{updateTime,jdbcType=VARCHAR},'%Y-%m-%d %H:%i:%s'),
+			#{content,jdbcType=LONGVARCHAR},
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.matrix.pojo.entity.TLessonFaq">
+		update educationalcenter.t_lesson_faq
+		<set>
+			<if test="parentCode != null">
+				parent_code = #{parentCode,jdbcType=VARCHAR},
+			</if>
+			<if test="scheduleCode != null">
+				schedule_code = #{scheduleCode,jdbcType=VARCHAR},
+			</if>
+			update_user = #{updateUser,jdbcType=VARCHAR},
+			update_time =
+			STR_TO_DATE(#{updateTime,jdbcType=VARCHAR},'%Y-%m-%d %H:%i:%s'),
+			<if test="content != null">
+				content = #{content,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<!-- 学生答疑列表 2017-03-18 zhy -->
+	<select id="getFaqForStudent" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT
+		tlf.`code`,
+		tlf.content,
+		tl.lesson_name,
+		DATE_FORMAT(
+		tlf.create_time,
+		'%Y-%m-%d
+		%H:%i:%s'
+		) AS create_time
+		FROM
+		educationalcenter.t_study_schedule AS tss,
+		educationalcenter.t_lesson
+		AS tl,
+		educationalcenter.t_lesson_faq as tlf,
+		educationalcenter.t_student AS ts
+		WHERE
+		tss.lesson_code = tl.`code`
+		and
+		tss.schedule_code = tlf.schedule_code
+		AND tlf.create_user = ts.`code`
+		AND tss.classes_code LIKE CONCAT('%', ts.classes_code, '%')
+		AND
+		ts.`code` = #{studentCode,jdbcType=VARCHAR}
+	</select>
+	<!-- 学生答疑回答列表 2017-03-18 zhy -->
+	<select id="faqAnswerForStudent" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT
+		tlf.`code`,
+		tlf.content,
+		tt.`name` as teacher_name,
+		tlf.create_time
+		FROM
+		educationalcenter.t_lesson_faq AS tlf,
+		educationalcenter.t_teacher AS tt
+		WHERE
+		tlf.create_user = tt.`code`
+		and tlf.`parent_code`=#{code,jdbcType=VARCHAR}
+	</select>
+	<!-- 教师答疑列表 2017-03-18 zhy -->
+	<select id="getFaqForTeacher" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT
+		tlf.`code`,
+		tlf.content,
+		ts.`name` AS student_name,
+		tc.class_name
+		FROM
+		educationalcenter.t_study_schedule AS tss,
+		educationalcenter.t_lesson_faq AS tlf,
+		educationalcenter.t_student AS
+		ts,
+		educationalcenter.t_classes AS tc
+		WHERE
+		tss.schedule_code =
+		tlf.schedule_code
+		AND tlf.create_user = ts.`code`
+		AND tlf.parent_code =
+		'0'
+		AND tc.`code` = ts.classes_code
+		AND tss.teacher_code =
+		'T1489071763988'
+	</select>
+</mapper>

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.matrix.dao.ITStudentDao">
+	<resultMap id="BaseResultMap" type="com.matrix.pojo.entity.TStudent">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="INTEGER" />
+		<result column="classes_code" property="classesCode" jdbcType="VARCHAR" />
+		<result column="head_pic" property="headPic" jdbcType="VARCHAR" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="sign_time" property="signTime" jdbcType="VARCHAR" />
+		<result column="schedule_code" property="scheduleCode"
+			jdbcType="VARCHAR" />
+		<result column="flag_evaluate" property="flagEvaluate"
+			jdbcType="INTEGER" />
+		<result column="lesson_name" property="lessonName" jdbcType="VARCHAR" />
+		<!-- lessonIntro -->
+		<result column="lesson_intro" property="lessonIntro" jdbcType="VARCHAR" />
+		<result column="lesson_start_time" property="lessonStartTime"
+			jdbcType="VARCHAR" />
+		<result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+		<result column="username" property="userName" jdbcType="VARCHAR" />
+		<result column="rollcall_success" property="rollcallSuccess"
+			jdbcType="INTEGER" />
+		<result column="evaluate_id" property="evaluateId"
+			jdbcType="INTEGER" />
+	</resultMap>
+
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		*
+		from
+		educationalcenter.t_student
+		where
+		id =
+		#{id,jdbcType=INTEGER}
+	</select>
+
+	<resultMap id="SignListViewMap" type="com.matrix.pojo.view.SignListView">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="INTEGER" />
+		<result column="classes_code" property="classesCode" jdbcType="VARCHAR" />
+		<result column="head_pic" property="headPic" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="findSignList" resultMap="SignListViewMap"
+		parameterType="java.lang.String">
+		select
+		* ,
+		l.create_time as createTime
+		from
+		educationalcenter.`t_student` s left join
+		educationalcenter.`t_lesson_sign` l on l.student_code =
+		s.code
+		where
+		l.schedule_code = #{scheduleCode , jdbcType=VARCHAR}
+	</select>
+
+
+	<resultMap id="StudentViewMap" type="com.matrix.pojo.view.StudentView">
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="INTEGER" />
+		<result column="classes_code" property="classesCode" jdbcType="VARCHAR" />
+		<result column="head_pic" property="headPic" jdbcType="VARCHAR" />
+		<result column="school_name" property="schoolName" jdbcType="VARCHAR" />
+		<result column="grade_name" property="gradeName" jdbcType="VARCHAR" />
+		<result column="class_name" property="className" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="findListByCodes" resultMap="StudentViewMap"
+		parameterType="java.util.List">
+		select
+		*
+		from
+		educationalcenter.t_student s left join
+		educationalcenter.t_classes c on s.classes_code = c.code
+		where
+		s.classes_code in
+		<foreach item="item" index="index" collection="list" open="("
+			close=")" separator=",">
+			#{item}
+		</foreach>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		educationalcenter.t_student where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+
+	<insert id="insertSelective" parameterType="com.matrix.pojo.entity.TStudent">
+		insert into educationalcenter.t_student
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="uuid != null">
+				uuid,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="sex != null">
+				sex,
+			</if>
+			<if test="classesCode != null">
+				classes_code,
+			</if>
+			<if test="headPic != null">
+				head_pic,
+			</if>
+			<if test="createUser != null">
+				create_user,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateUser != null">
+				update_user,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="uuid != null">
+				#{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=INTEGER},
+			</if>
+			<if test="classesCode != null">
+				#{classesCode,jdbcType=VARCHAR},
+			</if>
+			<if test="headPic != null">
+				#{headPic , jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				#{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateSelective" parameterType="com.matrix.pojo.entity.TStudent">
+		update educationalcenter.t_student
+		<set>
+			<if test="uuid != null">
+				uuid = #{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				sex = #{sex,jdbcType=INTEGER},
+			</if>
+			<if test="classesCode != null">
+				classes_code = #{classesCode,jdbcType=VARCHAR},
+			</if>
+			<if test="headPic != null">
+				head_pic = #{headPic , jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				create_user = #{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				update_user = #{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<!-- 根据scheduleCode查询学生签到信息 2017-03-17 zhy -->
+	<select id="findStudentSignByScheduleCode" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT
+		tss.schedule_code,
+		ts.`code`,
+		ts.`name`,
+		DATE_FORMAT(
+		tls.create_time,
+		'%Y-%m-%d %H:%i:%s'
+		) AS sign_time,
+		tls.flag_evaluate,
+		(
+		SELECT
+		tse.id
+		FROM
+		educationalcenter.t_student_evaluate AS tse
+		WHERE
+		tse.schedule_code = tss.schedule_code
+		AND tse.student_code = ts.`code`
+		) as evaluate_id
+		FROM
+		educationalcenter.t_study_schedule AS tss,
+		educationalcenter.t_lesson_sign AS tls,
+		educationalcenter.t_student AS ts
+		<where>
+			tss.schedule_code = tls.schedule_code
+			AND tls.student_code =
+			ts.`code`
+			AND tss.schedule_code = #{scheduleCode,jdbcType=VARCHAR}
+		</where>
+	</select>
+	<!-- 根据scheduleCode查询学生签到信息-随机dianm 2017-03-17 zhy -->
+	<select id="findStudentSignByScheduleCodeForRollcall"
+		parameterType="java.lang.String" resultMap="BaseResultMap">
+		SELECT
+		tmp.schedule_code,
+		tmp.`code`,
+		tmp.`name`,
+		tmp.sign_time,
+		tmp.flag_evaluate,
+		IFNULL(tmp.rollcall_success, - 1) AS
+		rollcall_success
+		FROM
+		(
+		SELECT
+		tss.schedule_code,
+		ts.`code`,
+		ts.`name`,
+		DATE_FORMAT(
+		tls.create_time,
+		'%Y-%m-%d %H:%i:%s'
+		) AS sign_time,
+		tls.flag_evaluate,
+		(
+		SELECT
+		tlr.flag_success
+		FROM
+		educationalcenter.t_lesson_rollcall AS tlr
+		WHERE
+		tlr.schedule_code =
+		tss.schedule_code
+		AND tlr.student_code = ts.`code`
+		) AS rollcall_success
+		FROM
+		educationalcenter.t_study_schedule AS tss,
+		educationalcenter.t_lesson_sign AS tls,
+		educationalcenter.t_student AS
+		ts
+		WHERE
+		tss.schedule_code = tls.schedule_code
+		AND tls.student_code =
+		ts.`code`
+		) AS tmp
+		<where>
+			tmp.schedule_code = #{scheduleCode,jdbcType=VARCHAR}
+		</where>
+	</select>
+	<!-- 课程表 2017-03-18 zhy -->
+	<select id="getSyllabus" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT
+		tl.lesson_name,
+		DATE_FORMAT(
+		tss.start_time,
+		'%Y-%m-%d
+		%H:%i:%s'
+		) AS
+		lesson_start_time,
+		tl.intro as lesson_intro,
+		tt.`name` AS teacher_name
+		FROM
+		educationalcenter.t_study_schedule AS tss,
+		educationalcenter.t_lesson AS tl,
+		educationalcenter.t_student AS ts,
+		educationalcenter.t_teacher AS tt
+		<where>
+			tss.lesson_code = tl.`code`
+			AND
+			tss.teacher_code = tt.`code`
+			AND
+			tss.classes_code LIKE CONCAT('%',
+			ts.classes_code, '%')
+			AND
+			ts.`code`=#{code,jdbcType=VARCHAR}
+		</where>
+	</select>
+	<select id="getStudentDetail" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT
+		tu.username,
+		ts.`name`,
+		ts.head_pic
+		FROM
+		educationalcenter.t_user AS tu,
+		educationalcenter.t_student AS ts
+		WHERE
+		tu.`code` = ts.`code`
+		and ts.`code` = #{code,jdbcType=VARCHAR}
+	</select>
+</mapper>
