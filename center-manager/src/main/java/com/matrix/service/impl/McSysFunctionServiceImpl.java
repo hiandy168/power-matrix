@@ -207,9 +207,8 @@ public class McSysFunctionServiceImpl extends BaseServiceImpl<McSysFunction, Int
 
 
 	/**
-	 * @descriptions 删除节点 mc_sys_function表 	TODO 删除功能存在缺陷，等待完善中。
-	 *										TODO 此处需要单独写一个内存树，将mc_sys_function表的数据组织到二叉树中
-	 *													 指定一个颗树，可以获得他的所有父节点以及所有子节点 
+	 * @descriptions 删除节点 mc_sys_function表 
+	 *										 
 	 * @param id
 	 * @param session
 	 * @date 2017年4月23日 下午6:53:32
