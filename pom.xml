@@ -19,7 +19,6 @@
 		<module>example-ui</module>
 		<module>center-manager</module>
 		<module>center-media</module>
-		<module>center-edu</module>
     </modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
