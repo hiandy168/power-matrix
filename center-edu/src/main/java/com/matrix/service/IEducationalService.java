@@ -1,6 +1,7 @@
 package com.matrix.service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.pojo.dto.ExamPaperDto;
@@ -52,7 +53,7 @@ public interface IEducationalService {
 	 */
 	public JSONObject studentSign(String scode, String scheduleCode);
 
-	public JSONObject login(TUser entity);
+	public JSONObject login(TUser entity,HttpSession session);
 
 	public JSONObject registe(RegisteDto entity);
 

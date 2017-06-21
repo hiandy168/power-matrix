@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,9 +71,9 @@ public class ApiEduController {
 
 	@RequestMapping(value = "login", produces = { "application/json;charset=utf-8" })
 	@ResponseBody
-	public JSONObject login(TUser entity, HttpServletResponse response) {
+	public JSONObject login(TUser entity, HttpServletResponse response,HttpSession session) {
 		response.setHeader("Access-Control-Allow-Origin", "*"); // 临时性解决跨域访问限制问题
-		return service.login(entity);
+		return service.login(entity,session);
 	}
 
 	@RequestMapping(value = "register", produces = { "application/json;charset=utf-8" })

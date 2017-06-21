@@ -14,14 +14,18 @@ import java.util.TreeMap;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.matrix.base.BaseClass;
+import com.matrix.cache.CacheLaunch;
+import com.matrix.cache.enums.DCacheEnum;
+import com.matrix.cache.inf.IBaseLaunch;
+import com.matrix.cache.inf.ICacheFactory;
 import com.matrix.dao.ITClassesDao;
 import com.matrix.dao.ITExamAnswerDao;
 import com.matrix.dao.ITExamPaperDao;
@@ -43,12 +47,12 @@ import com.matrix.pojo.entity.TExamQuestions;
 import com.matrix.pojo.entity.TLessonQrcode;
 import com.matrix.pojo.entity.TLessonSign;
 import com.matrix.pojo.entity.TStudent;
-import com.matrix.pojo.entity.TStudentEvaluate;
 import com.matrix.pojo.entity.TStudySchedule;
 import com.matrix.pojo.entity.TTeacher;
 import com.matrix.pojo.entity.TUser;
 import com.matrix.pojo.view.LessonResponseView;
 import com.matrix.pojo.view.LessonView;
+import com.matrix.pojo.view.McUserInfoView;
 import com.matrix.pojo.view.SignListView;
 import com.matrix.pojo.view.StudentView;
 import com.matrix.pojo.view.StudyScheduleView;
@@ -59,6 +63,8 @@ import com.matrix.utils.QrcodeUtil;
 @Service
 public class EducationalServiceImpl extends BaseClass implements IEducationalService {
 
+	private IBaseLaunch<ICacheFactory> launch = CacheLaunch.getInstance().Launch();
+	
 	@Resource
 	private ITLessonSignDao lessonSignDao;
 	@Resource
@@ -96,16 +102,17 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	 * @date 2017年3月7日 下午2:01:34
 	 * @version 1.0.0.1
 	 */
-	public JSONObject findSignList(String scheduleCode ,HttpServletRequest request) {
+	public JSONObject findSignList(String scheduleCode, HttpServletRequest request) {
 		JSONObject result = new JSONObject();
 		result.put("status", false);
 		List<SignListView> list = studentDao.findSignList(scheduleCode);
 		if (list != null && list.size() > 0) {
-			String path = "images" + File.separator + "center-edu" + File.separator + "studentHead" + File.separator; 
-			String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + File.separator + path;
-			for(int i = 0 ; i < list.size() ; i ++){
+			String path = "images" + File.separator + "center-edu" + File.separator + "studentHead" + File.separator;
+			String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+					+ request.getContextPath() + File.separator + path;
+			for (int i = 0; i < list.size(); i++) {
 				String headUrl = url + list.get(i).getHeadPic();
-				list.get(i).setHeadPic(headUrl);  
+				list.get(i).setHeadPic(headUrl);
 			}
 			result.put("status", true);
 			result.put("list", list);
@@ -189,13 +196,19 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 		return result;
 	}
 
-	public JSONObject login(TUser entity) {
+	public JSONObject login(TUser entity,HttpSession session) {
 		JSONObject result = new JSONObject();
 		result.put("status", false);
 
 		try {
 			TUser e = userDao.login(entity);
 			if (e != null) {
+				McUserInfoView view = new McUserInfoView();
+				view.setUserName(e.getUsername());
+				view.setPassword(e.getPassword());
+				launch.loadDictCache(DCacheEnum.UserInfoNp).set(view.getUserName() + view.getPassword(),
+						JSONObject.toJSONString(view));
+				session.setAttribute("userInfo", view);   // 写入session
 				result.put("status", true);
 				result.put("data", e);
 				result.put("msg", "登陆成功");
@@ -435,7 +448,8 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 			return result;
 		}
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日 HH点mm分");  // yyyy-MM-dd HH:mm
+			SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日 HH点mm分"); // yyyy-MM-dd
+																			// HH:mm
 			List<LessonResponseView> list_ = new ArrayList<LessonResponseView>();
 			List<StudyScheduleView> list = studyScheduleDao.findListByType(e);
 			if (list != null && list.size() > 0) {
@@ -592,7 +606,7 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 	}
 
 	@Override
-	public JSONObject classStudentList(String classCodes , HttpServletRequest request) {
+	public JSONObject classStudentList(String classCodes, HttpServletRequest request) {
 		JSONObject result = new JSONObject();
 		result.put("status", false);
 		List<StudentViewResponse> list_ = new ArrayList<StudentViewResponse>(); // 向页面返回的数据体
@@ -615,13 +629,15 @@ public class EducationalServiceImpl extends BaseClass implements IEducationalSer
 				for (String key : map.keySet()) {
 					StudentViewResponse svr = new StudentViewResponse();
 					svr.setClassName(key);
-					String path = "images" + File.separator + "center-edu" + File.separator + "studentHead" + File.separator; 
-					String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + File.separator + path;
+					String path = "images" + File.separator + "center-edu" + File.separator + "studentHead"
+							+ File.separator;
+					String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+							+ request.getContextPath() + File.separator + path;
 					List<StudentView> svlist = map.get(key);
-					if(svlist != null && svlist.size() != 0){
-						for(int i = 0 ; i < svlist.size() ; i ++){
+					if (svlist != null && svlist.size() != 0) {
+						for (int i = 0; i < svlist.size(); i++) {
 							String headUrl = url + svlist.get(i).getHeadPic();
-							svlist.get(i).setHeadPic(headUrl);  
+							svlist.get(i).setHeadPic(headUrl);
 						}
 					}
 					svr.setList(svlist);
