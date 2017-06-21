@@ -21,6 +21,9 @@
 						<input id="name" type="text" name="name" class="form-search" />
 					</span> 
 					
+					<a onclick="showAddDialog()" class="btn btn_orange btn_home radius50" style="float: right; cursor: pointer; margin-left: 10px"> 
+						<span> 添 加 </span>
+					</a>
 					<a onclick="searchReset()" class="btn btn_orange btn_search radius50" style="float: right; cursor: pointer; margin-left: 10px"> 
 						<span> 重 置 </span>
 					</a> 
@@ -102,13 +105,13 @@
            if(list.length>0){
             for(var i = 0 ; i < list.length ; i ++){
                 html_ += '<tr id="tr-' + list[i].id + '" class="gradeX">'
-                +'<td width="150px">' + list[i].name + '</td>'
+                +'<td width="150px"  class="assort-name">' + list[i].name + '</td>'
                 +'<td>' + list[i].userName + '</td>'
                 +'<td>' + list[i].updateTime + '</td>'
-                +'<td class="center">' + list[i].articleSum + '</td>'
+                +'<td class="center article-sum">' + list[i].articleSum + '</td>'
                 +'<td width="150px" align="center">'
-                +'<a onclick="deleteOne(\'' + list[i].id + '\')" title="删除"  style="cursor: pointer;">删除</a> | '
-                +'<a href="${basePath}media/edit_info_page.do?id=' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a> ' 
+                +'<a href="javascript:void(0)" onclick="showEditDialog(this)" assortId="' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a>  | '  
+                +'<a onclick="deleteAssort(this)" assortId="' + list[i].id + '" title="删除"  style="cursor: pointer;">删除</a> '
                 +'</td></tr>'
             }
            }else{
@@ -117,23 +120,7 @@
            
            $('#ajax-tbody-1').append(html_);
        }
-
-      function deleteOne(id_){
-      	jConfirm('您确定要删除这条记录吗？', 'confirm', function(flag) {
-           if(flag){
-           	var type_ = 'post';
-               var url_ = '${basePath}media/ajax_delete_one.do';
-               var data_ = {id:id_};
-               var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
-               if(obj.status == 'success'){
-                   var currentPageNumber = $(".paginate_active").html();   // 定位到当前分页的页码，然后重新加载数据
-                   aForm.formPaging(currentPageNumber);
-               }else{
-               }
-               jAlert(obj.msg, '系统提示');
-           }
-		});
-      }
+      
 
       //搜索
       function searchAssort(){
@@ -145,10 +132,143 @@
           $("#name").val(""); 
           aForm.formPaging(0);
       }
+      
+      // 显示添加弹窗
+  	  function showAddDialog(){
+    	  $("#dialog-name").val("");
+    	  $("#title-content").text("新建分类"); 
+    	  $("#dialog-submit").bind('click', addAssort);
+		  var dialogId = 'add-dialog-div';   // 弹窗ID
+		  $.blockUI({
+		  	  showOverlay:true ,
+		      css:  {	    	  
+		          cursor:'auto',
+		          left:($(window).width() - $("#" + dialogId).width())/2 + 'px',
+		          width:$("#" + dialogId).width()+'px',
+		          top:($(window).height()-$("#" + dialogId).height())/2 + 'px',
+		          position:'fixed', //居中
+		          border: '3px solid #FB9337'  // 边界
+		       },
+		       message: $('#' + dialogId),
+		       fadeIn: 500,//淡入时间
+		       fadeOut: 1000  //淡出时间
+	      });
+	  }
+  	  
+      // 提交要添加的内容  
+  	  function addAssort(){
+  		  var type_ = 'post';
+          var url_ = '${basePath}media/ajax_add_assort.do';
+          var data_ = $("#dialog-table").serializeArray();
+          var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+          if(obj.status == 'success'){
+              var currentPageNumber = $(".paginate_active").html();   // 定位到当前分页的页码，然后重新加载数据
+              aForm.formPaging(currentPageNumber);
+          }
+  	  }
+      
+      
+  	  // 显示添加弹窗
+  	  function showEditDialog(obj){
+  		  var name = $(obj).parent().parent().children(".assort-name")[0].innerText;
+    	  $("#dialog-name").val(name);
+    	  $("#title-content").text("编辑分类");
+    	  $("#dialog-submit").bind('click', {id_:$(obj).attr("assortId") , name_:name}, editAssort);  
+		  var dialogId = 'add-dialog-div';   // 弹窗ID 
+		  $.blockUI({
+		  	  showOverlay:true ,
+		      css:  {	    	  
+		          cursor:'auto',
+		          left:($(window).width() - $("#" + dialogId).width())/2 + 'px',
+		          width:$("#" + dialogId).width()+'px',
+		          top:($(window).height()-$("#" + dialogId).height())/2 + 'px',
+		          position:'fixed', //居中
+		          border: '3px solid #FB9337'  // 边界
+		       },
+		       message: $('#' + dialogId),
+		       fadeIn: 500,//淡入时间
+		       fadeOut: 1000  //淡出时间
+	      });
+	  }
+  	  
+  	  function editAssort(event){
+		  var type_ = 'post';
+		  var url_ = '${basePath}media/ajax_edit_assort.do';
+		  var data_ = $("#dialog-table").serializeArray();
+		  var o = new Object();
+		  o.name = "id";
+		  o.value = event.data.id_;
+		  data_.push(o);
+		  var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
+          if(obj.status == 'success'){
+              var currentPageNumber = $(".paginate_active").html();   // 定位到当前分页的页码，然后重新加载数据
+              aForm.formPaging(currentPageNumber);
+          }
+  	  }
 
-
+	  function closeDialog(){
+          $.unblockUI();
+      }
+	  
+	  
+	function deleteAssort(ele) {
+		var count = $(ele).parent().parent().children(".article-sum")[0].innerText;
+		if(count != "0"){
+			var name = $(ele).parent().parent().children(".assort-name")[0].innerText;
+			jAlert("【" + name + "】分类下已经有文章，不可以删除" , '系统提示');
+		}else{
+			jConfirm('您确定要删除这条记录吗？', 'confirm', function(flag) {
+				if (flag) {
+					var type_ = 'post';
+					var url_ = '${basePath}media/ajax_delete_assort.do'; 
+					var data_ = new Array();
+					var o = new Object();
+					o.name = "id";
+					o.value = $(ele).attr("assortId");
+					data_.push(o);
+					var obj = JSON.parse(ajaxs.sendAjax(type_, url_, data_));
+					if (obj.status == 'success') {
+						var currentPageNumber = $(".paginate_active").html(); // 定位到当前分页的页码，然后重新加载数据
+						aForm.formPaging(currentPageNumber);
+					} else {
+					}
+					jAlert(obj.msg, '系统提示');
+				}
+			});
+		}
+	}
 </script>
-
+<div id="add-dialog-div" class="dialog-page-div" style="display: none;width: 400px;height: 150px">
+    <p class="dialog-title">	
+        <a href="#" onclick="closeDialog()" class="dialog-close"></a>
+        <span id="title-content"></span>
+    </p>
+    <div id="dialog-content-wrapper" class="contentwrapper">
+        <div id="dialog-table-form" class="dataTables_wrapper" >
+            <form id="dialog-table" >
+	            <table class="dialog-table">
+	                <tbody>
+	                	<tr >
+	                		<td style="text-align: right">
+	                			分类名称：
+	                		</td>
+	                		<td style="text-align: left">
+	                			<input id="dialog-name" type="text" name="name" class="dialog-form-input" style="width:200px;"/>
+	                		</td>
+	                	</tr>
+	                </tbody>
+	                <tfoot>
+		                <tr>
+					      <td colspan="2" style="text-align: right">
+					      	    <button id="dialog-submit" class="stdbtn btn_orange" onclick="" style="opacity:1">提 &nbsp&nbsp&nbsp&nbsp&nbsp 交</button>
+					      </td> 
+					    </tr>
+	                </tfoot>
+	            </table>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 

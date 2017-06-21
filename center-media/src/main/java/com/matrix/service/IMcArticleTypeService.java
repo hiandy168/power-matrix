@@ -9,6 +9,12 @@ import com.matrix.pojo.entity.McArticleType;
 
 public interface IMcArticleTypeService extends IBaseService<McArticleType, Integer> {
 
-	JSONObject ajaxArticleAssortList(McArticleType e , HttpServletRequest request, HttpSession session); 
+	public JSONObject ajaxArticleAssortList(McArticleType e , HttpServletRequest request, HttpSession session);
+
+	public JSONObject ajaxAddAssort(McArticleType e, HttpServletRequest request, HttpSession session);
+
+	public JSONObject ajaxEditAssort(McArticleType e, HttpServletRequest request, HttpSession session);
+
+	public JSONObject ajaxDeleteAssort(McArticleType e, HttpServletRequest request, HttpSession session);      
 	
 }

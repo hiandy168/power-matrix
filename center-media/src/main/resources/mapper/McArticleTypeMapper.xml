@@ -52,7 +52,7 @@
 	
 	
 	
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	<delete id="deleteById" parameterType="java.lang.Integer">
 		delete from mediacenter.mc_article_type where id = #{id,jdbcType=INTEGER}
 	</delete>
 	

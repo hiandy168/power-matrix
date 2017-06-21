@@ -117,6 +117,60 @@ public class MediaCenterController extends BaseController {
 		super.userBehavior(session , logger , "ajax_article_assort_list" , "获取文章分类管理列表数据");   
 		return mcArticleTypeService.ajaxArticleAssortList(e , request , session); 
 	}
+	
+	/**
+	 * @description: 添加一条记录 
+	 * 
+	 * @param e
+	 * @param request
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年6月21日 下午3:17:53 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "ajax_add_assort", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject ajaxAddAssort(McArticleType e , HttpServletRequest request , HttpSession session) {
+		super.userBehavior(session , logger , "ajax_add_assort" , "添加分类记录");   
+		return mcArticleTypeService.ajaxAddAssort(e , request , session); 
+	}
+	
+	/**
+	 * @description: 更新一条记录
+	 * 
+	 * @param e
+	 * @param request
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年6月21日 下午5:54:53 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "ajax_edit_assort", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject ajaxEditAssort(McArticleType e , HttpServletRequest request , HttpSession session) {
+		super.userBehavior(session , logger , "ajax_edit_assort" , "更新分类记录");   
+		return mcArticleTypeService.ajaxEditAssort(e , request , session);  
+	}
+	
+	
+	/**
+	 * @description: 异步删除一条数据 
+	 * 
+	 * @param e
+	 * @param request
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年6月21日 下午6:08:05 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "ajax_delete_assort", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject ajaxDeleteAssort(McArticleType e , HttpServletRequest request , HttpSession session) {
+		super.userBehavior(session , logger , "ajax_delete_assort" , "删除分类记录");   
+		return mcArticleTypeService.ajaxDeleteAssort(e , request , session);  
+	}
+	
+	
 }
 
 
