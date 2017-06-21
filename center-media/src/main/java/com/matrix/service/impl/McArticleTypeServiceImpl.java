@@ -19,6 +19,7 @@ import com.matrix.base.BaseServiceImpl;
 import com.matrix.dao.IMcArticleInfoDao;
 import com.matrix.dao.IMcArticleTypeDao;
 import com.matrix.pojo.entity.McArticleType;
+import com.matrix.pojo.view.McUserInfoView;
 import com.matrix.service.IMcArticleTypeService;
 
 @Service("mcArticleTypeService")
@@ -60,6 +61,97 @@ public class McArticleTypeServiceImpl extends BaseServiceImpl<McArticleType, Int
 			r.put("data", data); 
 		}
 		return r;
+	}
+
+	
+	/**
+	 * @description: 添加一条记录 
+	 * 
+	 * @param e
+	 * @param request
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年6月21日 下午3:17:53 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject ajaxAddAssort(McArticleType e, HttpServletRequest request, HttpSession session) {
+		JSONObject result = new JSONObject();
+		if(StringUtils.isBlank(e.getName())){
+			result.put("status", "error");
+			result.put("msg", this.getInfo(700010002));  // 分类名称不得为空! 
+			return result;
+		}
+		
+		McUserInfoView userInfo = (McUserInfoView) session.getAttribute("userInfo");
+		e.setCreateTime(new Date());
+		e.setUpdateTime(new Date());
+		e.setCreateUserId(userInfo.getId());
+		e.setUpdateUserId(userInfo.getId()); 
+		int flag = mcArticleTypeDao.insertSelective(e);
+		if(flag == 1){
+			result.put("status", "success");
+			result.put("msg", this.getInfo(700010003));  // 数据添加成功!
+		}else{
+			result.put("status", "error");
+			result.put("msg", this.getInfo(700010004));  // 添加数据失败!
+		}
+		return result;
+	}
+
+
+	/**
+	 * @description: 更新一条记录
+	 * 
+	 * @param e
+	 * @param request
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年6月21日 下午5:54:53 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject ajaxEditAssort(McArticleType e, HttpServletRequest request, HttpSession session) {
+		JSONObject result = new JSONObject();
+		if(StringUtils.isBlank(e.getName())){
+			result.put("status", "error");
+			result.put("msg", this.getInfo(700010002));  // 分类名称不得为空! 
+			return result;
+		}
+		
+		McUserInfoView userInfo = (McUserInfoView) session.getAttribute("userInfo");
+		e.setUpdateTime(new Date());
+		e.setUpdateUserId(userInfo.getId()); 
+		int flag = mcArticleTypeDao.updateSelective(e);
+		if(flag == 1){
+			result.put("status", "success");
+			result.put("msg", this.getInfo(700010005));  // 数据更新成功!
+		}else{
+			result.put("status", "error");
+			result.put("msg", this.getInfo(700010006));  //更新数据失败!
+		}
+		return result;
+	}
+
+	/**
+	 * @description: 异步删除一条数据 
+	 * 
+	 * @param e
+	 * @param request
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年6月21日 下午6:08:05 
+	 * @version 1.0.0.1
+	 */
+	public JSONObject ajaxDeleteAssort(McArticleType e, HttpServletRequest request, HttpSession session) {
+		JSONObject result = new JSONObject();
+		int flag = mcArticleTypeDao.deleteById(e.getId());
+		if(flag == 1){
+			result.put("status", "success");
+			result.put("msg", this.getInfo(700010007));  // 数据删除成功!
+		}else{
+			result.put("status", "error");
+			result.put("msg", this.getInfo(700010008));  // 删除数据失败!  
+		}
+		return result;
 	}  
 	
 	

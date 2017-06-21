@@ -38,9 +38,11 @@
 	<select id="queryPage" parameterType="com.matrix.pojo.entity.McArticleType" resultMap="McArticleTypeView">
 		select 
 		  	t.* ,
+		  	u.user_name as userName,
 		  	count(i.article_type_id) as articleSum
 		from
 		  	mediacenter.mc_article_type t left join mediacenter.`mc_article_info` i on t.id = i.article_type_id
+		  	left join managercenter.`mc_user_info` u on u.id = t.update_user_id 
 		 where 1 = 1
 		<if test="name != null and name != ''  ">
 			and name = #{name , jdbcType=VARCHAR}
@@ -50,7 +52,7 @@
 	
 	
 	
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	<delete id="deleteById" parameterType="java.lang.Integer">
 		delete from mediacenter.mc_article_type where id = #{id,jdbcType=INTEGER}
 	</delete>
 	
