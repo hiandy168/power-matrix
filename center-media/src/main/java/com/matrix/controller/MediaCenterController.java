@@ -87,22 +87,6 @@ public class MediaCenterController extends BaseController {
 		super.userBehavior(session, logger, "page_media_recycle_bin_list", "回收站列表 mediaRecycleBinList.jsp");
 		return "jsp/center-manager/article/mediaRecycleBinList";
 	}
-
-	/**
-	 * @description: 置顶文章列表 |已发布状态的文章，可以进行置顶操作。置顶状态 01:置顶 02未置顶
-	 * 
-	 * @param session
-	 * @author Yangcl
-	 * @date 2017年6月16日 上午10:27:33
-	 * @version 1.0.0.1
-	 */
-	@RequestMapping("page_media_top_list")
-	public String mediaTopListPage(HttpSession session) {
-		super.userBehavior(session, logger, "page_media_top_list", "置顶文章列表 mediaTopList.jsp");
-		return "jsp/center-manager/article/mediaTopList";
-	}
-
-	
 	
 	
 	/**

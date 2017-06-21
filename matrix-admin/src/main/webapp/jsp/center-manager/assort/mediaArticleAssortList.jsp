@@ -16,29 +16,15 @@
 		<div id="table-form" class="dataTables_wrapper">
 			<div class="contenttitle2">
 				<p style="margin: 0px">
-					<label>姓名：</label> 
+					<label>分类名称：</label> 
 					<span class="field"> 
-						<input id="user-name" type="text" name="userName" class="form-search" />
-					</span> 
-					
-					<label>手机号：</label> 
-					<span class="field"> 
-						<input id="mobile" type="text" name="mobile" class="form-search" />
-					</span> 
-					
-					<label>性别：</label> 
-					<span class="field"> 
-						<select id="sex" name="sex" class="form-search">
-							<option value="">请选择---</option>
-							<option value="1">男</option>
-							<option value="2">女</option>
-						</select>
+						<input id="name" type="text" name="name" class="form-search" />
 					</span> 
 					
 					<a onclick="searchReset()" class="btn btn_orange btn_search radius50" style="float: right; cursor: pointer; margin-left: 10px"> 
 						<span> 重 置 </span>
 					</a> 
-					<a onclick="searchUser()" class="btn btn_orange btn_search radius50" style="float: right; cursor: pointer; margin-left: 20px"> 
+					<a onclick="searchAssort()" class="btn btn_orange btn_search radius50" style="float: right; cursor: pointer; margin-left: 20px"> 
 						<span> 查 询 </span>
 					</a>
 				</p>
@@ -58,12 +44,11 @@
 			<table id="dyntable2" cellpadding="0" cellspacing="0" border="0" class="stdtable">
 				<thead>
 					<tr>
-						<th class="head0">ID(升序排序)</th>  
-						<th class="head0">姓名(降序排序)</th> 
-						<th class="head0">手机(s)</th>
-						<th class="head0">身份证号</th>
-						<th class="head0">E-mail</th>
-						<th class="head0 " width="100px">操作</th>
+						<th class="head0">分类</th>  
+						<th class="head0">最后修改人</th> 
+						<th class="head0">最后修改时间</th>
+						<th class="head0">文章数量</th>
+						<th class="head0 " width="150px">操作</th>
 					</tr>
 				</thead>
 				<tbody id="ajax-tbody-1" class="page-list"><!--  class="page-list" 标识是页面数据列表 行变色使用 -->
@@ -102,9 +87,7 @@
            // 这种情况是响应上一页或下一页的触发事件
            var type_ = 'post';
            var data_ = {
-               userName: $("#user-name").val(),
-               mobile: $("#mobile").val(),
-               sex: $("#sex").val()
+               name: $("#name").val()
            };
            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
            aForm.launch(url_ , 'table-form' , obj).init();
@@ -119,11 +102,10 @@
            if(list.length>0){
             for(var i = 0 ; i < list.length ; i ++){
                 html_ += '<tr id="tr-' + list[i].id + '" class="gradeX">'
-                +'<td width="100px">' + list[i].id + '</td>'
+                +'<td width="150px">' + list[i].name + '</td>'
                 +'<td>' + list[i].userName + '</td>'
-                +'<td>' + list[i].mobile + '</td>'
-                +'<td class="center">' + list[i].idNumber + '</td>'
-                +'<td class="center">' + list[i].email + '</td>'
+                +'<td>' + list[i].updateTime + '</td>'
+                +'<td class="center">' + list[i].articleSum + '</td>'
                 +'<td width="150px" align="center">'
                 +'<a onclick="deleteOne(\'' + list[i].id + '\')" title="删除"  style="cursor: pointer;">删除</a> | '
                 +'<a href="${basePath}media/edit_info_page.do?id=' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a> ' 
@@ -154,15 +136,13 @@
       }
 
       //搜索
-      function searchUser(){
+      function searchAssort(){
           aForm.formPaging(0);
       }
 
       // 重置查询条件
       function searchReset(){
-          $("#user-name").val("");
-          $("#mobile").val("");
-          $("#sex").val("");
+          $("#name").val(""); 
           aForm.formPaging(0);
       }
 
