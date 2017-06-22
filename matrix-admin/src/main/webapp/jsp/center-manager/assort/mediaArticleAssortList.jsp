@@ -168,7 +168,7 @@
   	  }
       
       
-  	  // 显示添加弹窗
+  	  // 显示修改弹窗
   	  function showEditDialog(obj){
   		  var name = $(obj).parent().parent().children(".assort-name")[0].innerText;
     	  $("#dialog-name").val(name);
@@ -191,6 +191,7 @@
 	      });
 	  }
   	  
+  	  // 提交要修改的内容  
   	  function editAssort(event){
 		  var type_ = 'post';
 		  var url_ = '${basePath}media/ajax_edit_assort.do';
