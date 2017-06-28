@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.base.interfaces.IBaseService;
+import com.matrix.pojo.entity.McArticleInfo;
 import com.matrix.pojo.entity.McArticleType;
 
 public interface IMcArticleTypeService extends IBaseService<McArticleType, Integer> {
@@ -15,6 +16,6 @@ public interface IMcArticleTypeService extends IBaseService<McArticleType, Integ
 
 	public JSONObject ajaxEditAssort(McArticleType e, HttpServletRequest request, HttpSession session);
 
-	public JSONObject ajaxDeleteAssort(McArticleType e, HttpServletRequest request, HttpSession session);      
-	
+	public JSONObject ajaxDeleteAssort(McArticleType e, HttpServletRequest request, HttpSession session);
+
 }

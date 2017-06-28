@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.base.BaseController;
+import com.matrix.pojo.entity.McArticleInfo;
 import com.matrix.pojo.entity.McArticleType;
+import com.matrix.service.IMcArticleInfoService;
 import com.matrix.service.IMcArticleTypeService;
 import com.matrix.service.impl.McArticleTypeServiceImpl;
 
@@ -31,6 +33,9 @@ public class MediaCenterController extends BaseController {
 
 	@Autowired
 	private IMcArticleTypeService mcArticleTypeService;
+	
+	@Autowired
+	private IMcArticleInfoService mcArticleInfoService;
 
 	/**
 	 * @description: 已发布文章列表|已发布文章，所有人都可以见
@@ -171,6 +176,23 @@ public class MediaCenterController extends BaseController {
 	}
 	
 	
+	/**
+	 * @description: 根据release_type，获取对应状态的分类列表
+	 * 	release_type：发布状态， 01:未发布|02:已发布|03:草稿箱|04:回收站
+	 * 
+	 * @param e
+	 * @param request
+	 * @param session
+	 * @author Yangcl 
+	 * @date 2017年6月28日 下午3:08:44 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "ajax_article_list", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject ajaxArticleList(McArticleInfo e , HttpServletRequest request , HttpSession session) {
+		super.userBehavior(session , logger , "ajax_article_list" , "根据release_type获取对应状态的分类列表");   
+		return mcArticleInfoService.ajaxArticleList(e , request , session); 
+	}
 }
 
 

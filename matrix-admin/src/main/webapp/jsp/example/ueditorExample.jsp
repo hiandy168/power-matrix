@@ -85,9 +85,17 @@
 	 * 保存文章 
 	 */
 	function saveArticle(){
-		var str = '<html><meta charset="utf-8"><head></head><body>' + ue.getContent()  + '</body></html>';
+		var meta_ = '<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">'
+	    +'<meta content="yes" name="apple-mobile-web-app-capable" />'
+	        +'<meta content="black" name="apple-mobile-web-app-status-bar-style" />'
+	        +'<meta content="telephone=no" name="format-detection" />'
+	        +'<meta content="email=no" name="format-detection" />'
+	    	+'<meta charset="UTF-8">'
+		var style_ = '<style>img{max-width: 100%;}</style>';
+		
+		var str = '<html>' + meta_ + '<head>' + style_ + '</head><body>' + ue.getContent()  + '</body></html>';
 		str = str.replace(/&#39;/g,"'").toString();
-        console.log('ueContent = ' + str);
+        console.log(str);
 	}
 </script>
 
