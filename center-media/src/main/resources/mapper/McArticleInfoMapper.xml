@@ -35,7 +35,27 @@
 	</select>
 	
 	<!-- 开始分页查询 -->
-	<resultMap id="McArticleInfoView" type="com.matrix.pojo.view.McArticleInfoView"></resultMap>
+	<resultMap id="McArticleInfoView" type="com.matrix.pojo.view.McArticleInfoView">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="title_pic" property="titlePic" jdbcType="VARCHAR" />
+		<result column="source" property="source" jdbcType="VARCHAR" />
+		<result column="author" property="author" jdbcType="VARCHAR" />
+		<result column="author_id" property="authorId" jdbcType="VARCHAR" />
+		<result column="editor" property="editor" jdbcType="VARCHAR" />
+		<result column="editor_id" property="editorId" jdbcType="VARCHAR" />
+		<result column="release_type" property="releaseType" jdbcType="CHAR" />
+		<result column="release_time" property="releaseTime" jdbcType="TIMESTAMP" />
+		<result column="article_type_id" property="articleTypeId" jdbcType="INTEGER" />
+		<result column="reader_count" property="readerCount" jdbcType="INTEGER" />
+		<result column="thumbs_up_count" property="thumbsUpCount" jdbcType="INTEGER" />
+		<result column="shar_count" property="sharCount" jdbcType="INTEGER" />
+		<result column="top_type" property="topType" jdbcType="CHAR" />
+		<result column="source_link" property="sourceLink" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="html_content" property="htmlContent" jdbcType="LONGVARCHAR" />
+	</resultMap>
 	<select id="queryPage" resultMap="McArticleInfoView" parameterType="com.matrix.pojo.entity.McArticleInfo">
 		select
 			ai.*,
@@ -44,14 +64,14 @@
 			mediacenter.mc_article_info ai left join mediacenter.mc_article_type at on ai.article_type_id = at.id
 		where 
 			ai.release_type = #{releaseType , jdbcType=CHAR} 
-			<if test="title != null">
-				and title like CONCAT('%' , '${title , jdbcType=VARCHAR}' , '%' ) 
+			<if test="title != null and title != '' ">
+				and title like CONCAT('%' , '${title}' , '%' ) 
 			</if>
-			<if test="author != null">
-				and author like CONCAT('%' , '${author , jdbcType=VARCHAR}' , '%' ) 
+			<if test="author != null and author != '' ">
+				and author like CONCAT('%' , '${author}' , '%' ) 
 			</if>
-			<if test="editor != null">
-				and editor like CONCAT('%' , '${editor , jdbcType=VARCHAR}' , '%' ) 
+			<if test="editor != null and editor != '' ">
+				and editor like CONCAT('%' , '${editor}' , '%' ) 
 			</if>
 			<if test="articleTypeId != null">
 				and article_type_id = #{articleTypeId , jdbcType=INTEGER} 

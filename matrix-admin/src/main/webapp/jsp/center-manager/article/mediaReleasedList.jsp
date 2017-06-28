@@ -7,7 +7,7 @@
        $(function(){
            var type_ = 'post';
            var url_ = '${basePath}media/ajax_article_list.do';
-           var data_ = null;  // 可以为null，后台会进行默认处理
+           var data_ = {releaseType: '02'};  // 可以为null，后台会进行默认处理
            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
            aForm.launch(url_ , 'table-form' , obj).init().drawForm(loadTable);
        });
@@ -21,6 +21,7 @@
            // 这种情况是响应上一页或下一页的触发事件
            var type_ = 'post';
            var data_ = {
+       		   releaseType: '02',
         	   title: $("#title").val(),
                author: $("#author").val(),
                editor: $("#editor").val(),
@@ -40,7 +41,7 @@
             	for(var i = 0 ; i < list.length ; i ++){
 	                html_ += '<tr id="tr-' + list[i].id + '" class="gradeX">'
 	                +'<td>' + list[i].title + '</td>'
-	                +'<td width="60px">' + list[i].titlePic + '</td>'
+	                +'<td width="80px"><img src="' + list[i].titlePic + '" height="70" width="70"/></td>'
 	                +'<td >' + list[i].source + '</td>'
 	                +'<td >' + list[i].author + '</td>'
 	                +'<td >' + list[i].createTime + '</td>'
@@ -155,7 +156,7 @@
 				<thead>
 					<tr>
 						<th class="head0">标题</th> 
-						<th class="head0">标题小图</th> 
+						<th class="head0"  width="80px">标题小图</th> 
 						<th class="head0">文章来源</th> 
 						<th class="head0">作者</th>
 						<th class="head0">创建时间</th>
