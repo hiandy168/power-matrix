@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.matrix.base.BaseServiceImpl;
 import com.matrix.dao.IMcArticleInfoDao;
 import com.matrix.dao.IMcArticleTypeDao;
+import com.matrix.pojo.entity.McArticleInfo;
 import com.matrix.pojo.entity.McArticleType;
 import com.matrix.pojo.view.McUserInfoView;
 import com.matrix.service.IMcArticleTypeService;
@@ -148,9 +149,9 @@ public class McArticleTypeServiceImpl extends BaseServiceImpl<McArticleType, Int
 			result.put("msg", this.getInfo(700010008));  // 删除数据失败!  
 		}
 		return result;
-	}  
-	
-	
+	}
+
+
 }
 
 

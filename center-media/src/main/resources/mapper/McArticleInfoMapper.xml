@@ -25,7 +25,7 @@
 	</resultMap>
 	
 	
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
 			*
 		from 
@@ -34,6 +34,29 @@
 			id = #{id,jdbcType=INTEGER}
 	</select>
 	
+	<!-- 开始分页查询 -->
+	<resultMap id="McArticleInfoView" type="com.matrix.pojo.view.McArticleInfoView"></resultMap>
+	<select id="queryPage" resultMap="McArticleInfoView" parameterType="com.matrix.pojo.entity.McArticleInfo">
+		select
+			ai.*,
+			at.name as assort
+		from 
+			mediacenter.mc_article_info ai left join mediacenter.mc_article_type at on ai.article_type_id = at.id
+		where 
+			ai.release_type = #{releaseType , jdbcType=CHAR} 
+			<if test="title != null">
+				and title like CONCAT('%' , '${title , jdbcType=VARCHAR}' , '%' ) 
+			</if>
+			<if test="author != null">
+				and author like CONCAT('%' , '${author , jdbcType=VARCHAR}' , '%' ) 
+			</if>
+			<if test="editor != null">
+				and editor like CONCAT('%' , '${editor , jdbcType=VARCHAR}' , '%' ) 
+			</if>
+			<if test="articleTypeId != null">
+				and article_type_id = #{articleTypeId , jdbcType=INTEGER} 
+			</if>
+	</select>
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from mediacenter.mc_article_info where id = #{id,jdbcType=INTEGER}
