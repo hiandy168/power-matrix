@@ -64,7 +64,7 @@
        }
 
       function deleteOne(id_){
-      	jConfirm('您确定要删除这条记录吗？', 'confirm', function(flag) {
+      	jConfirm('您确定要删除这条记录吗？', '系统提示', function(flag) {
            if(flag){
            	var type_ = 'post';
                var url_ = '${basePath}example/ajax_delete_one.do';

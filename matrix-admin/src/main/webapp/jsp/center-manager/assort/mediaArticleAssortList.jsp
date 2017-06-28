@@ -218,7 +218,7 @@
 			var name = $(ele).parent().parent().children(".assort-name")[0].innerText;
 			jAlert("【" + name + "】分类下已经有文章，不可以删除" , '系统提示');
 		}else{
-			jConfirm('您确定要删除这条记录吗？', 'confirm', function(flag) {
+			jConfirm('您确定要删除这条记录吗？', '系统提示', function(flag) {
 				if (flag) {
 					var type_ = 'post';
 					var url_ = '${basePath}media/ajax_delete_assort.do'; 
