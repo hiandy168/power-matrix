@@ -29,7 +29,7 @@
 
 			$('#confirmbutton').click(function(){
 				// 注意：flag = ture or false - Yangcl
-				jConfirm('Can you confirm this?', 'confirm-title', function(flag) {
+				jConfirm('Can you confirm this?', '系统提示', function(flag) {
 					jAlert('您选择了: ' + flag, '系统提示');
 				});
 				return false;

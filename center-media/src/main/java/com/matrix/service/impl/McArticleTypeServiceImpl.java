@@ -2,8 +2,6 @@ package com.matrix.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.matrix.base.BaseServiceImpl;
 import com.matrix.dao.IMcArticleInfoDao;
 import com.matrix.dao.IMcArticleTypeDao;

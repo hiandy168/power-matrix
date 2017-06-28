@@ -168,7 +168,7 @@
   	  }
       
       
-  	  // 显示添加弹窗
+  	  // 显示修改弹窗
   	  function showEditDialog(obj){
   		  var name = $(obj).parent().parent().children(".assort-name")[0].innerText;
     	  $("#dialog-name").val(name);
@@ -191,6 +191,7 @@
 	      });
 	  }
   	  
+  	  // 提交要修改的内容  
   	  function editAssort(event){
 		  var type_ = 'post';
 		  var url_ = '${basePath}media/ajax_edit_assort.do';
@@ -217,7 +218,7 @@
 			var name = $(ele).parent().parent().children(".assort-name")[0].innerText;
 			jAlert("【" + name + "】分类下已经有文章，不可以删除" , '系统提示');
 		}else{
-			jConfirm('您确定要删除这条记录吗？', 'confirm', function(flag) {
+			jConfirm('您确定要删除这条记录吗？', '系统提示', function(flag) {
 				if (flag) {
 					var type_ = 'post';
 					var url_ = '${basePath}media/ajax_delete_assort.do'; 
