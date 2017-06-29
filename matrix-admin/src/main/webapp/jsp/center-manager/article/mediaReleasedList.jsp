@@ -1,108 +1,108 @@
 <%@ include file="/inc/resource.inc" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-  <%@ include file="/inc/iframe-head.jsp" %>
-  <script type="text/javascript">
-
-       $(function(){
-           var type_ = 'post';
-           var url_ = '${basePath}media/ajax_article_list.do';
-           var data_ = {releaseType: '02'};  // 可以为null，后台会进行默认处理
-           var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
-           aForm.launch(url_ , 'table-form' , obj).init().drawForm(loadTable);
-           var arr = obj.atlist;
-           if(arr.length != 0){
-        	   var html_ = '';
-        	   for(var i = 0 ; i < arr.length ; i ++){
-        		   html_ += '<option value="' + arr[i].id + '">' + arr[i].name + '</option>';
-        	   }
-        	   $("#article-type-id").append(html_); 
-           }
-       });
-
-       // 回调函数
-       function loadTable(url_){
-           if(url_ == undefined){ // 首次加载表单
-               draw(aForm.jsonObj);
-               return;
-           }
-           // 这种情况是响应上一页或下一页的触发事件
-           var type_ = 'post';
-           var data_ = {
-       		   releaseType: '02',
-        	   title: $("#title").val(),
-               author: $("#author").val(),
-               editor: $("#editor").val(),
-               articleTypeId: $("#article-type-id").val()
-           };
-           var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
-           aForm.launch(url_ , 'table-form' , obj).init();
-           draw(obj);
-       }
-
-       // 画表格
-       function draw(obj){
-           $('#ajax-tbody-1 tr').remove();
-           var html_ = '';
-           var list = obj.data.list;
-           if(list.length>0){
-            	for(var i = 0 ; i < list.length ; i ++){
-	                html_ += '<tr id="tr-' + list[i].id + '" class="gradeX">'
-	                +'<td>' + list[i].title + '</td>'
-	                +'<td width="80px"><img src="' + list[i].titlePic + '" height="70" width="70"/></td>'
-	                +'<td >' + list[i].source + '</td>'
-	                +'<td >' + list[i].author + '</td>'
-	                +'<td >' + list[i].createTime + '</td>'
-	                +'<td >' + list[i].editor + '</td>'
-	                +'<td >' + list[i].releaseTime + '</td>'
-	                +'<td >' + list[i].assort + '</td>'
-	                +'<td >' 
-	                	+'<div>阅读数：' + list[i].readerCount + '</div>'
-	                	+'<div>点赞数：' + list[i].thumbsUpCount + '</div>'
-	                	+'<div>分享数：' + list[i].shareCount + '</div>'
-	                + '</td>' 
-	                +'<td width="150px" align="center">'
-	                +'<a onclick="recallArticle(this)" articleId="' + list[i].id + '"  title="点击则撤回发布的文章"  style="cursor: pointer;">撤回发布</a>'
-	                +'</td></tr>'
-            	}
-           }else{
-           		html_='<tr><td colspan="11" style="text-align: center;">'+obj.msg+'</td></tr>';
-           }
-           $('#ajax-tbody-1').append(html_);
-       }
-
-     
-			function recallArticle(ele) {
-				jConfirm('您确定要撤回这篇文章吗？', '系统提示', function(flag) {
-					if (flag) {
-						var type_ = 'post';
-						var url_ = '${basePath}media/ajax_article_update.do'; 
-						var data_ = {
-							id : $(ele).attr("articleId"),
-							releaseType:'01',
-							toReleaseSource:'02' 
-						};
-						var obj = JSON.parse(ajaxs.sendAjax(type_, url_, data_));
-						if (obj.status == 'success') {
-							var currentPageNumber = $(".paginate_active").html(); // 定位到当前分页的页码，然后重新加载数据
-							aForm.formPaging(currentPageNumber);
-						} 
-						jAlert(obj.msg, '系统提示');
-					}
-				});
+<%@ include file="/inc/iframe-head.jsp" %>
+<script type="text/javascript">
+	$(function() {
+		var type_ = 'post';
+		var url_ = '${basePath}media/ajax_article_list.do';
+		var data_ = {
+			releaseType : '02'
+		};  
+		var obj = JSON.parse(ajaxs.sendAjax(type_, url_, data_));
+		aForm.launch(url_, 'table-form', obj).init().drawForm(loadTable);
+		var arr = obj.atlist;
+		if (arr.length != 0) {
+			var html_ = '';
+			for (var i = 0; i < arr.length; i++) {
+				html_ += '<option value="' + arr[i].id + '">' + arr[i].name + '</option>';
 			}
+			$("#article-type-id").append(html_);
+		}
+	});
 
-			//搜索
-			function searchUser() {
-				aForm.formPaging(0);
-			}
+	// 回调函数
+	function loadTable(url_) {
+		if (url_ == undefined) { // 首次加载表单
+			draw(aForm.jsonObj);
+			return;
+		}
+		// 这种情况是响应上一页或下一页的触发事件
+		var type_ = 'post';
+		var data_ = {
+			releaseType : '02',
+			title : $("#title").val(),
+			author : $("#author").val(),
+			editor : $("#editor").val(),
+			articleTypeId : $("#article-type-id").val()
+		};
+		var obj = JSON.parse(ajaxs.sendAjax(type_, url_, data_));
+		aForm.launch(url_, 'table-form', obj).init();
+		draw(obj);
+	}
 
-			// 重置查询条件
-			function searchReset() {
-				$(".form-search").val("");
-				aForm.formPaging(0);
+	// 画表格
+	function draw(obj) {
+		$('#ajax-tbody-1 tr').remove();
+		var html_ = '';
+		var list = obj.data.list;
+		if (list.length > 0) {
+			for (var i = 0; i < list.length; i++) {
+				html_ += '<tr id="tr-' + list[i].id + '" class="gradeX">'
+						+ '<td>' + list[i].title + '</td>'
+						+ '<td width="80px"><img src="' + list[i].titlePic + '" height="70" width="70"/></td>'
+						+ '<td >' + list[i].source + '</td>'
+						+ '<td >' + list[i].author + '</td>'
+						+ '<td >' + list[i].createTime + '</td>'
+						+ '<td >' + list[i].editor + '</td>'
+						+ '<td >' + list[i].releaseTime + '</td>'
+						+ '<td >' + list[i].assort + '</td>'
+						+ '<td >'
+							+ '<div>阅读数：' + list[i].readerCount + '</div>'
+							+ '<div>点赞数：' + list[i].thumbsUpCount + '</div>'
+							+ '<div>分享数：' + list[i].shareCount + '</div>'
+						+ '</td>'
+						+ '<td width="150px" align="center">'
+							+ '<a onclick="recallArticle(this)" articleId="' + list[i].id + '"  title="点击则撤回发布的文章"  style="cursor: pointer;">撤回发布</a>'
+						+ '</td></tr>'
 			}
-		</script>
+		} else {
+			html_ = '<tr><td colspan="11" style="text-align: center;">' + obj.msg + '</td></tr>';
+		}
+		$('#ajax-tbody-1').append(html_);
+	}
+
+	function recallArticle(ele) {
+		jConfirm('您确定要撤回这篇文章吗？', '系统提示', function(flag) {
+			if (flag) {
+				var type_ = 'post';
+				var url_ = '${basePath}media/ajax_article_update.do';
+				var data_ = {
+					id : $(ele).attr("articleId"),
+					releaseType : '01',
+					toReleaseSource : '02'
+				};
+				var obj = JSON.parse(ajaxs.sendAjax(type_, url_, data_));
+				if (obj.status == 'success') {
+					var currentPageNumber = $(".paginate_active").html(); // 定位到当前分页的页码，然后重新加载数据
+					aForm.formPaging(currentPageNumber);
+				}
+				jAlert(obj.msg, '系统提示');
+			}
+		});
+	}
+
+	//搜索
+	function searchUser() {
+		aForm.formPaging(0);
+	}
+
+	// 重置查询条件
+	function searchReset() {
+		$(".form-search").val("");
+		aForm.formPaging(0);
+	}
+</script>
 
 <div class="centercontent tables">
 	<!--这个跳转页面的功能及跳转路径等等-->
