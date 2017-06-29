@@ -196,6 +196,24 @@ public class MediaCenterController extends BaseController {
 		super.userBehavior(session , logger , "ajax_article_list" , "根据release_type获取对应状态的分类列表");   
 		return mcArticleInfoService.ajaxArticleList(e , request , session); 
 	}
+	
+	/**
+	 * @description: 更新或编辑一篇文章
+	 * 
+	 * @param e
+	 * @param request
+	 * @param session
+	 * @return
+	 * @author Yangcl 
+	 * @date 2017年6月29日 下午3:05:07 
+	 * @version 1.0.0.1
+	 */
+	@RequestMapping(value = "ajax_article_update", produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public JSONObject ajaxArticleUpdate(McArticleInfo e , HttpServletRequest request , HttpSession session) {
+		super.userBehavior(session , logger , "ajax_article_update" , "更新一篇文章");   
+		return mcArticleInfoService.ajaxArticleUpdate(e , request , session);  
+	}
 }
 
 

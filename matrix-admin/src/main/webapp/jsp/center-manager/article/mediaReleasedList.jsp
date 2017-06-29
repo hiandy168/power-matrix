@@ -62,8 +62,7 @@
 	                	+'<div>分享数：' + list[i].shareCount + '</div>'
 	                + '</td>' 
 	                +'<td width="150px" align="center">'
-	                +'<a onclick="deleteOne(\'' + list[i].id + '\')" title="删除"  style="cursor: pointer;">删除</a> | '
-	                +'<a href="${basePath}example/edit_info_page.do?id=' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a> ' 
+	                +'<a onclick="recallArticle(this)" articleId="' + list[i].id + '"  title="点击则撤回发布的文章"  style="cursor: pointer;">撤回发布</a>'
 	                +'</td></tr>'
             	}
            }else{
@@ -72,42 +71,44 @@
            $('#ajax-tbody-1').append(html_);
        }
 
-      function deleteOne(id_){
-      	jConfirm('您确定要删除这条记录吗？', '系统提示', function(flag) {
-           if(flag){
-           	var type_ = 'post';
-               var url_ = '${basePath}example/ajax_delete_one.do';
-               var data_ = {id:id_};
-               var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
-               if(obj.status == 'success'){
-                   var currentPageNumber = $(".paginate_active").html();   // 定位到当前分页的页码，然后重新加载数据
-                   aForm.formPaging(currentPageNumber);
-               }else{
-               }
-               jAlert(obj.msg, '系统提示');
-           }
-		});
-      }
+     
+			function recallArticle(ele) {
+				jConfirm('您确定要撤回这篇文章吗？', '系统提示', function(flag) {
+					if (flag) {
+						var type_ = 'post';
+						var url_ = '${basePath}media/ajax_article_update.do'; 
+						var data_ = {
+							id : $(ele).attr("articleId"),
+							releaseType:'01',
+							toReleaseSource:'02' 
+						};
+						var obj = JSON.parse(ajaxs.sendAjax(type_, url_, data_));
+						if (obj.status == 'success') {
+							var currentPageNumber = $(".paginate_active").html(); // 定位到当前分页的页码，然后重新加载数据
+							aForm.formPaging(currentPageNumber);
+						} 
+						jAlert(obj.msg, '系统提示');
+					}
+				});
+			}
 
-      //搜索
-      function searchUser(){
-          aForm.formPaging(0);
-      }
+			//搜索
+			function searchUser() {
+				aForm.formPaging(0);
+			}
 
-      // 重置查询条件
-      function searchReset(){
-          $(".form-search").val("");
-          aForm.formPaging(0);
-      }
-
-
-  </script>
+			// 重置查询条件
+			function searchReset() {
+				$(".form-search").val("");
+				aForm.formPaging(0);
+			}
+		</script>
 
 <div class="centercontent tables">
 	<!--这个跳转页面的功能及跳转路径等等-->
 	<div class="pageheader notab">
 		<h1 class="pagetitle">已发布文章列表</h1>
-		<span style="display: none">jsp/center-manager/assort/mediaArticleAssortList.jsp</span>
+		<span style="display: none">jsp/center-manager/assort/mediaReleasedList.jsp</span>
 	</div>
 
 	<div id="contentwrapper" class="contentwrapper">
