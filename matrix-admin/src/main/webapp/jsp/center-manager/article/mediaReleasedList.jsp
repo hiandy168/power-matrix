@@ -10,6 +10,14 @@
            var data_ = {releaseType: '02'};  // 可以为null，后台会进行默认处理
            var obj = JSON.parse(ajaxs.sendAjax(type_ , url_ , data_));
            aForm.launch(url_ , 'table-form' , obj).init().drawForm(loadTable);
+           var arr = obj.atlist;
+           if(arr.length != 0){
+        	   var html_ = '';
+        	   for(var i = 0 ; i < arr.length ; i ++){
+        		   html_ += '<option value="' + arr[i].id + '">' + arr[i].name + '</option>';
+        	   }
+        	   $("#article-type-id").append(html_); 
+           }
        });
 
        // 回调函数
@@ -51,7 +59,7 @@
 	                +'<td >' 
 	                	+'<div>阅读数：' + list[i].readerCount + '</div>'
 	                	+'<div>点赞数：' + list[i].thumbsUpCount + '</div>'
-	                	+'<div>分享数：' + list[i].sharCount + '</div>'
+	                	+'<div>分享数：' + list[i].shareCount + '</div>'
 	                + '</td>' 
 	                +'<td width="150px" align="center">'
 	                +'<a onclick="deleteOne(\'' + list[i].id + '\')" title="删除"  style="cursor: pointer;">删除</a> | '
@@ -127,8 +135,6 @@
 					<span class="field"> 
 						<select id="article-type-id" name="articleTypeId" class="form-search">
 							<option value="">请选择---</option>
-							<option value="1">男</option>
-							<option value="2">女</option>
 						</select>
 					</span> 
 					

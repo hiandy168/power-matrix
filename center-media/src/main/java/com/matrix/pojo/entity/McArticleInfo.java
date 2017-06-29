@@ -16,13 +16,14 @@ public class McArticleInfo {
     private Integer articleTypeId;
     private Integer readerCount;
     private Integer thumbsUpCount;
-    private Integer sharCount;
+    private Integer shareCount;
     private String topType;
     private String sourceLink;
     private Date createTime;
     private Date updateTime;
     private String htmlContent;
-    
+    private String toReleaseSource;  // 待发布文章的来源，依从于releaseType，标识的是该条记录上一个状态是什么：02已发布撤回的 03草稿箱提交的 04回收站还原的
+    private String remark;
 	public Integer getId() {
 		return id;
 	}
@@ -101,11 +102,11 @@ public class McArticleInfo {
 	public void setThumbsUpCount(Integer thumbsUpCount) {
 		this.thumbsUpCount = thumbsUpCount;
 	}
-	public Integer getSharCount() {
-		return sharCount;
+	public Integer getShareCount() {
+		return shareCount;
 	}
-	public void setSharCount(Integer sharCount) {
-		this.sharCount = sharCount;
+	public void setShareCount(Integer shareCount) {
+		this.shareCount = shareCount;
 	}
 	public String getTopType() {
 		return topType;
@@ -136,5 +137,17 @@ public class McArticleInfo {
 	}
 	public void setHtmlContent(String htmlContent) {
 		this.htmlContent = htmlContent;
+	}
+	public String getToReleaseSource() {
+		return toReleaseSource;
+	}
+	public void setToReleaseSource(String toReleaseSource) {
+		this.toReleaseSource = toReleaseSource;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 }
