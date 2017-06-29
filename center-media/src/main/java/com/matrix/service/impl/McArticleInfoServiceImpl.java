@@ -65,6 +65,23 @@ public class McArticleInfoServiceImpl extends BaseServiceImpl<McArticleInfo, Int
 		
 		r.put("atlist", mcArticleTypeDao.findList(new McArticleType())); 
 		return r;
+	}
+
+
+	@Override
+	public JSONObject ajaxArticleUpdate(McArticleInfo e, HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.ajaxPageData(e, request);
+		e.setUpdateTime(new Date()); 
+		int flag = mcArticleInfoDao.updateSelective(e);
+		if(flag == 1){
+			result.put("status", "success");
+			result.put("msg", this.getInfo(700010005));  // 数据更新成功!
+		}else{
+			result.put("status", "error");
+			result.put("msg", this.getInfo(700010006));  //更新数据失败!
+		}
+		
+		return result;
 	}  
 
 

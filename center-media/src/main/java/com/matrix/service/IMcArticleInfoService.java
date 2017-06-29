@@ -9,6 +9,8 @@ import com.matrix.pojo.entity.McArticleInfo;
 
 public interface IMcArticleInfoService extends IBaseService<McArticleInfo, Integer> {
 
-	public JSONObject ajaxArticleList(McArticleInfo e, HttpServletRequest request, HttpSession session); 
+	public JSONObject ajaxArticleList(McArticleInfo e, HttpServletRequest request, HttpSession session);
+
+	public JSONObject ajaxArticleUpdate(McArticleInfo e, HttpServletRequest request, HttpSession session);  
 
 }
