@@ -51,7 +51,7 @@
 						+ '<td class="center">' + list[i].idNumber + '</td>'
 						+ '<td class="center">' + list[i].email + '</td>'
 						+ '<td width="150px" align="center">'
-						+ '<a onclick="deleteOne(this)" eleId=' + list[i].id + '"  title="删除"  style="cursor: pointer;">删除</a> | '
+						+ '<a onclick="deleteOne(this)" eleId=' + list[i].id + '" title="删除"  style="cursor: pointer;">删除</a> | '
 						+ '<a href="${basePath}example/edit_info_page.do?id=' + list[i].id + '" title="修改"  style="cursor: pointer;">修改</a> '
 						+ '</td></tr>'
 			}
