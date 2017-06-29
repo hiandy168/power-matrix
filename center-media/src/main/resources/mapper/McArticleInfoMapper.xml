@@ -16,12 +16,14 @@
 		<result column="article_type_id" property="articleTypeId" jdbcType="INTEGER" />
 		<result column="reader_count" property="readerCount" jdbcType="INTEGER" />
 		<result column="thumbs_up_count" property="thumbsUpCount" jdbcType="INTEGER" />
-		<result column="shar_count" property="sharCount" jdbcType="INTEGER" />
+		<result column="share_count" property="shareCount" jdbcType="INTEGER" />
 		<result column="top_type" property="topType" jdbcType="CHAR" />
 		<result column="source_link" property="sourceLink" jdbcType="VARCHAR" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
 		<result column="html_content" property="htmlContent" jdbcType="LONGVARCHAR" />
+		<result column="to_release_source" property="toReleaseSource" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	
@@ -49,12 +51,14 @@
 		<result column="article_type_id" property="articleTypeId" jdbcType="INTEGER" />
 		<result column="reader_count" property="readerCount" jdbcType="INTEGER" />
 		<result column="thumbs_up_count" property="thumbsUpCount" jdbcType="INTEGER" />
-		<result column="shar_count" property="sharCount" jdbcType="INTEGER" />
+		<result column="share_count" property="shareCount" jdbcType="INTEGER" />
 		<result column="top_type" property="topType" jdbcType="CHAR" />
 		<result column="source_link" property="sourceLink" jdbcType="VARCHAR" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
 		<result column="html_content" property="htmlContent" jdbcType="LONGVARCHAR" />
+		<result column="to_release_source" property="toReleaseSource" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
 	</resultMap>
 	<select id="queryPage" resultMap="McArticleInfoView" parameterType="com.matrix.pojo.entity.McArticleInfo">
 		select
@@ -125,8 +129,8 @@
 			<if test="thumbsUpCount != null">
 				thumbs_up_count,
 			</if>
-			<if test="sharCount != null">
-				shar_count,
+			<if test="shareCount != null">
+				share_count,
 			</if>
 			<if test="topType != null">
 				top_type,
@@ -142,6 +146,12 @@
 			</if>
 			<if test="htmlContent != null">
 				html_content,
+			</if>
+			<if test="toReleaseSource != null">
+				to_release_source,
+			</if>
+			<if test="remark != null">
+				remark,
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -184,8 +194,8 @@
 			<if test="thumbsUpCount != null">
 				#{thumbsUpCount,jdbcType=INTEGER},
 			</if>
-			<if test="sharCount != null">
-				#{sharCount,jdbcType=INTEGER},
+			<if test="shareCount != null">
+				#{shareCount,jdbcType=INTEGER},
 			</if>
 			<if test="topType != null">
 				#{topType,jdbcType=CHAR},
@@ -201,6 +211,12 @@
 			</if>
 			<if test="htmlContent != null">
 				#{htmlContent,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="toReleaseSource != null">
+				#{toReleaseSource , jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark , jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
@@ -244,8 +260,8 @@
 			<if test="thumbsUpCount != null">
 				thumbs_up_count = #{thumbsUpCount,jdbcType=INTEGER},
 			</if>
-			<if test="sharCount != null">
-				shar_count = #{sharCount,jdbcType=INTEGER},
+			<if test="shareCount != null">
+				share_count = #{shareCount,jdbcType=INTEGER},
 			</if>
 			<if test="topType != null">
 				top_type = #{topType,jdbcType=CHAR},
@@ -261,6 +277,12 @@
 			</if>
 			<if test="htmlContent != null">
 				html_content = #{htmlContent,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="toReleaseSource != null">
+				to_release_source = #{toReleaseSource , jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark , jdbcType=VARCHAR},
 			</if>
 		</set>
 		where id = #{id,jdbcType=INTEGER}

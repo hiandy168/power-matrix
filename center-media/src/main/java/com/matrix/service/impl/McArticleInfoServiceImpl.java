@@ -2,6 +2,7 @@ package com.matrix.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import com.matrix.base.BaseServiceImpl;
 import com.matrix.dao.IMcArticleInfoDao;
 import com.matrix.dao.IMcArticleTypeDao;
 import com.matrix.pojo.entity.McArticleInfo;
+import com.matrix.pojo.entity.McArticleType;
 import com.matrix.service.IMcArticleInfoService;
 
 @Service("mcArticleInfoService")
@@ -60,6 +62,8 @@ public class McArticleInfoServiceImpl extends BaseServiceImpl<McArticleInfo, Int
 			data.put("list", list); 
 			r.put("data", data); 
 		}
+		
+		r.put("atlist", mcArticleTypeDao.findList(new McArticleType())); 
 		return r;
 	}  
 
