@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.matrix.base.BaseClass;
 import com.matrix.cache.CacheLaunch;
 import com.matrix.cache.enums.DCacheEnum;
+import com.matrix.cache.enums.SCacheEnum;
 import com.matrix.cache.inf.IBaseLaunch;
 import com.matrix.cache.inf.ICacheFactory;
 import com.matrix.service.IPowerCacheService;
@@ -36,11 +37,21 @@ public class PowerCacheServiceImpl extends BaseClass implements IPowerCacheServi
 			return result;
 		}
 		String value = "";
-		if(type.equals("dict")){
-			value = launch.loadDictCache(prefix).get(key);
-		}else{
-			value = launch.loadServiceCache(prefix).get(key);
+		try {
+			if(type.equals("dict")){
+				DCacheEnum [] arr = DCacheEnum.values();
+				value = launch.loadDictCache(arr[DCacheEnum.valueOf(prefix).ordinal()]).get(key);
+			}else{
+				SCacheEnum [] arr = SCacheEnum.values();
+				value = launch.loadServiceCache(arr[SCacheEnum.valueOf(prefix).ordinal()]).get(key);
+			}
+		} catch (Exception e) {
+			result.put("status", "error");
+			result.put("msg", "未找到对应缓存前缀：" + prefix);
+			return result;
 		}
+		
+		
 		if(StringUtils.isNotBlank(value)){
 			result.put("status", "success");
 			result.put("msg", "查询成功");

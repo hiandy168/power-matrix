@@ -52,16 +52,6 @@ public class RedisLaunch implements IBaseLaunch<ICacheFactory> {
 		return new RedisFactory("xd-" + enum_.toString() + "-");
 	}
 
-	@Override
-	public RedisFactory loadServiceCache(String baseKey) {
-		return new RedisFactory("xs-" + baseKey + "-");
-	}
-
-	@Override
-	public RedisFactory loadDictCache(String baseKey) {  
-		return new RedisFactory("xd-" + baseKey + "-");
-	}
-
 
 }
 
