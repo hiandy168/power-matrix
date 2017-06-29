@@ -1,72 +1,59 @@
 <%@ include file="/inc/resource.inc"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- <html xmlns="http://www.w3.org/1999/xhtml">
-<head> -->
-	<%@ include file="/inc/iframe-head.jsp"%>
-	 <link rel="stylesheet" href="${css}/ztree/zTreeStyle.css" type="text/css" />
-    
-	<script type="text/javascript" src="${js}/ztree/jquery.ztree.all.js"></script>
-	<!-- 系统角色权限 -->
-	<script type="text/javascript" src="${js}/system/sysUserRoleFunction.js"></script>
-	
-	<style type="text/css">
-		.a-btn{
-        	cursor: pointer;
-        	color:#FB9337; 
-        }
-        .a-btn:hover {
-        	color: red;
-       	}  
-		.dialog-table{
-			width:100%; 
-			border-collapse:separate; 
-			border-spacing:10px;  
-		}
-	</style>
-<%-- </head>
+<%@ include file="/inc/iframe-head.jsp"%>
+ <link rel="stylesheet" href="${css}/ztree/zTreeStyle.css" type="text/css" />
+   
+<script type="text/javascript" src="${js}/ztree/jquery.ztree.all.js"></script>
+<!-- 系统角色权限 -->
+<script type="text/javascript" src="${js}/system/sysUserRoleFunction.js"></script>
 
-<body class="withvernav">
+<style type="text/css">
+	.a-btn{
+       	cursor: pointer;
+       	color:#FB9337; 
+       }
+       .a-btn:hover {
+       	color: red;
+      	}  
+	.dialog-table{
+		width:100%; 
+		border-collapse:separate; 
+		border-spacing:10px;  
+	}
+</style>
 
-	<div class="bodywrapper">
-		<%@ include file="/inc/top.jsp"%>
-		<%@ include file="/inc/left.jsp"%> --%>
+<div class="centercontent tables">
+	<!--这个跳转页面的功能及跳转路径等等-->
+	<div class="pageheader notab">
+		<h1 class="pagetitle">常用弹层示例</h1>
+		<span class="pagedesc"> 本页面用于介绍系统常见的弹出层。 </span>
+		<span style="display: none">jsp/example/dialogExample.jsp</span>
+	</div>
 
-		<div class="centercontent tables">
-			<!--这个跳转页面的功能及跳转路径等等-->
-			<div class="pageheader notab">
-				<h1 class="pagetitle">常用弹层示例</h1>
-				<span class="pagedesc"> 本页面用于介绍系统常见的弹出层。 </span>
-				<span style="display: none">jsp/example/dialogExample.jsp</span>
+	<div id="contentwrapper" class="contentwrapper">
+
+		<%-- table-form 这个id分页使用 --%>
+		<div id="table-form" class="dataTables_wrapper">
+			<div class="contenttitle2">
+				<p style="margin: 0px">
+					<button  onclick="openAddDialog()" class="stdbtn btn_orange">添加弹层示例</button>
+				</p>
+				
+				<p style="margin-top: 20px">
+					<button onclick="openULDialog()" class="stdbtn btn_lime">自定义滚动条示例-ul-列表</button>
+				</p>
+				
+				<p style="margin-top: 20px">
+					<button  onclick="openTreeDialog()" class="stdbtn btn_orange">自定义滚动条示例-tree</button>
+				</p>
 			</div>
-
-			<div id="contentwrapper" class="contentwrapper">
-
-				<%-- table-form 这个id分页使用 --%>
-				<div id="table-form" class="dataTables_wrapper">
-					<div class="contenttitle2">
-						<p style="margin: 0px">
-							<button  onclick="openAddDialog()" class="stdbtn btn_orange">添加弹层示例</button>
-						</p>
-						
-						<p style="margin-top: 20px">
-							<button onclick="openULDialog()" class="stdbtn btn_lime">自定义滚动条示例-ul-列表</button>
-						</p>
-						
-						<p style="margin-top: 20px">
-							<button  onclick="openTreeDialog()" class="stdbtn btn_orange">自定义滚动条示例-tree</button>
-						</p>
-					</div>
-				</div>
-			</div>
-
 		</div>
+	</div>
+
+</div>
 
 
-<!-- 	</div>
-
-</body>
-</html> -->
 
 <script type="text/javascript">
 	function openAddDialog(){
